@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Quizly Earn</title>
 
-  <!-- HilltopAds Website Verification Tag -->
+  <!-- HilltopAds Verification -->
   <meta name="6c29ec16ceee48f087d18c842d44b568cb6f8e15" content="6c29ec16ceee48f087d18c842d44b568cb6f8e15" />
 
   <!-- Tailwind CSS -->
@@ -31,6 +31,20 @@
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col justify-between select-none">
+
+  <!-- ================= IN-APP NOTIFICATION BANNER ================= -->
+  <div id="inAppNotifyBanner" class="hidden fixed top-3 left-4 right-4 z-50 bg-slate-900/95 border border-amber-400/60 p-3.5 rounded-2xl shadow-2xl backdrop-blur-md flex items-start gap-3 transition-all transform duration-300">
+    <div class="w-8 h-8 rounded-xl bg-amber-400/20 text-amber-400 flex items-center justify-center shrink-0 text-sm">
+      <i class="fa-solid fa-bell"></i>
+    </div>
+    <div class="flex-1">
+      <h4 class="text-xs font-bold text-amber-400" id="notifyBannerTitle">Notification</h4>
+      <p class="text-[11px] text-slate-300 leading-tight mt-0.5" id="notifyBannerMsg">Message content</p>
+    </div>
+    <button onclick="dismissNotifyBanner()" class="text-slate-500 hover:text-white text-xs p-1">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
 
   <!-- ================= SPLASH SCREEN ================= -->
   <div id="splashScreen" class="fixed inset-0 bg-[#0c051f] z-50 flex flex-col items-center justify-between p-8">
@@ -117,10 +131,10 @@
 
   <!-- ================= MAIN USER VIEW ================= -->
   <div id="userAppView" class="flex-1 flex flex-col justify-between hidden">
-    <!-- Clean Header -->
+    <!-- Top Header -->
     <header class="p-3.5 bg-slate-900/90 border-b border-purple-900/40 flex justify-between items-center sticky top-0 z-30 backdrop-blur-md">
       <div class="flex items-center gap-2.5">
-        <img src="https://i.ibb.co/BHTcn7QD/file-0000000021988211ab800b8ece076fff.png" class="w-9 h-9 rounded-xl border border-amber-400/50 object-contain bg-purple-950" alt="Logo"/>
+        <img id="uHeaderAvatar" src="https://api.dicebear.com/7.x/bottts/svg?seed=Player" class="w-9 h-9 rounded-xl border border-amber-400/50 bg-purple-950 p-0.5 object-cover" alt="Avatar"/>
         <div>
           <h1 class="text-sm font-black text-amber-400 leading-tight">Quizly Earn</h1>
           <p class="text-[10px] text-slate-400 truncate max-w-[120px]" id="uProfileName">Player</p>
@@ -141,7 +155,7 @@
     <!-- Main Screens Container -->
     <main class="flex-1 p-4 max-w-md mx-auto w-full no-scrollbar space-y-4">
       
-      <!-- SCREEN 1: CLEAN HOME DASHBOARD -->
+      <!-- SCREEN 1: HOME -->
       <section id="uTabHome" class="space-y-4">
         <!-- Balance Hero Card -->
         <div class="bg-gradient-to-br from-purple-900 via-indigo-950 to-slate-900 p-5 rounded-3xl border border-purple-700/50 shadow-xl relative overflow-hidden">
@@ -158,7 +172,12 @@
           </div>
         </div>
 
-        <!-- Quick Action Banner to Refer Screen -->
+        <!-- Multi Slider Ad Container -->
+        <div id="multiSliderAdSlot" class="w-full min-h-[60px] bg-slate-900/60 border border-slate-800 rounded-2xl flex items-center justify-center overflow-hidden">
+          <!-- Multi Slider Video Script will inject here -->
+        </div>
+
+        <!-- Quick Refer Button -->
         <div onclick="switchUserTab('uTabRefer')" class="bg-gradient-to-r from-amber-500/20 to-purple-600/20 border border-amber-500/30 p-4 rounded-2xl flex items-center justify-between cursor-pointer active:scale-98 transition">
           <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-xl bg-amber-400/20 text-amber-400 flex items-center justify-center text-lg">
@@ -186,7 +205,7 @@
           </div>
         </div>
 
-        <!-- KBC Card -->
+        <!-- KBC Challenge Card -->
         <div class="bg-slate-900 border border-purple-900/50 p-5 rounded-3xl text-center space-y-3 shadow-lg">
           <div class="w-12 h-12 bg-amber-400/20 text-amber-400 rounded-2xl flex items-center justify-center mx-auto text-xl">
             <i class="fa-solid fa-brain"></i>
@@ -199,9 +218,8 @@
         </div>
       </section>
 
-      <!-- SCREEN 2: DEDICATED REFERRAL & EARN PAGE -->
+      <!-- SCREEN 2: DEDICATED REFERRAL PAGE -->
       <section id="uTabRefer" class="hidden space-y-4">
-        <!-- Hero Header -->
         <div class="bg-gradient-to-br from-indigo-900 via-purple-950 to-slate-900 border border-purple-700/40 p-6 rounded-3xl text-center space-y-2 shadow-xl">
           <div class="w-16 h-16 rounded-full bg-amber-400/20 text-amber-400 flex items-center justify-center mx-auto text-2xl border border-amber-400/30">
             <i class="fa-solid fa-user-group"></i>
@@ -210,7 +228,6 @@
           <p class="text-xs text-slate-300 max-w-xs mx-auto">Get <strong class="text-amber-300">50 Coins</strong> instantly whenever a friend joins using your referral link.</p>
         </div>
 
-        <!-- Stats Overview -->
         <div class="grid grid-cols-2 gap-3">
           <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl text-center">
             <p class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">Total Referrals</p>
@@ -222,7 +239,6 @@
           </div>
         </div>
 
-        <!-- Unlock Progress Bar -->
         <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl space-y-2">
           <div class="flex justify-between text-xs font-bold">
             <span class="text-slate-300">Unlimited Redeem Target</span>
@@ -233,13 +249,12 @@
           </div>
           <p class="text-[10px] text-slate-400 leading-relaxed">
             • 1 Referral = 1 Withdrawal Unlocked<br>
-            • 10 Referrals = Unlimited Withdrawals for lifetime!
+            • 10 Referrals = Unlimited Lifetime Withdrawals!
           </p>
         </div>
 
-        <!-- Share Actions -->
         <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl space-y-3">
-          <label class="text-xs font-bold text-slate-300">Your Personal Referral Link</label>
+          <label class="text-xs font-bold text-slate-300">Your Referral Link</label>
           <div class="flex gap-2">
             <input type="text" id="uReferralLinkDisplay" readonly class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 font-mono select-all focus:outline-none" />
             <button onclick="copyReferralLink()" class="px-4 py-2 bg-purple-700 hover:bg-purple-600 text-white font-bold rounded-xl text-xs active:scale-95 transition flex items-center gap-1.5">
@@ -357,7 +372,7 @@
           </div>
         </div>
 
-        <!-- Coin & Redeem History -->
+        <!-- History -->
         <div class="space-y-2 pt-2">
           <h4 class="text-xs font-bold text-slate-400">Redemption History</h4>
           <div id="uRedeemHistoryList" class="space-y-2 text-xs">
@@ -366,21 +381,21 @@
         </div>
       </section>
 
-      <!-- SCREEN 6: REALTIME LEADERBOARD -->
+      <!-- SCREEN 6: REALTIME LEADERBOARD WITH DP & NAME -->
       <section id="uTabLeaderboard" class="hidden space-y-4">
         <div class="flex items-center justify-between">
           <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider"><i class="fa-solid fa-trophy mr-1.5"></i>Top Earners Leaderboard</h3>
           <span class="text-[10px] text-slate-400">Live Ranks</span>
         </div>
-        <div id="uLeaderboardList" class="space-y-2 text-xs"></div>
+        <div id="uLeaderboardList" class="space-y-2 text-xs">
+          <!-- Populated with Avatars & Proper Names -->
+        </div>
       </section>
 
-      <!-- SCREEN 7: USER PROFILE -->
+      <!-- SCREEN 7: PROFILE -->
       <section id="uTabProfile" class="hidden space-y-4">
         <div class="bg-slate-900 border border-purple-900/50 p-5 rounded-2xl text-center space-y-2">
-          <div class="w-16 h-16 rounded-full bg-purple-950 border-2 border-amber-400 flex items-center justify-center mx-auto text-xl font-bold text-amber-400">
-            <i class="fa-solid fa-user"></i>
-          </div>
+          <img id="profAvatar" src="https://api.dicebear.com/7.x/bottts/svg?seed=Player" class="w-16 h-16 rounded-full border-2 border-amber-400 mx-auto bg-purple-950 p-1 object-cover" alt="Avatar"/>
           <h3 class="font-bold text-white text-sm" id="profDisplayName">Player</h3>
           <p class="text-[11px] text-slate-400 font-mono" id="profEmail">user@quizly.com</p>
           <p class="text-[10px] text-amber-400/80">Ref Code: <span id="profReferralCode" class="font-bold font-mono">---</span></p>
@@ -412,7 +427,7 @@
 
     </main>
 
-    <!-- Bottom Nav Bar (Now with dedicated Refer Tab) -->
+    <!-- Bottom Nav -->
     <nav class="bg-slate-900/95 border-t border-purple-900/40 flex justify-around items-center py-2.5 px-3 sticky bottom-0 z-30">
       <button onclick="switchUserTab('uTabHome')" id="navHome" class="flex flex-col items-center gap-1 text-amber-400">
         <i class="fa-solid fa-house text-sm"></i>
@@ -437,6 +452,20 @@
     </nav>
   </div>
 
+  <!-- MULTI SLIDER ADS SCRIPT INJECTION -->
+  <script>
+    (function(siavp){
+      var d = document,
+          s = d.createElement('script'),
+          l = d.currentScript || d.scripts[d.scripts.length - 1];
+      s.settings = siavp || {};
+      s.src = "\/\/candid-revenue.com\/bNXzV\/s.d_GRlf0OYNWRcG\/Ze_m\/9OuvZjUYlmkSPwTkcU0xNfj\/MB1AMjT\/M\/tLNTz\/Qp2NMRzAUoxfNAwO";
+      s.async = true;
+      s.referrerPolicy = 'no-referrer-when-downgrade';
+      l.parentNode.insertBefore(s, l);
+    })({});
+  </script>
+
   <!-- ================= JAVASCRIPT ENGINE ================= -->
   <script>
     const firebaseConfig = {
@@ -454,7 +483,8 @@
     const auth = firebase.auth();
     const db = firebase.database();
 
-    const EXO_VAST_TAG = "https://s.magsrv.com/v1/vast.php?idz=6041290&ex-av=name";
+    // HILLTOP VAST 3.0 TAG
+    const HILLTOP_VAST_TAG = "https://zealousimage.com/dom.FSzudMGBNMv/ZrGTUO/-ewmP9HuZZtU-lmk/PHTTc/0/NdjLMY1oMxDKUEtfNFzjQA2dMrzuUBw/OGQc";
 
     let currentAuthMode = 'login';
     let currentUser = null;
@@ -498,7 +528,80 @@
       return p.get('ref');
     }
 
+    // Dynamic Avatar Generator
+    function getAvatarUrl(seed) {
+      return `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(seed || 'Player')}`;
+    }
+
+    // ================= REAL PUSH & IN-APP NOTIFICATIONS =================
+    function requestNotificationPermission() {
+      if ("Notification" in window) {
+        if (Notification.permission === "default") {
+          Notification.requestPermission().then(permission => {
+            if (permission === "granted") {
+              showSystemNotification("Quizly Earn", "Notifications enabled successfully! You will receive live payout updates.");
+            }
+          });
+        }
+      }
+    }
+
+    function showSystemNotification(title, body) {
+      // 1. Browser Native Notification
+      if ("Notification" in window && Notification.permission === "granted") {
+        try {
+          new Notification(title, {
+            body: body,
+            icon: "https://i.ibb.co/BHTcn7QD/file-0000000021988211ab800b8ece076fff.png"
+          });
+        } catch(e) {}
+      }
+
+      // 2. In-App Banner Popup
+      const banner = document.getElementById('inAppNotifyBanner');
+      document.getElementById('notifyBannerTitle').innerText = title;
+      document.getElementById('notifyBannerMsg').innerText = body;
+      banner.classList.remove('hidden');
+
+      setTimeout(() => {
+        banner.classList.add('hidden');
+      }, 5000);
+    }
+
+    function dismissNotifyBanner() {
+      document.getElementById('inAppNotifyBanner').classList.add('hidden');
+    }
+
+    // LISTEN FOR BROADCAST & AUTO PAYOUT NOTIFICATIONS
+    function listenForLiveNotifications(uid) {
+      // 1. General Broadcast Notification from Admin
+      db.ref('broadcast_notification').on('value', snap => {
+        const notif = snap.val();
+        if (notif && notif.timestamp && (Date.now() - notif.timestamp < 1000 * 60 * 60)) { // within 1 hour
+          const lastSeen = localStorage.getItem('last_seen_broadcast');
+          if (lastSeen != notif.timestamp) {
+            localStorage.setItem('last_seen_broadcast', notif.timestamp);
+            showSystemNotification(notif.title || "Announcement", notif.message);
+          }
+        }
+      });
+
+      // 2. Auto Notification on Redeem Approval
+      db.ref('redeem_requests').orderByChild('uid').equalTo(uid).on('child_changed', snap => {
+        const req = snap.val();
+        if (req && req.status === 'APPROVED') {
+          const msg = req.redeemCodeGiven 
+            ? `Your ₹${req.amountInr} payout is approved! Code: ${req.redeemCodeGiven}` 
+            : `Your ₹${req.amountInr} payout has been approved and transferred successfully!`;
+          showSystemNotification("Payment Approved! 🎉", msg);
+        }
+      });
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
+      // Request notification on app open
+      requestNotificationPermission();
+
       let p = 0;
       const bar = document.getElementById('splashProgressBar');
       const st = document.getElementById('splashStatus');
@@ -522,6 +625,7 @@
         if (user) {
           currentUser = user;
           verifyDeviceAndLoadUser(user);
+          listenForLiveNotifications(user.uid);
         } else {
           document.getElementById('authScreen').classList.remove('hidden');
           document.getElementById('userAppView').classList.add('hidden');
@@ -617,6 +721,7 @@
               redeemsUsed: 0,
               adminRedeemUnlock: false,
               deviceId: deviceId,
+              avatar: getAvatarUrl(uniqueUserCode),
               isBanned: false,
               joinedAt: Date.now()
             }).then(() => {
@@ -654,19 +759,22 @@
 
           userData = data;
           userCoins = data.coins || 0;
+          const avatarUrl = data.avatar || getAvatarUrl(data.username || data.name);
+
           document.getElementById('uProfileName').innerText = data.name || "Player";
           document.getElementById('profDisplayName').innerText = data.name || "Player";
           document.getElementById('profEmail').innerText = data.email || "";
           document.getElementById('profReferralCode').innerText = data.username || "---";
 
-          // Referral Link & Stats
+          document.getElementById('uHeaderAvatar').src = avatarUrl;
+          document.getElementById('profAvatar').src = avatarUrl;
+
           const refLink = `https://quizly-earn.vercel.app?ref=${data.username}`;
           document.getElementById('uReferralLinkDisplay').value = refLink;
           const refCount = data.referralsCount || 0;
           document.getElementById('uReferPageCount').innerText = refCount;
           document.getElementById('uReferCoinsEarned').innerText = refCount * 50;
 
-          // Target bar (10 refs)
           const pct = Math.min(100, (refCount / 10) * 100);
           document.getElementById('uReferProgressBar').style.width = pct + '%';
           document.getElementById('uReferTargetText').innerText = `${refCount} / 10 Referrals`;
@@ -834,6 +942,7 @@
       }, 1300);
     }
 
+    // HILLTOP VAST 3.0 VIDEO AD TRIGGER
     function playExoClickVastAd(source) {
       const modal = document.getElementById('videoAdModal');
       modal.classList.remove('hidden');
@@ -850,7 +959,7 @@
             adList: [
               {
                 roll: 'preRoll',
-                vastTag: EXO_VAST_TAG
+                vastTag: HILLTOP_VAST_TAG
               }
             ]
           }
@@ -975,30 +1084,34 @@
       alert(`Redeem code ${code} copied to clipboard!`);
     }
 
+    // ================= REALTIME LEADERBOARD WITH REAL DP & NAME =================
     function loadRealtimeLeaderboard() {
-      db.ref('users').orderByChild('coins').limitToLast(20).on('value', snap => {
+      db.ref('users').orderByChild('coins').limitToLast(25).on('value', snap => {
         const wrap = document.getElementById('uLeaderboardList');
         wrap.innerHTML = '';
         let list = [];
 
         snap.forEach(c => list.push(c.val()));
-        list.reverse();
+        list.reverse(); // highest balance top
 
         list.forEach((u, index) => {
           const div = document.createElement('div');
-          div.className = "p-3 bg-slate-900 border border-slate-800 rounded-xl flex justify-between items-center";
+          div.className = "p-3 bg-slate-900 border border-slate-800 rounded-2xl flex justify-between items-center";
 
-          let rankBadge = `<span class="w-6 h-6 rounded-full bg-slate-800 text-slate-300 font-bold flex items-center justify-center text-xs">${index + 1}</span>`;
+          let rankBadge = `<span class="w-6 h-6 rounded-full bg-slate-800 text-slate-400 font-bold flex items-center justify-center text-xs">${index + 1}</span>`;
           if (index === 0) rankBadge = `<span class="w-6 h-6 rounded-full bg-amber-400 text-slate-950 font-black flex items-center justify-center text-xs">1</span>`;
           if (index === 1) rankBadge = `<span class="w-6 h-6 rounded-full bg-slate-300 text-slate-950 font-black flex items-center justify-center text-xs">2</span>`;
           if (index === 2) rankBadge = `<span class="w-6 h-6 rounded-full bg-amber-700 text-white font-black flex items-center justify-center text-xs">3</span>`;
 
+          const avatar = u.avatar || getAvatarUrl(u.username || u.name);
+
           div.innerHTML = `
             <div class="flex items-center gap-3">
               ${rankBadge}
+              <img src="${avatar}" class="w-9 h-9 rounded-xl border border-slate-700 bg-purple-950/60 p-0.5 object-cover" alt="DP"/>
               <div>
-                <p class="font-bold text-white text-xs">${u.name || 'Player'}</p>
-                <p class="text-[10px] text-slate-400">@${u.username || 'user'}</p>
+                <p class="font-bold text-white text-xs">${u.name || 'Anonymous'}</p>
+                <p class="text-[10px] text-slate-400">@${u.username || 'player'}</p>
               </div>
             </div>
             <span class="text-amber-400 font-bold text-xs"><i class="fa-solid fa-coins mr-1"></i>${u.coins || 0}</span>
