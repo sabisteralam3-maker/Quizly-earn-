@@ -4,10 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Quizly Earn</title>
+
+  <!-- HilltopAds Website Verification Tag -->
+  <meta name="6c29ec16ceee48f087d18c842d44b568cb6f8e15" content="6c29ec16ceee48f087d18c842d44b568cb6f8e15" />
+
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
 
-  <!-- Fluid Player for ExoClick VAST Video Ads -->
+  <!-- Fluid Player -->
   <link rel="stylesheet" href="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.css" type="text/css"/>
   <script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
 
@@ -30,12 +35,12 @@
   <!-- ================= SPLASH SCREEN ================= -->
   <div id="splashScreen" class="fixed inset-0 bg-[#0c051f] z-50 flex flex-col items-center justify-between p-8">
     <div class="flex-1 flex flex-col items-center justify-center text-center">
-      <div class="relative w-56 h-56 flex items-center justify-center mb-5">
+      <div class="relative w-52 h-52 flex items-center justify-center mb-5">
         <div class="absolute inset-0 bg-purple-600/30 blur-3xl rounded-full"></div>
         <img 
           src="https://i.ibb.co/BHTcn7QD/file-0000000021988211ab800b8ece076fff.png" 
           alt="Quizly Logo" 
-          class="splash-logo w-48 h-48 object-contain rounded-3xl relative z-10 border border-amber-400/40 shadow-2xl"
+          class="splash-logo w-44 h-44 object-contain rounded-3xl relative z-10 border border-amber-400/40 shadow-2xl"
         />
       </div>
       <h1 class="text-3xl font-black tracking-wider text-amber-400 drop-shadow-md">QUIZLY EARN</h1>
@@ -96,7 +101,7 @@
     </div>
   </div>
 
-  <!-- ================= VAST VIDEO AD MODAL ================= -->
+  <!-- ================= VAST VIDEO MODAL ================= -->
   <div id="videoAdModal" class="hidden fixed inset-0 bg-black/95 z-50 flex flex-col items-center justify-center p-4">
     <div class="w-full max-w-sm space-y-3 text-center">
       <div class="flex justify-between items-center text-xs text-amber-400 font-bold px-1">
@@ -112,7 +117,7 @@
 
   <!-- ================= MAIN USER VIEW ================= -->
   <div id="userAppView" class="flex-1 flex flex-col justify-between hidden">
-    <!-- Header -->
+    <!-- Clean Header -->
     <header class="p-3.5 bg-slate-900/90 border-b border-purple-900/40 flex justify-between items-center sticky top-0 z-30 backdrop-blur-md">
       <div class="flex items-center gap-2.5">
         <img src="https://i.ibb.co/BHTcn7QD/file-0000000021988211ab800b8ece076fff.png" class="w-9 h-9 rounded-xl border border-amber-400/50 object-contain bg-purple-950" alt="Logo"/>
@@ -136,42 +141,39 @@
     <!-- Main Screens Container -->
     <main class="flex-1 p-4 max-w-md mx-auto w-full no-scrollbar space-y-4">
       
-      <!-- SCREEN 1: HOME -->
+      <!-- SCREEN 1: CLEAN HOME DASHBOARD -->
       <section id="uTabHome" class="space-y-4">
-        <!-- Balance Card -->
-        <div class="bg-gradient-to-br from-purple-900 via-indigo-950 to-slate-900 p-5 rounded-2xl border border-purple-700/50 shadow-xl relative overflow-hidden">
+        <!-- Balance Hero Card -->
+        <div class="bg-gradient-to-br from-purple-900 via-indigo-950 to-slate-900 p-5 rounded-3xl border border-purple-700/50 shadow-xl relative overflow-hidden">
           <p class="text-[11px] font-semibold uppercase tracking-wider text-purple-300">Wallet Estimated Value</p>
           <div class="flex justify-between items-baseline mt-1">
             <h2 class="text-3xl font-black text-white" id="uInrValue">₹0.00</h2>
-            <span class="text-[10px] font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30 px-2.5 py-1 rounded-md" id="uConversionRateText">
+            <span class="text-[10px] font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30 px-2.5 py-1 rounded-md">
               1,200 Coins = ₹10
             </span>
           </div>
           <div class="mt-3 pt-3 border-t border-purple-800/50 flex justify-between text-[11px] text-slate-300">
-            <span>Redeem Unlocked: <strong id="uRedeemStatusBadge" class="text-amber-400">Locked (Need 1 Ref)</strong></span>
-            <span>Total Referrals: <strong id="uTotalReferralsCount">0</strong></span>
+            <span>Redeem Status: <strong id="uRedeemStatusBadge" class="text-amber-400">Locked</strong></span>
+            <button onclick="switchUserTab('uTabWallet')" class="text-amber-400 font-bold hover:underline">Withdraw →</button>
           </div>
         </div>
 
-        <!-- Referral Card -->
-        <div class="bg-slate-900 border border-purple-900/50 p-4 rounded-2xl space-y-2">
-          <div class="flex justify-between items-center">
-            <span class="text-xs font-bold text-amber-400"><i class="fa-solid fa-user-plus mr-1"></i>Refer & Earn 50 Coins</span>
-            <span class="text-[10px] text-slate-400">1 Ref = 1 Redeem (10 = Unlimited)</span>
+        <!-- Quick Action Banner to Refer Screen -->
+        <div onclick="switchUserTab('uTabRefer')" class="bg-gradient-to-r from-amber-500/20 to-purple-600/20 border border-amber-500/30 p-4 rounded-2xl flex items-center justify-between cursor-pointer active:scale-98 transition">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-amber-400/20 text-amber-400 flex items-center justify-center text-lg">
+              <i class="fa-solid fa-gift"></i>
+            </div>
+            <div>
+              <h4 class="text-xs font-bold text-white">Refer & Earn 50 Coins</h4>
+              <p class="text-[10px] text-slate-400">Invite friends & unlock unlimited cashouts</p>
+            </div>
           </div>
-          <div class="flex gap-2">
-            <input type="text" id="uReferralLinkDisplay" readonly class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-[11px] text-slate-300 font-mono select-all focus:outline-none" />
-            <button onclick="copyReferralLink()" class="px-3.5 py-2 bg-purple-700 hover:bg-purple-600 text-white font-bold rounded-xl text-xs active:scale-95 transition">
-              <i class="fa-regular fa-copy"></i>
-            </button>
-            <button onclick="shareReferralWhatsApp()" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs active:scale-95 transition">
-              <i class="fa-brands fa-whatsapp"></i>
-            </button>
-          </div>
+          <span class="text-xs text-amber-400 font-bold bg-slate-950/60 px-2.5 py-1.5 rounded-lg border border-slate-800">Invite</span>
         </div>
 
         <!-- Promo Code Card -->
-        <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl space-y-2">
+        <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl space-y-2">
           <div class="flex items-center gap-2 text-xs font-bold text-amber-400">
             <i class="fa-solid fa-ticket"></i>
             <span>Redeem Promo Code</span>
@@ -185,19 +187,79 @@
         </div>
 
         <!-- KBC Card -->
-        <div class="bg-slate-900 border border-purple-900/50 p-5 rounded-2xl text-center space-y-3 shadow-lg">
+        <div class="bg-slate-900 border border-purple-900/50 p-5 rounded-3xl text-center space-y-3 shadow-lg">
           <div class="w-12 h-12 bg-amber-400/20 text-amber-400 rounded-2xl flex items-center justify-center mx-auto text-xl">
             <i class="fa-solid fa-brain"></i>
           </div>
           <h3 class="text-base font-extrabold text-slate-100">KBC Mind Challenge</h3>
-          <p class="text-xs text-slate-400">5 questions per round. Earn 8–12 coins per correct answer!</p>
+          <p class="text-xs text-slate-400">Play fast 5-question rounds. Earn 8–12 coins per correct answer!</p>
           <button onclick="startKbcQuiz()" class="w-full py-3 bg-gradient-to-r from-amber-500 to-yellow-600 text-slate-950 font-black rounded-xl text-xs uppercase tracking-wider shadow-md active:scale-95 transition">
             Start Challenge
           </button>
         </div>
       </section>
 
-      <!-- SCREEN 2: KBC QUIZ -->
+      <!-- SCREEN 2: DEDICATED REFERRAL & EARN PAGE -->
+      <section id="uTabRefer" class="hidden space-y-4">
+        <!-- Hero Header -->
+        <div class="bg-gradient-to-br from-indigo-900 via-purple-950 to-slate-900 border border-purple-700/40 p-6 rounded-3xl text-center space-y-2 shadow-xl">
+          <div class="w-16 h-16 rounded-full bg-amber-400/20 text-amber-400 flex items-center justify-center mx-auto text-2xl border border-amber-400/30">
+            <i class="fa-solid fa-user-group"></i>
+          </div>
+          <h2 class="text-lg font-black text-amber-400">Invite Friends, Earn Real Cash!</h2>
+          <p class="text-xs text-slate-300 max-w-xs mx-auto">Get <strong class="text-amber-300">50 Coins</strong> instantly whenever a friend joins using your referral link.</p>
+        </div>
+
+        <!-- Stats Overview -->
+        <div class="grid grid-cols-2 gap-3">
+          <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl text-center">
+            <p class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">Total Referrals</p>
+            <h3 class="text-2xl font-black text-white mt-1" id="uReferPageCount">0</h3>
+          </div>
+          <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl text-center">
+            <p class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">Coins Earned</p>
+            <h3 class="text-2xl font-black text-amber-400 mt-1" id="uReferCoinsEarned">0</h3>
+          </div>
+        </div>
+
+        <!-- Unlock Progress Bar -->
+        <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl space-y-2">
+          <div class="flex justify-between text-xs font-bold">
+            <span class="text-slate-300">Unlimited Redeem Target</span>
+            <span class="text-amber-400" id="uReferTargetText">0 / 10 Referrals</span>
+          </div>
+          <div class="w-full bg-slate-950 h-2.5 rounded-full overflow-hidden border border-slate-800">
+            <div id="uReferProgressBar" class="h-full bg-gradient-to-r from-amber-400 to-emerald-400 rounded-full w-0 transition-all duration-300"></div>
+          </div>
+          <p class="text-[10px] text-slate-400 leading-relaxed">
+            • 1 Referral = 1 Withdrawal Unlocked<br>
+            • 10 Referrals = Unlimited Withdrawals for lifetime!
+          </p>
+        </div>
+
+        <!-- Share Actions -->
+        <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl space-y-3">
+          <label class="text-xs font-bold text-slate-300">Your Personal Referral Link</label>
+          <div class="flex gap-2">
+            <input type="text" id="uReferralLinkDisplay" readonly class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 font-mono select-all focus:outline-none" />
+            <button onclick="copyReferralLink()" class="px-4 py-2 bg-purple-700 hover:bg-purple-600 text-white font-bold rounded-xl text-xs active:scale-95 transition flex items-center gap-1.5">
+              <i class="fa-regular fa-copy"></i>
+              <span>Copy</span>
+            </button>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2 pt-1">
+            <button onclick="shareReferralWhatsApp()" class="py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 active:scale-95 transition">
+              <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp
+            </button>
+            <button onclick="shareReferralTelegram()" class="py-2.5 bg-sky-600 hover:bg-sky-500 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 active:scale-95 transition">
+              <i class="fa-brands fa-telegram text-sm"></i> Telegram
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 3: KBC QUIZ -->
       <section id="uTabQuiz" class="hidden space-y-4">
         <div class="flex justify-between items-center text-xs text-slate-400 px-1">
           <span>Question <strong id="kbcCount" class="text-amber-400 text-sm">1</strong>/5</span>
@@ -211,7 +273,7 @@
         <div id="kbcOptionsWrapper" class="space-y-2.5"></div>
       </section>
 
-      <!-- SCREEN 3: QUIZ REWARD CLAIM -->
+      <!-- SCREEN 4: QUIZ REWARD CLAIM -->
       <section id="uTabRewardUnlock" class="hidden text-center space-y-4 bg-slate-900 border border-purple-900/60 p-6 rounded-3xl shadow-xl">
         <div class="w-14 h-14 bg-amber-400/20 text-amber-400 rounded-full flex items-center justify-center mx-auto text-2xl">
           <i class="fa-solid fa-trophy"></i>
@@ -223,7 +285,7 @@
         </button>
       </section>
 
-      <!-- SCREEN 4: WALLET & REDEEM -->
+      <!-- SCREEN 5: WALLET & REDEEM -->
       <section id="uTabWallet" class="hidden space-y-4">
         <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Redeem Rewards</h3>
 
@@ -304,18 +366,16 @@
         </div>
       </section>
 
-      <!-- SCREEN 5: REALTIME LEADERBOARD -->
+      <!-- SCREEN 6: REALTIME LEADERBOARD -->
       <section id="uTabLeaderboard" class="hidden space-y-4">
         <div class="flex items-center justify-between">
           <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider"><i class="fa-solid fa-trophy mr-1.5"></i>Top Earners Leaderboard</h3>
           <span class="text-[10px] text-slate-400">Live Ranks</span>
         </div>
-        <div id="uLeaderboardList" class="space-y-2 text-xs">
-          <!-- Dynamically populated leaderboard items -->
-        </div>
+        <div id="uLeaderboardList" class="space-y-2 text-xs"></div>
       </section>
 
-      <!-- SCREEN 6: USER PROFILE -->
+      <!-- SCREEN 7: USER PROFILE -->
       <section id="uTabProfile" class="hidden space-y-4">
         <div class="bg-slate-900 border border-purple-900/50 p-5 rounded-2xl text-center space-y-2">
           <div class="w-16 h-16 rounded-full bg-purple-950 border-2 border-amber-400 flex items-center justify-center mx-auto text-xl font-bold text-amber-400">
@@ -352,7 +412,7 @@
 
     </main>
 
-    <!-- Bottom Nav -->
+    <!-- Bottom Nav Bar (Now with dedicated Refer Tab) -->
     <nav class="bg-slate-900/95 border-t border-purple-900/40 flex justify-around items-center py-2.5 px-3 sticky bottom-0 z-30">
       <button onclick="switchUserTab('uTabHome')" id="navHome" class="flex flex-col items-center gap-1 text-amber-400">
         <i class="fa-solid fa-house text-sm"></i>
@@ -362,13 +422,13 @@
         <i class="fa-solid fa-brain text-sm"></i>
         <span class="text-[10px] font-semibold">Quiz</span>
       </button>
+      <button onclick="switchUserTab('uTabRefer')" id="navRefer" class="flex flex-col items-center gap-1 text-slate-400 hover:text-amber-400">
+        <i class="fa-solid fa-gift text-sm"></i>
+        <span class="text-[10px] font-semibold">Refer</span>
+      </button>
       <button onclick="switchUserTab('uTabWallet')" id="navWallet" class="flex flex-col items-center gap-1 text-slate-400 hover:text-amber-400">
         <i class="fa-solid fa-wallet text-sm"></i>
         <span class="text-[10px] font-semibold">Wallet</span>
-      </button>
-      <button onclick="switchUserTab('uTabLeaderboard')" id="navLeader" class="flex flex-col items-center gap-1 text-slate-400 hover:text-amber-400">
-        <i class="fa-solid fa-trophy text-sm"></i>
-        <span class="text-[10px] font-semibold">Rank</span>
       </button>
       <button onclick="switchUserTab('uTabProfile')" id="navProfile" class="flex flex-col items-center gap-1 text-slate-400 hover:text-amber-400">
         <i class="fa-solid fa-user text-sm"></i>
@@ -377,7 +437,7 @@
     </nav>
   </div>
 
-  <!-- ================= JAVASCRIPT LOGIC ================= -->
+  <!-- ================= JAVASCRIPT ENGINE ================= -->
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyAy3Zs3J3j-hFu3A9OfG68M4LRLFbwHwaA",
@@ -401,7 +461,6 @@
     let userData = null;
     let userCoins = 0;
     let fluidPlayerInstance = null;
-    let isVideoPlaying = false;
 
     const fullQuestionBank = [
       { q: "Bharat ki aadhikarik rajdhani kya hai?", o: ["Mumbai", "New Delhi", "Kolkata", "Chennai"], a: 1 },
@@ -425,7 +484,6 @@
     let kbcSeconds = 15;
     let isAnswerLocked = false;
 
-    // ONE DEVICE ONE ACCOUNT (UUID IN LOCALSTORAGE)
     function getDeviceUUID() {
       let uuid = localStorage.getItem('qz_device_id');
       if (!uuid) {
@@ -435,7 +493,6 @@
       return uuid;
     }
 
-    // CHECK REFERRAL IN URL
     function getReferrerFromURL() {
       const p = new URLSearchParams(window.location.search);
       return p.get('ref');
@@ -524,7 +581,6 @@
           initializeDbUser(res.user, res.user.displayName || "Google Player", "Google Auth (No Password)");
         })
         .catch(error => {
-          console.warn("Popup error, switching to redirect:", error);
           auth.signInWithRedirect(provider);
         });
     }
@@ -533,26 +589,21 @@
       auth.signOut().then(() => location.reload());
     }
 
-    // INITIALIZE USER (WITH 1 DEVICE 1 ACCOUNT ENFORCEMENT & REFERRAL 50 COINS)
     function initializeDbUser(user, displayName, plainPassword) {
       const deviceId = getDeviceUUID();
       const uRef = db.ref('users/' + user.uid);
 
       uRef.once('value').then(snap => {
         if (!snap.exists()) {
-          // Device conflict check
           db.ref('devices/' + deviceId).once('value').then(devSnap => {
             if (devSnap.exists()) {
-              alert("Error: One device can only have ONE account! Registration blocked.");
+              alert("Error: One device can only have ONE account!");
               auth.signOut();
               return;
             }
 
-            // Clean username for referral (alphanumeric)
             let baseUsername = (displayName || user.email.split('@')[0]).replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
             let uniqueUserCode = baseUsername + Math.floor(100 + Math.random() * 900);
-
-            // Check if invited by someone
             const refFromURL = getReferrerFromURL();
 
             uRef.set({
@@ -572,7 +623,6 @@
               db.ref('devices/' + deviceId).set(user.uid);
               db.ref('usernames/' + uniqueUserCode).set(user.uid);
 
-              // Reward Referrer 50 Coins
               if (refFromURL) {
                 db.ref('usernames/' + refFromURL).once('value', refSnap => {
                   if (refSnap.exists()) {
@@ -590,9 +640,7 @@
       });
     }
 
-    // VERIFY DEVICE & LOAD USER DATA
     function verifyDeviceAndLoadUser(user) {
-      const currentDeviceId = getDeviceUUID();
       const uRef = db.ref('users/' + user.uid);
 
       uRef.on('value', snap => {
@@ -611,14 +659,19 @@
           document.getElementById('profEmail').innerText = data.email || "";
           document.getElementById('profReferralCode').innerText = data.username || "---";
 
-          // Referral Link setup
+          // Referral Link & Stats
           const refLink = `https://quizly-earn.vercel.app?ref=${data.username}`;
           document.getElementById('uReferralLinkDisplay').value = refLink;
-          document.getElementById('uTotalReferralsCount').innerText = data.referralsCount || 0;
+          const refCount = data.referralsCount || 0;
+          document.getElementById('uReferPageCount').innerText = refCount;
+          document.getElementById('uReferCoinsEarned').innerText = refCount * 50;
 
-          // Check Redeem Unlock Status
+          // Target bar (10 refs)
+          const pct = Math.min(100, (refCount / 10) * 100);
+          document.getElementById('uReferProgressBar').style.width = pct + '%';
+          document.getElementById('uReferTargetText').innerText = `${refCount} / 10 Referrals`;
+
           updateRedeemLockBadge();
-
           updateUserCoinsUI();
         }
       });
@@ -629,14 +682,13 @@
       loadRealtimeLeaderboard();
     }
 
-    // REDEEM UNLOCK LOGIC (1 Ref = 1 Redeem, 10 Ref = Unlimited, or Admin Unlock)
     function canUserRedeem() {
       if (!userData) return false;
       if (userData.adminRedeemUnlock === true) return true;
       const refs = userData.referralsCount || 0;
       const used = userData.redeemsUsed || 0;
-      if (refs >= 10) return true; // Unlimited
-      return (refs > used); // 1 ref = 1 redeem
+      if (refs >= 10) return true;
+      return (refs > used);
     }
 
     function updateRedeemLockBadge() {
@@ -647,7 +699,7 @@
       } else {
         const remaining = (userData.referralsCount || 0) - (userData.redeemsUsed || 0);
         if (remaining > 0) {
-          badge.innerText = `${remaining} Redeem Available`;
+          badge.innerText = `${remaining} Available`;
           badge.className = "text-emerald-400 font-bold";
         } else {
           badge.innerText = "Locked (Need 1 Ref)";
@@ -663,35 +715,41 @@
     }
 
     function switchUserTab(tabId) {
-      ['uTabHome', 'uTabQuiz', 'uTabRewardUnlock', 'uTabWallet', 'uTabLeaderboard', 'uTabProfile'].forEach(id => {
+      ['uTabHome', 'uTabRefer', 'uTabQuiz', 'uTabRewardUnlock', 'uTabWallet', 'uTabLeaderboard', 'uTabProfile'].forEach(id => {
         document.getElementById(id).classList.add('hidden');
       });
       document.getElementById(tabId).classList.remove('hidden');
 
-      ['navHome', 'navQuiz', 'navWallet', 'navLeader', 'navProfile'].forEach(n => {
-        document.getElementById(n).className = "flex flex-col items-center gap-1 text-slate-400 hover:text-amber-400";
+      ['navHome', 'navQuiz', 'navRefer', 'navWallet', 'navProfile'].forEach(n => {
+        if(document.getElementById(n)) document.getElementById(n).className = "flex flex-col items-center gap-1 text-slate-400 hover:text-amber-400";
       });
-      if (tabId === 'uTabHome') document.getElementById('navHome').className = "flex flex-col items-center gap-1 text-amber-400";
-      if (tabId === 'uTabQuiz') document.getElementById('navQuiz').className = "flex flex-col items-center gap-1 text-amber-400";
-      if (tabId === 'uTabWallet') document.getElementById('navWallet').className = "flex flex-col items-center gap-1 text-amber-400";
-      if (tabId === 'uTabLeaderboard') document.getElementById('navLeader').className = "flex flex-col items-center gap-1 text-amber-400";
-      if (tabId === 'uTabProfile') document.getElementById('navProfile').className = "flex flex-col items-center gap-1 text-amber-400";
+      if (tabId === 'uTabHome' && document.getElementById('navHome')) document.getElementById('navHome').className = "flex flex-col items-center gap-1 text-amber-400";
+      if (tabId === 'uTabQuiz' && document.getElementById('navQuiz')) document.getElementById('navQuiz').className = "flex flex-col items-center gap-1 text-amber-400";
+      if (tabId === 'uTabRefer' && document.getElementById('navRefer')) document.getElementById('navRefer').className = "flex flex-col items-center gap-1 text-amber-400";
+      if (tabId === 'uTabWallet' && document.getElementById('navWallet')) document.getElementById('navWallet').className = "flex flex-col items-center gap-1 text-amber-400";
+      if (tabId === 'uTabProfile' && document.getElementById('navProfile')) document.getElementById('navProfile').className = "flex flex-col items-center gap-1 text-amber-400";
     }
 
     function copyReferralLink() {
       const link = document.getElementById('uReferralLinkDisplay');
       link.select();
       navigator.clipboard.writeText(link.value);
-      alert("Referral link copied! Share with friends to earn 50 coins.");
+      alert("Referral link copied!");
     }
 
     function shareReferralWhatsApp() {
       const link = document.getElementById('uReferralLinkDisplay').value;
-      const text = `Play Quiz on Quizly Earn & win real cash daily! Use my link to join: ${link}`;
+      const text = `Play Quiz on Quizly Earn & win cash daily! Use my referral link: ${link}`;
       window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
     }
 
-    // ================= KBC QUIZ ENGINE =================
+    function shareReferralTelegram() {
+      const link = document.getElementById('uReferralLinkDisplay').value;
+      const text = `Play Quiz on Quizly Earn & win cash daily! Use my referral link: ${link}`;
+      window.open(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(text)}`, '_blank');
+    }
+
+    // ================= KBC ENGINE =================
     function startKbcQuiz() {
       const shuffled = [...fullQuestionBank].sort(() => 0.5 - Math.random());
       activeRoundQuestions = shuffled.slice(0, 5);
@@ -776,12 +834,10 @@
       }, 1300);
     }
 
-    // ================= EXOCLICK VAST VIDEO ENGINE =================
     function playExoClickVastAd(source) {
       const modal = document.getElementById('videoAdModal');
       modal.classList.remove('hidden');
 
-      // Initialize fluid player with ExoClick VAST Tag
       if (!fluidPlayerInstance) {
         fluidPlayerInstance = fluidPlayer('exoclickVideoPlayer', {
           layoutControls: {
@@ -801,7 +857,6 @@
         });
       }
 
-      // 15 seconds countdown timer for reward credit
       let adTimer = 15;
       const badge = document.getElementById('videoAdTimerBadge');
       badge.innerText = `Reward in ${adTimer}s`;
@@ -813,7 +868,6 @@
           clearInterval(adCount);
           modal.classList.add('hidden');
 
-          // Credit Reward
           const award = (source === 'quiz') ? (currentQuizAward > 0 ? currentQuizAward : 10) : 25;
           const newBalance = userCoins + award;
 
@@ -825,7 +879,6 @@
       }, 1000);
     }
 
-    // ================= REDEEMS =================
     function initiateRedeem(method) {
       if (!canUserRedeem()) {
         alert("Redemption Locked! You need to refer at least 1 friend to unlock this redeem (or reach 10 referrals for unlimited).");
@@ -837,7 +890,6 @@
       if (method === 'Amazon Code') inrAmount = parseInt(document.getElementById('selAmazonAmount').value);
       if (method === 'Direct UPI') inrAmount = parseInt(document.getElementById('selUpiAmount').value);
 
-      // Calculation: 1,200 Coins = Rs 10
       const coinsRequired = inrAmount * 120;
 
       if (userCoins < coinsRequired) {
@@ -923,7 +975,6 @@
       alert(`Redeem code ${code} copied to clipboard!`);
     }
 
-    // ================= REALTIME LEADERBOARD =================
     function loadRealtimeLeaderboard() {
       db.ref('users').orderByChild('coins').limitToLast(20).on('value', snap => {
         const wrap = document.getElementById('uLeaderboardList');
@@ -931,7 +982,7 @@
         let list = [];
 
         snap.forEach(c => list.push(c.val()));
-        list.reverse(); // highest coins first
+        list.reverse();
 
         list.forEach((u, index) => {
           const div = document.createElement('div');
@@ -957,7 +1008,6 @@
       });
     }
 
-    // ================= PROMO CODE =================
     function claimPromoCode() {
       const codeInput = document.getElementById('promoCodeInput').value.trim().toUpperCase();
       if (!codeInput) {
