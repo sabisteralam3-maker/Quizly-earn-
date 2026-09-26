@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Quizly Earn</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+
+  <!-- Firebase SDK (v9 Compat) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <style>
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.4)); }
+      50% { transform: scale(1.04); filter: drop-shadow(0 0 25px rgba(245, 158, 11, 0.8)); }
+    }
+    .splash-logo {
+      animation: pulseGlow 2.5s infinite ease-in-out;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col justify-between select-none">
+
+  <!-- ================= 1. SPLASH SCREEN ================= -->
+  <div id="splashScreen" class="fixed inset-0 bg-[#0c051f] z-50 flex flex-col items-center justify-between p-8">
+    <div class="flex-1 flex flex-col items-center justify-center text-center">
+      <div class="relative w-64 h-64 flex items-center justify-center mb-6">
+        <div class="absolute inset-0 bg-purple-600/30 blur-3xl rounded-full"></div>
+        <img 
+          src="https://i.ibb.co/kVGczvqn/Picsart-26-09-26-23-18-39-524.jpg" 
+          alt="Quizly Earn Loading" 
+          class="splash-logo w-52 h-52 object-cover rounded-2xl relative z-10 border border-amber-400/30 shadow-2xl"
+        />
+      </div>
+      <h1 class="text-3xl font-black tracking-wider text-amber-400 drop-shadow-md">QUIZLY EARN</h1>
+      <p class="text-xs text-purple-300 mt-2 tracking-widest font-semibold uppercase">Play Quiz • Earn Coins • Redeem Cash</p>
+    </div>
+
+    <div class="w-full max-w-xs space-y-2 text-center">
+      <div class="w-full bg-slate-900 border border-purple-500/40 h-2.5 rounded-full overflow-hidden p-0.5">
+        <div id="splashProgressBar" class="h-full bg-gradient-to-r from-amber-400 via-purple-500 to-amber-300 rounded-full w-0 transition-all duration-300 ease-out"></div>
+      </div>
+      <p id="splashStatus" class="text-[11px] text-purple-400 font-medium">Starting secure services...</p>
+    </div>
+  </div>
+
+  <!-- ================= 2. AUTH SCREEN ================= -->
+  <div id="authScreen" class="hidden fixed inset-0 bg-[#0c051f] z-40 flex flex-col items-center justify-center p-6 overflow-y-auto">
+    <div class="bg-slate-900/90 border border-purple-900/60 p-6 rounded-3xl max-w-sm w-full shadow-2xl backdrop-blur-md space-y-4">
+      <div class="text-center">
+        <img src="https://i.ibb.co/svGs6zsn/Picsart-26-09-26-23-19-05-004.jpg" class="w-16 h-16 rounded-2xl mx-auto mb-2 border border-amber-400/40 shadow-md" alt="Logo"/>
+        <h2 class="text-xl font-black text-white" id="authTitle">Welcome to Quizly</h2>
+        <p class="text-xs text-slate-400">Earn daily cash with knowledge</p>
+      </div>
+
+      <!-- Auth Toggle Tabs -->
+      <div class="flex bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
+        <button onclick="setAuthMode('login')" id="tabBtnLogin" class="flex-1 py-2 font-bold rounded-lg bg-amber-400 text-slate-950 transition">Log In</button>
+        <button onclick="setAuthMode('signup')" id="tabBtnSignup" class="flex-1 py-2 font-bold rounded-lg text-slate-400 transition">Sign Up</button>
+      </div>
+
+      <!-- Name Field (Only Signup) -->
+      <div id="nameInputGroup" class="hidden space-y-1">
+        <label class="text-[11px] font-semibold text-slate-400">Your Full Name</label>
+        <input type="text" id="authName" placeholder="Enter name" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400" />
+      </div>
+
+      <div class="space-y-1">
+        <label class="text-[11px] font-semibold text-slate-400">Email Address</label>
+        <input type="email" id="authEmail" placeholder="Enter your email" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400" />
+      </div>
+
+      <div class="space-y-1">
+        <label class="text-[11px] font-semibold text-slate-400">Password</label>
+        <input type="password" id="authPassword" placeholder="Enter password (min 6 chars)" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400" />
+      </div>
+
+      <button onclick="handleEmailAuth()" id="authSubmitBtn" class="w-full py-3 bg-amber-400 hover:bg-amber-500 text-slate-950 font-black rounded-xl text-xs uppercase tracking-wider transition active:scale-95 shadow-md">
+        Login Account
+      </button>
+
+      <div class="flex items-center gap-2 my-2">
+        <hr class="flex-1 border-slate-800" />
+        <span class="text-[10px] text-slate-500 font-semibold uppercase">OR</span>
+        <hr class="flex-1 border-slate-800" />
+      </div>
+
+      <!-- Google Button -->
+      <button onclick="handleGoogleSignIn()" class="w-full py-2.5 px-4 bg-white hover:bg-slate-100 text-slate-800 font-bold rounded-xl flex items-center justify-center gap-2.5 text-xs active:scale-95 transition shadow-sm">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-4 h-4" alt="Google" />
+        <span>Continue with Google</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= 3. USER APP VIEW ================= -->
+  <div id="userAppView" class="flex-1 flex flex-col justify-between hidden">
+    <!-- Header -->
+    <header class="p-4 bg-slate-900/90 border-b border-purple-900/40 flex justify-between items-center sticky top-0 z-30 backdrop-blur-md">
+      <div class="flex items-center gap-2.5">
+        <img src="https://i.ibb.co/svGs6zsn/Picsart-26-09-26-23-19-05-004.jpg" class="w-9 h-9 rounded-xl border border-amber-400/50 object-cover" alt="App Logo"/>
+        <div>
+          <h1 class="text-sm font-black text-amber-400 leading-tight">Quizly Earn</h1>
+          <p class="text-[10px] text-slate-400 truncate max-w-[120px]" id="uProfileName">Player</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-1.5 bg-purple-950/80 px-3 py-1.5 rounded-full border border-amber-500/40">
+        <i class="fa-solid fa-coins text-amber-400 text-xs"></i>
+        <span id="uCoinBalance" class="font-bold text-amber-300 text-xs">0</span>
+      </div>
+    </header>
+
+    <!-- Main Screens Container -->
+    <main class="flex-1 p-4 max-w-md mx-auto w-full no-scrollbar space-y-4">
+      
+      <!-- USER SCREEN: HOME -->
+      <section id="uTabHome" class="space-y-4">
+        <!-- Balance Card -->
+        <div class="bg-gradient-to-br from-purple-900 via-indigo-950 to-slate-900 p-5 rounded-2xl border border-purple-700/50 shadow-xl relative overflow-hidden">
+          <p class="text-[11px] font-semibold uppercase tracking-wider text-purple-300">Total Coins Valuation</p>
+          <div class="flex justify-between items-baseline mt-1">
+            <h2 class="text-3xl font-black text-white" id="uInrValue">₹0.00</h2>
+            <span class="text-[10px] font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30 px-2.5 py-1 rounded-md" id="uConversionRateText">
+              1,200 Coins = ₹10
+            </span>
+          </div>
+          <div class="mt-3 pt-3 border-t border-purple-800/50 flex justify-between text-[11px] text-slate-300">
+            <span>Min. Redeem: <strong>₹10 (Amazon/Play)</strong></span>
+            <span>UPI: <strong>₹100</strong></span>
+          </div>
+        </div>
+
+        <!-- KBC Card -->
+        <div class="bg-slate-900 border border-purple-900/50 p-5 rounded-2xl text-center space-y-3 shadow-lg">
+          <div class="w-12 h-12 bg-amber-400/20 text-amber-400 rounded-2xl flex items-center justify-center mx-auto text-xl">
+            <i class="fa-solid fa-brain"></i>
+          </div>
+          <h3 class="text-base font-extrabold text-slate-100">KBC Brain Challenge</h3>
+          <p class="text-xs text-slate-400">Solve general knowledge questions & earn coins per right answer!</p>
+          <button onclick="startKbcQuiz()" class="w-full py-3 bg-gradient-to-r from-amber-500 to-yellow-600 text-slate-950 font-black rounded-xl text-xs uppercase tracking-wider shadow-md active:scale-95 transition">
+            Start Challenge
+          </button>
+        </div>
+
+        <!-- Video Locker Card -->
+        <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-teal-500/20 text-teal-400 flex items-center justify-center text-lg">
+              <i class="fa-solid fa-film"></i>
+            </div>
+            <div>
+              <h4 class="text-xs font-bold text-slate-200">Daily Video Reward</h4>
+              <p class="text-[10px] text-slate-400">Watch video to unlock instant bonus</p>
+            </div>
+          </div>
+          <button onclick="openVideoLocker('bonus')" class="px-3.5 py-1.5 bg-purple-900/80 hover:bg-purple-800 text-purple-200 text-xs font-bold rounded-lg border border-purple-700/50">
+            Watch
+          </button>
+        </div>
+
+        <!-- Official Channels & Support Links -->
+        <div class="grid grid-cols-2 gap-2 text-center text-xs">
+          <a id="linkOfficialChannel" href="#" target="_blank" class="p-3 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-center gap-2 hover:border-amber-400/50 transition">
+            <i class="fa-brands fa-telegram text-sky-400 text-sm"></i>
+            <span class="font-bold text-slate-300">Telegram / YT</span>
+          </a>
+          <a id="linkSupportId" href="#" class="p-3 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-center gap-2 hover:border-amber-400/50 transition">
+            <i class="fa-solid fa-headset text-emerald-400 text-sm"></i>
+            <span class="font-bold text-slate-300">Support Help</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- USER SCREEN: KBC QUIZ -->
+      <section id="uTabQuiz" class="hidden space-y-4">
+        <div class="flex justify-between items-center text-xs text-slate-400 px-1">
+          <span>Question <strong id="kbcCount" class="text-amber-400 text-sm">1</strong>/5</span>
+          <span class="text-rose-400 font-bold bg-rose-950/60 px-2.5 py-1 rounded-full border border-rose-800/40">
+            <i class="fa-regular fa-clock mr-1"></i><span id="kbcClock">15</span>s
+          </span>
+        </div>
+        <div class="bg-slate-900 border border-purple-900/60 p-6 rounded-2xl text-center min-h-[120px] flex items-center justify-center shadow-lg">
+          <h3 id="kbcQuestionLabel" class="text-sm font-bold text-slate-100 leading-snug">Loading question...</h3>
+        </div>
+        <div id="kbcOptionsWrapper" class="space-y-2.5"></div>
+      </section>
+
+      <!-- USER SCREEN: REWARD UNLOCK (CPAGRIP) -->
+      <section id="uTabRewardUnlock" class="hidden text-center space-y-4 bg-slate-900 border border-purple-900/60 p-6 rounded-3xl shadow-xl">
+        <div class="w-14 h-14 bg-amber-400/20 text-amber-400 rounded-full flex items-center justify-center mx-auto text-2xl">
+          <i class="fa-solid fa-trophy"></i>
+        </div>
+        <h3 class="text-lg font-black text-amber-400">Round Completed!</h3>
+        <p class="text-xs text-slate-300">You earned <strong id="quizAwardCoins" class="text-amber-300 font-bold">50</strong> coins. Complete video task to credit into your balance:</p>
+        <button onclick="openVideoLocker('quiz')" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 text-white font-black rounded-xl text-xs uppercase tracking-wider shadow-lg active:scale-95 transition">
+          <i class="fa-solid fa-unlock mr-1.5"></i> Watch Video & Unlock Coins
+        </button>
+      </section>
+
+      <!-- USER SCREEN: WALLET -->
+      <section id="uTabWallet" class="hidden space-y-4">
+        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Redeem Rewards</h3>
+
+        <!-- Play Store -->
+        <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-lg bg-green-500/20 text-green-400 flex items-center justify-center">
+              <i class="fa-brands fa-google-play"></i>
+            </div>
+            <div>
+              <h4 class="text-xs font-bold text-slate-100">₹10 Play Store Code</h4>
+              <p class="text-[10px] text-amber-400 font-semibold" id="redeemCostPlay">1,200 Coins</p>
+            </div>
+          </div>
+          <button onclick="promptRedeem('Google Play Code', 10, 'email')" class="px-3.5 py-1.5 bg-amber-400 hover:bg-amber-500 text-slate-950 text-xs font-bold rounded-lg active:scale-95 transition">
+            Redeem
+          </button>
+        </div>
+
+        <!-- Amazon Code -->
+        <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-lg bg-yellow-500/20 text-yellow-400 flex items-center justify-center">
+              <i class="fa-brands fa-amazon"></i>
+            </div>
+            <div>
+              <h4 class="text-xs font-bold text-slate-100">₹10 Amazon Code</h4>
+              <p class="text-[10px] text-amber-400 font-semibold" id="redeemCostAmazon">1,200 Coins</p>
+            </div>
+          </div>
+          <button onclick="promptRedeem('Amazon Code', 10, 'email')" class="px-3.5 py-1.5 bg-amber-400 hover:bg-amber-500 text-slate-950 text-xs font-bold rounded-lg active:scale-95 transition">
+            Redeem
+          </button>
+        </div>
+
+        <!-- UPI -->
+        <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center">
+              <i class="fa-solid fa-money-bill-transfer"></i>
+            </div>
+            <div>
+              <h4 class="text-xs font-bold text-slate-100">₹100 Direct UPI</h4>
+              <p class="text-[10px] text-amber-400 font-semibold" id="redeemCostUpi">12,000 Coins</p>
+            </div>
+          </div>
+          <button onclick="promptRedeem('Direct UPI', 100, 'upi')" class="px-3.5 py-1.5 bg-amber-400 hover:bg-amber-500 text-slate-950 text-xs font-bold rounded-lg active:scale-95 transition">
+            Redeem
+          </button>
+        </div>
+
+        <!-- Redemption History -->
+        <div class="space-y-2 pt-2">
+          <h4 class="text-xs font-bold text-slate-400">My Redemption History</h4>
+          <div id="uRedeemHistoryList" class="space-y-2 text-xs">
+            <p class="text-slate-600 text-[11px]">No redemption history yet.</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Bottom Nav -->
+    <nav class="bg-slate-900/95 border-t border-purple-900/40 flex justify-around items-center py-2.5 px-4 sticky bottom-0 z-30">
+      <button onclick="switchUserTab('uTabHome')" class="flex flex-col items-center gap-1 text-amber-400">
+        <i class="fa-solid fa-house text-sm"></i>
+        <span class="text-[10px] font-semibold">Home</span>
+      </button>
+      <button onclick="startKbcQuiz()" class="flex flex-col items-center gap-1 text-slate-400 hover:text-amber-400">
+        <i class="fa-solid fa-brain text-sm"></i>
+        <span class="text-[10px] font-semibold">Quiz</span>
+      </button>
+      <button onclick="switchUserTab('uTabWallet')" class="flex flex-col items-center gap-1 text-slate-400 hover:text-amber-400">
+        <i class="fa-solid fa-wallet text-sm"></i>
+        <span class="text-[10px] font-semibold">Wallet</span>
+      </button>
+      <button onclick="handleSignOut()" class="flex flex-col items-center gap-1 text-slate-400 hover:text-rose-400">
+        <i class="fa-solid fa-right-from-bracket text-sm"></i>
+        <span class="text-[10px] font-semibold">Logout</span>
+      </button>
+    </nav>
+
+    <!-- Adsterra 320x50 Banner Slot -->
+    <div class="bg-black/90 border-t border-slate-900 text-center py-1 sticky bottom-[51px] z-20">
+      <div id="adsterra-banner-container" class="min-h-[50px] flex items-center justify-center text-[10px] text-slate-600 border border-dashed border-slate-800 mx-2 rounded">
+        <span>Adsterra 320x50 Banner Slot</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= JAVASCRIPT ================= -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAy3Zs3J3j-hFu3A9OfG68M4LRLFbwHwaA",
+      authDomain: "quizly-earn.firebaseapp.com",
+      databaseURL: "https://quizly-earn-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "quizly-earn",
+      storageBucket: "quizly-earn.firebasestorage.app",
+      messagingSenderId: "696248072791",
+      appId: "1:696248072791:web:7c315afae333b814ed0112",
+      measurementId: "G-STRXHCV7RL"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.database();
+
+    let currentAuthMode = 'login';
+    let currentUser = null;
+    let userCoins = 0;
+    let appConfig = {
+      minTaskCoin: 8,
+      maxTaskCoin: 12,
+      minRedeemCoins: 1200,
+      channelUrl: "https://t.me/",
+      supportId: "mailto:sabisteralam3@gmail.com"
+    };
+
+    let kbcQuizIndex = 0;
+    let currentQuizAward = 0;
+    let kbcTimerInterval = null;
+    let kbcSeconds = 15;
+
+    const sampleKbcBank = [
+      { q: "Bharat ki aadhikarik rajdhani kya hai?", o: ["Mumbai", "New Delhi", "Kolkata", "Chennai"], a: 1 },
+      { q: "Surya ke sabse nikat grah (planet) konsa hai?", o: ["Budh (Mercury)", "Mangal", "Shukra", "Brihaspati"], a: 0 },
+      { q: "Cricket match ki ek team me kitne players hote hain?", o: ["9", "10", "11", "12"], a: 2 },
+      { q: "Android operating system kis company ka banaya hua hai?", o: ["Apple", "Microsoft", "Google", "Samsung"], a: 2 },
+      { q: "Computer ka brain kise kaha jata hai?", o: ["RAM", "CPU", "Motherboard", "Hard Disk"], a: 1 }
+    ];
+
+    window.addEventListener('DOMContentLoaded', () => {
+      let p = 0;
+      const bar = document.getElementById('splashProgressBar');
+      const st = document.getElementById('splashStatus');
+
+      const iv = setInterval(() => {
+        p += 15;
+        bar.style.width = p + '%';
+        if (p === 60) st.innerText = "Syncing live database...";
+        if (p >= 100) {
+          clearInterval(iv);
+          bootAppAuth();
+        }
+      }, 150);
+    });
+
+    function bootAppAuth() {
+      db.ref('app_config').on('value', snap => {
+        const c = snap.val();
+        if (c) {
+          appConfig = { ...appConfig, ...c };
+          applyLiveSettingsToUI();
+        }
+      });
+
+      auth.onAuthStateChanged(user => {
+        document.getElementById('splashScreen').classList.add('hidden');
+        if (user) {
+          currentUser = user;
+          verifyUserRecord(user);
+        } else {
+          document.getElementById('authScreen').classList.remove('hidden');
+          document.getElementById('userAppView').classList.add('hidden');
+        }
+      });
+    }
+
+    function applyLiveSettingsToUI() {
+      document.getElementById('linkOfficialChannel').href = appConfig.channelUrl;
+      document.getElementById('linkSupportId').href = appConfig.supportId.startsWith('http') ? appConfig.supportId : `mailto:${appConfig.supportId}`;
+      document.getElementById('redeemCostPlay').innerText = `${appConfig.minRedeemCoins} Coins`;
+      document.getElementById('redeemCostAmazon').innerText = `${appConfig.minRedeemCoins} Coins`;
+      document.getElementById('redeemCostUpi').innerText = `${appConfig.minRedeemCoins * 10} Coins`;
+      document.getElementById('uConversionRateText').innerText = `${appConfig.minRedeemCoins} Coins = ₹10`;
+    }
+
+    function setAuthMode(mode) {
+      currentAuthMode = mode;
+      if (mode === 'signup') {
+        document.getElementById('nameInputGroup').classList.remove('hidden');
+        document.getElementById('authTitle').innerText = "Create New Account";
+        document.getElementById('authSubmitBtn').innerText = "Create Account";
+        document.getElementById('tabBtnSignup').className = "flex-1 py-2 font-bold rounded-lg bg-amber-400 text-slate-950 transition";
+        document.getElementById('tabBtnLogin').className = "flex-1 py-2 font-bold rounded-lg text-slate-400 transition";
+      } else {
+        document.getElementById('nameInputGroup').classList.add('hidden');
+        document.getElementById('authTitle').innerText = "Welcome to Quizly";
+        document.getElementById('authSubmitBtn').innerText = "Login Account";
+        document.getElementById('tabBtnLogin').className = "flex-1 py-2 font-bold rounded-lg bg-amber-400 text-slate-950 transition";
+        document.getElementById('tabBtnSignup').className = "flex-1 py-2 font-bold rounded-lg text-slate-400 transition";
+      }
+    }
+
+    function handleEmailAuth() {
+      const email = document.getElementById('authEmail').value.trim();
+      const pass = document.getElementById('authPassword').value;
+      const name = document.getElementById('authName').value.trim();
+
+      if (!email || !pass) {
+        alert("Please enter valid email and password.");
+        return;
+      }
+
+      if (currentAuthMode === 'signup') {
+        if (!name) { alert("Please enter your name."); return; }
+        auth.createUserWithEmailAndPassword(email, pass)
+          .then(res => {
+            res.user.updateProfile({ displayName: name });
+            initializeDbUser(res.user, name);
+          })
+          .catch(e => alert(e.message));
+      } else {
+        auth.signInWithEmailAndPassword(email, pass)
+          .catch(e => alert(e.message));
+      }
+    }
+
+    function handleGoogleSignIn() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider)
+        .then(res => {
+          initializeDbUser(res.user, res.user.displayName || "Google Player");
+        })
+        .catch(e => alert(e.message));
+    }
+
+    function handleSignOut() {
+      auth.signOut().then(() => location.reload());
+    }
+
+    function initializeDbUser(user, displayName) {
+      const uRef = db.ref('users/' + user.uid);
+      uRef.once('value').then(snap => {
+        if (!snap.exists()) {
+          uRef.set({
+            uid: user.uid,
+            name: displayName,
+            email: user.email,
+            coins: 0,
+            isBanned: false,
+            joinedAt: Date.now()
+          });
+        }
+      });
+    }
+
+    function verifyUserRecord(user) {
+      const uRef = db.ref('users/' + user.uid);
+      uRef.on('value', snap => {
+        const data = snap.val();
+        if (data) {
+          if (data.isBanned) {
+            alert("Aapka account policy violation ki wajah se ban kar diya gaya hai.");
+            auth.signOut();
+            return;
+          }
+          userCoins = data.coins || 0;
+          document.getElementById('uProfileName').innerText = data.name || user.displayName || "Player";
+          updateUserCoinsUI();
+        }
+      });
+
+      document.getElementById('authScreen').classList.add('hidden');
+      document.getElementById('userAppView').classList.remove('hidden');
+      loadUserRedeemHistory();
+    }
+
+    function updateUserCoinsUI() {
+      document.getElementById('uCoinBalance').innerText = userCoins;
+      const inrVal = ((userCoins / appConfig.minRedeemCoins) * 10).toFixed(2);
+      document.getElementById('uInrValue').innerText = "₹" + inrVal;
+    }
+
+    function switchUserTab(tabId) {
+      ['uTabHome', 'uTabQuiz', 'uTabRewardUnlock', 'uTabWallet'].forEach(id => {
+        document.getElementById(id).classList.add('hidden');
+      });
+      document.getElementById(tabId).classList.remove('hidden');
+    }
+
+    function startKbcQuiz() {
+      kbcQuizIndex = 0;
+      currentQuizAward = 0;
+      switchUserTab('uTabQuiz');
+      showKbcQuestion();
+    }
+
+    function showKbcQuestion() {
+      clearInterval(kbcTimerInterval);
+      kbcSeconds = 15;
+      document.getElementById('kbcClock').innerText = kbcSeconds;
+
+      const q = sampleKbcBank[kbcQuizIndex];
+      document.getElementById('kbcCount').innerText = kbcQuizIndex + 1;
+      document.getElementById('kbcQuestionLabel').innerText = q.q;
+
+      const wrap = document.getElementById('kbcOptionsWrapper');
+      wrap.innerHTML = '';
+
+      q.o.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = "w-full py-3 px-4 bg-slate-900/90 hover:bg-slate-800 border border-purple-900/40 rounded-xl text-left text-xs font-semibold tracking-wide transition active:scale-98 flex justify-between items-center";
+        btn.innerHTML = `<span><strong class="text-amber-400 mr-2">${String.fromCharCode(65 + idx)}.</strong> ${opt}</span>`;
+        btn.onclick = () => submitKbcAnswer(idx);
+        wrap.appendChild(btn);
+      });
+
+      kbcTimerInterval = setInterval(() => {
+        kbcSeconds--;
+        document.getElementById('kbcClock').innerText = kbcSeconds;
+        if (kbcSeconds <= 0) {
+          clearInterval(kbcTimerInterval);
+          advanceKbc();
+        }
+      }, 1000);
+    }
+
+    function submitKbcAnswer(selectedIdx) {
+      clearInterval(kbcTimerInterval);
+      if (selectedIdx === sampleKbcBank[kbcQuizIndex].a) {
+        const min = parseInt(appConfig.minTaskCoin);
+        const max = parseInt(appConfig.maxTaskCoin);
+        const earned = Math.floor(Math.random() * (max - min + 1)) + min;
+        currentQuizAward += earned;
+      }
+      advanceKbc();
+    }
+
+    function advanceKbc() {
+      kbcQuizIndex++;
+      if (kbcQuizIndex < sampleKbcBank.length) {
+        showKbcQuestion();
+      } else {
+        document.getElementById('quizAwardCoins').innerText = currentQuizAward > 0 ? currentQuizAward : appConfig.minTaskCoin;
+        switchUserTab('uTabRewardUnlock');
+      }
+    }
+
+    function openVideoLocker(type) {
+      const lockerUrl = "https://www.cpagrip.com/show.php?l=YOUR_LOCKER_ID";
+      window.open(lockerUrl, '_blank');
+
+      setTimeout(() => {
+        const reward = (type === 'quiz') ? (currentQuizAward > 0 ? currentQuizAward : appConfig.minTaskCoin) : 25;
+        const newBalance = userCoins + reward;
+
+        db.ref('users/' + currentUser.uid).update({ coins: newBalance }).then(() => {
+          alert(`Great! ${reward} Coins credited to your wallet.`);
+          switchUserTab('uTabHome');
+        });
+      }, 3500);
+    }
+
+    function promptRedeem(method, inrValue, fieldType) {
+      const required = (inrValue === 10) ? appConfig.minRedeemCoins : (appConfig.minRedeemCoins * 10);
+      if (userCoins < required) {
+        alert(`Insufficient coins! You need at least ${required} coins for ₹${inrValue} withdrawal.`);
+        return;
+      }
+
+      const input = prompt(`Enter your ${fieldType === 'upi' ? 'UPI ID' : 'Email to receive code'}:`);
+      if (input && input.trim().length > 3) {
+        const newBalance = userCoins - required;
+        const ref = db.ref('redeem_requests').push();
+        
+        ref.set({
+          id: ref.key,
+          uid: currentUser.uid,
+          userName: currentUser.displayName || "Player",
+          userEmail: currentUser.email,
+          targetInfo: input.trim(),
+          method: method,
+          amountInr: inrValue,
+          coinsDeducted: required,
+          status: 'PENDING',
+          redeemCodeGiven: '',
+          requestedAt: Date.now()
+        }).then(() => {
+          db.ref('users/' + currentUser.uid).update({ coins: newBalance });
+          alert("Redeem request submitted successfully! Status: PENDING.");
+        });
+      }
+    }
+
+    function loadUserRedeemHistory() {
+      db.ref('redeem_requests').orderByChild('uid').equalTo(currentUser.uid).on('value', snap => {
+        const list = document.getElementById('uRedeemHistoryList');
+        list.innerHTML = '';
+        if (!snap.exists()) {
+          list.innerHTML = '<p class="text-slate-600 text-[11px]">No redemption history yet.</p>';
+          return;
+        }
+
+        snap.forEach(child => {
+          const item = child.val();
+          const div = document.createElement('div');
+          div.className = "p-3 bg-slate-900 border border-slate-800 rounded-xl flex justify-between items-center";
+          
+          let statusBadge = item.status === 'APPROVED' ? '<span class="text-emerald-400 font-bold">APPROVED</span>' : (item.status === 'REJECTED' ? '<span class="text-rose-400 font-bold">REJECTED</span>' : '<span class="text-amber-400 font-bold">PENDING</span>');
+          let codeDisplay = item.redeemCodeGiven ? `<p class="text-[10px] text-emerald-300 select-all font-mono mt-0.5">Code: ${item.redeemCodeGiven}</p>` : '';
+
+          div.innerHTML = `
+            <div>
+              <p class="font-bold text-slate-200">₹${item.amountInr} - ${item.method}</p>
+              <p class="text-[10px] text-slate-500">${new Date(item.requestedAt).toLocaleDateString()}</p>
+              ${codeDisplay}
+            </div>
+            <div class="text-right text-[11px]">${statusBadge}</div>
+          `;
+          list.prepend(div);
+        });
+      });
+    }
+  </script>
+</body>
+</html>
