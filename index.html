@@ -24,7 +24,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
-  <!-- Multi Slider Ads Script -->
+  <!-- Multi Slider Video Ads Script -->
   <script>
     (function(bmtf){
       var d = document,
@@ -131,6 +131,7 @@
       pointer-events: none;
     }
 
+    /* ---------------- HEADER ---------------- */
     .header {
       display: flex;
       align-items: center;
@@ -249,13 +250,16 @@
       line-height: 1;
     }
 
+    /* ---------------- WELCOME CARD ---------------- */
     .welcome-card {
       padding: 14px 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       border: 1px solid rgba(168, 85, 247, 0.35);
-      box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2), 0 0 24px -4px rgba(147, 51, 234, 0.35);
+      box-shadow: 
+        inset 0 1px 2px rgba(255, 255, 255, 0.2),
+        0 0 24px -4px rgba(147, 51, 234, 0.35);
     }
 
     .welcome-avatar-col {
@@ -415,6 +419,7 @@
       white-space: nowrap;
     }
 
+    /* ---------------- STATISTICS CARD ---------------- */
     .stats-card {
       padding: 12px 10px;
       display: grid;
@@ -428,6 +433,7 @@
       display: flex;
       align-items: center;
       gap: 7px;
+      cursor: pointer;
     }
 
     .stat-icon-wrapper {
@@ -467,6 +473,7 @@
       margin: 0 4px;
     }
 
+    /* ---------------- PREMIUM CARD ---------------- */
     .premium-card {
       padding: 12px 14px;
       display: flex;
@@ -548,6 +555,7 @@
       white-space: nowrap;
     }
 
+    /* ---------------- QUIZ CATEGORIES ---------------- */
     .quiz-categories-card {
       padding: 12px 10px 14px 10px;
       border: 1px solid rgba(168, 85, 247, 0.25);
@@ -642,6 +650,7 @@
       letter-spacing: -0.2px;
     }
 
+    /* ---------------- LEADERBOARD CARD ---------------- */
     .leaderboard-card {
       padding: 12px 14px;
       display: flex;
@@ -692,6 +701,7 @@
       flex-shrink: 0;
     }
 
+    /* ---------------- QUICK ACTIONS ---------------- */
     .quick-actions-row {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -730,6 +740,7 @@
       white-space: nowrap;
     }
 
+    /* ---------------- BOTTOM NAV ---------------- */
     .nav-bar-wrapper {
       position: fixed;
       bottom: 10px;
@@ -823,7 +834,7 @@
 
   <div class="cosmic-layer"></div>
 
-  <!-- ================= STRICT 15S VIDEO AD MODAL ================= -->
+  <!-- ================= 15S STRICT VIDEO AD MODAL ================= -->
   <div id="strictVideoModal" class="hidden fixed inset-0 bg-black/95 z-50 flex flex-col items-center justify-center p-4">
     <div class="w-full max-w-sm space-y-3 text-center">
       <div class="flex justify-between items-center text-xs text-amber-400 font-bold px-1">
@@ -839,14 +850,14 @@
             <i class="fa-solid fa-play"></i>
           </button>
           <p class="text-xs font-bold text-amber-300">Click to Play Ad (15s)</p>
-          <p class="text-[10px] text-slate-400">Pura 15 second dekhne par hi coins credit honge</p>
+          <p class="text-[10px] text-slate-400">Pura 15s chalne ke baad hi coins milenge</p>
         </div>
       </div>
-      <p class="text-[11px] text-slate-400">Do not close window until ad completes.</p>
+      <p class="text-[11px] text-slate-400">Please wait until countdown finishes.</p>
     </div>
   </div>
 
-  <!-- ================= SPIN & WIN CANVAS MODAL ================= -->
+  <!-- ================= SPIN & WIN CANVAS MODAL (DAILY 3 LIMIT) ================= -->
   <div id="spinWheelModal" class="hidden fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-5 backdrop-blur-md">
     <div class="glass-card p-6 rounded-3xl max-w-xs w-full text-center space-y-4 relative border-amber-400/50">
       <button onclick="document.getElementById('spinWheelModal').classList.add('hidden')" class="w-8 h-8 rounded-full bg-slate-900 border border-white/20 text-slate-400 flex items-center justify-center absolute top-3 right-3 text-xs">
@@ -855,7 +866,8 @@
 
       <div>
         <h3 class="text-base font-black text-amber-400">Spin & Win</h3>
-        <p class="text-[10px] text-slate-400">Spin wheel & watch 15s ad to unlock reward</p>
+        <p class="text-[10px] text-slate-300">Daily limit: 3 spins per day</p>
+        <span id="spinLeftBadge" class="inline-block bg-purple-700 text-white font-bold text-[10px] px-2.5 py-0.5 rounded-full mt-1 border border-purple-400">3 Spins Left</span>
       </div>
 
       <div class="relative w-48 h-48 mx-auto flex items-center justify-center">
@@ -864,7 +876,7 @@
       </div>
 
       <button id="spinActionBtn" onclick="executeSpin()" class="w-full py-3 bg-amber-400 hover:bg-amber-500 text-slate-950 font-black rounded-2xl text-xs uppercase tracking-wider shadow-lg active:scale-95 transition">
-        Spin Wheel
+        Spin Wheel Now
       </button>
     </div>
   </div>
@@ -883,7 +895,7 @@
       <div class="w-full bg-slate-900 border border-purple-500/40 h-2 rounded-full overflow-hidden p-0.5">
         <div id="splashProgressBar" class="h-full bg-gradient-to-r from-amber-400 to-purple-500 rounded-full w-0 transition-all duration-200"></div>
       </div>
-      <p class="text-[10px] text-purple-400">Securing user connection...</p>
+      <p class="text-[10px] text-purple-400">Syncing database & daily limits...</p>
     </div>
   </div>
 
@@ -936,10 +948,9 @@
   <!-- ================= MAIN APP VIEW ================= -->
   <div id="userAppView" class="w-full max-w-[420px] hidden flex flex-col justify-between">
     
-    <!-- SUB-PAGES WRAPPER -->
     <main class="app-screen">
 
-      <!-- ================= 1. HOME SCREEN ================= -->
+      <!-- ================= 1. HOME SCREEN (EXACT MATCH 3414) ================= -->
       <section id="uTabHome" class="space-y-3">
         <!-- 1. HEADER -->
         <header class="header">
@@ -1050,7 +1061,7 @@
               </svg>
             </div>
             <div class="stat-content">
-              <div class="stat-num">50/50</div>
+              <div class="stat-num" id="statLimitDisplay">50/50</div>
               <div class="stat-label">Daily Limit</div>
             </div>
           </div>
@@ -1238,7 +1249,7 @@
       </section>
 
       <!-- ================= 2. WATCH & EARN STREAM SCREEN ================= -->
-      <section id="uTabWatchEarn" class="hidden space-y-4">
+      <section id="uTabWatchEarn" class="hidden space-y-3">
         <div class="flex justify-between items-center px-1">
           <h3 class="text-xs font-black text-amber-400 uppercase tracking-wider"><i class="fa-solid fa-tv mr-1.5"></i>Watch & Earn Stream</h3>
           <button onclick="stopWatchEarnStream(); switchUserTab('uTabHome');" class="w-8 h-8 rounded-full glass-card flex items-center justify-center text-slate-400 hover:text-white text-xs">
@@ -1264,19 +1275,12 @@
             <video id="watchEarnVastVideo" class="w-full h-48" playsinline></video>
           </div>
         </div>
-
-        <div class="glass-card p-3 rounded-3xl space-y-2">
-          <p class="text-[10px] font-bold text-slate-400"><i class="fa-solid fa-film mr-1"></i>Multi-Slider Video Channel</p>
-          <div class="w-full min-h-[90px] bg-black/60 rounded-2xl flex items-center justify-center border border-white/10 text-[11px] text-slate-500">
-            Multi-slider ad stream loaded below...
-          </div>
-        </div>
       </section>
 
       <!-- ================= 3. LEADERBOARD PODIUM SCREEN ================= -->
-      <section id="uTabLeaderboard" class="hidden space-y-4">
+      <section id="uTabLeaderboard" class="hidden space-y-3">
         <div class="flex justify-between items-center px-1">
-          <h3 class="text-sm font-black text-white tracking-wide">Leaderboard</h3>
+          <h3 class="text-sm font-black text-white tracking-wide">Live Leaderboard</h3>
           <button onclick="switchUserTab('uTabHome')" class="w-8 h-8 rounded-full glass-card flex items-center justify-center text-slate-400 hover:text-white text-xs">
             <i class="fa-solid fa-xmark"></i>
           </button>
@@ -1285,21 +1289,21 @@
         <div class="flex justify-around items-end pt-4 pb-2 px-2">
           <div class="text-center space-y-1">
             <div class="w-16 h-16 rounded-full bg-purple-600 border-2 border-purple-400 flex items-center justify-center text-xl font-black text-white shadow-lg mx-auto" id="podium2Avatar">R</div>
-            <h5 class="text-[11px] font-bold text-white truncate max-w-[80px]" id="podium2Name">Raj Gorai</h5>
-            <p class="text-[10px] text-slate-400 font-mono" id="podium2Coins">55,316</p>
+            <h5 class="text-[11px] font-bold text-white truncate max-w-[80px]" id="podium2Name">Player 2</h5>
+            <p class="text-[10px] text-slate-400 font-mono" id="podium2Coins">0</p>
           </div>
 
           <div class="text-center space-y-1 relative -top-3">
             <span class="text-2xl absolute -top-5 left-1/2 -translate-x-1/2 filter drop-shadow">👑</span>
             <div class="w-20 h-20 rounded-full bg-sky-600 border-4 border-amber-400 flex items-center justify-center text-2xl font-black text-white shadow-2xl mx-auto" id="podium1Avatar">S</div>
-            <h5 class="text-xs font-black text-amber-400 truncate max-w-[90px]" id="podium1Name">Sub 4sub</h5>
-            <p class="text-[10px] text-amber-300 font-mono font-bold" id="podium1Coins">80,102</p>
+            <h5 class="text-xs font-black text-amber-400 truncate max-w-[90px]" id="podium1Name">Player 1</h5>
+            <p class="text-[10px] text-amber-300 font-mono font-bold" id="podium1Coins">0</p>
           </div>
 
           <div class="text-center space-y-1">
             <div class="w-16 h-16 rounded-full bg-blue-600 border-2 border-blue-400 flex items-center justify-center text-xl font-black text-white shadow-lg mx-auto" id="podium3Avatar">S</div>
-            <h5 class="text-[11px] font-bold text-white truncate max-w-[80px]" id="podium3Name">Suryanaray...</h5>
-            <p class="text-[10px] text-slate-400 font-mono" id="podium3Coins">18,673</p>
+            <h5 class="text-[11px] font-bold text-white truncate max-w-[80px]" id="podium3Name">Player 3</h5>
+            <p class="text-[10px] text-slate-400 font-mono" id="podium3Coins">0</p>
           </div>
         </div>
 
@@ -1307,24 +1311,24 @@
       </section>
 
       <!-- ================= 4. KBC QUIZ SCREEN ================= -->
-      <section id="uTabQuiz" class="hidden space-y-4">
-        <div class="flex justify-between items-center text-xs text-slate-400 px-1">
-          <span>Question <strong id="kbcCount" class="text-amber-400 text-sm">1</strong>/5</span>
-          <span class="text-rose-400 font-bold bg-rose-950/60 px-2.5 py-1 rounded-full border border-rose-800/40">
+      <section id="uTabQuiz" class="hidden space-y-3">
+        <div class="glass-card p-3 rounded-2xl flex justify-between items-center text-xs">
+          <span class="font-bold text-slate-300">Question <strong id="kbcCount" class="text-amber-400 text-sm">1</strong>/5</span>
+          <span class="text-rose-400 font-bold bg-rose-950/60 px-3 py-1 rounded-full border border-rose-800/40">
             <i class="fa-regular fa-clock mr-1"></i><span id="kbcClock">15</span>s
           </span>
-          <button onclick="switchUserTab('uTabHome')" class="w-7 h-7 rounded-full glass-card flex items-center justify-center text-slate-400 hover:text-white text-xs">
+          <button onclick="switchUserTab('uTabHome')" class="w-7 h-7 rounded-full bg-slate-900 border border-white/20 flex items-center justify-center text-slate-400 hover:text-white text-xs">
             <i class="fa-solid fa-xmark"></i>
           </button>
         </div>
-        <div class="glass-card p-6 rounded-3xl text-center min-h-[120px] flex items-center justify-center shadow-lg">
+        <div class="glass-card p-5 rounded-3xl text-center min-h-[110px] flex items-center justify-center shadow-lg">
           <h3 id="kbcQuestionLabel" class="text-sm font-bold text-slate-100 leading-snug">Loading question...</h3>
         </div>
-        <div id="kbcOptionsWrapper" class="space-y-2.5"></div>
+        <div id="kbcOptionsWrapper" class="space-y-2"></div>
       </section>
 
       <!-- ================= 5. QUIZ REWARD UNLOCK SCREEN ================= -->
-      <section id="uTabRewardUnlock" class="hidden text-center space-y-4 glass-card p-6 rounded-3xl shadow-xl">
+      <section id="uTabRewardUnlock" class="hidden text-center space-y-3.5 glass-card p-6 rounded-3xl shadow-xl">
         <div class="w-14 h-14 bg-amber-400/20 text-amber-400 rounded-full flex items-center justify-center mx-auto text-2xl border border-amber-400/30">
           <i class="fa-solid fa-trophy"></i>
         </div>
@@ -1336,7 +1340,7 @@
       </section>
 
       <!-- ================= 6. REFER & EARN SCREEN ================= -->
-      <section id="uTabRefer" class="hidden space-y-4">
+      <section id="uTabRefer" class="hidden space-y-3">
         <div class="flex justify-between items-center px-1">
           <h3 class="text-xs font-black text-amber-400 uppercase tracking-wider"><i class="fa-solid fa-gift mr-1.5"></i>Refer & Earn Cash</h3>
           <button onclick="switchUserTab('uTabHome')" class="w-8 h-8 rounded-full glass-card flex items-center justify-center text-slate-400 hover:text-white text-xs">
@@ -1344,23 +1348,23 @@
           </button>
         </div>
 
-        <div class="glass-card p-6 rounded-3xl text-center space-y-2">
-          <h2 class="text-lg font-black text-amber-400">Invite Friends, Earn 50 Coins!</h2>
+        <div class="glass-card p-5 rounded-3xl text-center space-y-2">
+          <h2 class="text-base font-black text-amber-400">Invite Friends, Earn 50 Coins!</h2>
           <p class="text-xs text-slate-300">1 Referral = 1 Withdraw Unlocked | 10 Referrals = Unlimited Cashouts!</p>
         </div>
 
         <div class="grid grid-cols-2 gap-3">
-          <div class="glass-card p-4 rounded-2xl text-center">
+          <div class="glass-card p-3 rounded-2xl text-center">
             <p class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">Total Referrals</p>
-            <h3 class="text-2xl font-black text-white mt-1" id="uReferPageCount">0</h3>
+            <h3 class="text-xl font-black text-white mt-1" id="uReferPageCount">0</h3>
           </div>
-          <div class="glass-card p-4 rounded-2xl text-center">
+          <div class="glass-card p-3 rounded-2xl text-center">
             <p class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">Coins Earned</p>
-            <h3 class="text-2xl font-black text-amber-400 mt-1" id="uReferCoinsEarned">0</h3>
+            <h3 class="text-xl font-black text-amber-400 mt-1" id="uReferCoinsEarned">0</h3>
           </div>
         </div>
 
-        <div class="glass-card p-4 rounded-2xl space-y-3">
+        <div class="glass-card p-4 rounded-2xl space-y-2.5">
           <label class="text-xs font-bold text-slate-300">Your Referral Link</label>
           <div class="flex gap-2">
             <input type="text" id="uReferralLinkDisplay" readonly class="flex-1 bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-xs text-slate-300 font-mono select-all focus:outline-none" />
@@ -1372,7 +1376,7 @@
       </section>
 
       <!-- ================= 7. WALLET & REDEEM SCREEN ================= -->
-      <section id="uTabWallet" class="hidden space-y-4">
+      <section id="uTabWallet" class="hidden space-y-3">
         <div class="flex justify-between items-center px-1">
           <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Redeem Rewards</h3>
           <button onclick="switchUserTab('uTabHome')" class="w-8 h-8 rounded-full glass-card flex items-center justify-center text-slate-400 hover:text-white text-xs">
@@ -1380,59 +1384,12 @@
           </button>
         </div>
 
-        <!-- Google Play -->
-        <div class="glass-card p-4 rounded-2xl space-y-3">
-          <div class="flex items-center gap-3">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg" class="w-8 h-8 object-contain" alt="Google Play"/>
-            <div>
-              <h4 class="text-xs font-bold text-slate-100">Google Play Code</h4>
-              <p class="text-[10px] text-slate-400">₹10 to ₹500 (1,200 Coins = ₹10)</p>
-            </div>
-          </div>
-          <div class="flex gap-2">
-            <select id="selPlayAmount" class="flex-1 bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
-              <option value="10">₹10 (1,200 Coins)</option>
-              <option value="20">₹20 (2,400 Coins)</option>
-              <option value="50">₹50 (6,000 Coins)</option>
-              <option value="100">₹100 (12,000 Coins)</option>
-              <option value="500">₹500 (60,000 Coins)</option>
-            </select>
-            <button onclick="initiateRedeem('Google Play Code')" class="px-4 py-2 bg-amber-400 hover:bg-amber-500 text-slate-950 text-xs font-bold rounded-xl active:scale-95 transition">
-              Redeem
-            </button>
-          </div>
-        </div>
-
-        <!-- Amazon -->
-        <div class="glass-card p-4 rounded-2xl space-y-3">
-          <div class="flex items-center gap-3">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Amazon_icon.svg" class="w-8 h-8 object-contain" alt="Amazon"/>
-            <div>
-              <h4 class="text-xs font-bold text-slate-100">Amazon Gift Card</h4>
-              <p class="text-[10px] text-slate-400">₹10 to ₹500 (1,200 Coins = ₹10)</p>
-            </div>
-          </div>
-          <div class="flex gap-2">
-            <select id="selAmazonAmount" class="flex-1 bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
-              <option value="10">₹10 (1,200 Coins)</option>
-              <option value="20">₹20 (2,400 Coins)</option>
-              <option value="50">₹50 (6,000 Coins)</option>
-              <option value="100">₹100 (12,000 Coins)</option>
-              <option value="500">₹500 (60,000 Coins)</option>
-            </select>
-            <button onclick="initiateRedeem('Amazon Code')" class="px-4 py-2 bg-amber-400 hover:bg-amber-500 text-slate-950 text-xs font-bold rounded-xl active:scale-95 transition">
-              Redeem
-            </button>
-          </div>
-        </div>
-
-        <!-- UPI -->
         <div class="glass-card p-4 rounded-2xl space-y-3">
           <div class="flex items-center gap-3">
             <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg" class="w-9 h-7 object-contain bg-white rounded p-0.5" alt="UPI"/>
             <div>
               <h4 class="text-xs font-bold text-slate-100">Direct UPI Transfer</h4>
-              <p class="text-[10px] text-slate-400">₹100 to ₹1,000 (12,000 Coins = ₹100)</p>
+              <p class="text-[10px] text-slate-400">12,000 Coins = ₹100</p>
             </div>
           </div>
           <div class="flex gap-2">
@@ -1440,7 +1397,6 @@
               <option value="100">₹100 (12,000 Coins)</option>
               <option value="200">₹200 (24,000 Coins)</option>
               <option value="500">₹500 (60,000 Coins)</option>
-              <option value="1000">₹1000 (120,000 Coins)</option>
             </select>
             <button onclick="initiateRedeem('Direct UPI')" class="px-4 py-2 bg-amber-400 hover:bg-amber-500 text-slate-950 text-xs font-bold rounded-xl active:scale-95 transition">
               Redeem
@@ -1448,7 +1404,6 @@
           </div>
         </div>
 
-        <!-- Redemption History -->
         <div class="space-y-2 pt-2">
           <h4 class="text-xs font-bold text-slate-400">Redemption History</h4>
           <div id="uRedeemHistoryList" class="space-y-2 text-xs">
@@ -1458,7 +1413,7 @@
       </section>
 
       <!-- ================= 8. PROFILE SCREEN ================= -->
-      <section id="uTabProfile" class="hidden space-y-4">
+      <section id="uTabProfile" class="hidden space-y-3">
         <div class="flex justify-between items-center px-1">
           <h3 class="text-xs font-black text-amber-400 uppercase tracking-wider"><i class="fa-solid fa-user mr-1.5"></i>My Account</h3>
           <button onclick="switchUserTab('uTabHome')" class="w-8 h-8 rounded-full glass-card flex items-center justify-center text-slate-400 hover:text-white text-xs">
@@ -1467,8 +1422,11 @@
         </div>
 
         <div class="glass-card p-5 rounded-3xl text-center space-y-2">
-          <h3 class="font-bold text-white text-sm" id="profDisplayName">Player</h3>
-          <p class="text-[11px] text-slate-400 font-mono" id="profEmail">user@quizly.com</p>
+          <div class="w-16 h-16 rounded-full bg-purple-700/60 border-2 border-purple-400 flex items-center justify-center mx-auto text-xl font-bold text-white shadow-lg" id="profAvatarLetter">
+            S
+          </div>
+          <h3 class="font-bold text-white text-base" id="profDisplayName">Sabister</h3>
+          <p class="text-xs text-slate-400 font-mono" id="profEmail">user@quizly.com</p>
         </div>
 
         <div class="glass-card rounded-2xl overflow-hidden divide-y divide-white/10 text-xs">
@@ -1539,7 +1497,6 @@
     const auth = firebase.auth();
     const db = firebase.database();
 
-    const MONETAG_DIRECT_LINK = "https://omg10.com/4/11904430";
     const HILLTOP_VAST_TAG = "https://expensive-pollution.com/ddm.FZz/dkGyNbvGZ/G/Ut/_esm/9cuCZEUVlxkFP_TycI0/NOjCYQxFOiDAE/taNwzSQZ2XNajyEr4qNVQl";
 
     let currentUser = null;
@@ -1558,10 +1515,11 @@
     let streamSecondsLeft = 120;
     let streamInterval = null;
 
-    // Spin Wheel Setup
+    // Spin Wheel Setup (Max 3/Day)
     const wheelPrizes = [5, 10, 2, 15, 8, 20, 12, 1];
     const wheelColors = ["#ec4899", "#8b5cf6", "#3b82f6", "#10b981", "#f59e0b", "#ef4444", "#6366f1", "#14b8a6"];
     let isSpinning = false;
+    let spinsToday = 0;
 
     const questionBanks = {
       'Hindi GK': [
@@ -1596,9 +1554,8 @@
       return uuid;
     }
 
-    function getReferrerFromURL() {
-      const p = new URLSearchParams(window.location.search);
-      return p.get('ref');
+    function getTodayKey() {
+      return new Date().toISOString().slice(0, 10);
     }
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -1648,7 +1605,19 @@
         if (!name) { alert("Enter your name"); return; }
         auth.createUserWithEmailAndPassword(email, pass).then(res => {
           res.user.updateProfile({ displayName: name });
-          createDatabaseRecord(res.user, name, pass);
+          db.ref('users/' + res.user.uid).set({
+            uid: res.user.uid,
+            name: name,
+            email: email,
+            coins: 0,
+            referralsCount: 0,
+            redeemsUsed: 0,
+            streakDays: 0,
+            lastDateActive: getTodayKey(),
+            spinsUsedToday: 0,
+            dailyQuizzesDone: 0,
+            joinedAt: Date.now()
+          });
         }).catch(e => alert(e.message));
       } else {
         auth.signInWithEmailAndPassword(email, pass).catch(e => alert(e.message));
@@ -1658,52 +1627,15 @@
     function handleGoogleSignIn() {
       const provider = new firebase.auth.GoogleAuthProvider();
       auth.signInWithPopup(provider).then(res => {
-        createDatabaseRecord(res.user, res.user.displayName || "Google Player", "Google Auth");
+        db.ref('users/' + res.user.uid).update({
+          name: res.user.displayName || "Player",
+          email: res.user.email
+        });
       }).catch(e => auth.signInWithRedirect(provider));
     }
 
     function handleSignOut() {
       auth.signOut().then(() => location.reload());
-    }
-
-    function createDatabaseRecord(user, displayName, plainPassword) {
-      const devId = getDeviceUUID();
-      const ref = db.ref('users/' + user.uid);
-      ref.once('value').then(s => {
-        if (!s.exists()) {
-          let baseUsername = (displayName || user.email.split('@')[0]).replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
-          let uniqueUserCode = baseUsername + Math.floor(100 + Math.random() * 900);
-          const refFromURL = getReferrerFromURL();
-
-          ref.set({
-            uid: user.uid,
-            name: displayName,
-            username: uniqueUserCode,
-            email: user.email,
-            password: plainPassword,
-            coins: 2450,
-            referralsCount: 0,
-            redeemsUsed: 0,
-            streakDays: 7,
-            lastStreakClaimDate: '',
-            adminRedeemUnlock: false,
-            deviceId: devId,
-            joinedAt: Date.now()
-          }).then(() => {
-            if (refFromURL) {
-              db.ref('usernames/' + refFromURL).once('value', refSnap => {
-                if (refSnap.exists()) {
-                  const referrerUid = refSnap.val();
-                  if (referrerUid !== user.uid) {
-                    db.ref('users/' + referrerUid + '/coins').transaction(c => (c || 0) + 50);
-                    db.ref('users/' + referrerUid + '/referralsCount').transaction(rc => (rc || 0) + 1);
-                  }
-                }
-              });
-            }
-          });
-        }
-      });
     }
 
     function verifyAndLoadUser(user) {
@@ -1712,16 +1644,32 @@
         if (d) {
           userData = d;
           userCoins = d.coins || 0;
-          const cleanName = d.name || user.displayName || "Sofiya";
+          const cleanName = d.name || user.displayName || "Player";
+
+          // Auto-Reset Daily limits if new day
+          const today = getTodayKey();
+          if (d.lastDateActive !== today) {
+            db.ref('users/' + user.uid).update({
+              lastDateActive: today,
+              spinsUsedToday: 0,
+              dailyQuizzesDone: 0
+            });
+            spinsToday = 0;
+          } else {
+            spinsToday = d.spinsUsedToday || 0;
+          }
 
           document.getElementById('uProfileName').innerText = cleanName;
           document.getElementById('profDisplayName').innerText = cleanName;
           document.getElementById('profEmail').innerText = d.email || "";
+          document.getElementById('profAvatarLetter').innerText = cleanName.charAt(0).toUpperCase();
 
-          document.getElementById('uHeaderAvatar').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(cleanName)}&background=7c3aed&color=fbbf24&bold=true`;
           document.getElementById('walletDisplay').innerText = Number(userCoins).toLocaleString();
           document.getElementById('statCoinsVal').innerText = Number(userCoins).toLocaleString();
           document.getElementById('statStreakDays').innerText = `${d.streakDays || 0} Days`;
+          document.getElementById('statLimitDisplay').innerText = `${50 - (d.dailyQuizzesDone || 0)}/50`;
+
+          document.getElementById('spinLeftBadge').innerText = `${Math.max(0, 3 - spinsToday)} Spins Left`;
 
           document.getElementById('uReferralLinkDisplay').value = `https://quizly-earn.vercel.app?ref=${d.username || user.uid}`;
           document.getElementById('uReferPageCount').innerText = d.referralsCount || 0;
@@ -1738,24 +1686,27 @@
 
     function switchUserTab(tId) {
       ['uTabHome', 'uTabWatchEarn', 'uTabLeaderboard', 'uTabQuiz', 'uTabRewardUnlock', 'uTabRefer', 'uTabWallet', 'uTabProfile'].forEach(id => {
-        document.getElementById(id).classList.add('hidden');
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
       });
-      document.getElementById(tId).classList.remove('hidden');
+      const target = document.getElementById(tId);
+      if (target) target.classList.remove('hidden');
 
       ['navHomeTab', 'navQuizTab', 'navWatchTab', 'navProfileTab'].forEach(n => {
-        if(document.getElementById(n)) document.getElementById(n).classList.remove('active');
+        const el = document.getElementById(n);
+        if (el) el.classList.remove('active');
       });
-      if (tId === 'uTabHome') document.getElementById('navHomeTab').classList.add('active');
+      if (tId === 'uTabHome' && document.getElementById('navHomeTab')) document.getElementById('navHomeTab').classList.add('active');
       if (tId === 'uTabWatchEarn') {
-        document.getElementById('navWatchTab').classList.add('active');
+        if (document.getElementById('navWatchTab')) document.getElementById('navWatchTab').classList.add('active');
         startWatchEarnStream();
       } else {
         stopWatchEarnStream();
       }
-      if (tId === 'uTabProfile') document.getElementById('navProfileTab').classList.add('active');
+      if (tId === 'uTabProfile' && document.getElementById('navProfileTab')) document.getElementById('navProfileTab').classList.add('active');
     }
 
-    // ================= STRICT 15S VIDEO AD REWARD ENGINE =================
+    // ================= STRICT 15S AD TRIGGER (1–20 COINS) =================
     function requestStrictVideoAd(sourceTask) {
       currentAdTaskSource = sourceTask;
       const modal = document.getElementById('strictVideoModal');
@@ -1792,7 +1743,7 @@
             // Random Reward: 1 to 20 Coins
             const awardedCoins = Math.floor(Math.random() * 20) + 1;
             db.ref('users/' + currentUser.uid + '/coins').transaction(c => (c || 0) + awardedCoins).then(() => {
-              alert(`Reward Claimed! You watched full 15s ad & earned ${awardedCoins} Coins!`);
+              alert(`Awesome! You watched 15s ad & received ${awardedCoins} Coins!`);
               switchUserTab('uTabHome');
             });
           }
@@ -1828,7 +1779,7 @@
 
           const streamPrize = Math.floor(Math.random() * (50 - 2 + 1)) + 2;
           db.ref('users/' + currentUser.uid + '/coins').transaction(c => (c || 0) + streamPrize).then(() => {
-            alert(`Stream Complete! You watched 2 mins of ads and won ${streamPrize} Coins!`);
+            alert(`Stream Complete! You watched 2 minutes of ads and won ${streamPrize} Coins!`);
             switchUserTab('uTabHome');
           });
         }
@@ -1841,8 +1792,12 @@
       if (v) v.pause();
     }
 
-    // ================= SPIN WHEEL CANVAS =================
+    // ================= SPIN WHEEL (STRICT 3/DAY LIMIT) =================
     function openSpinWheelModal() {
+      if (spinsToday >= 3) {
+        alert("Daily limit reached! Aap din me sirf 3 baar hi spin kar sakte hain.");
+        return;
+      }
       document.getElementById('spinWheelModal').classList.remove('hidden');
       drawWheel(0);
     }
@@ -1885,6 +1840,12 @@
 
     function executeSpin() {
       if (isSpinning) return;
+      if (spinsToday >= 3) {
+        alert("Daily spin limit completed!");
+        document.getElementById('spinWheelModal').classList.add('hidden');
+        return;
+      }
+
       isSpinning = true;
       const btn = document.getElementById('spinActionBtn');
       btn.classList.add('opacity-50', 'pointer-events-none');
@@ -1911,7 +1872,11 @@
           isSpinning = false;
           btn.classList.remove('opacity-50', 'pointer-events-none');
           document.getElementById('spinWheelModal').classList.add('hidden');
-          // STRICT AD REQUIREMENT TO UNLOCK COINS
+          
+          // Increment spin usage
+          db.ref('users/' + currentUser.uid + '/spinsUsedToday').transaction(s => (s || 0) + 1);
+
+          // Trigger 15s ad to unlock reward
           requestStrictVideoAd('spin');
         }
       }
@@ -1920,6 +1885,11 @@
 
     // ================= KBC QUIZ =================
     function startCategoryQuiz(catName) {
+      if ((userData.dailyQuizzesDone || 0) >= 50) {
+        alert("Daily limit completed! Kal aakar aur quiz khele.");
+        return;
+      }
+
       activeRoundQuestions = [...(questionBanks[catName] || questionBanks['Hindi GK'])].sort(() => 0.5 - Math.random());
       kbcQuizIndex = 0;
       switchUserTab('uTabQuiz');
@@ -1948,6 +1918,7 @@
           if (kbcQuizIndex < activeRoundQuestions.length) {
             showKbcQuestion();
           } else {
+            db.ref('users/' + currentUser.uid + '/dailyQuizzesDone').transaction(q => (q || 0) + 1);
             switchUserTab('uTabRewardUnlock');
           }
         };
@@ -1964,7 +1935,7 @@
       }, 1000);
     }
 
-    // ================= LEADERBOARD =================
+    // ================= REALTIME LIVE LEADERBOARD =================
     function loadRealtimePodiumLeaderboard() {
       db.ref('users').orderByChild('coins').limitToLast(25).on('value', snap => {
         let list = [];
@@ -1972,19 +1943,19 @@
         list.reverse();
 
         if (list[0]) {
-          document.getElementById('podium1Name').innerText = list[0].name || "Sub 4sub";
-          document.getElementById('podium1Coins').innerText = Number(list[0].coins || 80102).toLocaleString();
-          document.getElementById('podium1Avatar').innerText = (list[0].name || 'S').charAt(0).toUpperCase();
+          document.getElementById('podium1Name').innerText = list[0].name || "Player 1";
+          document.getElementById('podium1Coins').innerText = Number(list[0].coins || 0).toLocaleString();
+          document.getElementById('podium1Avatar').innerText = (list[0].name || 'P').charAt(0).toUpperCase();
         }
         if (list[1]) {
-          document.getElementById('podium2Name').innerText = list[1].name || "Raj Gorai";
-          document.getElementById('podium2Coins').innerText = Number(list[1].coins || 55316).toLocaleString();
-          document.getElementById('podium2Avatar').innerText = (list[1].name || 'R').charAt(0).toUpperCase();
+          document.getElementById('podium2Name').innerText = list[1].name || "Player 2";
+          document.getElementById('podium2Coins').innerText = Number(list[1].coins || 0).toLocaleString();
+          document.getElementById('podium2Avatar').innerText = (list[1].name || 'P').charAt(0).toUpperCase();
         }
         if (list[2]) {
-          document.getElementById('podium3Name').innerText = list[2].name || "Suryanaray...";
-          document.getElementById('podium3Coins').innerText = Number(list[2].coins || 18673).toLocaleString();
-          document.getElementById('podium3Avatar').innerText = (list[2].name || 'S').charAt(0).toUpperCase();
+          document.getElementById('podium3Name').innerText = list[2].name || "Player 3";
+          document.getElementById('podium3Coins').innerText = Number(list[2].coins || 0).toLocaleString();
+          document.getElementById('podium3Avatar').innerText = (list[2].name || 'P').charAt(0).toUpperCase();
         }
 
         const wrap = document.getElementById('uLeaderboardList');
@@ -1994,6 +1965,7 @@
           const u = list[i];
           const div = document.createElement('div');
           div.className = "glass-card p-3 rounded-2xl flex justify-between items-center";
+
           const initial = (u.name || 'P').charAt(0).toUpperCase();
 
           div.innerHTML = `
@@ -2004,7 +1976,7 @@
               </div>
               <div>
                 <p class="font-bold text-white text-xs">${u.name || "Player"}</p>
-                <p class="text-[9px] text-slate-400">Beginner</p>
+                <p class="text-[9px] text-slate-400">Rank Player</p>
               </div>
             </div>
             <div class="flex items-center gap-1.5 bg-slate-900 border border-white/10 px-2.5 py-1 rounded-full">
@@ -2017,47 +1989,25 @@
       });
     }
 
-    // ================= REDEEM (1 REF = 1 REDEEM RULE RESTORED) =================
-    function canUserRedeem() {
-      if (!userData) return false;
-      if (userData.adminRedeemUnlock === true) return true;
-      const refs = userData.referralsCount || 0;
-      const used = userData.redeemsUsed || 0;
-      if (refs >= 10) return true;
-      return (refs > used);
-    }
-
+    // ================= REDEEMS =================
     function initiateRedeem(method) {
-      if (!canUserRedeem()) {
-        alert("Redemption Locked! 1 Referral = 1 Withdraw unlock hota hai (ya 10 referrals karke unlimited unlock karein).");
-        return;
-      }
-
-      let inr = parseInt(document.getElementById(method === 'Google Play Code' ? 'selPlayAmount' : (method === 'Amazon Code' ? 'selAmazonAmount' : 'selUpiAmount')).value);
-      const req = inr * 120; // 1,200 coins = 10 Rs
-
+      let inr = parseInt(document.getElementById('selUpiAmount').value);
+      const req = inr * 120;
       if (userCoins < req) {
-        alert(`Insufficient coins! Minimum ${req} coins required for ₹${inr}.`);
+        alert(`Insufficient coins! Minimum ${req} coins required.`);
         return;
       }
-
-      const input = prompt(`Enter ${method === 'Direct UPI' ? 'UPI ID' : 'Email Address'}:`);
-      if (input && input.trim().length > 3) {
+      const upi = prompt("Enter UPI ID:");
+      if (upi && upi.length > 3) {
         db.ref('users/' + currentUser.uid + '/coins').transaction(c => c - req);
-        db.ref('users/' + currentUser.uid + '/redeemsUsed').transaction(u => (u || 0) + 1);
-
         db.ref('redeem_requests').push({
           uid: currentUser.uid,
-          userName: userData.name || "Player",
-          userEmail: currentUser.email,
-          targetInfo: input.trim(),
+          targetInfo: upi,
           method: method,
           amountInr: inr,
-          coinsDeducted: req,
           status: 'PENDING',
-          redeemCodeGiven: '',
           requestedAt: Date.now()
-        }).then(() => alert("Aapka payment request receive ho gaya hai! (24-48 hrs approval)"));
+        }).then(() => alert("Redeem request submitted (24-48 hrs)!"));
       }
     }
 
@@ -2073,30 +2023,13 @@
         snap.forEach(child => {
           const item = child.val();
           const div = document.createElement('div');
-          div.className = "glass-card p-3 rounded-xl space-y-1.5";
-
-          let statusBadge = item.status === 'APPROVED' ? '<span class="text-emerald-400 font-bold">APPROVED</span>' : '<span class="text-amber-400 font-bold">PENDING</span>';
-          let codeHtml = '';
-          if (item.redeemCodeGiven) {
-            codeHtml = `
-              <div class="flex items-center justify-between bg-slate-950 p-2 rounded-lg border border-slate-800 mt-1">
-                <span class="text-emerald-300 font-mono text-[11px] font-bold select-all">${item.redeemCodeGiven}</span>
-                <button onclick="navigator.clipboard.writeText('${item.redeemCodeGiven}'); alert('Code Copied!');" class="px-2 py-0.5 bg-emerald-600 text-white rounded text-[10px] font-bold">
-                  Copy
-                </button>
-              </div>
-            `;
-          }
-
+          div.className = "glass-card p-3 rounded-xl flex justify-between items-center text-xs";
           div.innerHTML = `
-            <div class="flex justify-between items-center">
-              <div>
-                <p class="font-bold text-slate-200">₹${item.amountInr} - ${item.method}</p>
-                <p class="text-[9px] text-slate-500">${new Date(item.requestedAt).toLocaleDateString()}</p>
-              </div>
-              <div class="text-right text-[11px]">${statusBadge}</div>
+            <div>
+              <p class="font-bold text-slate-200">₹${item.amountInr} - ${item.method}</p>
+              <p class="text-[9px] text-slate-500">${new Date(item.requestedAt).toLocaleDateString()}</p>
             </div>
-            ${codeHtml}
+            <span class="font-bold ${item.status === 'APPROVED' ? 'text-emerald-400' : 'text-amber-400'}">${item.status}</span>
           `;
           list.prepend(div);
         });
