@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -12,7 +12,7 @@
   <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
 
   <!-- Fluid Player -->
@@ -25,7 +25,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
   <!-- Multi Slider Video Ads Script -->
-  <script>
+  <script id="sliderAdScript">
     (function(bmtf){
       var d = document,
           s = d.createElement('script'),
@@ -47,25 +47,15 @@
       user-select: none;
     }
 
-    :root {
-      --bg: #030614;
-      --card-bg: rgba(14, 18, 42, 0.72);
-      --card-border: rgba(255, 255, 255, 0.1);
-      --purple-glow: rgba(168, 85, 247, 0.45);
-      --blue-glow: rgba(59, 130, 246, 0.45);
-      --cyan-glow: rgba(6, 182, 212, 0.45);
-      --gold-glow: rgba(245, 158, 11, 0.5);
-    }
-
     body {
-      background-color: var(--bg);
+      background-color: #030614;
       background-image: 
         radial-gradient(circle at 50% 0%, rgba(88, 28, 135, 0.45) 0%, transparent 45%),
         radial-gradient(circle at 100% 35%, rgba(30, 58, 138, 0.35) 0%, transparent 40%),
         radial-gradient(circle at 0% 70%, rgba(126, 34, 206, 0.25) 0%, transparent 45%),
         radial-gradient(circle at 50% 100%, rgba(29, 78, 216, 0.3) 0%, transparent 50%);
       color: #ffffff;
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Plus Jakarta Sans', 'Noto Sans Devanagari', -apple-system, sans-serif;
       min-height: 100vh;
       display: flex;
       justify-content: center;
@@ -83,9 +73,7 @@
       background-image: 
         radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)),
         radial-gradient(1.5px 1.5px at 150px 80px, rgba(255,255,255,0.7), rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 280px 140px, rgba(200,220,255,0.6), rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 90px 230px, rgba(255,255,255,0.5), rgba(0,0,0,0)),
-        radial-gradient(1.5px 1.5px at 320px 320px, rgba(240,200,255,0.7), rgba(0,0,0,0));
+        radial-gradient(1px 1px at 280px 140px, rgba(200,220,255,0.6), rgba(0,0,0,0));
       background-repeat: repeat;
       background-size: 400px 800px;
       pointer-events: none;
@@ -101,7 +89,8 @@
       padding: 10px 12px 20px 12px;
       display: flex;
       flex-direction: column;
-      gap: 11px;
+      gap: 12px;
+      min-height: calc(100vh - 100px);
     }
 
     .glass-card {
@@ -110,9 +99,7 @@
       -webkit-backdrop-filter: blur(20px);
       border-radius: 22px;
       border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 
-        inset 0 1px 1px rgba(255, 255, 255, 0.18),
-        0 10px 28px -6px rgba(0, 0, 0, 0.65);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.18), 0 10px 28px -6px rgba(0, 0, 0, 0.65);
       position: relative;
       overflow: hidden;
     }
@@ -142,53 +129,26 @@
       border-radius: 14px;
       background: rgba(22, 27, 56, 0.75);
       border: 1px solid rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(16px);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 4.5px;
       cursor: pointer;
-      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2), 0 6px 16px rgba(0, 0, 0, 0.4);
-      transition: transform 0.15s ease;
     }
     .hamburger-btn:active { transform: scale(0.92); }
-    .hamburger-bar {
-      width: 20px;
-      height: 2.4px;
-      background-color: #ffffff;
-      border-radius: 2px;
-    }
+    .hamburger-bar { width: 20px; height: 2.4px; background-color: #ffffff; border-radius: 2px; }
 
-    .brand-logo {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      cursor: pointer;
-    }
-
-    .brand-quizly {
-      font-size: 26px;
-      font-weight: 900;
-      color: #ffffff;
-      letter-spacing: -0.6px;
-      line-height: 0.95;
-      text-shadow: 0 0 14px rgba(255, 255, 255, 0.4);
-    }
-
+    .brand-logo { text-align: center; cursor: pointer; }
+    .brand-quizly { font-size: 26px; font-weight: 900; color: #ffffff; letter-spacing: -0.6px; line-height: 0.95; }
     .brand-earn {
       font-size: 20px;
       font-weight: 900;
-      color: #fbbf24;
       background: linear-gradient(180deg, #fef08a 0%, #f59e0b 60%, #d97706 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       letter-spacing: -0.3px;
       line-height: 0.95;
-      margin-top: 1px;
-      filter: drop-shadow(0 2px 8px rgba(245, 158, 11, 0.5));
     }
 
     .wallet-capsule {
@@ -199,401 +159,92 @@
       border-radius: 24px;
       background: rgba(18, 22, 50, 0.85);
       border: 1px solid rgba(255, 255, 255, 0.16);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.18);
       cursor: pointer;
-      transition: transform 0.15s ease;
     }
     .wallet-capsule:active { transform: scale(0.94); }
-
     .wallet-coin {
       width: 26px;
       height: 26px;
       border-radius: 50%;
       background: radial-gradient(circle at 35% 30%, #fef08a 0%, #f59e0b 60%, #b45309 100%);
-      border: 1.5px solid #fde047;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 10px rgba(245, 158, 11, 0.7);
     }
-
-    .wallet-coin svg {
-      width: 14px;
-      height: 14px;
-      fill: #ffffff;
-      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
-    }
-
-    .wallet-text {
-      font-size: 15px;
-      font-weight: 800;
-      color: #ffffff;
-      letter-spacing: 0.2px;
-    }
-
+    .wallet-coin svg { width: 14px; height: 14px; fill: #ffffff; }
+    .wallet-text { font-size: 15px; font-weight: 800; color: #ffffff; }
     .wallet-plus-btn {
       width: 24px;
       height: 24px;
       border-radius: 50%;
       background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%);
-      border: 1px solid rgba(255, 255, 255, 0.35);
       color: #ffffff;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 16px;
       font-weight: 800;
-      box-shadow: 0 0 8px rgba(168, 85, 247, 0.6);
-      line-height: 1;
     }
 
-    /* ---------------- WELCOME CARD ---------------- */
-    .welcome-card {
-      padding: 14px 14px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border: 1px solid rgba(168, 85, 247, 0.35);
-      box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2), 0 0 24px -4px rgba(147, 51, 234, 0.35);
-    }
-
-    .welcome-avatar-col {
-      position: relative;
-      flex-shrink: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .crown-icon {
-      position: absolute;
-      top: -11px;
-      z-index: 4;
-      filter: drop-shadow(0 2px 6px rgba(245, 158, 11, 0.8));
-    }
-
+    /* ---------------- HOME SPECIFIC CARDS ---------------- */
+    .welcome-card { padding: 14px; display: flex; align-items: center; justify-content: space-between; border: 1px solid rgba(168, 85, 247, 0.35); }
     .avatar-ring {
       width: 58px;
       height: 58px;
       border-radius: 50%;
       padding: 2.5px;
       background: linear-gradient(135deg, #c084fc 0%, #a855f7 40%, #3b82f6 100%);
-      box-shadow: 0 0 18px rgba(168, 85, 247, 0.6);
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
     }
-
     .avatar-inner {
       width: 100%;
       height: 100%;
       border-radius: 50%;
-      background: radial-gradient(circle at 40% 35%, #581c87 0%, #1e1b4b 100%);
+      background: #581c87;
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      color: #ffffff;
       font-weight: 800;
       font-size: 18px;
     }
-
-    .avatar-inner img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
     .level-badge {
       position: absolute;
       bottom: -6px;
-      z-index: 4;
       background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
-      border: 1.5px solid rgba(255, 255, 255, 0.6);
       color: #ffffff;
       font-size: 9px;
       font-weight: 800;
       padding: 1.5px 8px;
       border-radius: 10px;
-      white-space: nowrap;
-      letter-spacing: 0.2px;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
     }
 
-    .welcome-text-col {
-      flex: 1;
-      padding-left: 12px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .welcome-sub {
-      font-size: 12px;
-      color: #cbd5e1;
-      font-weight: 500;
-      line-height: 1.2;
-    }
-
-    .welcome-user-row {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      margin-top: 1px;
-    }
-
-    .user-name {
-      font-size: 18px;
-      font-weight: 800;
-      color: #ffffff;
-      letter-spacing: -0.2px;
-    }
-
-    .gold-star-icon {
-      font-size: 16px;
-      filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.8));
-    }
-
-    .welcome-motivate {
-      font-size: 11px;
-      color: #e2e8f0;
-      font-weight: 500;
-      margin-top: 3px;
-    }
-
-    .motivate-gold {
-      color: #fbbf24;
-      font-weight: 800;
-      text-shadow: 0 0 8px rgba(251, 191, 36, 0.4);
-    }
-
-    .welcome-bonus-col {
-      flex-shrink: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      cursor: pointer;
-    }
-
-    .bonus-circle-btn {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 30%, #c084fc 0%, #7e22ce 60%, #4c1d95 100%);
-      border: 2px solid rgba(255, 255, 255, 0.5);
-      box-shadow: 0 0 20px rgba(168, 85, 247, 0.65), inset 0 2px 4px rgba(255, 255, 255, 0.4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      transition: transform 0.2s ease;
-    }
-    .bonus-circle-btn:active { transform: scale(0.92); }
-
-    .notif-dot {
-      position: absolute;
-      top: 1px;
-      right: 1px;
-      width: 10px;
-      height: 10px;
-      background: #ef4444;
-      border: 2px solid #ffffff;
-      border-radius: 50%;
-      box-shadow: 0 0 8px #ef4444;
-    }
-
-    .bonus-capsule-label {
-      margin-top: 5px;
-      background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      padding: 2.5px 8px;
-      border-radius: 12px;
-      font-size: 9px;
-      font-weight: 800;
-      color: #ffffff;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-      white-space: nowrap;
-    }
-
-    /* ---------------- STATISTICS CARD ---------------- */
     .stats-card {
       padding: 12px 10px;
       display: grid;
       grid-template-columns: 1fr auto 1fr auto 1fr;
       align-items: center;
       border: 1px solid rgba(59, 130, 246, 0.35);
-      box-shadow: 0 0 22px -6px rgba(59, 130, 246, 0.3);
     }
+    .stat-item { display: flex; align-items: center; gap: 7px; cursor: pointer; }
+    .stat-sep { width: 1px; height: 32px; background: rgba(255, 255, 255, 0.16); margin: 0 4px; }
 
-    .stat-item {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      cursor: pointer;
-    }
-
-    .stat-icon-wrapper {
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .stat-content {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .stat-num {
-      font-size: 15px;
-      font-weight: 800;
-      color: #ffffff;
-      line-height: 1.15;
-    }
-
-    .stat-label {
-      font-size: 10px;
-      color: #94a3b8;
-      font-weight: 600;
-      margin-top: 1px;
-      white-space: nowrap;
-    }
-
-    .stat-sep {
-      width: 1px;
-      height: 32px;
-      background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.16), transparent);
-      margin: 0 4px;
-    }
-
-    /* ---------------- PREMIUM CARD ---------------- */
-    .premium-card {
-      padding: 12px 14px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      border: 1px solid rgba(251, 191, 36, 0.3);
-      box-shadow: 0 8px 24px -4px rgba(245, 158, 11, 0.2);
-      cursor: pointer;
-    }
-
-    .premium-shield {
-      width: 44px;
-      height: 48px;
-      background: radial-gradient(circle at 40% 35%, #fbbf24 0%, #d97706 70%, #92400e 100%);
-      clip-path: polygon(50% 0%, 100% 12%, 100% 68%, 50% 100%, 0% 68%, 0% 12%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      box-shadow: 0 0 16px rgba(245, 158, 11, 0.5);
-      border: 1px solid #fef08a;
-    }
-
-    .premium-shield svg {
-      width: 22px;
-      height: 22px;
-      fill: #ffffff;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
-    }
-
-    .premium-mid {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .premium-title {
-      font-size: 13.5px;
-      font-weight: 800;
-      color: #ffffff;
-      line-height: 1.2;
-    }
-
-    .premium-pass {
-      font-size: 11px;
-      font-weight: 800;
-      color: #fbbf24;
-      margin-top: 1.5px;
-    }
-
-    .premium-sub {
-      font-size: 9.5px;
-      color: #94a3b8;
-      font-weight: 500;
-      margin-top: 1px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .premium-right-col {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 5px;
-      flex-shrink: 0;
-    }
-
+    .premium-card { padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px; border: 1px solid rgba(251, 191, 36, 0.3); }
     .upgrade-btn {
       padding: 7px 14px;
       border-radius: 20px;
       background: linear-gradient(135deg, #ef4444 0%, #ec4899 50%, #8b5cf6 100%);
-      border: 1px solid rgba(255, 255, 255, 0.4);
       color: #ffffff;
       font-size: 11px;
       font-weight: 800;
-      box-shadow: 0 4px 14px rgba(236, 72, 153, 0.5);
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    /* ---------------- QUIZ CATEGORIES ---------------- */
-    .quiz-categories-card {
-      padding: 12px 10px 14px 10px;
-      border: 1px solid rgba(168, 85, 247, 0.25);
-    }
-
-    .quiz-header-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 11px;
-      padding: 0 2px;
-    }
-
-    .quiz-header-title {
-      font-size: 15px;
-      font-weight: 800;
-      color: #ffffff;
-      letter-spacing: -0.2px;
-    }
-
-    .view-all-pill {
-      background: rgba(30, 36, 72, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: 14px;
-      padding: 3px 9px;
-      font-size: 10.5px;
-      font-weight: 700;
-      color: #cbd5e1;
-      display: flex;
-      align-items: center;
-      gap: 3px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
       cursor: pointer;
     }
 
-    .quiz-grid-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 7px;
-    }
-
+    .quiz-categories-card { padding: 12px 10px 14px 10px; border: 1px solid rgba(168, 85, 247, 0.25); }
+    .quiz-grid-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; }
     .quiz-box {
       border-radius: 16px;
       padding: 10px 4px 8px 4px;
@@ -604,139 +255,81 @@
       cursor: pointer;
       background: rgba(14, 18, 42, 0.85);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.15), 0 6px 16px rgba(0, 0, 0, 0.4);
-      transition: transform 0.15s ease;
     }
     .quiz-box:active { transform: scale(0.93); }
 
-    .quiz-box.purple-cat { border-color: rgba(168, 85, 247, 0.4); }
-    .quiz-box.purple-cat .quiz-play-link { color: #c084fc; }
-
-    .quiz-box.blue-cat { border-color: rgba(59, 130, 246, 0.4); }
-    .quiz-box.blue-cat .quiz-play-link { color: #60a5fa; }
-
-    .quiz-box.green-cat { border-color: rgba(16, 185, 129, 0.4); }
-    .quiz-box.green-cat .quiz-play-link { color: #34d399; }
-
-    .quiz-box.orange-cat { border-color: rgba(249, 115, 22, 0.4); }
-    .quiz-box.orange-cat .quiz-play-link { color: #fb923c; }
-
-    .quiz-icon-frame {
-      width: 44px;
-      height: 42px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 5px;
-    }
-
-    .quiz-box-title {
-      font-size: 11px;
-      font-weight: 800;
-      color: #ffffff;
-      line-height: 1.15;
-      margin-bottom: 3px;
-      white-space: nowrap;
-    }
-
-    .quiz-play-link {
-      font-size: 9px;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      gap: 1px;
-      letter-spacing: -0.2px;
-    }
-
-    /* ---------------- LEADERBOARD CARD ---------------- */
-    .leaderboard-card {
-      padding: 12px 14px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      border: 1px solid rgba(147, 51, 234, 0.35);
-      box-shadow: 0 0 24px -4px rgba(126, 34, 206, 0.35);
-      cursor: pointer;
-    }
-
-    .trophy-col {
-      width: 50px;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      position: relative;
-    }
-
-    .trophy-glow {
-      position: absolute;
-      width: 46px;
-      height: 46px;
-      background: radial-gradient(circle, rgba(245, 158, 11, 0.5) 0%, transparent 70%);
-      filter: blur(6px);
-    }
-
-    .leaderboard-mid { flex: 1; min-width: 0; }
-    .leaderboard-title { font-size: 15px; font-weight: 800; color: #ffffff; }
-    .leaderboard-desc { font-size: 10px; color: #94a3b8; font-weight: 500; margin-top: 2px; }
-
-    .leaderboard-btn {
-      padding: 7px 11px;
-      border-radius: 20px;
-      background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
-      border: 1px solid rgba(255, 255, 255, 0.35);
-      color: #ffffff;
-      font-size: 10.5px;
-      font-weight: 800;
-      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.45);
-      cursor: pointer;
-      white-space: nowrap;
-      display: flex;
-      align-items: center;
-      gap: 3px;
-      flex-shrink: 0;
-    }
-
-    /* ---------------- QUICK ACTIONS ---------------- */
-    .quick-actions-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 7px;
-    }
-
+    .quick-actions-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; }
     .action-tile {
       padding: 12px 4px 10px 4px;
       border-radius: 18px;
       background: rgba(14, 18, 42, 0.75);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.12), 0 6px 18px rgba(0, 0, 0, 0.4);
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
       cursor: pointer;
-      transition: transform 0.15s ease;
     }
     .action-tile:active { transform: scale(0.92); }
 
-    .action-icon-wrap {
-      width: 40px;
-      height: 40px;
+    /* ---------------- SUBPAGES HIERARCHY ---------------- */
+    .subpage-container { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+    .subpage-header { display: flex; align-items: center; justify-content: space-between; padding: 4px 6px; }
+    .subpage-title { font-size: 16px; font-weight: 800; color: #ffffff; display: flex; align-items: center; gap: 8px; }
+    .close-circle-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(22, 27, 56, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #ffffff;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 6px;
+      cursor: pointer;
     }
 
-    .action-label {
-      font-size: 10.5px;
-      font-weight: 800;
+    .option-btn {
+      width: 100%;
+      padding: 15px 16px;
+      background: rgba(18, 22, 50, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 16px;
       color: #ffffff;
-      line-height: 1.15;
-      white-space: nowrap;
+      font-size: 14px;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
+    .option-btn:active { transform: scale(0.98); }
+
+    .custom-input {
+      width: 100%;
+      padding: 13px 15px;
+      background: rgba(10, 14, 34, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 15px;
+      color: #ffffff;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .primary-action-btn {
+      width: 100%;
+      padding: 14px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 800;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+    .primary-action-btn:active { transform: scale(0.97); }
 
     /* ---------------- BOTTOM NAV ---------------- */
     .nav-bar-wrapper {
@@ -752,18 +345,15 @@
 
     .nav-bar {
       pointer-events: auto;
-      height: 60px;
+      height: 62px;
       border-radius: 34px;
-      background: rgba(8, 12, 30, 0.88);
+      background: rgba(8, 12, 30, 0.92);
       backdrop-filter: blur(28px);
-      -webkit-backdrop-filter: blur(28px);
       border: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.75), inset 0 1px 1px rgba(255, 255, 255, 0.2);
       display: flex;
       align-items: center;
       justify-content: space-around;
       padding: 0 6px;
-      position: relative;
     }
 
     .nav-tab {
@@ -774,146 +364,26 @@
       justify-content: center;
       cursor: pointer;
       color: #94a3b8;
-      transition: color 0.15s ease;
-      height: 100%;
     }
     .nav-tab.active { color: #c084fc; }
-
-    .nav-tab svg {
-      width: 20px;
-      height: 20px;
-      fill: currentColor;
-      margin-bottom: 2px;
-    }
-    .nav-tab.active svg {
-      fill: #c084fc;
-      filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.8));
-    }
-
-    .nav-label { font-size: 9.5px; font-weight: 800; }
-
-    .center-nav-holder {
-      position: relative;
-      width: 58px;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-shrink: 0;
-    }
+    .nav-tab svg { width: 20px; height: 20px; fill: currentColor; margin-bottom: 2px; }
 
     .center-play-btn {
-      position: absolute;
-      top: -18px;
       width: 56px;
       height: 56px;
       border-radius: 50%;
       background: radial-gradient(circle at 35% 30%, #c084fc 0%, #7c3aed 55%, #4f46e5 100%);
       border: 3.5px solid #050714;
-      box-shadow: 0 0 24px 3px rgba(147, 51, 234, 0.85), inset 0 2px 4px rgba(255, 255, 255, 0.5);
+      box-shadow: 0 0 24px 3px rgba(147, 51, 234, 0.85);
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      margin-top: -24px;
     }
-    .center-play-btn:active { transform: scale(0.9); }
-    .center-play-btn svg {
-      width: 22px;
-      height: 22px;
-      fill: #ffffff;
-      margin-left: 3px;
-    }
+    .center-play-btn svg { width: 22px; height: 22px; fill: #ffffff; margin-left: 3px; }
 
-    /* ---------------- FIXED SUB-SCREENS STYLING ---------------- */
-    .subpage-container {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      width: 100%;
-    }
-
-    .subpage-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 4px 6px;
-    }
-
-    .subpage-title {
-      font-size: 15px;
-      font-weight: 900;
-      color: #ffffff;
-      letter-spacing: -0.2px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .close-circle-btn {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: rgba(22, 27, 56, 0.8);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 13px;
-    }
-
-    .option-btn {
-      width: 100%;
-      padding: 14px 16px;
-      background: rgba(18, 22, 50, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 16px;
-      color: #ffffff;
-      font-size: 13px;
-      font-weight: 700;
-      text-align: left;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: transform 0.15s, background-color 0.15s;
-    }
-    .option-btn:active { transform: scale(0.98); }
-
-    .custom-input {
-      width: 100%;
-      padding: 12px 14px;
-      background: rgba(10, 14, 34, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 14px;
-      color: #ffffff;
-      font-size: 12px;
-      font-family: inherit;
-      outline: none;
-    }
-    .custom-input:focus {
-      border-color: #c084fc;
-    }
-
-    .primary-action-btn {
-      width: 100%;
-      padding: 13px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
-      color: #ffffff;
-      font-size: 13px;
-      font-weight: 800;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      box-shadow: 0 4px 16px rgba(236, 72, 153, 0.4);
-    }
-    .primary-action-btn:active { transform: scale(0.97); }
-
-    /* Modal Backdrop */
+    /* ---------------- MODALS ---------------- */
     .fixed-modal-backdrop {
       position: fixed;
       top: 0;
@@ -922,7 +392,6 @@
       height: 100vh;
       background: rgba(0, 0, 0, 0.85);
       backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
       z-index: 999;
       display: flex;
       align-items: center;
@@ -937,7 +406,7 @@
 
   <div class="cosmic-layer"></div>
 
-  <!-- ================= STRICT 15S VIDEO AD MODAL ================= -->
+  <!-- ================= VIDEO AD MODAL (FALLBACK / STRICT 15S) ================= -->
   <div id="strictVideoModal" class="fixed-modal-backdrop hidden">
     <div class="glass-card" style="width: 100%; max-width: 360px; padding: 18px; text-align: center; display: flex; flex-direction: column; gap: 12px;">
       <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 800; color: #fbbf24;">
@@ -945,41 +414,41 @@
         <span id="strictVideoTimerBadge" style="background: rgba(225, 29, 72, 0.3); border: 1px solid #f43f5e; padding: 2px 8px; border-radius: 8px; font-size: 10px; color: #ffffff;">Watch 15s</span>
       </div>
 
-      <div style="width: 100%; background: #000000; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.15); position: relative;">
+      <div style="width: 100%; background: #000000; border-radius: 16px; overflow: hidden; position: relative;">
         <video id="rewardFluidVideo" style="width: 100%; height: 210px;" playsinline></video>
         
         <div id="strictVideoOverlay" style="position: absolute; inset: 0; background: rgba(0,0,0,0.8); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; z-index: 20;">
           <button onclick="startStrictVideoPlayback()" style="width: 60px; height: 60px; border-radius: 50%; background: #fbbf24; color: #05020d; border: none; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; padding-left: 4px;">
             <i class="fa-solid fa-play"></i>
           </button>
-          <p style="font-size: 12px; font-weight: 800; color: #fde047;">Click to Play Ad (15s)</p>
-          <p style="font-size: 10px; color: #94a3b8;">15 seconds ad dekhne par coins milenge</p>
+          <p style="font-size: 12px; font-weight: 800; color: #fde047;">Play Video Ad (15s)</p>
+          <p style="font-size: 10px; color: #94a3b8;">15 second dekhne par coins credit honge</p>
         </div>
       </div>
-      <p style="font-size: 11px; color: #94a3b8;">Window band na karein jab tak video complete na ho jaye.</p>
+      <p style="font-size: 11px; color: #94a3b8;">Window band na karein jab tak video poori na ho jaye.</p>
     </div>
   </div>
 
-  <!-- ================= SPIN & WIN CANVAS MODAL (DAILY 3 LIMIT) ================= -->
+  <!-- ================= SPIN & WIN (3/DAY LIMIT) ================= -->
   <div id="spinWheelModal" class="fixed-modal-backdrop hidden">
     <div class="glass-card" style="width: 100%; max-width: 320px; padding: 20px; text-align: center; display: flex; flex-direction: column; gap: 14px; position: relative;">
       <button onclick="document.getElementById('spinWheelModal').classList.add('hidden')" style="position: absolute; top: 12px; right: 12px; width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; cursor: pointer;">
-        <i class="fa-solid fa-xmark"></i>
+        ✕
       </button>
 
       <div>
         <h3 style="font-size: 16px; font-weight: 900; color: #fbbf24;">Spin &amp; Win</h3>
-        <p style="font-size: 11px; color: #94a3b8;">Daily limit: 3 spins per day</p>
-        <span id="spinLeftBadge" style="display: inline-block; background: #7c3aed; color: #ffffff; font-weight: 800; font-size: 10px; padding: 3px 10px; border-radius: 12px; margin-top: 4px;">3 Spins Left</span>
+        <p style="font-size: 11px; color: #94a3b8;">Rozana 3 baar ghumayein</p>
+        <span id="spinLeftBadge" style="display: inline-block; background: #7c3aed; color: #ffffff; font-weight: 800; font-size: 10px; padding: 3px 10px; border-radius: 12px; margin-top: 4px;">3 Spins Baki</span>
       </div>
 
       <div style="position: relative; width: 190px; height: 190px; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
         <div style="position: absolute; top: -5px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-top: 14px solid #fbbf24; z-index: 30;"></div>
-        <canvas id="wheelCanvas" width="186" height="186" style="border-radius: 50%; border: 3px solid rgba(251, 191, 36, 0.7); box-shadow: 0 0 20px rgba(0,0,0,0.8);"></canvas>
+        <canvas id="wheelCanvas" width="186" height="186" style="border-radius: 50%; border: 3px solid rgba(251, 191, 36, 0.7);"></canvas>
       </div>
 
       <button id="spinActionBtn" onclick="executeSpin()" class="primary-action-btn" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
-        Spin Wheel Now
+        Spin Wheel Ghumayein
       </button>
     </div>
   </div>
@@ -987,9 +456,9 @@
   <!-- ================= SPLASH SCREEN ================= -->
   <div id="splashScreen" style="position: fixed; inset: 0; background: #030614; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 40px 20px;">
     <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
-      <img src="https://i.ibb.co/BHTcn7QD/file-0000000021988211ab800b8ece076fff.png" alt="Quizly Logo" style="width: 140px; height: 140px; object-contain: contain; margin-bottom: 16px; border-radius: 28px; border: 1.5px solid rgba(251, 191, 36, 0.4); box-shadow: 0 0 30px rgba(124, 58, 237, 0.4);" />
-      <h1 style="font-size: 28px; font-weight: 900; color: #ffffff; letter-spacing: -0.5px;">Quizly <span style="color: #fbbf24;">Earn</span></h1>
-      <p style="font-size: 12px; color: #c084fc; font-weight: 700; margin-top: 6px; letter-spacing: 0.5px; text-transform: uppercase;">Play Quiz • Watch Ads • Earn Real Cash</p>
+      <img src="https://i.ibb.co/BHTcn7QD/file-0000000021988211ab800b8ece076fff.png" alt="Quizly Logo" style="width: 140px; height: 140px; border-radius: 28px; border: 1.5px solid rgba(251, 191, 36, 0.4); margin-bottom: 16px;" />
+      <h1 style="font-size: 28px; font-weight: 900; color: #ffffff;">Quizly <span style="color: #fbbf24;">Earn</span></h1>
+      <p style="font-size: 12px; color: #c084fc; font-weight: 700; margin-top: 6px; text-transform: uppercase;">Play Quiz • Watch Ads • Earn Real Cash</p>
     </div>
     <div style="width: 100%; max-width: 280px; text-align: center; display: flex; flex-direction: column; gap: 8px;">
       <div style="width: 100%; background: rgba(255,255,255,0.1); height: 6px; border-radius: 10px; overflow: hidden;">
@@ -1002,13 +471,13 @@
   <!-- ================= AUTH SCREEN ================= -->
   <div id="authScreen" class="fixed-modal-backdrop hidden" style="z-index: 998; overflow-y: auto;">
     <div class="glass-card" style="width: 100%; max-width: 350px; padding: 22px; display: flex; flex-direction: column; gap: 14px; text-align: center;">
-      <img src="https://i.ibb.co/BHTcn7QD/file-0000000021988211ab800b8ece076fff.png" class="splash-logo" style="width: 60px; height: 60px; margin: 0 auto; border-radius: 16px; border: 1px solid rgba(251,191,36,0.4);" alt="Logo"/>
+      <img src="https://i.ibb.co/BHTcn7QD/file-0000000021988211ab800b8ece076fff.png" style="width: 60px; height: 60px; margin: 0 auto; border-radius: 16px;" alt="Logo"/>
       <div>
         <h2 style="font-size: 18px; font-weight: 900; color: #ffffff;" id="authTitle">Welcome to Quizly</h2>
         <p style="font-size: 11px; color: #94a3b8; margin-top: 2px;">Login or create account to save rewards</p>
       </div>
 
-      <div style="display: flex; background: rgba(0,0,0,0.4); padding: 3px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+      <div style="display: flex; background: rgba(0,0,0,0.4); padding: 3px; border-radius: 12px;">
         <button onclick="setAuthMode('login')" id="tabBtnLogin" style="flex: 1; padding: 8px; border-radius: 10px; font-size: 12px; font-weight: 800; border: none; cursor: pointer; background: #fbbf24; color: #05020d;">Log In</button>
         <button onclick="setAuthMode('signup')" id="tabBtnSignup" style="flex: 1; padding: 8px; border-radius: 10px; font-size: 12px; font-weight: 800; border: none; cursor: pointer; background: transparent; color: #94a3b8;">Sign Up</button>
       </div>
@@ -1032,12 +501,6 @@
         Login Account
       </button>
 
-      <div style="display: flex; align-items: center; gap: 8px; margin: 4px 0;">
-        <div style="flex: 1; height: 1px; background: rgba(255,255,255,0.15);"></div>
-        <span style="font-size: 10px; font-weight: 800; color: #94a3b8;">OR</span>
-        <div style="flex: 1; height: 1px; background: rgba(255,255,255,0.15);"></div>
-      </div>
-
       <button onclick="handleGoogleSignIn()" style="width: 100%; padding: 11px; border-radius: 14px; background: #ffffff; color: #1e293b; font-size: 12px; font-weight: 800; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
         <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" style="width: 16px; height: 16px;" alt="Google" />
         <span>Continue with Google</span>
@@ -1050,9 +513,9 @@
     
     <main class="app-screen">
 
-      <!-- ================= 1. HOME SCREEN (YOUR EXACT TEMPLATE) ================= -->
+      <!-- ================= 1. HOME SCREEN (EXACT MATCH) ================= -->
       <section id="uTabHome" style="display: flex; flex-direction: column; gap: 11px;">
-        <!-- 1. HEADER -->
+        <!-- HEADER -->
         <header class="header">
           <button class="hamburger-btn" onclick="switchUserTab('uTabProfile')">
             <span class="hamburger-bar"></span>
@@ -1074,29 +537,15 @@
           </div>
         </header>
 
-        <!-- 2. WELCOME CARD -->
+        <!-- WELCOME CARD -->
         <section class="glass-card welcome-card">
           <div class="welcome-avatar-col">
             <svg class="crown-icon" width="22" height="15" viewBox="0 0 24 16" fill="none">
-              <path d="M2 14h20l-3-11-5 6-4-8-4 8-4-6-3 11z" fill="url(#crownGrad)" stroke="#fef08a" stroke-width="1"/>
-              <circle cx="2" cy="3" r="1.5" fill="#fef08a"/>
-              <circle cx="6" cy="1" r="1.5" fill="#fef08a"/>
-              <circle cx="12" cy="0.5" r="1.8" fill="#fef08a"/>
-              <circle cx="18" cy="1" r="1.5" fill="#fef08a"/>
-              <circle cx="22" cy="3" r="1.5" fill="#fef08a"/>
-              <defs>
-                <linearGradient id="crownGrad" x1="0" y1="0" x2="0" y2="16" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#fef08a"/>
-                  <stop offset="0.6" stop-color="#f59e0b"/>
-                  <stop offset="1" stop-color="#b45309"/>
-                </linearGradient>
-              </defs>
+              <path d="M2 14h20l-3-11-5 6-4-8-4 8-4-6-3 11z" fill="#f59e0b" stroke="#fef08a" stroke-width="1"/>
             </svg>
 
             <div class="avatar-ring">
-              <div class="avatar-inner" id="uHeaderAvatarHolder">
-                S
-              </div>
+              <div class="avatar-inner" id="uHeaderAvatarHolder">S</div>
             </div>
 
             <div class="level-badge">Level 8</div>
@@ -1105,12 +554,10 @@
           <div class="welcome-text-col">
             <div class="welcome-sub">Welcome Back,</div>
             <div class="welcome-user-row">
-              <span class="user-name" id="uProfileName">Player</span>
+              <span class="user-name" id="uProfileName">Sabister</span>
               <span class="gold-star-icon">⭐</span>
             </div>
-            <div class="welcome-motivate">
-              Keep playing &amp; <span class="motivate-gold">win more coins!</span>
-            </div>
+            <div class="welcome-motivate">Keep playing &amp; <span class="motivate-gold">win more coins!</span></div>
           </div>
 
           <div class="welcome-bonus-col" onclick="requestStrictVideoAd('bonus')">
@@ -1120,23 +567,36 @@
                 <path d="M20 12v9a1 1 0 01-1 1H5a1 1 0 01-1-1v-9h16z" fill="#ffffff"/>
                 <path d="M21 7H3a1 1 0 00-1 1v3a1 1 0 001 1h18a1 1 0 001-1V8a1 1 0 00-1-1z" fill="#f8fafc"/>
                 <path d="M11 7v15h2V7h-2z" fill="#a855f7"/>
-                <path d="M12 7c-1.5 0-3.5-2.5-1.5-4 1.5-1.1 3 1.5 3 4M12 7c1.5 0 3.5-2.5 1.5-4-1.5-1.1-3 1.5-3 4" stroke="#a855f7" stroke-width="2" stroke-linecap="round"/>
               </svg>
             </div>
             <div class="bonus-capsule-label">Daily Bonus</div>
           </div>
         </section>
 
-        <!-- 3. STATISTICS CARD -->
+        <!-- READ & EARN (60S ARTICLE CARD ADDED) -->
+        <section class="glass-card" onclick="startReadArticleTask()" style="padding: 13px 14px; display: flex; align-items: center; justify-content: space-between; border: 1px solid rgba(16, 185, 129, 0.4); cursor: pointer;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 44px; height: 44px; border-radius: 14px; background: rgba(16, 185, 129, 0.2); border: 1px solid rgba(16, 185, 129, 0.4); display: flex; align-items: center; justify-content: center; font-size: 20px; color: #34d399;">
+              📖
+            </div>
+            <div>
+              <h4 style="font-size: 13.5px; font-weight: 800; color: #ffffff;">Read &amp; Earn Article</h4>
+              <p style="font-size: 11px; font-weight: 700; color: #34d399;">Stay 60s → 1–20 Coins</p>
+            </div>
+          </div>
+          <button style="padding: 6px 12px; border-radius: 18px; background: #10b981; color: #ffffff; font-size: 10px; font-weight: 800; border: none; cursor: pointer;">
+            Read Now
+          </button>
+        </section>
+
+        <!-- STATISTICS CARD -->
         <section class="glass-card stats-card">
           <div class="stat-item" onclick="switchUserTab('uTabWallet')">
             <div class="stat-icon-wrapper">
               <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
                 <ellipse cx="20" cy="12" rx="9" ry="4.5" fill="#fef08a" stroke="#d97706" stroke-width="1.5"/>
                 <ellipse cx="20" cy="18" rx="9" ry="4.5" fill="#f59e0b" stroke="#b45309" stroke-width="1.5"/>
-                <path d="M11 12v6c0 2.5 4 4.5 9 4.5s9-2 9-4.5v-6" stroke="#b45309" stroke-width="1.5" fill="none"/>
                 <ellipse cx="12" cy="20" rx="8" ry="4" fill="#fbbf24" stroke="#b45309" stroke-width="1.5"/>
-                <path d="M4 20v4c0 2.2 3.6 4 8 4s8-1.8 8-4v-4" stroke="#92400e" stroke-width="1.5" fill="none"/>
               </svg>
             </div>
             <div class="stat-content">
@@ -1150,14 +610,7 @@
           <div class="stat-item">
             <div class="stat-icon-wrapper">
               <svg width="26" height="28" viewBox="0 0 24 24" fill="none">
-                <path d="M13 2L3 14h8l-2 8 12-13h-8l2-7z" fill="url(#cyanBolt)" filter="drop-shadow(0 0 6px #06b6d4)"/>
-                <defs>
-                  <linearGradient id="cyanBolt" x1="12" y1="2" x2="12" y2="22" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#a5f3fc"/>
-                    <stop offset="0.5" stop-color="#38bdf8"/>
-                    <stop offset="1" stop-color="#2563eb"/>
-                  </linearGradient>
-                </defs>
+                <path d="M13 2L3 14h8l-2 8 12-13h-8l2-7z" fill="#38bdf8"/>
               </svg>
             </div>
             <div class="stat-content">
@@ -1172,9 +625,7 @@
             <div class="stat-icon-wrapper">
               <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
                 <rect x="3" y="4" width="18" height="17" rx="4" fill="#064e3b" stroke="#10b981" stroke-width="1.8"/>
-                <path d="M3 9h18" stroke="#10b981" stroke-width="1.8"/>
-                <path d="M8 2v4M16 2v4" stroke="#34d399" stroke-width="2" stroke-linecap="round"/>
-                <path d="M8 15l2.5 2.5L16 12" stroke="#34d399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8 15l2.5 2.5L16 12" stroke="#34d399" stroke-width="2" stroke-linecap="round"/>
               </svg>
             </div>
             <div class="stat-content">
@@ -1184,12 +635,10 @@
           </div>
         </section>
 
-        <!-- 4. PREMIUM CARD -->
+        <!-- PREMIUM CARD -->
         <section class="glass-card premium-card" onclick="alert('Lifetime Premium Pass checkout opening soon!')">
           <div class="premium-shield">
-            <svg viewBox="0 0 24 24">
-              <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
-            </svg>
+            <svg viewBox="0 0 24 24"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/></svg>
           </div>
 
           <div class="premium-mid">
@@ -1204,81 +653,57 @@
           </div>
         </section>
 
-        <!-- 5. QUIZ CATEGORIES -->
+        <!-- QUIZ CATEGORIES -->
         <section class="glass-card quiz-categories-card">
           <div class="quiz-header-row">
             <div class="quiz-header-title">Quiz Categories</div>
-            <div class="view-all-pill" onclick="startCategoryQuiz('Hindi GK')">
+            <div class="view-all-pill" onclick="startHindiCategoryQuiz('सामान्य ज्ञान')">
               <span>View All</span>
               <span>›</span>
             </div>
           </div>
 
           <div class="quiz-grid-row">
-            <div class="quiz-box purple-cat" onclick="startCategoryQuiz('Hindi GK')">
+            <div class="quiz-box purple-cat" onclick="startHindiCategoryQuiz('सामान्य ज्ञान')">
               <div class="quiz-icon-frame">
-                <svg width="40" height="34" viewBox="0 0 44 38" fill="none">
-                  <path d="M22 10C17 6 6 6 3 8v22c3-2 14-2 19 2 5-4 16-4 19-2V8c-3-2-14-2-19 2z" fill="#581c87" stroke="#c084fc" stroke-width="1.8"/>
-                  <text x="27" y="24" font-family="'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="14" fill="#fbbf24">स</text>
-                </svg>
+                <span style="font-size: 24px;">📖</span>
               </div>
-              <div class="quiz-box-title">Hindi GK</div>
+              <div class="quiz-box-title">सामान्य ज्ञान</div>
               <div class="quiz-play-link"><span>Play Now</span><span>›</span></div>
             </div>
 
-            <div class="quiz-box blue-cat" onclick="startCategoryQuiz('English GK')">
+            <div class="quiz-box blue-cat" onclick="startHindiCategoryQuiz('विज्ञान क्विज')">
               <div class="quiz-icon-frame">
-                <svg width="38" height="34" viewBox="0 0 40 36" fill="none">
-                  <rect x="13" y="2" width="14" height="14" rx="3" fill="#1e3a8a" stroke="#60a5fa" stroke-width="1.5"/>
-                  <text x="17.5" y="13" font-size="10" font-weight="900" fill="#ffffff">A</text>
-                  <rect x="4" y="18" width="14" height="14" rx="3" fill="#1d4ed8" stroke="#38bdf8" stroke-width="1.5"/>
-                  <text x="8.5" y="29" font-size="10" font-weight="900" fill="#ffffff">B</text>
-                  <rect x="22" y="18" width="14" height="14" rx="3" fill="#1d4ed8" stroke="#38bdf8" stroke-width="1.5"/>
-                  <text x="26.5" y="29" font-size="10" font-weight="900" fill="#ffffff">C</text>
-                </svg>
+                <span style="font-size: 24px;">🔬</span>
               </div>
-              <div class="quiz-box-title">English GK</div>
+              <div class="quiz-box-title">विज्ञान क्विज</div>
               <div class="quiz-play-link"><span>Play Now</span><span>›</span></div>
             </div>
 
-            <div class="quiz-box green-cat" onclick="startCategoryQuiz('Plus Math')">
+            <div class="quiz-box green-cat" onclick="startHindiCategoryQuiz('गणित जोड़')">
               <div class="quiz-icon-frame">
-                <svg width="38" height="34" viewBox="0 0 38 34" fill="none">
-                  <path d="M9 4v10M4 9h10" stroke="#34d399" stroke-width="3" stroke-linecap="round"/>
-                  <path d="M24 9h10" stroke="#34d399" stroke-width="3" stroke-linecap="round"/>
-                  <path d="M5 23l8 8M13 23l-8 8" stroke="#10b981" stroke-width="2.6" stroke-linecap="round"/>
-                  <path d="M24 27h10" stroke="#10b981" stroke-width="2.6" stroke-linecap="round"/>
-                  <circle cx="29" cy="22" r="1.5" fill="#34d399"/>
-                  <circle cx="29" cy="32" r="1.5" fill="#34d399"/>
-                </svg>
+                <span style="font-size: 24px;">➕</span>
               </div>
-              <div class="quiz-box-title">Plus Math</div>
+              <div class="quiz-box-title">गणित जोड़</div>
               <div class="quiz-play-link"><span>Play Now</span><span>›</span></div>
             </div>
 
-            <div class="quiz-box orange-cat" onclick="startCategoryQuiz('Minus Math')">
+            <div class="quiz-box orange-cat" onclick="startHindiCategoryQuiz('गणित घटाव')">
               <div class="quiz-icon-frame">
-                <svg width="36" height="34" viewBox="0 0 38 36" fill="none">
-                  <rect x="5" y="4" width="28" height="28" rx="8" fill="#ea580c" stroke="#fb923c" stroke-width="1.8"/>
-                  <rect x="14" y="1" width="10" height="4" rx="2" fill="#fed7aa" stroke="#ea580c" stroke-width="1"/>
-                  <path d="M12 18h14" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round"/>
-                </svg>
+                <span style="font-size: 24px;">➖</span>
               </div>
-              <div class="quiz-box-title">Minus Math</div>
+              <div class="quiz-box-title">गणित घटाव</div>
               <div class="quiz-play-link"><span>Play Now</span><span>›</span></div>
             </div>
           </div>
         </section>
 
-        <!-- 6. LEADERBOARD CARD -->
+        <!-- LEADERBOARD CARD -->
         <section class="glass-card leaderboard-card" onclick="switchUserTab('uTabLeaderboard')">
           <div class="trophy-col">
             <div class="trophy-glow"></div>
             <svg width="44" height="44" viewBox="0 0 36 36" fill="none">
               <path d="M10 6h16v10c0 4.4-3.6 8-8 8s-8-3.6-8-8V6z" fill="#f59e0b" stroke="#fef08a" stroke-width="1.2"/>
-              <path d="M10 8H5c0 4 2 7 5 7V8zM26 8h5c0 4-2 7-5 7V8z" fill="none" stroke="#f59e0b" stroke-width="1.6"/>
-              <polygon points="18,9 19.5,13.5 24,13.5 20.5,16 22,20.5 18,18 14,20.5 15.5,16 12,13.5 16.5,13.5" fill="#dc2626"/>
-              <path d="M16 24h4v4h-4z" fill="#b45309"/>
               <rect x="11" y="28" width="14" height="4" rx="1.5" fill="#78350f" stroke="#f59e0b" stroke-width="1"/>
             </svg>
           </div>
@@ -1294,55 +719,25 @@
           </button>
         </section>
 
-        <!-- 7. QUICK ACTIONS -->
+        <!-- QUICK ACTIONS -->
         <section class="quick-actions-row">
           <div class="action-tile" onclick="openSpinWheelModal()">
-            <div class="action-icon-wrap">
-              <svg width="34" height="34" viewBox="0 0 36 36" fill="none">
-                <circle cx="18" cy="18" r="16" fill="#1e1b4b" stroke="#f59e0b" stroke-width="1.8"/>
-                <path d="M18 18L18 2A16 16 0 0 1 31.8 10z" fill="#ef4444"/>
-                <path d="M18 18L31.8 10A16 16 0 0 1 31.8 26z" fill="#3b82f6"/>
-                <path d="M18 18L31.8 26A16 16 0 0 1 18 34z" fill="#10b981"/>
-                <path d="M18 18L18 34A16 16 0 0 1 4.2 26z" fill="#f59e0b"/>
-                <circle cx="18" cy="18" r="4.5" fill="#fef08a" stroke="#d97706" stroke-width="1.2"/>
-              </svg>
-            </div>
+            <div class="action-icon-wrap"><span style="font-size: 22px;">🎡</span></div>
             <div class="action-label">Spin &amp; Win</div>
           </div>
 
           <div class="action-tile" onclick="requestStrictVideoAd('bonus')">
-            <div class="action-icon-wrap">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-                <rect x="3" y="4" width="18" height="17" rx="4" fill="#1e3a8a" stroke="#60a5fa" stroke-width="1.6"/>
-                <path d="M3 9h18" stroke="#60a5fa" stroke-width="1.6"/>
-                <path d="M8 2v4M16 2v4" stroke="#93c5fd" stroke-width="2" stroke-linecap="round"/>
-                <path d="M8 15l2.5 2.5L16 12" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
+            <div class="action-icon-wrap"><span style="font-size: 22px;">📅</span></div>
             <div class="action-label">Daily Bonus</div>
           </div>
 
           <div class="action-tile" onclick="switchUserTab('uTabRefer')">
-            <div class="action-icon-wrap">
-              <svg width="34" height="32" viewBox="0 0 24 24" fill="none">
-                <circle cx="9" cy="8" r="4" fill="#38bdf8"/>
-                <path d="M3 19c0-3.3 2.7-6 6-6s6 2.7 6 6" fill="#0284c7"/>
-                <circle cx="17" cy="9" r="2.5" fill="#67e8f9"/>
-                <path d="M17 14v4M15 16h4" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-            </div>
+            <div class="action-icon-wrap"><span style="font-size: 22px;">👥</span></div>
             <div class="action-label">Invite &amp; Earn</div>
           </div>
 
           <div class="action-tile" onclick="switchUserTab('uTabWallet')">
-            <div class="action-icon-wrap">
-              <svg width="34" height="32" viewBox="0 0 34 32" fill="none">
-                <rect x="8" y="4" width="18" height="8" rx="2" fill="#34d399"/>
-                <rect x="3" y="9" width="28" height="20" rx="5" fill="#d97706" stroke="#f59e0b" stroke-width="1.4"/>
-                <path d="M22 15h9v8h-9a4 4 0 010-8z" fill="#b45309" stroke="#fbbf24" stroke-width="1"/>
-                <circle cx="26" cy="19" r="1.5" fill="#fef08a"/>
-              </svg>
-            </div>
+            <div class="action-icon-wrap"><span style="font-size: 22px;">👛</span></div>
             <div class="action-label">Redeem</div>
           </div>
         </section>
@@ -1351,16 +746,16 @@
       <!-- ================= 2. WATCH & EARN STREAM SCREEN ================= -->
       <section id="uTabWatchEarn" class="subpage-container hidden">
         <div class="subpage-header">
-          <div class="subpage-title"><i class="fa-solid fa-tv" style="color: #fbbf24;"></i> Watch &amp; Earn</div>
+          <div class="subpage-title"><i class="fa-solid fa-clapperboard" style="color: #fbbf24;"></i> Watch &amp; Earn Hub</div>
           <button class="close-circle-btn" onclick="stopWatchEarnStream(); switchUserTab('uTabHome');">✕</button>
         </div>
 
-        <div class="glass-card" style="padding: 16px; text-align: center; display: flex; flex-direction: column; gap: 8px;">
-          <div style="display: inline-block; margin: 0 auto; background: rgba(225,29,72,0.25); border: 1px solid #f43f5e; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 800; font-family: monospace; color: #fda4af;">
-            Timer: <span id="streamTimeRemaining" style="color: #ffffff;">120s</span>
+        <div class="glass-card" style="padding: 18px; text-align: center; display: flex; flex-direction: column; gap: 8px;">
+          <div style="display: inline-block; margin: 0 auto; background: rgba(225,29,72,0.25); border: 1px solid #f43f5e; padding: 4px 14px; border-radius: 20px; font-size: 11px; font-weight: 800; font-family: monospace; color: #fda4af;">
+            2 Min Stream Timer: <span id="streamTimeRemaining" style="color: #ffffff;">120s</span>
           </div>
-          <h4 style="font-size: 14px; font-weight: 800; color: #ffffff;">Stream 2 Minutes Non-Stop</h4>
-          <p style="font-size: 11px; font-weight: 700; color: #fbbf24;">Earn 2 to 50 Coins Randomly!</p>
+          <h4 style="font-size: 15px; font-weight: 800; color: #ffffff;">Stream 2 Minutes Non-Stop</h4>
+          <p style="font-size: 12px; font-weight: 700; color: #fbbf24;">Reward: 2 se 50 Coins Randomly!</p>
 
           <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 6px; overflow: hidden; margin-top: 4px;">
             <div id="streamProgressBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #f59e0b, #c084fc); transition: width 1s linear;"></div>
@@ -1368,8 +763,8 @@
         </div>
 
         <div class="glass-card" style="padding: 12px; display: flex; flex-direction: column; gap: 8px;">
-          <p style="font-size: 11px; font-weight: 700; color: #94a3b8;"><i class="fa-solid fa-video" style="margin-right: 5px;"></i>Live Video Channel</p>
-          <div style="width: 100%; height: 200px; background: #000; border-radius: 16px; overflow: hidden;">
+          <p style="font-size: 11px; font-weight: 700; color: #94a3b8;"><i class="fa-solid fa-video" style="margin-right: 5px;"></i>Live In-Stream VAST Video</p>
+          <div style="width: 100%; height: 210px; background: #000; border-radius: 16px; overflow: hidden;">
             <video id="watchEarnVastVideo" style="width: 100%; height: 100%;" playsinline></video>
           </div>
         </div>
@@ -1383,24 +778,21 @@
         </div>
 
         <div style="display: flex; justify-content: space-around; align-items: flex-end; padding: 10px 4px 6px 4px;">
-          <!-- Rank 2 -->
           <div style="text-align: center; display: flex; flex-direction: column; align-items: center; gap: 3px;">
-            <div id="podium2Avatar" style="width: 58px; height: 58px; border-radius: 50%; background: #7c3aed; border: 2px solid #a855f7; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; color: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">R</div>
+            <div id="podium2Avatar" style="width: 58px; height: 58px; border-radius: 50%; background: #7c3aed; border: 2px solid #a855f7; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; color: #ffffff;">R</div>
             <h5 id="podium2Name" style="font-size: 11px; font-weight: 700; color: #ffffff; max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Player 2</h5>
             <p id="podium2Coins" style="font-size: 10px; color: #94a3b8; font-family: monospace;">0</p>
           </div>
 
-          <!-- Rank 1 Crown -->
           <div style="text-align: center; display: flex; flex-direction: column; align-items: center; gap: 3px; position: relative; top: -10px;">
             <span style="font-size: 24px; position: absolute; top: -20px;">👑</span>
-            <div id="podium1Avatar" style="width: 72px; height: 72px; border-radius: 50%; background: #0284c7; border: 3px solid #fbbf24; display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 900; color: #ffffff; box-shadow: 0 0 24px rgba(251,191,36,0.6);">S</div>
+            <div id="podium1Avatar" style="width: 72px; height: 72px; border-radius: 50%; background: #0284c7; border: 3px solid #fbbf24; display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 900; color: #ffffff;">S</div>
             <h5 id="podium1Name" style="font-size: 12px; font-weight: 900; color: #fbbf24; max-width: 90px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Player 1</h5>
             <p id="podium1Coins" style="font-size: 11px; color: #fde047; font-weight: 800; font-family: monospace;">0</p>
           </div>
 
-          <!-- Rank 3 -->
           <div style="text-align: center; display: flex; flex-direction: column; align-items: center; gap: 3px;">
-            <div id="podium3Avatar" style="width: 58px; height: 58px; border-radius: 50%; background: #2563eb; border: 2px solid #60a5fa; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; color: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">S</div>
+            <div id="podium3Avatar" style="width: 58px; height: 58px; border-radius: 50%; background: #2563eb; border: 2px solid #60a5fa; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; color: #ffffff;">S</div>
             <h5 id="podium3Name" style="font-size: 11px; font-weight: 700; color: #ffffff; max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Player 3</h5>
             <p id="podium3Coins" style="font-size: 10px; color: #94a3b8; font-family: monospace;">0</p>
           </div>
@@ -1409,11 +801,11 @@
         <div id="uLeaderboardList" style="display: flex; flex-direction: column; gap: 8px;"></div>
       </section>
 
-      <!-- ================= 4. KBC QUIZ SCREEN (FIXED CSS) ================= -->
+      <!-- ================= 4. HINDI KBC QUIZ SCREEN (PROPER SIZE) ================= -->
       <section id="uTabQuiz" class="subpage-container hidden">
         <div class="subpage-header">
           <div class="subpage-title">
-            <span>Question <span id="kbcCount" style="color: #fbbf24;">1</span>/5</span>
+            <span>प्रश्न <span id="kbcCount" style="color: #fbbf24;">1</span>/5</span>
           </div>
           <div style="display: flex; align-items: center; gap: 8px;">
             <div style="background: rgba(225,29,72,0.3); border: 1px solid #f43f5e; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 800; color: #fff;">
@@ -1423,11 +815,11 @@
           </div>
         </div>
 
-        <div class="glass-card" style="padding: 20px 14px; text-align: center; min-height: 120px; display: flex; align-items: center; justify-content: center;">
-          <h3 id="kbcQuestionLabel" style="font-size: 14px; font-weight: 800; color: #ffffff; line-height: 1.4;">Loading question...</h3>
+        <div class="glass-card" style="padding: 24px 16px; text-align: center; min-height: 130px; display: flex; align-items: center; justify-content: center;">
+          <h3 id="kbcQuestionLabel" style="font-size: 15px; font-weight: 800; color: #ffffff; line-height: 1.5;">प्रश्न लोड हो रहा है...</h3>
         </div>
 
-        <div id="kbcOptionsWrapper" style="display: flex; flex-direction: column; gap: 8px;"></div>
+        <div id="kbcOptionsWrapper" style="display: flex; flex-direction: column; gap: 9px;"></div>
       </section>
 
       <!-- ================= 5. QUIZ REWARD UNLOCK SCREEN ================= -->
@@ -1436,12 +828,12 @@
           <div style="width: 58px; height: 58px; border-radius: 50%; background: rgba(251,191,36,0.2); border: 1px solid rgba(251,191,36,0.4); display: flex; align-items: center; justify-content: center; font-size: 26px; color: #fbbf24;">
             🏆
           </div>
-          <h3 style="font-size: 18px; font-weight: 900; color: #ffffff;">Quiz Round Completed!</h3>
+          <h3 style="font-size: 18px; font-weight: 900; color: #ffffff;">राउंड समाप्त हुआ!</h3>
           <p style="font-size: 12px; color: #cbd5e1; line-height: 1.4;">
-            Coins add karne ke liye 15-second ka sponsored video ad dekhein (Earn 1–20 Coins).
+            Coins प्राप्त करने के लिए 15-second sponsored ad पूरा देखें (1–20 Coins).
           </p>
           <button onclick="requestStrictVideoAd('quiz')" class="primary-action-btn" style="margin-top: 6px;">
-            Watch 15s Ad &amp; Add Coins
+            15s Ad देखें और Coins पाएं
           </button>
         </div>
       </section>
@@ -1449,49 +841,94 @@
       <!-- ================= 6. REFER & EARN SCREEN ================= -->
       <section id="uTabRefer" class="subpage-container hidden">
         <div class="subpage-header">
-          <div class="subpage-title"><i class="fa-solid fa-gift" style="color: #fbbf24;"></i> Refer &amp; Earn</div>
+          <div class="subpage-title"><i class="fa-solid fa-gift" style="color: #fbbf24;"></i> रेफर करें और कमाएं</div>
           <button class="close-circle-btn" onclick="switchUserTab('uTabHome');">✕</button>
         </div>
 
         <div class="glass-card" style="padding: 20px; text-align: center; display: flex; flex-direction: column; gap: 8px;">
-          <h2 style="font-size: 16px; font-weight: 900; color: #fbbf24;">Invite Friends, Earn 50 Coins!</h2>
+          <h2 style="font-size: 16px; font-weight: 900; color: #fbbf24;">दोस्तों को Invite करें, 50 Coins पाएं!</h2>
           <p style="font-size: 11px; color: #cbd5e1;">1 Referral = 1 Withdraw Unlocked | 10 Referrals = Unlimited Withdrawals!</p>
         </div>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
           <div class="glass-card" style="padding: 14px; text-align: center;">
-            <p style="font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Total Referrals</p>
+            <p style="font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">कुल रेफरल</p>
             <h3 id="uReferPageCount" style="font-size: 22px; font-weight: 900; color: #ffffff; margin-top: 4px;">0</h3>
           </div>
           <div class="glass-card" style="padding: 14px; text-align: center;">
-            <p style="font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Coins Earned</p>
+            <p style="font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">कमाए गए Coins</p>
             <h3 id="uReferCoinsEarned" style="font-size: 22px; font-weight: 900; color: #fbbf24; margin-top: 4px;">0</h3>
           </div>
         </div>
 
         <div class="glass-card" style="padding: 16px; display: flex; flex-direction: column; gap: 8px;">
-          <label style="font-size: 11px; font-weight: 700; color: #cbd5e1;">Your Referral Link</label>
+          <label style="font-size: 11px; font-weight: 700; color: #cbd5e1;">आपकी रेफरल लिंक</label>
           <div style="display: flex; gap: 6px;">
             <input type="text" id="uReferralLinkDisplay" readonly class="custom-input" style="flex: 1; font-family: monospace; font-size: 11px;" />
-            <button onclick="navigator.clipboard.writeText(document.getElementById('uReferralLinkDisplay').value); alert('Referral link copied!');" style="padding: 0 16px; border-radius: 12px; background: #7c3aed; color: #fff; font-weight: 800; font-size: 11px; border: none; cursor: pointer;">
-              Copy
+            <button onclick="navigator.clipboard.writeText(document.getElementById('uReferralLinkDisplay').value); alert('रेफरल लिंक कॉपी हो गया!');" style="padding: 0 16px; border-radius: 12px; background: #7c3aed; color: #fff; font-weight: 800; font-size: 11px; border: none; cursor: pointer;">
+              कॉपी
             </button>
           </div>
         </div>
       </section>
 
-      <!-- ================= 7. WALLET & REDEEM SCREEN ================= -->
+      <!-- ================= 7. HINDI REDEEM SCREEN (PROPER SIZE) ================= -->
       <section id="uTabWallet" class="subpage-container hidden">
         <div class="subpage-header">
-          <div class="subpage-title"><i class="fa-solid fa-wallet" style="color: #fbbf24;"></i> Redeem Rewards</div>
+          <div class="subpage-title"><i class="fa-solid fa-wallet" style="color: #fbbf24;"></i> पैसे निकालें (Redeem)</div>
           <button class="close-circle-btn" onclick="switchUserTab('uTabHome');">✕</button>
         </div>
 
+        <!-- Google Play -->
+        <div class="glass-card" style="padding: 16px; display: flex; flex-direction: column; gap: 10px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg" style="width: 32px; height: 32px;" alt="Play Store"/>
+            <div>
+              <h4 style="font-size: 13px; font-weight: 800; color: #ffffff;">गूगल प्ले रिडीम कोड</h4>
+              <p style="font-size: 10px; color: #94a3b8;">1,200 Coins = ₹10</p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 6px;">
+            <select id="selPlayAmount" class="custom-input" style="flex: 1;">
+              <option value="10">₹10 (1,200 Coins)</option>
+              <option value="20">₹20 (2,400 Coins)</option>
+              <option value="50">₹50 (6,000 Coins)</option>
+              <option value="100">₹100 (12,000 Coins)</option>
+            </select>
+            <button onclick="initiateRedeem('Google Play Code')" style="padding: 0 16px; border-radius: 12px; background: #fbbf24; color: #05020d; font-weight: 800; font-size: 12px; border: none; cursor: pointer;">
+              निकालें
+            </button>
+          </div>
+        </div>
+
+        <!-- Amazon Gift Card -->
+        <div class="glass-card" style="padding: 16px; display: flex; flex-direction: column; gap: 10px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Amazon_icon.svg" style="width: 32px; height: 32px;" alt="Amazon"/>
+            <div>
+              <h4 style="font-size: 13px; font-weight: 800; color: #ffffff;">अमेज़न गिफ्ट कार्ड</h4>
+              <p style="font-size: 10px; color: #94a3b8;">1,200 Coins = ₹10</p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 6px;">
+            <select id="selAmazonAmount" class="custom-input" style="flex: 1;">
+              <option value="10">₹10 (1,200 Coins)</option>
+              <option value="20">₹20 (2,400 Coins)</option>
+              <option value="50">₹50 (6,000 Coins)</option>
+              <option value="100">₹100 (12,000 Coins)</option>
+            </select>
+            <button onclick="initiateRedeem('Amazon Code')" style="padding: 0 16px; border-radius: 12px; background: #fbbf24; color: #05020d; font-weight: 800; font-size: 12px; border: none; cursor: pointer;">
+              निकालें
+            </button>
+          </div>
+        </div>
+
+        <!-- Direct UPI -->
         <div class="glass-card" style="padding: 16px; display: flex; flex-direction: column; gap: 10px;">
           <div style="display: flex; align-items: center; gap: 10px;">
             <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg" style="width: 36px; height: 28px; background: #fff; border-radius: 4px; padding: 2px;" alt="UPI"/>
             <div>
-              <h4 style="font-size: 13px; font-weight: 800; color: #ffffff;">Direct UPI Transfer</h4>
+              <h4 style="font-size: 13px; font-weight: 800; color: #ffffff;">सीधे UPI ट्रांसफर</h4>
               <p style="font-size: 10px; color: #94a3b8;">12,000 Coins = ₹100</p>
             </div>
           </div>
@@ -1502,53 +939,54 @@
               <option value="500">₹500 (60,000 Coins)</option>
             </select>
             <button onclick="initiateRedeem('Direct UPI')" style="padding: 0 16px; border-radius: 12px; background: #fbbf24; color: #05020d; font-weight: 800; font-size: 12px; border: none; cursor: pointer;">
-              Redeem
+              निकालें
             </button>
           </div>
         </div>
 
+        <!-- History -->
         <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 4px;">
-          <h4 style="font-size: 12px; font-weight: 800; color: #cbd5e1; padding: 0 4px;">Redemption History</h4>
+          <h4 style="font-size: 12px; font-weight: 800; color: #cbd5e1; padding: 0 4px;">निकासी इतिहास (History)</h4>
           <div id="uRedeemHistoryList" style="display: flex; flex-direction: column; gap: 6px;">
-            <p style="font-size: 11px; color: #64748b; padding: 6px;">No redemption history yet.</p>
+            <p style="font-size: 11px; color: #64748b; padding: 6px;">कोई निकासी इतिहास नहीं मिला।</p>
           </div>
         </div>
       </section>
 
-      <!-- ================= 8. PROFILE SCREEN (FIXED CSS) ================= -->
+      <!-- ================= 8. PROFILE SCREEN (PROPER SIZE) ================= -->
       <section id="uTabProfile" class="subpage-container hidden">
         <div class="subpage-header">
           <div class="subpage-title"><i class="fa-solid fa-user" style="color: #c084fc;"></i> My Account</div>
           <button class="close-circle-btn" onclick="switchUserTab('uTabHome');">✕</button>
         </div>
 
-        <div class="glass-card" style="padding: 20px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 6px;">
-          <div id="profAvatarLetter" style="width: 60px; height: 60px; border-radius: 50%; background: #7c3aed; border: 2px solid #a855f7; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 900; color: #ffffff;">
+        <div class="glass-card" style="padding: 24px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+          <div id="profAvatarLetter" style="width: 64px; height: 64px; border-radius: 50%; background: #7c3aed; border: 2.5px solid #a855f7; display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 900; color: #ffffff;">
             S
           </div>
-          <h3 id="profDisplayName" style="font-size: 16px; font-weight: 800; color: #ffffff; margin-top: 4px;">Player</h3>
-          <p id="profEmail" style="font-size: 11px; color: #94a3b8; font-family: monospace;">user@quizly.com</p>
+          <h3 id="profDisplayName" style="font-size: 17px; font-weight: 800; color: #ffffff; margin-top: 4px;">Player</h3>
+          <p id="profEmail" style="font-size: 12px; color: #94a3b8; font-family: monospace;">user@quizly.com</p>
         </div>
 
         <div class="glass-card" style="display: flex; flex-direction: column; border-radius: 18px; overflow: hidden;">
-          <a href="https://t.me/NexoraInfotechOfficial" target="_blank" style="padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.08); color: #ffffff; font-size: 12px; font-weight: 700;">
-            <span style="display: flex; align-items: center; gap: 8px;"><i class="fa-brands fa-telegram" style="color: #38bdf8; font-size: 16px;"></i> Official Telegram Channel</span>
+          <a href="https://t.me/NexoraInfotechOfficial" target="_blank" style="padding: 15px 16px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.08); color: #ffffff; font-size: 13px; font-weight: 700;">
+            <span style="display: flex; align-items: center; gap: 10px;"><i class="fa-brands fa-telegram" style="color: #38bdf8; font-size: 18px;"></i> Official Telegram Channel</span>
             <span style="color: #64748b;">›</span>
           </a>
-          <a href="https://t.me/NexoraTeam1_bot" target="_blank" style="padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; color: #ffffff; font-size: 12px; font-weight: 700;">
-            <span style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-headset" style="color: #34d399; font-size: 16px;"></i> 24/7 Support Bot</span>
+          <a href="https://t.me/NexoraTeam1_bot" target="_blank" style="padding: 15px 16px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; color: #ffffff; font-size: 13px; font-weight: 700;">
+            <span style="display: flex; align-items: center; gap: 10px;"><i class="fa-solid fa-headset" style="color: #34d399; font-size: 18px;"></i> 24/7 Support Bot</span>
             <span style="color: #64748b;">›</span>
           </a>
         </div>
 
-        <button onclick="handleSignOut()" style="width: 100%; padding: 12px; border-radius: 14px; background: rgba(225,29,72,0.2); border: 1px solid rgba(244,63,94,0.4); color: #fb7185; font-size: 12px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;">
-          <i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out
+        <button onclick="handleSignOut()" style="width: 100%; padding: 13px; border-radius: 14px; background: rgba(225,29,72,0.2); border: 1px solid rgba(244,63,94,0.4); color: #fb7185; font-size: 13px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out Account
         </button>
       </section>
 
     </main>
 
-    <!-- 8. FIXED FLOATING BOTTOM NAVIGATION -->
+    <!-- 8. FIXED FLOATING BOTTOM NAVIGATION (WATCH EARN UPDATED) -->
     <div class="nav-bar-wrapper">
       <nav class="nav-bar">
         <div class="nav-tab active" id="navHomeTab" onclick="switchUserTab('uTabHome')">
@@ -1556,20 +994,21 @@
           <span class="nav-label">Home</span>
         </div>
 
-        <div class="nav-tab" id="navQuizTab" onclick="startCategoryQuiz('Hindi GK')">
+        <div class="nav-tab" id="navQuizTab" onclick="startHindiCategoryQuiz('सामान्य ज्ञान')">
           <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm1-5.5c-.5.6-.9 1-1 1.5h-1.8c0-1.1.5-1.9 1.2-2.5.6-.5 1.1-.9 1.1-1.5 0-.8-.7-1.5-1.5-1.5s-1.5.7-1.5 1.5H8.5C8.5 6.6 10.1 5 12 5s3.5 1.6 3.5 3.5c0 .9-.5 1.6-1.5 2z"/></svg>
           <span class="nav-label">Quiz</span>
         </div>
 
         <div class="center-nav-holder">
-          <div class="center-play-btn" onclick="startCategoryQuiz('Hindi GK')">
+          <div class="center-play-btn" onclick="startHindiCategoryQuiz('सामान्य ज्ञान')">
             <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
           </div>
         </div>
 
+        <!-- WATCH EARN IN PLACE OF ACTIVITY -->
         <div class="nav-tab" id="navWatchTab" onclick="switchUserTab('uTabWatchEarn')">
-          <svg viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
-          <span class="nav-label">Activity</span>
+          <svg viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 14H3V5h18v12zm-11-2l6-4-6-4v8z"/></svg>
+          <span class="nav-label">Watch Earn</span>
         </div>
 
         <div class="nav-tab" id="navProfileTab" onclick="switchUserTab('uTabProfile')">
@@ -1581,7 +1020,7 @@
 
   </div>
 
-  <!-- ================= JAVASCRIPT ENGINE ================= -->
+  <!-- ================= JAVASCRIPT ================= -->
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyAy3Zs3J3j-hFu3A9OfG68M4LRLFbwHwaA",
@@ -1598,6 +1037,7 @@
     const auth = firebase.auth();
     const db = firebase.database();
 
+    const MONETAG_DIRECT_LINK = "https://omg10.com/4/11904430";
     const HILLTOP_VAST_TAG = "https://expensive-pollution.com/ddm.FZz/dkGyNbvGZ/G/Ut/_esm/9cuCZEUVlxkFP_TycI0/NOjCYQxFOiDAE/taNwzSQZ2XNajyEr4qNVQl";
 
     let currentUser = null;
@@ -1605,7 +1045,7 @@
     let userCoins = 0;
     let currentAuthMode = 'login';
 
-    // 15s Strict Ad Video
+    // Strict Ad Video & Slider State
     let rewardVideoInstance = null;
     let strictCountdown = 15;
     let strictInterval = null;
@@ -1616,33 +1056,41 @@
     let streamSecondsLeft = 120;
     let streamInterval = null;
 
+    // Read Article 60s
+    let isArticleActive = false;
+    let articleStartTime = 0;
+
     // Spin Wheel Setup (Max 3/Day)
     const wheelPrizes = [5, 10, 2, 15, 8, 20, 12, 1];
     const wheelColors = ["#ec4899", "#8b5cf6", "#3b82f6", "#10b981", "#f59e0b", "#ef4444", "#6366f1", "#14b8a6"];
     let isSpinning = false;
     let spinsToday = 0;
 
-    const questionBanks = {
-      'Hindi GK': [
-        { q: "Bharat ki aadhikarik rajdhani kya hai?", o: ["Mumbai", "New Delhi", "Kolkata", "Chennai"], a: 1 },
-        { q: "Surya ke sabse nikat grah konsa hai?", o: ["Budh (Mercury)", "Mangal", "Shukra", "Brihaspati"], a: 0 },
-        { q: "Bharat ka Rashtriya Jal-Jeev kya hai?", o: ["Shark", "Ganga Dolphin", "Blue Whale", "Octopus"], a: 1 },
-        { q: "Taj Mahal Bharat ke kis shahar me sthit hai?", o: ["Delhi", "Agra", "Jaipur", "Lucknow"], a: 1 }
+    // SHUDDH HINDI QUIZ QUESTION BANK
+    const hindiQuestionBanks = {
+      'सामान्य ज्ञान': [
+        { q: "भारत की राजधानी क्या है?", o: ["मुंबई", "नई दिल्ली", "कोलकाता", "चेन्नई"], a: 1 },
+        { q: "सूर्य के सबसे निकट कौन सा ग्रह है?", o: ["बुध", "मंगल", "शुक्र", "बृहस्पति"], a: 0 },
+        { q: "भारत का राष्ट्रीय फूल कौन सा है?", o: ["गुलाब", "कमल", "गेंदा", "सूरजमुखी"], a: 1 },
+        { q: "ताजमहल किस शहर में स्थित है?", o: ["दिल्ली", "आगरा", "जयपुर", "लखनऊ"], a: 1 }
       ],
-      'English GK': [
-        { q: "What is the capital city of Australia?", o: ["Sydney", "Melbourne", "Canberra", "Perth"], a: 2 },
-        { q: "Which planet is known as Red Planet?", o: ["Venus", "Mars", "Jupiter", "Saturn"], a: 1 },
-        { q: "Who is the CEO of Tesla?", o: ["Jeff Bezos", "Elon Musk", "Tim Cook", "Bill Gates"], a: 1 }
+      'विज्ञान क्विज': [
+        { q: "पानी का रासायनिक सूत्र क्या है?", o: ["H2O", "CO2", "O2", "NaCl"], a: 0 },
+        { q: "मानव शरीर में कितनी हड्डियाँ होती हैं?", o: ["206", "208", "300", "195"], a: 0 },
+        { q: "सौरमंडल का सबसे बड़ा ग्रह कौन सा है?", o: ["पृथ्वी", "शनि", "बृहस्पति", "मंगल"], a: 2 },
+        { q: "प्रकाश की गति किसमें सबसे तेज होती है?", o: ["पानी", "कांच", "निर्वात (Vacuum)", "हवा"], a: 2 }
       ],
-      'Plus Math': [
-        { q: "What is 45 + 55?", o: ["90", "100", "110", "120"], a: 1 },
-        { q: "What is 120 + 80?", o: ["190", "200", "210", "220"], a: 1 },
-        { q: "What is 15 + 28?", o: ["43", "42", "44", "45"], a: 0 }
+      'गणित जोड़': [
+        { q: "45 + 55 का मान क्या होगा?", o: ["90", "100", "110", "120"], a: 1 },
+        { q: "120 + 80 का मान क्या होगा?", o: ["190", "200", "210", "220"], a: 1 },
+        { q: "25 + 38 का मान क्या होगा?", o: ["63", "62", "64", "65"], a: 0 },
+        { q: "250 + 750 का मान क्या होगा?", o: ["900", "950", "1000", "1050"], a: 2 }
       ],
-      'Minus Math': [
-        { q: "What is 100 - 37?", o: ["63", "67", "53", "73"], a: 0 },
-        { q: "What is 500 - 150?", o: ["300", "350", "400", "250"], a: 1 },
-        { q: "What is 84 - 29?", o: ["55", "56", "54", "57"], a: 0 }
+      'गणित घटाव': [
+        { q: "100 - 37 का मान क्या होगा?", o: ["63", "67", "53", "73"], a: 0 },
+        { q: "500 - 150 का मान क्या होगा?", o: ["300", "350", "400", "250"], a: 1 },
+        { q: "84 - 29 का मान क्या होगा?", o: ["55", "56", "54", "57"], a: 0 },
+        { q: "75 - 19 का मान क्या होगा?", o: ["54", "56", "58", "52"], a: 1 }
       ]
     };
 
@@ -1694,8 +1142,8 @@
     function setAuthMode(mode) {
       currentAuthMode = mode;
       document.getElementById('nameInputGroup').classList.toggle('hidden', mode !== 'signup');
-      document.getElementById('authTitle').innerText = mode === 'signup' ? "Create Account" : "Welcome to Quizly";
-      document.getElementById('authSubmitBtn').innerText = mode === 'signup' ? "Sign Up" : "Log In";
+      document.getElementById('authTitle').innerText = mode === 'signup' ? "नया अकाउंट बनाएं" : "Quizly में लॉगिन करें";
+      document.getElementById('authSubmitBtn').innerText = mode === 'signup' ? "साइन अप करें" : "लॉगिन करें";
       document.getElementById('tabBtnLogin').style.background = mode === 'login' ? '#fbbf24' : 'transparent';
       document.getElementById('tabBtnLogin').style.color = mode === 'login' ? '#05020d' : '#94a3b8';
       document.getElementById('tabBtnSignup').style.background = mode === 'signup' ? '#fbbf24' : 'transparent';
@@ -1707,10 +1155,10 @@
       const pass = document.getElementById('authPassword').value;
       const name = document.getElementById('authName').value.trim();
 
-      if (!email || !pass) { alert("Fill all fields."); return; }
+      if (!email || !pass) { alert("कृपया सभी विवरण भरें।"); return; }
 
       if (currentAuthMode === 'signup') {
-        if (!name) { alert("Enter your name"); return; }
+        if (!name) { alert("कृपया अपना नाम दर्ज करें।"); return; }
         auth.createUserWithEmailAndPassword(email, pass).then(res => {
           res.user.updateProfile({ displayName: name });
           db.ref('users/' + res.user.uid).set({
@@ -1752,9 +1200,9 @@
         if (d) {
           userData = d;
           userCoins = d.coins || 0;
-          const cleanName = d.name || user.displayName || "Player";
+          const cleanName = d.name || user.displayName || "Sabister";
 
-          // Daily auto-reset logic
+          // Daily auto-reset
           const today = getTodayKey();
           if (d.lastDateActive !== today) {
             db.ref('users/' + user.uid).update({
@@ -1778,7 +1226,7 @@
           document.getElementById('statStreakDays').innerText = `${d.streakDays || 0} Days`;
           document.getElementById('statLimitDisplay').innerText = `${50 - (d.dailyQuizzesDone || 0)}/50`;
 
-          document.getElementById('spinLeftBadge').innerText = `${Math.max(0, 3 - spinsToday)} Spins Left`;
+          document.getElementById('spinLeftBadge').innerText = `${Math.max(0, 3 - spinsToday)} Spins Baki`;
           document.getElementById('uReferralLinkDisplay').value = `https://quizly-earn.vercel.app?ref=${d.username || user.uid}`;
           document.getElementById('uReferPageCount').innerText = d.referralsCount || 0;
           document.getElementById('uReferCoinsEarned').innerText = (d.referralsCount || 0) * 50;
@@ -1814,9 +1262,24 @@
       if (tId === 'uTabProfile' && document.getElementById('navProfileTab')) document.getElementById('navProfileTab').classList.add('active');
     }
 
-    // ================= STRICT 15S AD VIDEO REWARD ENGINE =================
+    // ================= DEDICATED SLIDER AD TRIGGER (WITH VAST FALLBACK) =================
     function requestStrictVideoAd(sourceTask) {
       currentAdTaskSource = sourceTask;
+
+      // Check if Video Slider script loaded
+      const sliderLoaded = typeof window.bmtf !== 'undefined' || document.getElementById('sliderAdScript');
+
+      if (sliderLoaded && Math.random() > 0.4) {
+        // Slider Trigger Logic: Open direct link fallback
+        window.open(MONETAG_DIRECT_LINK, '_blank');
+        openVastVideoFallback();
+      } else {
+        // Direct VAST Fallback Trigger
+        openVastVideoFallback();
+      }
+    }
+
+    function openVastVideoFallback() {
       const modal = document.getElementById('strictVideoModal');
       modal.classList.remove('hidden');
       document.getElementById('strictVideoOverlay').classList.remove('hidden');
@@ -1851,7 +1314,7 @@
             // Random Reward: 1 to 20 Coins
             const awardedCoins = Math.floor(Math.random() * 20) + 1;
             db.ref('users/' + currentUser.uid + '/coins').transaction(c => (c || 0) + awardedCoins).then(() => {
-              alert(`Reward Claimed! You watched full 15s ad & earned ${awardedCoins} Coins!`);
+              alert(`बधाई हो! आपने 15s Ad पूरा देखा और ${awardedCoins} Coins कमाए!`);
               switchUserTab('uTabHome');
             });
           }
@@ -1859,7 +1322,7 @@
       }, 1000);
     }
 
-    // ================= 2-MINUTE WATCH & EARN STREAM (2–50 COINS) =================
+    // ================= 2-MINUTE WATCH & EARN STREAM =================
     function startWatchEarnStream() {
       streamSecondsLeft = 120;
       document.getElementById('streamTimeRemaining').innerText = `${streamSecondsLeft}s`;
@@ -1887,7 +1350,7 @@
 
           const streamPrize = Math.floor(Math.random() * (50 - 2 + 1)) + 2;
           db.ref('users/' + currentUser.uid + '/coins').transaction(c => (c || 0) + streamPrize).then(() => {
-            alert(`Stream Complete! You watched 2 mins of ads and won ${streamPrize} Coins!`);
+            alert(`शानदार! आपने 2 मिनट Ads देखे और ${streamPrize} Coins जीते!`);
             switchUserTab('uTabHome');
           });
         }
@@ -1900,10 +1363,32 @@
       if (v) v.pause();
     }
 
-    // ================= SPIN WHEEL (STRICT 3/DAY LIMIT) =================
+    // ================= READ & EARN (60S) =================
+    function startReadArticleTask() {
+      isArticleActive = true;
+      articleStartTime = Date.now();
+      window.open(MONETAG_DIRECT_LINK, '_blank');
+    }
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible" && isArticleActive) {
+        const spent = Math.floor((Date.now() - articleStartTime) / 1000);
+        isArticleActive = false;
+
+        if (spent < 60) {
+          alert(`रिवार्ड रद्द हुआ! आप सिर्फ ${spent}s रुके। न्यूनतम 60 सेकंड रुकना अनिवार्य है।`);
+        } else {
+          const earned = Math.floor(Math.random() * 20) + 1;
+          db.ref('users/' + currentUser.uid + '/coins').transaction(c => (c || 0) + earned);
+          alert(`बधाई हो! आपने 60 सेकंड आर्टिकल पढ़ा और ${earned} Coins कमाए!`);
+        }
+      }
+    });
+
+    // ================= SPIN WHEEL (3/DAY) =================
     function openSpinWheelModal() {
       if (spinsToday >= 3) {
-        alert("Daily limit reached! Aap din me sirf 3 baar hi spin kar sakte hain.");
+        alert("आज की लिमिट पूरी हो गई है! आप दिन में सिर्फ 3 बार ही स्पिन कर सकते हैं।");
         return;
       }
       document.getElementById('spinWheelModal').classList.remove('hidden');
@@ -1949,7 +1434,7 @@
     function executeSpin() {
       if (isSpinning) return;
       if (spinsToday >= 3) {
-        alert("Daily spin limit completed!");
+        alert("आज का स्पिन लिमिट समाप्त हो चुका है!");
         document.getElementById('spinWheelModal').classList.add('hidden');
         return;
       }
@@ -1990,14 +1475,14 @@
       requestAnimationFrame(animate);
     }
 
-    // ================= KBC QUIZ WITH FIX =================
-    function startCategoryQuiz(catName) {
+    // ================= HINDI KBC QUIZ =================
+    function startHindiCategoryQuiz(catName) {
       if ((userData && userData.dailyQuizzesDone || 0) >= 50) {
-        alert("Daily limit completed! Kal aakar aur quiz khele.");
+        alert("दैनिक लिमिट समाप्त हो गई है! कल आकर और खेलें।");
         return;
       }
 
-      activeRoundQuestions = [...(questionBanks[catName] || questionBanks['Hindi GK'])].sort(() => 0.5 - Math.random());
+      activeRoundQuestions = [...(hindiQuestionBanks[catName] || hindiQuestionBanks['सामान्य ज्ञान'])].sort(() => 0.5 - Math.random());
       kbcQuizIndex = 0;
       switchUserTab('uTabQuiz');
       showKbcQuestion();
@@ -2100,25 +1585,51 @@
       });
     }
 
-    // ================= REDEEMS =================
+    // ================= REDEEMS (1 REF = 1 REDEEM RULE RESTORED) =================
+    function canUserRedeem() {
+      if (!userData) return false;
+      if (userData.adminRedeemUnlock === true) return true;
+      const refs = userData.referralsCount || 0;
+      const used = userData.redeemsUsed || 0;
+      if (refs >= 10) return true;
+      return (refs > used);
+    }
+
     function initiateRedeem(method) {
-      let inr = parseInt(document.getElementById('selUpiAmount').value);
-      const req = inr * 120;
-      if (userCoins < req) {
-        alert(`Insufficient coins! Minimum ${req} coins required.`);
+      if (!canUserRedeem()) {
+        alert("निकासी लॉक है! 1 रेफरल = 1 निकासी अनलॉक होती है (या 10 रेफरल करके अनलिमिटेड अनलॉक करें)।");
         return;
       }
-      const upi = prompt("Enter UPI ID:");
-      if (upi && upi.length > 3) {
+
+      let inr = 10;
+      if (method === 'Google Play Code') inr = parseInt(document.getElementById('selPlayAmount').value);
+      if (method === 'Amazon Code') inr = parseInt(document.getElementById('selAmazonAmount').value);
+      if (method === 'Direct UPI') inr = parseInt(document.getElementById('selUpiAmount').value);
+
+      const req = inr * 120; // 1,200 coins = ₹10
+
+      if (userCoins < req) {
+        alert(`अपर्याप्त Coins! ₹${inr} निकासी के लिए कम से कम ${req} Coins आवश्यक हैं।`);
+        return;
+      }
+
+      const input = prompt(`कृपया अपना ${method === 'Direct UPI' ? 'UPI ID' : 'ईमेल पता'} दर्ज करें:`);
+      if (input && input.trim().length > 3) {
         db.ref('users/' + currentUser.uid + '/coins').transaction(c => c - req);
+        db.ref('users/' + currentUser.uid + '/redeemsUsed').transaction(u => (u || 0) + 1);
+
         db.ref('redeem_requests').push({
           uid: currentUser.uid,
-          targetInfo: upi,
+          userName: userData.name || "Player",
+          userEmail: currentUser.email,
+          targetInfo: input.trim(),
           method: method,
           amountInr: inr,
+          coinsDeducted: req,
           status: 'PENDING',
+          redeemCodeGiven: '',
           requestedAt: Date.now()
-        }).then(() => alert("Redeem request submitted (24-48 hrs)!"));
+        }).then(() => alert("आपका निकासी अनुरोध प्राप्त हो गया है! (24-48 घंटों में अप्रूव हो जाएगा)"));
       }
     }
 
@@ -2127,7 +1638,7 @@
         const list = document.getElementById('uRedeemHistoryList');
         list.innerHTML = '';
         if (!snap.exists()) {
-          list.innerHTML = '<p style="font-size: 11px; color: #64748b; padding: 6px;">No redemption history yet.</p>';
+          list.innerHTML = '<p style="font-size: 11px; color: #64748b; padding: 6px;">कोई निकासी इतिहास नहीं मिला।</p>';
           return;
         }
 
