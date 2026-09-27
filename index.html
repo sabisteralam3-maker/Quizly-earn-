@@ -5,21 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Quizly Earn</title>
 
-  <!-- Monetag Website Verification Tag -->
+  <!-- Monetag Verification -->
   <meta name="monetag" content="421338142263e17d4e560ebd8aeda8c4">
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
 
-  <!-- Fluid Player -->
-  <link rel="stylesheet" href="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.css" type="text/css"/>
-  <script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
-
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <!-- MONETAG AD SCRIPTS -->
+  <!-- 1. MultiTag Script -->
+  <script src="https://quge5.com/88/tag.min.js" data-zone="287721" async data-cfasync="false"></script>
+
+  <!-- 2. Vignette Ads Script -->
+  <script>(function(s){s.dataset.zone='11904440',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+
+  <!-- 3. In-Page Push Script -->
+  <script>(function(s){s.dataset.zone='11904437',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
 
   <style>
     @keyframes pulseGlow {
@@ -112,6 +118,35 @@
         <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-4 h-4" alt="Google" />
         <span>Continue with Google</span>
       </button>
+    </div>
+  </div>
+
+  <!-- ================= CUSTOM MONETAG REWARDED VIDEO MODAL ================= -->
+  <div id="rewardVideoModal" class="hidden fixed inset-0 bg-slate-950/95 z-50 flex flex-col items-center justify-center p-6 backdrop-blur-md">
+    <div class="bg-slate-900 border border-purple-900/80 p-6 rounded-3xl max-w-sm w-full shadow-2xl text-center space-y-4 relative overflow-hidden">
+      <div class="absolute -right-8 -top-8 w-24 h-24 bg-amber-400/10 rounded-full blur-xl"></div>
+      
+      <div class="w-16 h-16 rounded-2xl bg-amber-400/20 text-amber-400 flex items-center justify-center mx-auto text-3xl border border-amber-400/30">
+        <i class="fa-solid fa-play"></i>
+      </div>
+
+      <div>
+        <h3 class="text-base font-black text-white">Sponsored Video Reward</h3>
+        <p class="text-xs text-slate-400 mt-1">Watch full 15s sponsored content to credit your coins.</p>
+      </div>
+
+      <!-- Animated Progress Countdown -->
+      <div class="space-y-2">
+        <div class="flex justify-between text-xs font-bold px-1">
+          <span class="text-amber-400">Verifying Reward...</span>
+          <span class="text-rose-400" id="videoTimerText">15s</span>
+        </div>
+        <div class="w-full bg-slate-950 h-2.5 rounded-full overflow-hidden border border-slate-800">
+          <div id="videoProgressBar" class="h-full bg-gradient-to-r from-amber-400 via-purple-500 to-emerald-400 rounded-full w-0 transition-all duration-1000 linear"></div>
+        </div>
+      </div>
+
+      <p class="text-[10px] text-slate-500">Do not close this window. Coins will be credited automatically.</p>
     </div>
   </div>
 
@@ -275,9 +310,9 @@
           <i class="fa-solid fa-trophy"></i>
         </div>
         <h3 class="text-lg font-black text-amber-400">Quiz Completed!</h3>
-        <p class="text-xs text-slate-300">You earned <strong id="quizAwardCoins" class="text-amber-300 font-bold">50</strong> coins in this round! Claim them below:</p>
-        <button onclick="claimQuizReward()" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 text-white font-black rounded-xl text-xs uppercase tracking-wider shadow-lg active:scale-95 transition">
-          <i class="fa-solid fa-coins mr-1.5"></i> Add Coins to Wallet
+        <p class="text-xs text-slate-300">You earned <strong id="quizAwardCoins" class="text-amber-300 font-bold">50</strong> coins in this round! Watch video ad to credit coins:</p>
+        <button onclick="playMonetagRewardedVideo('quiz')" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 text-white font-black rounded-xl text-xs uppercase tracking-wider shadow-lg active:scale-95 transition">
+          <i class="fa-solid fa-play mr-1.5"></i> Watch Video & Add Coins
         </button>
       </section>
 
@@ -447,6 +482,9 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.database();
+
+    // MONETAG DIRECT LINK
+    const MONETAG_DIRECT_LINK = "https://omg10.com/4/11904430";
 
     let currentAuthMode = 'login';
     let currentUser = null;
@@ -895,14 +933,42 @@
       }, 1300);
     }
 
-    function claimQuizReward() {
-      const award = currentQuizAward > 0 ? currentQuizAward : 10;
-      const newBalance = userCoins + award;
+    // ================= CUSTOM MONETAG REWARDED VIDEO FUNCTION =================
+    function playMonetagRewardedVideo(source) {
+      // 1. Open Monetag DirectLink in new tab for high-revenue impression
+      window.open(MONETAG_DIRECT_LINK, '_blank');
 
-      db.ref('users/' + currentUser.uid).update({ coins: newBalance }).then(() => {
-        alert(`Success! ${award} Coins added to your wallet!`);
-        switchUserTab('uTabHome');
-      });
+      // 2. Launch 15s Rewarded Countdown Modal inside app
+      const modal = document.getElementById('rewardVideoModal');
+      const timerText = document.getElementById('videoTimerText');
+      const progressBar = document.getElementById('videoProgressBar');
+      
+      modal.classList.remove('hidden');
+      progressBar.style.width = '0%';
+
+      let seconds = 15;
+      timerText.innerText = `${seconds}s`;
+
+      const countdown = setInterval(() => {
+        seconds--;
+        timerText.innerText = `${seconds}s`;
+        const percentage = ((15 - seconds) / 15) * 100;
+        progressBar.style.width = `${percentage}%`;
+
+        if (seconds <= 0) {
+          clearInterval(countdown);
+          modal.classList.add('hidden');
+
+          // Credit Reward
+          const award = (source === 'quiz') ? (currentQuizAward > 0 ? currentQuizAward : 10) : 25;
+          const newBalance = userCoins + award;
+
+          db.ref('users/' + currentUser.uid).update({ coins: newBalance }).then(() => {
+            alert(`Great! ${award} Coins credited to your wallet.`);
+            switchUserTab('uTabHome');
+          });
+        }
+      }, 1000);
     }
 
     function initiateRedeem(method) {
