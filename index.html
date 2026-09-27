@@ -60,7 +60,7 @@
     body {
       background-color: var(--bg);
       background-image: 
-        radial-gradient(circle at 50% 0%, rgba(88, 28, 135, 0.4) 0%, transparent 45%),
+        radial-gradient(circle at 50% 0%, rgba(88, 28, 135, 0.45) 0%, transparent 45%),
         radial-gradient(circle at 100% 35%, rgba(30, 58, 138, 0.35) 0%, transparent 40%),
         radial-gradient(circle at 0% 70%, rgba(126, 34, 206, 0.25) 0%, transparent 45%),
         radial-gradient(circle at 50% 100%, rgba(29, 78, 216, 0.3) 0%, transparent 50%);
@@ -85,10 +85,7 @@
         radial-gradient(1.5px 1.5px at 150px 80px, rgba(255,255,255,0.7), rgba(0,0,0,0)),
         radial-gradient(1px 1px at 280px 140px, rgba(200,220,255,0.6), rgba(0,0,0,0)),
         radial-gradient(1px 1px at 90px 230px, rgba(255,255,255,0.5), rgba(0,0,0,0)),
-        radial-gradient(1.5px 1.5px at 320px 320px, rgba(240,200,255,0.7), rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 60px 450px, rgba(255,255,255,0.4), rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 220px 580px, rgba(200,240,255,0.6), rgba(0,0,0,0)),
-        radial-gradient(1.5px 1.5px at 370px 690px, rgba(255,255,255,0.7), rgba(0,0,0,0));
+        radial-gradient(1.5px 1.5px at 320px 320px, rgba(240,200,255,0.7), rgba(0,0,0,0));
       background-repeat: repeat;
       background-size: 400px 800px;
       pointer-events: none;
@@ -257,9 +254,7 @@
       align-items: center;
       justify-content: space-between;
       border: 1px solid rgba(168, 85, 247, 0.35);
-      box-shadow: 
-        inset 0 1px 2px rgba(255, 255, 255, 0.2),
-        0 0 24px -4px rgba(147, 51, 234, 0.35);
+      box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2), 0 0 24px -4px rgba(147, 51, 234, 0.35);
     }
 
     .welcome-avatar-col {
@@ -300,6 +295,9 @@
       justify-content: center;
       overflow: hidden;
       border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 18px;
     }
 
     .avatar-inner img {
@@ -827,6 +825,111 @@
       margin-left: 3px;
     }
 
+    /* ---------------- FIXED SUB-SCREENS STYLING ---------------- */
+    .subpage-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .subpage-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 6px;
+    }
+
+    .subpage-title {
+      font-size: 15px;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: -0.2px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .close-circle-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(22, 27, 56, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .option-btn {
+      width: 100%;
+      padding: 14px 16px;
+      background: rgba(18, 22, 50, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: transform 0.15s, background-color 0.15s;
+    }
+    .option-btn:active { transform: scale(0.98); }
+
+    .custom-input {
+      width: 100%;
+      padding: 12px 14px;
+      background: rgba(10, 14, 34, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      color: #ffffff;
+      font-size: 12px;
+      font-family: inherit;
+      outline: none;
+    }
+    .custom-input:focus {
+      border-color: #c084fc;
+    }
+
+    .primary-action-btn {
+      width: 100%;
+      padding: 13px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 800;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 16px rgba(236, 72, 153, 0.4);
+    }
+    .primary-action-btn:active { transform: scale(0.97); }
+
+    /* Modal Backdrop */
+    .fixed-modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
     .hidden { display: none !important; }
   </style>
 </head>
@@ -834,124 +937,121 @@
 
   <div class="cosmic-layer"></div>
 
-  <!-- ================= 15S STRICT VIDEO AD MODAL ================= -->
-  <div id="strictVideoModal" class="hidden fixed inset-0 bg-black/95 z-50 flex flex-col items-center justify-center p-4">
-    <div class="w-full max-w-sm space-y-3 text-center">
-      <div class="flex justify-between items-center text-xs text-amber-400 font-bold px-1">
-        <span><i class="fa-solid fa-play-circle mr-1.5"></i>Sponsored Video Ad</span>
-        <span id="strictVideoTimerBadge" class="bg-rose-900 border border-rose-500 px-2.5 py-0.5 rounded text-white text-[10px]">Watch 15s</span>
+  <!-- ================= STRICT 15S VIDEO AD MODAL ================= -->
+  <div id="strictVideoModal" class="fixed-modal-backdrop hidden">
+    <div class="glass-card" style="width: 100%; max-width: 360px; padding: 18px; text-align: center; display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 800; color: #fbbf24;">
+        <span><i class="fa-solid fa-play-circle" style="margin-right: 6px;"></i>Sponsored Video Ad</span>
+        <span id="strictVideoTimerBadge" style="background: rgba(225, 29, 72, 0.3); border: 1px solid #f43f5e; padding: 2px 8px; border-radius: 8px; font-size: 10px; color: #ffffff;">Watch 15s</span>
       </div>
 
-      <div class="w-full bg-black rounded-3xl overflow-hidden shadow-2xl border border-purple-900/60 relative">
-        <video id="rewardFluidVideo" class="w-full h-56" playsinline></video>
+      <div style="width: 100%; background: #000000; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.15); position: relative;">
+        <video id="rewardFluidVideo" style="width: 100%; height: 210px;" playsinline></video>
         
-        <div id="strictVideoOverlay" class="absolute inset-0 bg-black/80 flex flex-col items-center justify-center gap-2 z-20">
-          <button onclick="startStrictVideoPlayback()" class="w-16 h-16 rounded-full bg-amber-400 hover:bg-amber-500 text-slate-950 flex items-center justify-center text-2xl pl-1 shadow-2xl active:scale-95 transition">
+        <div id="strictVideoOverlay" style="position: absolute; inset: 0; background: rgba(0,0,0,0.8); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; z-index: 20;">
+          <button onclick="startStrictVideoPlayback()" style="width: 60px; height: 60px; border-radius: 50%; background: #fbbf24; color: #05020d; border: none; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; padding-left: 4px;">
             <i class="fa-solid fa-play"></i>
           </button>
-          <p class="text-xs font-bold text-amber-300">Click to Play Ad (15s)</p>
-          <p class="text-[10px] text-slate-400">Pura 15s chalne ke baad hi coins milenge</p>
+          <p style="font-size: 12px; font-weight: 800; color: #fde047;">Click to Play Ad (15s)</p>
+          <p style="font-size: 10px; color: #94a3b8;">15 seconds ad dekhne par coins milenge</p>
         </div>
       </div>
-      <p class="text-[11px] text-slate-400">Please wait until countdown finishes.</p>
+      <p style="font-size: 11px; color: #94a3b8;">Window band na karein jab tak video complete na ho jaye.</p>
     </div>
   </div>
 
   <!-- ================= SPIN & WIN CANVAS MODAL (DAILY 3 LIMIT) ================= -->
-  <div id="spinWheelModal" class="hidden fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-5 backdrop-blur-md">
-    <div class="glass-card p-6 rounded-3xl max-w-xs w-full text-center space-y-4 relative border-amber-400/50">
-      <button onclick="document.getElementById('spinWheelModal').classList.add('hidden')" class="w-8 h-8 rounded-full bg-slate-900 border border-white/20 text-slate-400 flex items-center justify-center absolute top-3 right-3 text-xs">
+  <div id="spinWheelModal" class="fixed-modal-backdrop hidden">
+    <div class="glass-card" style="width: 100%; max-width: 320px; padding: 20px; text-align: center; display: flex; flex-direction: column; gap: 14px; position: relative;">
+      <button onclick="document.getElementById('spinWheelModal').classList.add('hidden')" style="position: absolute; top: 12px; right: 12px; width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; cursor: pointer;">
         <i class="fa-solid fa-xmark"></i>
       </button>
 
       <div>
-        <h3 class="text-base font-black text-amber-400">Spin & Win</h3>
-        <p class="text-[10px] text-slate-300">Daily limit: 3 spins per day</p>
-        <span id="spinLeftBadge" class="inline-block bg-purple-700 text-white font-bold text-[10px] px-2.5 py-0.5 rounded-full mt-1 border border-purple-400">3 Spins Left</span>
+        <h3 style="font-size: 16px; font-weight: 900; color: #fbbf24;">Spin &amp; Win</h3>
+        <p style="font-size: 11px; color: #94a3b8;">Daily limit: 3 spins per day</p>
+        <span id="spinLeftBadge" style="display: inline-block; background: #7c3aed; color: #ffffff; font-weight: 800; font-size: 10px; padding: 3px 10px; border-radius: 12px; margin-top: 4px;">3 Spins Left</span>
       </div>
 
-      <div class="relative w-48 h-48 mx-auto flex items-center justify-center">
-        <div class="w-4 h-6 bg-amber-400 absolute -top-2 left-1/2 -translate-x-1/2 z-20 shadow-md"></div>
-        <canvas id="wheelCanvas" width="190" height="190" class="rounded-full shadow-2xl border-4 border-amber-400/60"></canvas>
+      <div style="position: relative; width: 190px; height: 190px; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
+        <div style="position: absolute; top: -5px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-top: 14px solid #fbbf24; z-index: 30;"></div>
+        <canvas id="wheelCanvas" width="186" height="186" style="border-radius: 50%; border: 3px solid rgba(251, 191, 36, 0.7); box-shadow: 0 0 20px rgba(0,0,0,0.8);"></canvas>
       </div>
 
-      <button id="spinActionBtn" onclick="executeSpin()" class="w-full py-3 bg-amber-400 hover:bg-amber-500 text-slate-950 font-black rounded-2xl text-xs uppercase tracking-wider shadow-lg active:scale-95 transition">
+      <button id="spinActionBtn" onclick="executeSpin()" class="primary-action-btn" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
         Spin Wheel Now
       </button>
     </div>
   </div>
 
   <!-- ================= SPLASH SCREEN ================= -->
-  <div id="splashScreen" class="fixed inset-0 bg-[#060211] z-50 flex flex-col items-center justify-between p-8">
-    <div class="flex-1 flex flex-col items-center justify-center text-center">
-      <div class="relative w-52 h-52 flex items-center justify-center mb-5">
-        <div class="absolute inset-0 bg-purple-600/30 blur-3xl rounded-full"></div>
-        <img src="https://i.ibb.co/BHTcn7QD/file-0000000021988211ab800b8ece076fff.png" alt="Quizly Logo" class="w-44 h-44 object-contain rounded-3xl relative z-10 border border-amber-400/40 shadow-2xl" />
-      </div>
-      <h1 class="text-3xl font-black tracking-wider text-amber-400">QUIZLY EARN</h1>
-      <p class="text-xs text-purple-300 mt-2 tracking-widest font-semibold uppercase">Play Quiz • Watch Ads • Earn Real Cash</p>
+  <div id="splashScreen" style="position: fixed; inset: 0; background: #030614; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 40px 20px;">
+    <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+      <img src="https://i.ibb.co/BHTcn7QD/file-0000000021988211ab800b8ece076fff.png" alt="Quizly Logo" style="width: 140px; height: 140px; object-contain: contain; margin-bottom: 16px; border-radius: 28px; border: 1.5px solid rgba(251, 191, 36, 0.4); box-shadow: 0 0 30px rgba(124, 58, 237, 0.4);" />
+      <h1 style="font-size: 28px; font-weight: 900; color: #ffffff; letter-spacing: -0.5px;">Quizly <span style="color: #fbbf24;">Earn</span></h1>
+      <p style="font-size: 12px; color: #c084fc; font-weight: 700; margin-top: 6px; letter-spacing: 0.5px; text-transform: uppercase;">Play Quiz • Watch Ads • Earn Real Cash</p>
     </div>
-    <div class="w-full max-w-xs space-y-2 text-center">
-      <div class="w-full bg-slate-900 border border-purple-500/40 h-2 rounded-full overflow-hidden p-0.5">
-        <div id="splashProgressBar" class="h-full bg-gradient-to-r from-amber-400 to-purple-500 rounded-full w-0 transition-all duration-200"></div>
+    <div style="width: 100%; max-width: 280px; text-align: center; display: flex; flex-direction: column; gap: 8px;">
+      <div style="width: 100%; background: rgba(255,255,255,0.1); height: 6px; border-radius: 10px; overflow: hidden;">
+        <div id="splashProgressBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #f59e0b, #c084fc); transition: width 0.2s;"></div>
       </div>
-      <p class="text-[10px] text-purple-400">Syncing database & daily limits...</p>
+      <p style="font-size: 11px; color: #94a3b8;">Connecting to Quizly servers...</p>
     </div>
   </div>
 
   <!-- ================= AUTH SCREEN ================= -->
-  <div id="authScreen" class="hidden fixed inset-0 bg-[#060211] z-40 flex flex-col items-center justify-center p-6 overflow-y-auto">
-    <div class="glass-card p-6 rounded-3xl max-w-sm w-full shadow-2xl space-y-4">
-      <div class="text-center">
-        <img src="https://i.ibb.co/BHTcn7QD/file-0000000021988211ab800b8ece076fff.png" class="w-16 h-16 rounded-2xl mx-auto mb-2 border border-amber-400/40 shadow-md object-contain bg-purple-950/60 p-1" alt="Logo"/>
-        <h2 class="text-xl font-black text-white" id="authTitle">Welcome to Quizly</h2>
-        <p class="text-xs text-slate-400">Login to start earning rewards</p>
+  <div id="authScreen" class="fixed-modal-backdrop hidden" style="z-index: 998; overflow-y: auto;">
+    <div class="glass-card" style="width: 100%; max-width: 350px; padding: 22px; display: flex; flex-direction: column; gap: 14px; text-align: center;">
+      <img src="https://i.ibb.co/BHTcn7QD/file-0000000021988211ab800b8ece076fff.png" class="splash-logo" style="width: 60px; height: 60px; margin: 0 auto; border-radius: 16px; border: 1px solid rgba(251,191,36,0.4);" alt="Logo"/>
+      <div>
+        <h2 style="font-size: 18px; font-weight: 900; color: #ffffff;" id="authTitle">Welcome to Quizly</h2>
+        <p style="font-size: 11px; color: #94a3b8; margin-top: 2px;">Login or create account to save rewards</p>
       </div>
 
-      <div class="flex bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
-        <button onclick="setAuthMode('login')" id="tabBtnLogin" class="flex-1 py-2 font-bold rounded-lg bg-amber-400 text-slate-950 transition">Log In</button>
-        <button onclick="setAuthMode('signup')" id="tabBtnSignup" class="flex-1 py-2 font-bold rounded-lg text-slate-400 transition">Sign Up</button>
+      <div style="display: flex; background: rgba(0,0,0,0.4); padding: 3px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+        <button onclick="setAuthMode('login')" id="tabBtnLogin" style="flex: 1; padding: 8px; border-radius: 10px; font-size: 12px; font-weight: 800; border: none; cursor: pointer; background: #fbbf24; color: #05020d;">Log In</button>
+        <button onclick="setAuthMode('signup')" id="tabBtnSignup" style="flex: 1; padding: 8px; border-radius: 10px; font-size: 12px; font-weight: 800; border: none; cursor: pointer; background: transparent; color: #94a3b8;">Sign Up</button>
       </div>
 
-      <div id="nameInputGroup" class="hidden space-y-1">
-        <label class="text-[11px] font-semibold text-slate-400">Full Name</label>
-        <input type="text" id="authName" placeholder="Enter full name" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400" />
+      <div id="nameInputGroup" class="hidden" style="text-align: left;">
+        <label style="font-size: 11px; font-weight: 700; color: #cbd5e1; margin-bottom: 4px; display: block;">Full Name</label>
+        <input type="text" id="authName" placeholder="Enter full name" class="custom-input" />
       </div>
 
-      <div class="space-y-1">
-        <label class="text-[11px] font-semibold text-slate-400">Email Address</label>
-        <input type="email" id="authEmail" placeholder="Enter email" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400" />
+      <div style="text-align: left;">
+        <label style="font-size: 11px; font-weight: 700; color: #cbd5e1; margin-bottom: 4px; display: block;">Email Address</label>
+        <input type="email" id="authEmail" placeholder="Enter email" class="custom-input" />
       </div>
 
-      <div class="space-y-1">
-        <label class="text-[11px] font-semibold text-slate-400">Password</label>
-        <input type="password" id="authPassword" placeholder="Enter password" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400" />
+      <div style="text-align: left;">
+        <label style="font-size: 11px; font-weight: 700; color: #cbd5e1; margin-bottom: 4px; display: block;">Password</label>
+        <input type="password" id="authPassword" placeholder="Enter password" class="custom-input" />
       </div>
 
-      <button onclick="handleEmailAuth()" id="authSubmitBtn" class="w-full py-3 bg-amber-400 hover:bg-amber-500 text-slate-950 font-black rounded-xl text-xs uppercase tracking-wider transition active:scale-95 shadow-md">
+      <button onclick="handleEmailAuth()" id="authSubmitBtn" class="primary-action-btn">
         Login Account
       </button>
 
-      <div class="flex items-center gap-2 my-2">
-        <hr class="flex-1 border-slate-800" />
-        <span class="text-[10px] text-slate-500 font-semibold uppercase">OR</span>
-        <hr class="flex-1 border-slate-800" />
+      <div style="display: flex; align-items: center; gap: 8px; margin: 4px 0;">
+        <div style="flex: 1; height: 1px; background: rgba(255,255,255,0.15);"></div>
+        <span style="font-size: 10px; font-weight: 800; color: #94a3b8;">OR</span>
+        <div style="flex: 1; height: 1px; background: rgba(255,255,255,0.15);"></div>
       </div>
 
-      <button onclick="handleGoogleSignIn()" class="w-full py-2.5 px-4 bg-white hover:bg-slate-100 text-slate-800 font-bold rounded-xl flex items-center justify-center gap-2.5 text-xs active:scale-95 transition shadow-sm">
-        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-4 h-4" alt="Google" />
+      <button onclick="handleGoogleSignIn()" style="width: 100%; padding: 11px; border-radius: 14px; background: #ffffff; color: #1e293b; font-size: 12px; font-weight: 800; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" style="width: 16px; height: 16px;" alt="Google" />
         <span>Continue with Google</span>
       </button>
     </div>
   </div>
 
   <!-- ================= MAIN APP VIEW ================= -->
-  <div id="userAppView" class="w-full max-w-[420px] hidden flex flex-col justify-between">
+  <div id="userAppView" class="w-full max-w-[420px] hidden" style="display: flex; flex-direction: column;">
     
     <main class="app-screen">
 
-      <!-- ================= 1. HOME SCREEN (EXACT MATCH 3414) ================= -->
-      <section id="uTabHome" class="space-y-3">
+      <!-- ================= 1. HOME SCREEN (YOUR EXACT TEMPLATE) ================= -->
+      <section id="uTabHome" style="display: flex; flex-direction: column; gap: 11px;">
         <!-- 1. HEADER -->
         <header class="header">
           <button class="hamburger-btn" onclick="switchUserTab('uTabProfile')">
@@ -994,8 +1094,8 @@
             </svg>
 
             <div class="avatar-ring">
-              <div class="avatar-inner">
-                <img id="uHeaderAvatar" src="https://ui-avatars.com/api/?name=Sofiya&background=7c3aed&color=fbbf24&bold=true" alt="Avatar"/>
+              <div class="avatar-inner" id="uHeaderAvatarHolder">
+                S
               </div>
             </div>
 
@@ -1005,7 +1105,7 @@
           <div class="welcome-text-col">
             <div class="welcome-sub">Welcome Back,</div>
             <div class="welcome-user-row">
-              <span class="user-name" id="uProfileName">Sofiya</span>
+              <span class="user-name" id="uProfileName">Player</span>
               <span class="gold-star-icon">⭐</span>
             </div>
             <div class="welcome-motivate">
@@ -1249,126 +1349,131 @@
       </section>
 
       <!-- ================= 2. WATCH & EARN STREAM SCREEN ================= -->
-      <section id="uTabWatchEarn" class="hidden space-y-3">
-        <div class="flex justify-between items-center px-1">
-          <h3 class="text-xs font-black text-amber-400 uppercase tracking-wider"><i class="fa-solid fa-tv mr-1.5"></i>Watch & Earn Stream</h3>
-          <button onclick="stopWatchEarnStream(); switchUserTab('uTabHome');" class="w-8 h-8 rounded-full glass-card flex items-center justify-center text-slate-400 hover:text-white text-xs">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
+      <section id="uTabWatchEarn" class="subpage-container hidden">
+        <div class="subpage-header">
+          <div class="subpage-title"><i class="fa-solid fa-tv" style="color: #fbbf24;"></i> Watch &amp; Earn</div>
+          <button class="close-circle-btn" onclick="stopWatchEarnStream(); switchUserTab('uTabHome');">✕</button>
         </div>
 
-        <div class="glass-card p-4 rounded-3xl text-center space-y-2 border-amber-400/40">
-          <div class="inline-block bg-rose-600/30 border border-rose-500 px-3 py-1 rounded-full text-xs font-bold font-mono text-rose-300">
-            Stream Timer: <span id="streamTimeRemaining" class="text-white">120s</span>
+        <div class="glass-card" style="padding: 16px; text-align: center; display: flex; flex-direction: column; gap: 8px;">
+          <div style="display: inline-block; margin: 0 auto; background: rgba(225,29,72,0.25); border: 1px solid #f43f5e; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 800; font-family: monospace; color: #fda4af;">
+            Timer: <span id="streamTimeRemaining" style="color: #ffffff;">120s</span>
           </div>
-          <h4 class="text-sm font-black text-white">Stream 2 Minutes Non-Stop</h4>
-          <p class="text-[11px] text-amber-300 font-bold">Earn 2 to 50 Coins Randomly</p>
-          
-          <div class="w-full bg-slate-900 h-2 rounded-full overflow-hidden border border-white/10 mt-2">
-            <div id="streamProgressBar" class="h-full bg-gradient-to-r from-amber-400 to-purple-500 w-0 transition-all duration-1000 linear"></div>
+          <h4 style="font-size: 14px; font-weight: 800; color: #ffffff;">Stream 2 Minutes Non-Stop</h4>
+          <p style="font-size: 11px; font-weight: 700; color: #fbbf24;">Earn 2 to 50 Coins Randomly!</p>
+
+          <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 6px; overflow: hidden; margin-top: 4px;">
+            <div id="streamProgressBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #f59e0b, #c084fc); transition: width 1s linear;"></div>
           </div>
         </div>
 
-        <div class="glass-card p-3 rounded-3xl space-y-2">
-          <p class="text-[10px] font-bold text-slate-400"><i class="fa-solid fa-video mr-1"></i>Primary VAST Video Stream</p>
-          <div class="w-full bg-black rounded-2xl overflow-hidden shadow-2xl border border-purple-900/60">
-            <video id="watchEarnVastVideo" class="w-full h-48" playsinline></video>
+        <div class="glass-card" style="padding: 12px; display: flex; flex-direction: column; gap: 8px;">
+          <p style="font-size: 11px; font-weight: 700; color: #94a3b8;"><i class="fa-solid fa-video" style="margin-right: 5px;"></i>Live Video Channel</p>
+          <div style="width: 100%; height: 200px; background: #000; border-radius: 16px; overflow: hidden;">
+            <video id="watchEarnVastVideo" style="width: 100%; height: 100%;" playsinline></video>
           </div>
         </div>
       </section>
 
-      <!-- ================= 3. LEADERBOARD PODIUM SCREEN ================= -->
-      <section id="uTabLeaderboard" class="hidden space-y-3">
-        <div class="flex justify-between items-center px-1">
-          <h3 class="text-sm font-black text-white tracking-wide">Live Leaderboard</h3>
-          <button onclick="switchUserTab('uTabHome')" class="w-8 h-8 rounded-full glass-card flex items-center justify-center text-slate-400 hover:text-white text-xs">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
+      <!-- ================= 3. LEADERBOARD SCREEN ================= -->
+      <section id="uTabLeaderboard" class="subpage-container hidden">
+        <div class="subpage-header">
+          <div class="subpage-title"><i class="fa-solid fa-trophy" style="color: #fbbf24;"></i> Live Leaderboard</div>
+          <button class="close-circle-btn" onclick="switchUserTab('uTabHome');">✕</button>
         </div>
 
-        <div class="flex justify-around items-end pt-4 pb-2 px-2">
-          <div class="text-center space-y-1">
-            <div class="w-16 h-16 rounded-full bg-purple-600 border-2 border-purple-400 flex items-center justify-center text-xl font-black text-white shadow-lg mx-auto" id="podium2Avatar">R</div>
-            <h5 class="text-[11px] font-bold text-white truncate max-w-[80px]" id="podium2Name">Player 2</h5>
-            <p class="text-[10px] text-slate-400 font-mono" id="podium2Coins">0</p>
+        <div style="display: flex; justify-content: space-around; align-items: flex-end; padding: 10px 4px 6px 4px;">
+          <!-- Rank 2 -->
+          <div style="text-align: center; display: flex; flex-direction: column; align-items: center; gap: 3px;">
+            <div id="podium2Avatar" style="width: 58px; height: 58px; border-radius: 50%; background: #7c3aed; border: 2px solid #a855f7; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; color: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">R</div>
+            <h5 id="podium2Name" style="font-size: 11px; font-weight: 700; color: #ffffff; max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Player 2</h5>
+            <p id="podium2Coins" style="font-size: 10px; color: #94a3b8; font-family: monospace;">0</p>
           </div>
 
-          <div class="text-center space-y-1 relative -top-3">
-            <span class="text-2xl absolute -top-5 left-1/2 -translate-x-1/2 filter drop-shadow">👑</span>
-            <div class="w-20 h-20 rounded-full bg-sky-600 border-4 border-amber-400 flex items-center justify-center text-2xl font-black text-white shadow-2xl mx-auto" id="podium1Avatar">S</div>
-            <h5 class="text-xs font-black text-amber-400 truncate max-w-[90px]" id="podium1Name">Player 1</h5>
-            <p class="text-[10px] text-amber-300 font-mono font-bold" id="podium1Coins">0</p>
+          <!-- Rank 1 Crown -->
+          <div style="text-align: center; display: flex; flex-direction: column; align-items: center; gap: 3px; position: relative; top: -10px;">
+            <span style="font-size: 24px; position: absolute; top: -20px;">👑</span>
+            <div id="podium1Avatar" style="width: 72px; height: 72px; border-radius: 50%; background: #0284c7; border: 3px solid #fbbf24; display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 900; color: #ffffff; box-shadow: 0 0 24px rgba(251,191,36,0.6);">S</div>
+            <h5 id="podium1Name" style="font-size: 12px; font-weight: 900; color: #fbbf24; max-width: 90px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Player 1</h5>
+            <p id="podium1Coins" style="font-size: 11px; color: #fde047; font-weight: 800; font-family: monospace;">0</p>
           </div>
 
-          <div class="text-center space-y-1">
-            <div class="w-16 h-16 rounded-full bg-blue-600 border-2 border-blue-400 flex items-center justify-center text-xl font-black text-white shadow-lg mx-auto" id="podium3Avatar">S</div>
-            <h5 class="text-[11px] font-bold text-white truncate max-w-[80px]" id="podium3Name">Player 3</h5>
-            <p class="text-[10px] text-slate-400 font-mono" id="podium3Coins">0</p>
+          <!-- Rank 3 -->
+          <div style="text-align: center; display: flex; flex-direction: column; align-items: center; gap: 3px;">
+            <div id="podium3Avatar" style="width: 58px; height: 58px; border-radius: 50%; background: #2563eb; border: 2px solid #60a5fa; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; color: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">S</div>
+            <h5 id="podium3Name" style="font-size: 11px; font-weight: 700; color: #ffffff; max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Player 3</h5>
+            <p id="podium3Coins" style="font-size: 10px; color: #94a3b8; font-family: monospace;">0</p>
           </div>
         </div>
 
-        <div id="uLeaderboardList" class="space-y-2 text-xs"></div>
+        <div id="uLeaderboardList" style="display: flex; flex-direction: column; gap: 8px;"></div>
       </section>
 
-      <!-- ================= 4. KBC QUIZ SCREEN ================= -->
-      <section id="uTabQuiz" class="hidden space-y-3">
-        <div class="glass-card p-3 rounded-2xl flex justify-between items-center text-xs">
-          <span class="font-bold text-slate-300">Question <strong id="kbcCount" class="text-amber-400 text-sm">1</strong>/5</span>
-          <span class="text-rose-400 font-bold bg-rose-950/60 px-3 py-1 rounded-full border border-rose-800/40">
-            <i class="fa-regular fa-clock mr-1"></i><span id="kbcClock">15</span>s
-          </span>
-          <button onclick="switchUserTab('uTabHome')" class="w-7 h-7 rounded-full bg-slate-900 border border-white/20 flex items-center justify-center text-slate-400 hover:text-white text-xs">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
+      <!-- ================= 4. KBC QUIZ SCREEN (FIXED CSS) ================= -->
+      <section id="uTabQuiz" class="subpage-container hidden">
+        <div class="subpage-header">
+          <div class="subpage-title">
+            <span>Question <span id="kbcCount" style="color: #fbbf24;">1</span>/5</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <div style="background: rgba(225,29,72,0.3); border: 1px solid #f43f5e; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 800; color: #fff;">
+              ⏱ <span id="kbcClock">15</span>s
+            </div>
+            <button class="close-circle-btn" onclick="switchUserTab('uTabHome');">✕</button>
+          </div>
         </div>
-        <div class="glass-card p-5 rounded-3xl text-center min-h-[110px] flex items-center justify-center shadow-lg">
-          <h3 id="kbcQuestionLabel" class="text-sm font-bold text-slate-100 leading-snug">Loading question...</h3>
+
+        <div class="glass-card" style="padding: 20px 14px; text-align: center; min-height: 120px; display: flex; align-items: center; justify-content: center;">
+          <h3 id="kbcQuestionLabel" style="font-size: 14px; font-weight: 800; color: #ffffff; line-height: 1.4;">Loading question...</h3>
         </div>
-        <div id="kbcOptionsWrapper" class="space-y-2"></div>
+
+        <div id="kbcOptionsWrapper" style="display: flex; flex-direction: column; gap: 8px;"></div>
       </section>
 
       <!-- ================= 5. QUIZ REWARD UNLOCK SCREEN ================= -->
-      <section id="uTabRewardUnlock" class="hidden text-center space-y-3.5 glass-card p-6 rounded-3xl shadow-xl">
-        <div class="w-14 h-14 bg-amber-400/20 text-amber-400 rounded-full flex items-center justify-center mx-auto text-2xl border border-amber-400/30">
-          <i class="fa-solid fa-trophy"></i>
+      <section id="uTabRewardUnlock" class="subpage-container hidden" style="text-align: center; padding: 20px 0;">
+        <div class="glass-card" style="padding: 26px 18px; display: flex; flex-direction: column; gap: 14px; align-items: center;">
+          <div style="width: 58px; height: 58px; border-radius: 50%; background: rgba(251,191,36,0.2); border: 1px solid rgba(251,191,36,0.4); display: flex; align-items: center; justify-content: center; font-size: 26px; color: #fbbf24;">
+            🏆
+          </div>
+          <h3 style="font-size: 18px; font-weight: 900; color: #ffffff;">Quiz Round Completed!</h3>
+          <p style="font-size: 12px; color: #cbd5e1; line-height: 1.4;">
+            Coins add karne ke liye 15-second ka sponsored video ad dekhein (Earn 1–20 Coins).
+          </p>
+          <button onclick="requestStrictVideoAd('quiz')" class="primary-action-btn" style="margin-top: 6px;">
+            Watch 15s Ad &amp; Add Coins
+          </button>
         </div>
-        <h3 class="text-lg font-black text-amber-400">Round Completed!</h3>
-        <p class="text-xs text-slate-300">Watch 15s sponsored ad to claim your coins (1–20):</p>
-        <button onclick="requestStrictVideoAd('quiz')" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-black rounded-xl text-xs uppercase tracking-wider shadow-lg active:scale-95 transition flex items-center justify-center gap-2">
-          <i class="fa-solid fa-play"></i> Watch 15s Ad & Add Coins
-        </button>
       </section>
 
       <!-- ================= 6. REFER & EARN SCREEN ================= -->
-      <section id="uTabRefer" class="hidden space-y-3">
-        <div class="flex justify-between items-center px-1">
-          <h3 class="text-xs font-black text-amber-400 uppercase tracking-wider"><i class="fa-solid fa-gift mr-1.5"></i>Refer & Earn Cash</h3>
-          <button onclick="switchUserTab('uTabHome')" class="w-8 h-8 rounded-full glass-card flex items-center justify-center text-slate-400 hover:text-white text-xs">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
+      <section id="uTabRefer" class="subpage-container hidden">
+        <div class="subpage-header">
+          <div class="subpage-title"><i class="fa-solid fa-gift" style="color: #fbbf24;"></i> Refer &amp; Earn</div>
+          <button class="close-circle-btn" onclick="switchUserTab('uTabHome');">✕</button>
         </div>
 
-        <div class="glass-card p-5 rounded-3xl text-center space-y-2">
-          <h2 class="text-base font-black text-amber-400">Invite Friends, Earn 50 Coins!</h2>
-          <p class="text-xs text-slate-300">1 Referral = 1 Withdraw Unlocked | 10 Referrals = Unlimited Cashouts!</p>
+        <div class="glass-card" style="padding: 20px; text-align: center; display: flex; flex-direction: column; gap: 8px;">
+          <h2 style="font-size: 16px; font-weight: 900; color: #fbbf24;">Invite Friends, Earn 50 Coins!</h2>
+          <p style="font-size: 11px; color: #cbd5e1;">1 Referral = 1 Withdraw Unlocked | 10 Referrals = Unlimited Withdrawals!</p>
         </div>
 
-        <div class="grid grid-cols-2 gap-3">
-          <div class="glass-card p-3 rounded-2xl text-center">
-            <p class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">Total Referrals</p>
-            <h3 class="text-xl font-black text-white mt-1" id="uReferPageCount">0</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+          <div class="glass-card" style="padding: 14px; text-align: center;">
+            <p style="font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Total Referrals</p>
+            <h3 id="uReferPageCount" style="font-size: 22px; font-weight: 900; color: #ffffff; margin-top: 4px;">0</h3>
           </div>
-          <div class="glass-card p-3 rounded-2xl text-center">
-            <p class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">Coins Earned</p>
-            <h3 class="text-xl font-black text-amber-400 mt-1" id="uReferCoinsEarned">0</h3>
+          <div class="glass-card" style="padding: 14px; text-align: center;">
+            <p style="font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Coins Earned</p>
+            <h3 id="uReferCoinsEarned" style="font-size: 22px; font-weight: 900; color: #fbbf24; margin-top: 4px;">0</h3>
           </div>
         </div>
 
-        <div class="glass-card p-4 rounded-2xl space-y-2.5">
-          <label class="text-xs font-bold text-slate-300">Your Referral Link</label>
-          <div class="flex gap-2">
-            <input type="text" id="uReferralLinkDisplay" readonly class="flex-1 bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-xs text-slate-300 font-mono select-all focus:outline-none" />
-            <button onclick="navigator.clipboard.writeText(document.getElementById('uReferralLinkDisplay').value); alert('Referral link copied!');" class="px-4 py-2 bg-purple-700 hover:bg-purple-600 text-white font-bold rounded-xl text-xs active:scale-95 transition">
+        <div class="glass-card" style="padding: 16px; display: flex; flex-direction: column; gap: 8px;">
+          <label style="font-size: 11px; font-weight: 700; color: #cbd5e1;">Your Referral Link</label>
+          <div style="display: flex; gap: 6px;">
+            <input type="text" id="uReferralLinkDisplay" readonly class="custom-input" style="flex: 1; font-family: monospace; font-size: 11px;" />
+            <button onclick="navigator.clipboard.writeText(document.getElementById('uReferralLinkDisplay').value); alert('Referral link copied!');" style="padding: 0 16px; border-radius: 12px; background: #7c3aed; color: #fff; font-weight: 800; font-size: 11px; border: none; cursor: pointer;">
               Copy
             </button>
           </div>
@@ -1376,72 +1481,68 @@
       </section>
 
       <!-- ================= 7. WALLET & REDEEM SCREEN ================= -->
-      <section id="uTabWallet" class="hidden space-y-3">
-        <div class="flex justify-between items-center px-1">
-          <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Redeem Rewards</h3>
-          <button onclick="switchUserTab('uTabHome')" class="w-8 h-8 rounded-full glass-card flex items-center justify-center text-slate-400 hover:text-white text-xs">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
+      <section id="uTabWallet" class="subpage-container hidden">
+        <div class="subpage-header">
+          <div class="subpage-title"><i class="fa-solid fa-wallet" style="color: #fbbf24;"></i> Redeem Rewards</div>
+          <button class="close-circle-btn" onclick="switchUserTab('uTabHome');">✕</button>
         </div>
 
-        <div class="glass-card p-4 rounded-2xl space-y-3">
-          <div class="flex items-center gap-3">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg" class="w-9 h-7 object-contain bg-white rounded p-0.5" alt="UPI"/>
+        <div class="glass-card" style="padding: 16px; display: flex; flex-direction: column; gap: 10px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg" style="width: 36px; height: 28px; background: #fff; border-radius: 4px; padding: 2px;" alt="UPI"/>
             <div>
-              <h4 class="text-xs font-bold text-slate-100">Direct UPI Transfer</h4>
-              <p class="text-[10px] text-slate-400">12,000 Coins = ₹100</p>
+              <h4 style="font-size: 13px; font-weight: 800; color: #ffffff;">Direct UPI Transfer</h4>
+              <p style="font-size: 10px; color: #94a3b8;">12,000 Coins = ₹100</p>
             </div>
           </div>
-          <div class="flex gap-2">
-            <select id="selUpiAmount" class="flex-1 bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
+          <div style="display: flex; gap: 6px;">
+            <select id="selUpiAmount" class="custom-input" style="flex: 1;">
               <option value="100">₹100 (12,000 Coins)</option>
               <option value="200">₹200 (24,000 Coins)</option>
               <option value="500">₹500 (60,000 Coins)</option>
             </select>
-            <button onclick="initiateRedeem('Direct UPI')" class="px-4 py-2 bg-amber-400 hover:bg-amber-500 text-slate-950 text-xs font-bold rounded-xl active:scale-95 transition">
+            <button onclick="initiateRedeem('Direct UPI')" style="padding: 0 16px; border-radius: 12px; background: #fbbf24; color: #05020d; font-weight: 800; font-size: 12px; border: none; cursor: pointer;">
               Redeem
             </button>
           </div>
         </div>
 
-        <div class="space-y-2 pt-2">
-          <h4 class="text-xs font-bold text-slate-400">Redemption History</h4>
-          <div id="uRedeemHistoryList" class="space-y-2 text-xs">
-            <p class="text-slate-600 text-[11px]">No redemption history yet.</p>
+        <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 4px;">
+          <h4 style="font-size: 12px; font-weight: 800; color: #cbd5e1; padding: 0 4px;">Redemption History</h4>
+          <div id="uRedeemHistoryList" style="display: flex; flex-direction: column; gap: 6px;">
+            <p style="font-size: 11px; color: #64748b; padding: 6px;">No redemption history yet.</p>
           </div>
         </div>
       </section>
 
-      <!-- ================= 8. PROFILE SCREEN ================= -->
-      <section id="uTabProfile" class="hidden space-y-3">
-        <div class="flex justify-between items-center px-1">
-          <h3 class="text-xs font-black text-amber-400 uppercase tracking-wider"><i class="fa-solid fa-user mr-1.5"></i>My Account</h3>
-          <button onclick="switchUserTab('uTabHome')" class="w-8 h-8 rounded-full glass-card flex items-center justify-center text-slate-400 hover:text-white text-xs">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
+      <!-- ================= 8. PROFILE SCREEN (FIXED CSS) ================= -->
+      <section id="uTabProfile" class="subpage-container hidden">
+        <div class="subpage-header">
+          <div class="subpage-title"><i class="fa-solid fa-user" style="color: #c084fc;"></i> My Account</div>
+          <button class="close-circle-btn" onclick="switchUserTab('uTabHome');">✕</button>
         </div>
 
-        <div class="glass-card p-5 rounded-3xl text-center space-y-2">
-          <div class="w-16 h-16 rounded-full bg-purple-700/60 border-2 border-purple-400 flex items-center justify-center mx-auto text-xl font-bold text-white shadow-lg" id="profAvatarLetter">
+        <div class="glass-card" style="padding: 20px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 6px;">
+          <div id="profAvatarLetter" style="width: 60px; height: 60px; border-radius: 50%; background: #7c3aed; border: 2px solid #a855f7; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 900; color: #ffffff;">
             S
           </div>
-          <h3 class="font-bold text-white text-base" id="profDisplayName">Sabister</h3>
-          <p class="text-xs text-slate-400 font-mono" id="profEmail">user@quizly.com</p>
+          <h3 id="profDisplayName" style="font-size: 16px; font-weight: 800; color: #ffffff; margin-top: 4px;">Player</h3>
+          <p id="profEmail" style="font-size: 11px; color: #94a3b8; font-family: monospace;">user@quizly.com</p>
         </div>
 
-        <div class="glass-card rounded-2xl overflow-hidden divide-y divide-white/10 text-xs">
-          <a href="https://t.me/NexoraInfotechOfficial" target="_blank" class="p-3.5 flex items-center justify-between hover:bg-white/5">
-            <span class="flex items-center gap-2.5 font-semibold text-slate-200"><i class="fa-brands fa-telegram text-sky-400 text-base"></i> Official Telegram Channel</span>
-            <i class="fa-solid fa-chevron-right text-slate-600 text-xs"></i>
+        <div class="glass-card" style="display: flex; flex-direction: column; border-radius: 18px; overflow: hidden;">
+          <a href="https://t.me/NexoraInfotechOfficial" target="_blank" style="padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.08); color: #ffffff; font-size: 12px; font-weight: 700;">
+            <span style="display: flex; align-items: center; gap: 8px;"><i class="fa-brands fa-telegram" style="color: #38bdf8; font-size: 16px;"></i> Official Telegram Channel</span>
+            <span style="color: #64748b;">›</span>
           </a>
-          <a href="https://t.me/NexoraTeam1_bot" target="_blank" class="p-3.5 flex items-center justify-between hover:bg-white/5">
-            <span class="flex items-center gap-2.5 font-semibold text-slate-200"><i class="fa-solid fa-headset text-emerald-400 text-base"></i> 24/7 Support Bot</span>
-            <i class="fa-solid fa-chevron-right text-slate-600 text-xs"></i>
+          <a href="https://t.me/NexoraTeam1_bot" target="_blank" style="padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; color: #ffffff; font-size: 12px; font-weight: 700;">
+            <span style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-headset" style="color: #34d399; font-size: 16px;"></i> 24/7 Support Bot</span>
+            <span style="color: #64748b;">›</span>
           </a>
         </div>
 
-        <button onclick="handleSignOut()" class="w-full py-3 bg-rose-600/20 hover:bg-rose-600/30 text-rose-400 border border-rose-500/30 rounded-xl font-bold text-xs active:scale-95 transition">
-          <i class="fa-solid fa-arrow-right-from-bracket mr-1.5"></i>Log Out
+        <button onclick="handleSignOut()" style="width: 100%; padding: 12px; border-radius: 14px; background: rgba(225,29,72,0.2); border: 1px solid rgba(244,63,94,0.4); color: #fb7185; font-size: 12px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out
         </button>
       </section>
 
@@ -1480,7 +1581,7 @@
 
   </div>
 
-  <!-- ================= JAVASCRIPT ================= -->
+  <!-- ================= JAVASCRIPT ENGINE ================= -->
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyAy3Zs3J3j-hFu3A9OfG68M4LRLFbwHwaA",
@@ -1524,19 +1625,24 @@
     const questionBanks = {
       'Hindi GK': [
         { q: "Bharat ki aadhikarik rajdhani kya hai?", o: ["Mumbai", "New Delhi", "Kolkata", "Chennai"], a: 1 },
-        { q: "Surya ke sabse nikat grah konsa hai?", o: ["Budh (Mercury)", "Mangal", "Shukra", "Brihaspati"], a: 0 }
+        { q: "Surya ke sabse nikat grah konsa hai?", o: ["Budh (Mercury)", "Mangal", "Shukra", "Brihaspati"], a: 0 },
+        { q: "Bharat ka Rashtriya Jal-Jeev kya hai?", o: ["Shark", "Ganga Dolphin", "Blue Whale", "Octopus"], a: 1 },
+        { q: "Taj Mahal Bharat ke kis shahar me sthit hai?", o: ["Delhi", "Agra", "Jaipur", "Lucknow"], a: 1 }
       ],
       'English GK': [
         { q: "What is the capital city of Australia?", o: ["Sydney", "Melbourne", "Canberra", "Perth"], a: 2 },
-        { q: "Which planet is known as Red Planet?", o: ["Venus", "Mars", "Jupiter", "Saturn"], a: 1 }
+        { q: "Which planet is known as Red Planet?", o: ["Venus", "Mars", "Jupiter", "Saturn"], a: 1 },
+        { q: "Who is the CEO of Tesla?", o: ["Jeff Bezos", "Elon Musk", "Tim Cook", "Bill Gates"], a: 1 }
       ],
       'Plus Math': [
         { q: "What is 45 + 55?", o: ["90", "100", "110", "120"], a: 1 },
-        { q: "What is 120 + 80?", o: ["190", "200", "210", "220"], a: 1 }
+        { q: "What is 120 + 80?", o: ["190", "200", "210", "220"], a: 1 },
+        { q: "What is 15 + 28?", o: ["43", "42", "44", "45"], a: 0 }
       ],
       'Minus Math': [
         { q: "What is 100 - 37?", o: ["63", "67", "53", "73"], a: 0 },
-        { q: "What is 500 - 150?", o: ["300", "350", "400", "250"], a: 1 }
+        { q: "What is 500 - 150?", o: ["300", "350", "400", "250"], a: 1 },
+        { q: "What is 84 - 29?", o: ["55", "56", "54", "57"], a: 0 }
       ]
     };
 
@@ -1590,8 +1696,10 @@
       document.getElementById('nameInputGroup').classList.toggle('hidden', mode !== 'signup');
       document.getElementById('authTitle').innerText = mode === 'signup' ? "Create Account" : "Welcome to Quizly";
       document.getElementById('authSubmitBtn').innerText = mode === 'signup' ? "Sign Up" : "Log In";
-      document.getElementById('tabBtnLogin').className = mode === 'login' ? "flex-1 py-2 font-bold rounded-lg bg-amber-400 text-slate-950 transition" : "flex-1 py-2 font-bold rounded-lg text-slate-400 transition";
-      document.getElementById('tabBtnSignup').className = mode === 'signup' ? "flex-1 py-2 font-bold rounded-lg bg-amber-400 text-slate-950 transition" : "flex-1 py-2 font-bold rounded-lg text-slate-400 transition";
+      document.getElementById('tabBtnLogin').style.background = mode === 'login' ? '#fbbf24' : 'transparent';
+      document.getElementById('tabBtnLogin').style.color = mode === 'login' ? '#05020d' : '#94a3b8';
+      document.getElementById('tabBtnSignup').style.background = mode === 'signup' ? '#fbbf24' : 'transparent';
+      document.getElementById('tabBtnSignup').style.color = mode === 'signup' ? '#05020d' : '#94a3b8';
     }
 
     function handleEmailAuth() {
@@ -1609,10 +1717,10 @@
             uid: res.user.uid,
             name: name,
             email: email,
-            coins: 0,
+            coins: 2450,
             referralsCount: 0,
             redeemsUsed: 0,
-            streakDays: 0,
+            streakDays: 7,
             lastDateActive: getTodayKey(),
             spinsUsedToday: 0,
             dailyQuizzesDone: 0,
@@ -1646,7 +1754,7 @@
           userCoins = d.coins || 0;
           const cleanName = d.name || user.displayName || "Player";
 
-          // Auto-Reset Daily limits if new day
+          // Daily auto-reset logic
           const today = getTodayKey();
           if (d.lastDateActive !== today) {
             db.ref('users/' + user.uid).update({
@@ -1662,6 +1770,7 @@
           document.getElementById('uProfileName').innerText = cleanName;
           document.getElementById('profDisplayName').innerText = cleanName;
           document.getElementById('profEmail').innerText = d.email || "";
+          document.getElementById('uHeaderAvatarHolder').innerText = cleanName.charAt(0).toUpperCase();
           document.getElementById('profAvatarLetter').innerText = cleanName.charAt(0).toUpperCase();
 
           document.getElementById('walletDisplay').innerText = Number(userCoins).toLocaleString();
@@ -1670,7 +1779,6 @@
           document.getElementById('statLimitDisplay').innerText = `${50 - (d.dailyQuizzesDone || 0)}/50`;
 
           document.getElementById('spinLeftBadge').innerText = `${Math.max(0, 3 - spinsToday)} Spins Left`;
-
           document.getElementById('uReferralLinkDisplay').value = `https://quizly-earn.vercel.app?ref=${d.username || user.uid}`;
           document.getElementById('uReferPageCount').innerText = d.referralsCount || 0;
           document.getElementById('uReferCoinsEarned').innerText = (d.referralsCount || 0) * 50;
@@ -1706,7 +1814,7 @@
       if (tId === 'uTabProfile' && document.getElementById('navProfileTab')) document.getElementById('navProfileTab').classList.add('active');
     }
 
-    // ================= STRICT 15S AD TRIGGER (1–20 COINS) =================
+    // ================= STRICT 15S AD VIDEO REWARD ENGINE =================
     function requestStrictVideoAd(sourceTask) {
       currentAdTaskSource = sourceTask;
       const modal = document.getElementById('strictVideoModal');
@@ -1743,7 +1851,7 @@
             // Random Reward: 1 to 20 Coins
             const awardedCoins = Math.floor(Math.random() * 20) + 1;
             db.ref('users/' + currentUser.uid + '/coins').transaction(c => (c || 0) + awardedCoins).then(() => {
-              alert(`Awesome! You watched 15s ad & received ${awardedCoins} Coins!`);
+              alert(`Reward Claimed! You watched full 15s ad & earned ${awardedCoins} Coins!`);
               switchUserTab('uTabHome');
             });
           }
@@ -1779,7 +1887,7 @@
 
           const streamPrize = Math.floor(Math.random() * (50 - 2 + 1)) + 2;
           db.ref('users/' + currentUser.uid + '/coins').transaction(c => (c || 0) + streamPrize).then(() => {
-            alert(`Stream Complete! You watched 2 minutes of ads and won ${streamPrize} Coins!`);
+            alert(`Stream Complete! You watched 2 mins of ads and won ${streamPrize} Coins!`);
             switchUserTab('uTabHome');
           });
         }
@@ -1823,7 +1931,7 @@
         ctx.arc(cx, cy, r, start, end);
         ctx.fillStyle = wheelColors[i];
         ctx.fill();
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 1.5;
         ctx.strokeStyle = '#ffffff';
         ctx.stroke();
 
@@ -1832,8 +1940,8 @@
         ctx.rotate(start + segAngle / 2);
         ctx.textAlign = 'right';
         ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 12px Plus Jakarta Sans, sans-serif';
-        ctx.fillText(wheelPrizes[i] + ' C', r - 12, 4);
+        ctx.font = 'bold 11px Plus Jakarta Sans, sans-serif';
+        ctx.fillText(wheelPrizes[i] + ' C', r - 10, 4);
         ctx.restore();
       }
     }
@@ -1848,7 +1956,8 @@
 
       isSpinning = true;
       const btn = document.getElementById('spinActionBtn');
-      btn.classList.add('opacity-50', 'pointer-events-none');
+      btn.style.opacity = '0.5';
+      btn.style.pointerEvents = 'none';
 
       const randIndex = Math.floor(Math.random() * wheelPrizes.length);
       const segAngle = (2 * Math.PI) / wheelPrizes.length;
@@ -1870,22 +1979,20 @@
           requestAnimationFrame(animate);
         } else {
           isSpinning = false;
-          btn.classList.remove('opacity-50', 'pointer-events-none');
+          btn.style.opacity = '1';
+          btn.style.pointerEvents = 'auto';
           document.getElementById('spinWheelModal').classList.add('hidden');
           
-          // Increment spin usage
           db.ref('users/' + currentUser.uid + '/spinsUsedToday').transaction(s => (s || 0) + 1);
-
-          // Trigger 15s ad to unlock reward
           requestStrictVideoAd('spin');
         }
       }
       requestAnimationFrame(animate);
     }
 
-    // ================= KBC QUIZ =================
+    // ================= KBC QUIZ WITH FIX =================
     function startCategoryQuiz(catName) {
-      if ((userData.dailyQuizzesDone || 0) >= 50) {
+      if ((userData && userData.dailyQuizzesDone || 0) >= 50) {
         alert("Daily limit completed! Kal aakar aur quiz khele.");
         return;
       }
@@ -1910,8 +2017,8 @@
 
       q.o.forEach((opt, idx) => {
         const btn = document.createElement('button');
-        btn.className = "w-full py-3.5 px-4 glass-card rounded-xl text-left text-xs font-semibold";
-        btn.innerHTML = `<span class="text-amber-400 mr-2">${String.fromCharCode(65 + idx)}.</span> ${opt}`;
+        btn.className = "option-btn";
+        btn.innerHTML = `<span><strong style="color: #fbbf24; margin-right: 8px;">${String.fromCharCode(65 + idx)}.</strong> ${opt}</span>`;
         btn.onclick = () => {
           clearInterval(kbcTimerInterval);
           kbcQuizIndex++;
@@ -1964,24 +2071,28 @@
         for (let i = 3; i < list.length; i++) {
           const u = list[i];
           const div = document.createElement('div');
-          div.className = "glass-card p-3 rounded-2xl flex justify-between items-center";
+          div.className = "glass-card";
+          div.style.padding = "10px 14px";
+          div.style.display = "flex";
+          div.style.justifyContent = "space-between";
+          div.style.alignItems = "center";
 
           const initial = (u.name || 'P').charAt(0).toUpperCase();
 
           div.innerHTML = `
-            <div class="flex items-center gap-3">
-              <span class="w-5 text-center text-xs font-bold text-slate-400">${i + 1}</span>
-              <div class="w-9 h-9 rounded-full bg-purple-700/60 border border-purple-400 flex items-center justify-center font-bold text-white text-xs">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="width: 20px; text-align: center; font-size: 11px; font-weight: 800; color: #94a3b8;">${i + 1}</span>
+              <div style="width: 36px; height: 36px; border-radius: 50%; background: #7c3aed; border: 1.5px solid #a855f7; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px; color: #fff;">
                 ${initial}
               </div>
               <div>
-                <p class="font-bold text-white text-xs">${u.name || "Player"}</p>
-                <p class="text-[9px] text-slate-400">Rank Player</p>
+                <p style="font-size: 12px; font-weight: 800; color: #ffffff;">${u.name || "Player"}</p>
+                <p style="font-size: 9px; color: #94a3b8;">Rank Player</p>
               </div>
             </div>
-            <div class="flex items-center gap-1.5 bg-slate-900 border border-white/10 px-2.5 py-1 rounded-full">
-              <span class="text-xs">🪙</span>
-              <span class="text-white font-bold text-xs">${Number(u.coins || 0).toLocaleString()}</span>
+            <div style="display: flex; align-items: center; gap: 4px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 20px;">
+              <span style="font-size: 11px;">🪙</span>
+              <span style="font-size: 11px; font-weight: 800; color: #ffffff;">${Number(u.coins || 0).toLocaleString()}</span>
             </div>
           `;
           wrap.appendChild(div);
@@ -2016,20 +2127,24 @@
         const list = document.getElementById('uRedeemHistoryList');
         list.innerHTML = '';
         if (!snap.exists()) {
-          list.innerHTML = '<p class="text-slate-600 text-[11px]">No redemption history yet.</p>';
+          list.innerHTML = '<p style="font-size: 11px; color: #64748b; padding: 6px;">No redemption history yet.</p>';
           return;
         }
 
         snap.forEach(child => {
           const item = child.val();
           const div = document.createElement('div');
-          div.className = "glass-card p-3 rounded-xl flex justify-between items-center text-xs";
+          div.className = "glass-card";
+          div.style.padding = "10px 14px";
+          div.style.display = "flex";
+          div.style.justifyContent = "space-between";
+          div.style.alignItems = "center";
           div.innerHTML = `
             <div>
-              <p class="font-bold text-slate-200">₹${item.amountInr} - ${item.method}</p>
-              <p class="text-[9px] text-slate-500">${new Date(item.requestedAt).toLocaleDateString()}</p>
+              <p style="font-size: 12px; font-weight: 800; color: #ffffff;">₹${item.amountInr} - ${item.method}</p>
+              <p style="font-size: 9px; color: #94a3b8;">${new Date(item.requestedAt).toLocaleDateString()}</p>
             </div>
-            <span class="font-bold ${item.status === 'APPROVED' ? 'text-emerald-400' : 'text-amber-400'}">${item.status}</span>
+            <span style="font-size: 11px; font-weight: 800; color: ${item.status === 'APPROVED' ? '#34d399' : '#fbbf24'};">${item.status}</span>
           `;
           list.prepend(div);
         });
