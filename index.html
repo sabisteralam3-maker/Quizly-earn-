@@ -9,10 +9,9 @@
   <meta name="500b95e80fc810c92ed9dd55e4b3ae8c5476fe8b" content="500b95e80fc810c92ed9dd55e4b3ae8c5476fe8b" />
   <meta name="monetag" content="421338142263e17d4e560ebd8aeda8c4">
 
-  <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
 
   <!-- Fluid Player -->
@@ -65,7 +64,7 @@
         radial-gradient(circle at 0% 70%, rgba(126, 34, 206, 0.25) 0%, transparent 45%),
         radial-gradient(circle at 50% 100%, rgba(29, 78, 216, 0.3) 0%, transparent 50%);
       color: #ffffff;
-      font-family: 'Plus Jakarta Sans', 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       min-height: 100vh;
       display: flex;
       justify-content: center;
@@ -314,6 +313,12 @@
       font-size: 20px;
       font-weight: 900;
       color: #ffffff;
+    }
+
+    .avatar-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .level-badge {
@@ -651,7 +656,6 @@
       transform: scale(0.93);
     }
 
-    /* Category Specific Glow & Accents */
     .quiz-box.purple-cat {
       border-color: rgba(168, 85, 247, 0.4);
       box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2), 0 0 16px -2px rgba(168, 85, 247, 0.35);
@@ -778,12 +782,12 @@
     /* ---------------- 7. QUICK ACTIONS ---------------- */
     .quick-actions-row {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 7px;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
     }
 
     .action-tile {
-      padding: 12px 4px 10px 4px;
+      padding: 12px 3px 10px 3px;
       border-radius: 18px;
       background: rgba(14, 18, 42, 0.75);
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -802,16 +806,16 @@
     }
 
     .action-icon-wrap {
-      width: 40px;
-      height: 40px;
+      width: 38px;
+      height: 38px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 6px;
+      margin-bottom: 5px;
     }
 
     .action-label {
-      font-size: 10.5px;
+      font-size: 10px;
       font-weight: 800;
       color: #ffffff;
       line-height: 1.15;
@@ -1040,7 +1044,7 @@
             <i class="fa-solid fa-play"></i>
           </button>
           <p style="font-size: 12px; font-weight: 800; color: #fde047;">Play Video Ad (15s)</p>
-          <p style="font-size: 10px; color: #94a3b8;">15 second dekhne par coins milenge</p>
+          <p style="font-size: 10px; color: #94a3b8;">15 second dekhne par coins credit honge</p>
         </div>
       </div>
       <p style="font-size: 11px; color: #94a3b8;">Window band na karein jab tak video poori na ho jaye.</p>
@@ -1427,7 +1431,7 @@
           </button>
         </section>
 
-        <!-- 7. QUICK ACTIONS -->
+        <!-- 7. QUICK ACTIONS (EXACT PRESERVED + READ & EARN INCLUDED) -->
         <section class="quick-actions-row">
           <div class="action-tile" data-action="Spin & Win" onclick="openSpinWheelModal()">
             <div class="action-icon-wrap">
@@ -1455,6 +1459,14 @@
               </svg>
             </div>
             <div class="action-label">Daily Bonus</div>
+          </div>
+
+          <!-- Read & Earn Action Tile -->
+          <div class="action-tile" data-action="Read Earn" onclick="startReadArticleTask()">
+            <div class="action-icon-wrap">
+              <span style="font-size: 24px;">📖</span>
+            </div>
+            <div class="action-label">Read Earn</div>
           </div>
 
           <div class="action-tile" data-action="Invite & Earn" onclick="switchUserTab('uTabRefer')">
@@ -1734,7 +1746,7 @@
 
     </main>
 
-    <!-- 8. FIXED FLOATING BOTTOM NAVIGATION (EXACT PRESERVED WITH WATCH EARN) -->
+    <!-- 8. FIXED FLOATING BOTTOM NAVIGATION (WATCH EARN IN PLACE OF ACTIVITY) -->
     <div class="nav-bar-wrapper">
       <nav class="nav-bar">
 
@@ -1819,6 +1831,10 @@
     let watchEarnInstance = null;
     let streamSecondsLeft = 120;
     let streamInterval = null;
+
+    // Read Article 60s
+    let isArticleActive = false;
+    let articleStartTime = 0;
 
     // Spin Wheel Setup (Max 3/Day)
     const wheelPrizes = [5, 10, 2, 15, 8, 20, 12, 1];
@@ -2118,6 +2134,28 @@
       if (v) v.pause();
     }
 
+    // ================= READ & EARN (60S) =================
+    function startReadArticleTask() {
+      isArticleActive = true;
+      articleStartTime = Date.now();
+      window.open(MONETAG_DIRECT_LINK, '_blank');
+    }
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible" && isArticleActive) {
+        const spent = Math.floor((Date.now() - articleStartTime) / 1000);
+        isArticleActive = false;
+
+        if (spent < 60) {
+          alert(`रिवार्ड रद्द हुआ! आप सिर्फ ${spent}s रुके। न्यूनतम 60 सेकंड रुकना अनिवार्य है।`);
+        } else {
+          const earned = Math.floor(Math.random() * 20) + 1;
+          db.ref('users/' + currentUser.uid + '/coins').transaction(c => (c || 0) + earned);
+          alert(`बधाई हो! आपने 60 सेकंड आर्टिकल पढ़ा और ${earned} Coins कमाए!`);
+        }
+      }
+    });
+
     // ================= SPIN WHEEL (3/DAY) =================
     function openSpinWheelModal() {
       if (spinsToday >= 3) {
@@ -2330,7 +2368,7 @@
       if (method === 'Amazon Code') inr = parseInt(document.getElementById('selAmazonAmount').value);
       if (method === 'Direct UPI') inr = parseInt(document.getElementById('selUpiAmount').value);
 
-      const req = inr * 120;
+      const req = inr * 120; // 1,200 coins = ₹10
 
       if (userCoins < req) {
         alert(`अपर्याप्त Coins! ₹${inr} निकासी के लिए कम से कम ${req} Coins आवश्यक हैं।`);
