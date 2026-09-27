@@ -7,6 +7,7 @@
 
   <!-- Hilltop Verification -->
   <meta name="500b95e80fc810c92ed9dd55e4b3ae8c5476fe8b" content="500b95e80fc810c92ed9dd55e4b3ae8c5476fe8b" />
+  <meta name="monetag" content="421338142263e17d4e560ebd8aeda8c4">
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -37,31 +38,56 @@
 
   <style>
     @keyframes pulseGlow {
-      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.35)); }
-      50% { transform: scale(1.03); filter: drop-shadow(0 0 25px rgba(245, 158, 11, 0.7)); }
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.4)); }
+      50% { transform: scale(1.03); filter: drop-shadow(0 0 25px rgba(245, 158, 11, 0.8)); }
     }
     .splash-logo { animation: pulseGlow 2.5s infinite ease-in-out; }
     .no-scrollbar::-webkit-scrollbar { display: none; }
-    .glass-card {
-      background: linear-gradient(135deg, rgba(26, 20, 56, 0.75) 0%, rgba(13, 10, 31, 0.9) 100%);
-      backdrop-filter: blur(14px);
-      border: 1px solid rgba(168, 85, 247, 0.25);
+    
+    /* Liquid Glass styling */
+    .liquid-glass {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    }
+    .liquid-glass-accent {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.18) 0%, rgba(245, 158, 11, 0.12) 100%);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      box-shadow: 0 8px 32px 0 rgba(168, 85, 247, 0.25);
     }
   </style>
 </head>
-<body class="bg-[#060312] text-slate-100 font-sans min-h-screen flex flex-col justify-between select-none">
+<body class="bg-[#05020c] text-slate-100 font-sans min-h-screen flex flex-col justify-between select-none">
 
-  <!-- ================= 3S ADS LOADING ANIMATION MODAL ================= -->
+  <!-- ================= IN-APP NOTIFICATION BANNER ================= -->
+  <div id="inAppNotifyBanner" class="hidden fixed top-3 left-4 right-4 z-50 liquid-glass border border-amber-400/60 p-3.5 rounded-2xl shadow-2xl flex items-start gap-3 transition-all duration-300">
+    <div class="w-8 h-8 rounded-xl bg-amber-400/20 text-amber-400 flex items-center justify-center shrink-0 text-sm">
+      <i class="fa-solid fa-bell"></i>
+    </div>
+    <div class="flex-1">
+      <h4 class="text-xs font-bold text-amber-400" id="notifyBannerTitle">Notification</h4>
+      <p class="text-[11px] text-slate-300 leading-tight mt-0.5" id="notifyBannerMsg">Message content</p>
+    </div>
+    <button onclick="dismissNotifyBanner()" class="text-slate-500 hover:text-white text-xs p-1">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+
+  <!-- ================= 3S AD PRELOADER ================= -->
   <div id="adLoaderModal" class="hidden fixed inset-0 bg-black/95 z-50 flex flex-col items-center justify-center p-6 backdrop-blur-md">
     <div class="relative w-20 h-20 flex items-center justify-center mb-4">
       <div class="absolute inset-0 rounded-full border-4 border-amber-400/20 border-t-amber-400 animate-spin"></div>
       <i class="fa-solid fa-film text-2xl text-amber-400"></i>
     </div>
-    <h3 class="text-sm font-black text-amber-400">Preparing High-Reward Video...</h3>
+    <h3 class="text-sm font-black text-amber-400">Preparing Video Ad...</h3>
     <p class="text-[11px] text-slate-400 mt-1">Starting in <span id="adLoaderSec" class="font-bold text-white">3</span> seconds</p>
   </div>
 
-  <!-- ================= 30S VIDEO AD MODAL (STRICT PLAY ONLY) ================= -->
+  <!-- ================= 30S VIDEO AD MODAL ================= -->
   <div id="videoAdModal" class="hidden fixed inset-0 bg-black/95 z-50 flex flex-col items-center justify-center p-4">
     <div class="w-full max-w-sm space-y-3 text-center">
       <div class="flex justify-between items-center text-xs text-amber-400 font-bold px-1">
@@ -72,21 +98,20 @@
       <div class="w-full bg-black rounded-2xl overflow-hidden shadow-2xl border border-slate-800 relative">
         <video id="hilltopVideoPlayer" class="w-full h-56" playsinline></video>
         
-        <!-- Play Overlay Trigger -->
-        <div id="videoPlayOverlay" class="absolute inset-0 bg-black/70 flex flex-col items-center justify-center gap-2 z-20">
+        <div id="videoPlayOverlay" class="absolute inset-0 bg-black/75 flex flex-col items-center justify-center gap-2 z-20">
           <button onclick="startActualVideoAd()" class="w-16 h-16 rounded-full bg-amber-400 hover:bg-amber-500 text-slate-950 flex items-center justify-center text-2xl pl-1 shadow-2xl active:scale-95 transition">
             <i class="fa-solid fa-play"></i>
           </button>
           <p class="text-xs font-bold text-amber-300">Click to Play & Earn Coins</p>
         </div>
       </div>
-      <p class="text-[11px] text-slate-400">Coins tabhi credit honge jab pura 30 second ad chalega.</p>
+      <p class="text-[11px] text-slate-400">Pura 30 second ad chalne par hi coins credit honge.</p>
     </div>
   </div>
 
   <!-- ================= EARLY RETURN ERROR POPUP ================= -->
   <div id="earlyReturnModal" class="hidden fixed inset-0 bg-slate-950/90 z-50 flex items-center justify-center p-6 backdrop-blur-md">
-    <div class="glass-card border border-rose-500/50 p-6 rounded-3xl max-w-sm w-full text-center space-y-4 shadow-2xl">
+    <div class="liquid-glass border border-rose-500/50 p-6 rounded-3xl max-w-sm w-full text-center space-y-4 shadow-2xl">
       <div class="w-16 h-16 rounded-full bg-rose-500/20 text-rose-500 flex items-center justify-center mx-auto text-3xl border border-rose-500/30">
         <i class="fa-solid fa-triangle-exclamation"></i>
       </div>
@@ -97,7 +122,7 @@
           Reward pane ke liye kam se kam <strong class="text-amber-400">60 seconds</strong> rukna compulsory hai!
         </p>
       </div>
-      <button onclick="retryArticleReading()" class="w-full py-3 bg-gradient-to-r from-rose-600 to-amber-600 hover:from-rose-500 text-white font-black rounded-xl text-xs uppercase tracking-wider shadow-lg active:scale-95 transition">
+      <button onclick="retryArticleReading()" class="w-full py-3 bg-gradient-to-r from-rose-600 to-amber-600 hover:from-rose-500 text-white font-black rounded-xl text-xs uppercase tracking-wider shadow-lg active:scale-95 transition flex items-center justify-center gap-2">
         <i class="fa-solid fa-rotate-right mr-1.5"></i> Try Again (Read 60s)
       </button>
     </div>
@@ -124,7 +149,7 @@
 
   <!-- ================= AUTH SCREEN ================= -->
   <div id="authScreen" class="hidden fixed inset-0 bg-[#070314] z-40 flex flex-col items-center justify-center p-6 overflow-y-auto">
-    <div class="glass-card p-6 rounded-3xl max-w-sm w-full shadow-2xl space-y-4">
+    <div class="liquid-glass p-6 rounded-3xl max-w-sm w-full shadow-2xl space-y-4">
       <div class="text-center">
         <img src="https://i.ibb.co/BHTcn7QD/file-0000000021988211ab800b8ece076fff.png" class="w-16 h-16 rounded-2xl mx-auto mb-2 border border-amber-400/40 shadow-md object-contain bg-purple-950/60 p-1" alt="Logo"/>
         <h2 class="text-xl font-black text-white" id="authTitle">Welcome to Quizly</h2>
@@ -168,10 +193,10 @@
     </div>
   </div>
 
-  <!-- ================= MAIN APP VIEW ================= -->
+  <!-- ================= MAIN USER VIEW ================= -->
   <div id="userAppView" class="flex-1 flex flex-col justify-between hidden">
-    <!-- Top Bar -->
-    <header class="p-3.5 bg-slate-900/90 border-b border-purple-900/40 flex justify-between items-center sticky top-0 z-30 backdrop-blur-md">
+    <!-- Top Header -->
+    <header class="p-3.5 bg-slate-950/80 border-b border-white/10 flex justify-between items-center sticky top-0 z-30 backdrop-blur-xl">
       <div class="flex items-center gap-2.5">
         <img id="uHeaderAvatar" src="" class="w-10 h-10 rounded-2xl border-2 border-amber-400/60 object-cover shadow-lg" alt="Avatar"/>
         <div>
@@ -181,10 +206,10 @@
       </div>
 
       <div class="flex items-center gap-2">
-        <button onclick="switchUserTab('uTabLeaderboard')" class="text-amber-400 p-2 bg-purple-950/80 rounded-xl border border-amber-400/30 text-xs active:scale-95 transition">
+        <button onclick="switchUserTab('uTabLeaderboard')" class="text-amber-400 p-2 liquid-glass rounded-xl border border-amber-400/30 text-xs active:scale-95 transition">
           <i class="fa-solid fa-trophy"></i>
         </button>
-        <div class="flex items-center gap-1.5 bg-purple-950/80 px-3.5 py-1.5 rounded-full border border-amber-500/40 shadow-inner">
+        <div class="flex items-center gap-1.5 liquid-glass px-3.5 py-1.5 rounded-full border border-amber-500/40 shadow-inner">
           <i class="fa-solid fa-coins text-amber-400 text-xs"></i>
           <span id="uCoinBalance" class="font-bold text-amber-300 text-xs">0</span>
         </div>
@@ -196,11 +221,11 @@
       
       <!-- SCREEN 1: HOME -->
       <section id="uTabHome" class="space-y-4">
-        <!-- Balance Hero Card -->
-        <div class="bg-gradient-to-br from-purple-900 via-indigo-950 to-slate-900 p-5 rounded-3xl border border-purple-700/50 shadow-xl relative overflow-hidden">
+        <!-- Balance Hero Card (Liquid Glass Accent) -->
+        <div class="liquid-glass-accent p-5 rounded-3xl relative overflow-hidden">
           <div class="flex justify-between items-start">
             <div>
-              <p class="text-[11px] font-semibold uppercase tracking-wider text-purple-300">Wallet Estimated Value</p>
+              <p class="text-[11px] font-semibold uppercase tracking-wider text-purple-200">Wallet Estimated Value</p>
               <h2 class="text-3xl font-black text-white mt-0.5" id="uInrValue">₹0.00</h2>
             </div>
             <span class="text-[10px] font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30 px-2.5 py-1 rounded-lg">
@@ -208,7 +233,7 @@
             </span>
           </div>
 
-          <div class="mt-4 pt-3 border-t border-purple-800/50 flex justify-between items-center text-[11px] text-slate-300">
+          <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-[11px] text-slate-300">
             <span>Daily Streak: <strong id="uStreakDayCount" class="text-amber-400">Day 0</strong></span>
             <button onclick="switchUserTab('uTabStreak')" class="text-amber-400 font-bold hover:underline flex items-center gap-1">
               <span>View Streak</span> <i class="fa-solid fa-fire text-amber-400 text-xs"></i>
@@ -216,31 +241,63 @@
           </div>
         </div>
 
-        <!-- Quick Access Options (Contest, Tasks & Streak) -->
-        <div class="grid grid-cols-2 gap-3">
-          <div onclick="switchUserTab('uTabContest')" class="glass-card p-3.5 rounded-2xl flex items-center gap-3 cursor-pointer active:scale-95 transition">
-            <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-lg border border-amber-400/30">
+        <!-- 3 Quick Access Cards (Contest, Tasks & Read Earn) -->
+        <div class="grid grid-cols-3 gap-2.5">
+          <div onclick="switchUserTab('uTabContest')" class="liquid-glass p-3 rounded-2xl flex flex-col items-center text-center cursor-pointer active:scale-95 transition">
+            <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-base border border-amber-400/30 mb-1.5">
               <i class="fa-solid fa-flag-checkered"></i>
             </div>
-            <div>
-              <h4 class="text-xs font-bold text-white">Daily Contest</h4>
-              <p class="text-[9px] text-slate-400">Win mega codes</p>
-            </div>
+            <h4 class="text-[11px] font-bold text-white">Contest</h4>
+            <p class="text-[8px] text-slate-400">Win mega cash</p>
           </div>
 
-          <div onclick="switchUserTab('uTabOfferwall')" class="glass-card p-3.5 rounded-2xl flex items-center gap-3 cursor-pointer active:scale-95 transition">
-            <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg border border-emerald-400/30">
+          <div onclick="switchUserTab('uTabOfferwall')" class="liquid-glass p-3 rounded-2xl flex flex-col items-center text-center cursor-pointer active:scale-95 transition">
+            <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-base border border-emerald-400/30 mb-1.5">
               <i class="fa-solid fa-list-check"></i>
             </div>
-            <div>
-              <h4 class="text-xs font-bold text-white">Offer Tasks</h4>
-              <p class="text-[9px] text-slate-400">Download & Earn</p>
+            <h4 class="text-[11px] font-bold text-white">Offer Tasks</h4>
+            <p class="text-[8px] text-slate-400">Download & win</p>
+          </div>
+
+          <div onclick="switchUserTab('uTabReadEarn')" class="liquid-glass p-3 rounded-2xl flex flex-col items-center text-center cursor-pointer active:scale-95 transition">
+            <div class="w-10 h-10 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center text-base border border-sky-400/30 mb-1.5">
+              <i class="fa-solid fa-book-open"></i>
             </div>
+            <h4 class="text-[11px] font-bold text-white">Read Earn</h4>
+            <p class="text-[8px] text-slate-400">60s 15 Coins</p>
+          </div>
+        </div>
+
+        <!-- Refer Quick Card -->
+        <div onclick="switchUserTab('uTabRefer')" class="liquid-glass p-4 rounded-3xl flex items-center justify-between cursor-pointer active:scale-98 transition hover:border-purple-400/50">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-2xl bg-amber-400/20 text-amber-400 flex items-center justify-center text-xl border border-amber-400/30">
+              <i class="fa-solid fa-gift"></i>
+            </div>
+            <div>
+              <h4 class="text-xs font-black text-white">Refer & Earn 50 Coins</h4>
+              <p class="text-[10px] text-slate-400 mt-0.5">Invite friends & unlock unlimited cashouts</p>
+            </div>
+          </div>
+          <span class="text-xs text-amber-400 font-bold liquid-glass px-3 py-1.5 rounded-xl border border-white/10">Invite</span>
+        </div>
+
+        <!-- Promo Code Card -->
+        <div class="liquid-glass p-4 rounded-3xl space-y-2">
+          <div class="flex items-center gap-2 text-xs font-bold text-amber-400">
+            <i class="fa-solid fa-ticket"></i>
+            <span>Redeem Promo Code</span>
+          </div>
+          <div class="flex gap-2">
+            <input type="text" id="promoCodeInput" placeholder="Enter Promo Code" class="flex-1 bg-slate-950/80 border border-white/10 rounded-xl px-3 py-2 text-xs text-white uppercase font-bold focus:outline-none focus:border-amber-400" />
+            <button onclick="claimPromoCode()" class="px-4 py-2 bg-amber-400 hover:bg-amber-500 text-slate-950 font-bold rounded-xl text-xs active:scale-95 transition">
+              Apply
+            </button>
           </div>
         </div>
 
         <!-- KBC Challenge Card -->
-        <div class="glass-card p-5 rounded-3xl text-center space-y-3 shadow-xl">
+        <div class="liquid-glass p-5 rounded-3xl text-center space-y-3 shadow-xl">
           <div class="w-12 h-12 bg-amber-400/20 text-amber-400 rounded-2xl flex items-center justify-center mx-auto text-xl border border-amber-400/30">
             <i class="fa-solid fa-brain"></i>
           </div>
@@ -254,9 +311,16 @@
         </div>
       </section>
 
-      <!-- SCREEN 2: DEDICATED READ & EARN PAGE -->
+      <!-- SCREEN 2: READ & EARN (WITH CLOSE BUTTON) -->
       <section id="uTabReadEarn" class="hidden space-y-4">
-        <div class="bg-gradient-to-br from-indigo-900 via-purple-950 to-slate-900 border border-purple-700/40 p-6 rounded-3xl text-center space-y-2 shadow-xl">
+        <div class="flex justify-between items-center px-1">
+          <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider"><i class="fa-solid fa-newspaper mr-1.5"></i>Read & Earn Articles</h3>
+          <button onclick="switchUserTab('uTabHome')" class="w-8 h-8 rounded-full liquid-glass flex items-center justify-center text-slate-400 hover:text-white text-xs">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <div class="liquid-glass-accent p-6 rounded-3xl text-center space-y-2">
           <div class="w-14 h-14 rounded-2xl bg-emerald-400/20 text-emerald-400 flex items-center justify-center mx-auto text-2xl border border-emerald-400/30">
             <i class="fa-solid fa-book-open"></i>
           </div>
@@ -264,55 +328,61 @@
           <p class="text-xs text-slate-300 max-w-xs mx-auto">Open article and spend <strong class="text-amber-300">60 seconds</strong> reading. Pura time complete hone par instant 10–15 coins milenge.</p>
         </div>
 
-        <div class="glass-card p-5 rounded-3xl space-y-3 text-center">
-          <h4 class="text-xs font-bold text-slate-200">Featured Web Article</h4>
-          <p class="text-[11px] text-slate-400">Click below to start reading in background:</p>
+        <div class="liquid-glass p-5 rounded-3xl space-y-3 text-center">
+          <h4 class="text-xs font-bold text-slate-200">Featured Article #1</h4>
+          <p class="text-[11px] text-slate-400">Click below to open article in background tab:</p>
           <button onclick="startReadArticleTask()" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-black rounded-xl text-xs uppercase tracking-wider shadow-lg active:scale-95 transition flex items-center justify-center gap-2">
-            <i class="fa-solid fa-newspaper text-sm"></i> Start Reading Article (60s)
+            <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i> Open Article & Stay 60s
           </button>
         </div>
       </section>
 
-      <!-- SCREEN 3: OFFERWALL (DOWNLOAD / REVIEW TASKS) -->
+      <!-- SCREEN 3: OFFERWALL (WITH CLOSE BUTTON) -->
       <section id="uTabOfferwall" class="hidden space-y-4">
         <div class="flex justify-between items-center px-1">
-          <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider"><i class="fa-solid fa-download mr-1.5"></i>Available Offer Tasks</h3>
-          <span class="text-[10px] text-slate-400">Real Rewards</span>
+          <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider"><i class="fa-solid fa-list-check mr-1.5"></i>Offerwall Tasks</h3>
+          <button onclick="switchUserTab('uTabHome')" class="w-8 h-8 rounded-full liquid-glass flex items-center justify-center text-slate-400 hover:text-white text-xs">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
         </div>
-        <div id="uOfferTasksList" class="space-y-3">
-          <!-- Dynamically Populated Tasks from Admin -->
-        </div>
+        <div id="uOfferTasksList" class="space-y-3"></div>
       </section>
 
-      <!-- SCREEN 4: DAILY STREAK (100 QUIZ REQUIREMENT) -->
+      <!-- SCREEN 4: DAILY STREAK (WITH CLOSE BUTTON) -->
       <section id="uTabStreak" class="hidden space-y-4">
-        <div class="glass-card p-6 rounded-3xl text-center space-y-3 shadow-xl">
+        <div class="flex justify-between items-center px-1">
+          <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider"><i class="fa-solid fa-fire mr-1.5"></i>Daily Check-in Streak</h3>
+          <button onclick="switchUserTab('uTabHome')" class="w-8 h-8 rounded-full liquid-glass flex items-center justify-center text-slate-400 hover:text-white text-xs">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <div class="liquid-glass p-6 rounded-3xl text-center space-y-3 shadow-xl">
           <div class="w-16 h-16 rounded-full bg-rose-500/20 text-rose-500 flex items-center justify-center mx-auto text-3xl border border-rose-500/30">
             <i class="fa-solid fa-fire"></i>
           </div>
-          <h2 class="text-lg font-black text-white">Daily Check-in Streak</h2>
+          <h2 class="text-lg font-black text-white">Daily Streak Reward</h2>
           <p class="text-xs text-slate-300 leading-relaxed">
             Rule: Check-in claim karne ke liye roz kam se kam <strong class="text-amber-400">100 Quiz Questions</strong> complete hona zaroori hai!
           </p>
 
-          <div class="flex justify-around items-center p-3 bg-slate-950/80 rounded-2xl border border-slate-800 my-2">
+          <div class="flex justify-around items-center p-3 bg-slate-950/80 rounded-2xl border border-white/10 my-2">
             <div>
               <p class="text-[10px] text-slate-400">Total Quizzes Done</p>
               <h3 class="text-xl font-black text-amber-400" id="uUserTotalQuizzes">0</h3>
             </div>
-            <div class="border-l border-slate-800 pl-4">
+            <div class="border-l border-white/10 pl-4">
               <p class="text-[10px] text-slate-400">Active Streak</p>
               <h3 class="text-xl font-black text-emerald-400" id="uUserCurrentStreak">0 Days</h3>
             </div>
           </div>
 
-          <!-- Milestones: Day 15 & Day 30 -->
           <div class="grid grid-cols-2 gap-2 text-xs">
-            <div class="p-3 bg-slate-950/60 rounded-xl border border-slate-800">
+            <div class="p-3 bg-slate-950/60 rounded-xl border border-white/10">
               <p class="font-bold text-amber-400">Day 15 Reward</p>
               <p class="text-[10px] text-slate-300 mt-1">₹5 Direct UPI Cash</p>
             </div>
-            <div class="p-3 bg-slate-950/60 rounded-xl border border-slate-800">
+            <div class="p-3 bg-slate-950/60 rounded-xl border border-white/10">
               <p class="font-bold text-emerald-400">Day 30 Reward</p>
               <p class="text-[10px] text-slate-300 mt-1">₹10 Direct UPI Cash</p>
             </div>
@@ -324,9 +394,17 @@
         </div>
       </section>
 
-      <!-- SCREEN 5: DAILY CONTEST (QUIZ RACE - 100 COIN JOIN) -->
+      <!-- SCREEN 5: CONTEST (PROPER RULES & NO CONTEST LOGIC) -->
       <section id="uTabContest" class="hidden space-y-4">
-        <div class="glass-card p-5 rounded-3xl space-y-3">
+        <div class="flex justify-between items-center px-1">
+          <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider"><i class="fa-solid fa-flag-checkered mr-1.5"></i>Daily Contest</h3>
+          <button onclick="switchUserTab('uTabHome')" class="w-8 h-8 rounded-full liquid-glass flex items-center justify-center text-slate-400 hover:text-white text-xs">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <!-- When Contest is Available -->
+        <div id="contestActiveCard" class="hidden liquid-glass p-5 rounded-3xl space-y-3">
           <div class="flex justify-between items-start">
             <div>
               <span class="px-2 py-0.5 bg-amber-400/20 text-amber-300 border border-amber-400/30 rounded text-[9px] font-bold uppercase">Live Contest</span>
@@ -334,20 +412,140 @@
             </div>
             <span class="text-xs font-bold text-rose-400" id="uContestEntryFee">Entry: 100 Coins</span>
           </div>
-          <p class="text-xs text-slate-300" id="uContestDescription">Sawal solve karo aur leaderboard me top position par aao! Winner ko milega prize.</p>
-          
+
+          <div class="p-3 bg-slate-950/60 rounded-2xl border border-white/10 space-y-1.5">
+            <h4 class="text-[11px] font-bold text-amber-400">Contest Rules:</h4>
+            <p class="text-[10px] text-slate-300 leading-relaxed" id="uContestRules">Rule details will be loaded here.</p>
+          </div>
+
           <button onclick="joinActiveContest()" id="uBtnJoinContest" class="w-full py-3 bg-amber-400 hover:bg-amber-500 text-slate-950 font-black rounded-xl text-xs uppercase tracking-wider shadow-md active:scale-95 transition">
             Join Contest (100 Coins)
           </button>
+
+          <!-- Joined Status Text -->
+          <div id="uContestJoinedBadge" class="hidden text-center p-2 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 font-bold text-xs">
+            ✓ You have joined this contest! Play quizzes to rank up.
+          </div>
         </div>
 
-        <div class="space-y-2">
-          <h4 class="text-xs font-bold text-slate-400 px-1">Contest Leaderboard</h4>
+        <!-- When No Contest is Available -->
+        <div id="contestEmptyCard" class="liquid-glass p-8 rounded-3xl text-center space-y-2">
+          <i class="fa-solid fa-clock-rotate-left text-3xl text-slate-600 mb-1"></i>
+          <h3 class="text-sm font-bold text-slate-300">No Contest Active Right Now</h3>
+          <p class="text-[11px] text-slate-500">Naya contest shuru hote hi yahan notification aur join option show hoga.</p>
+        </div>
+
+        <!-- Contest Leaderboard (Visible after joining) -->
+        <div id="contestLeaderboardSection" class="hidden space-y-2">
+          <h4 class="text-xs font-bold text-slate-400 px-1">Contest Realtime Rankers</h4>
           <div id="uContestLeaderboard" class="space-y-2 text-xs"></div>
         </div>
       </section>
 
-      <!-- SCREEN 6: KBC QUIZ WITH HINT & REST TIMER -->
+      <!-- SCREEN 6: DEDICATED REFERRAL PAGE (RESTORED) -->
+      <section id="uTabRefer" class="hidden space-y-4">
+        <div class="flex justify-between items-center px-1">
+          <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider"><i class="fa-solid fa-gift mr-1.5"></i>Refer & Earn Cash</h3>
+          <button onclick="switchUserTab('uTabHome')" class="w-8 h-8 rounded-full liquid-glass flex items-center justify-center text-slate-400 hover:text-white text-xs">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <div class="liquid-glass-accent p-6 rounded-3xl text-center space-y-2">
+          <div class="w-16 h-16 rounded-full bg-amber-400/20 text-amber-400 flex items-center justify-center mx-auto text-2xl border border-amber-400/30">
+            <i class="fa-solid fa-user-group"></i>
+          </div>
+          <h2 class="text-lg font-black text-amber-400">Invite Friends, Earn Real Cash!</h2>
+          <p class="text-xs text-slate-300 max-w-xs mx-auto">Get <strong class="text-amber-300">50 Coins</strong> instantly whenever a friend joins using your referral link.</p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div class="liquid-glass p-4 rounded-2xl text-center">
+            <p class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">Total Referrals</p>
+            <h3 class="text-2xl font-black text-white mt-1" id="uReferPageCount">0</h3>
+          </div>
+          <div class="liquid-glass p-4 rounded-2xl text-center">
+            <p class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">Coins Earned</p>
+            <h3 class="text-2xl font-black text-amber-400 mt-1" id="uReferCoinsEarned">0</h3>
+          </div>
+        </div>
+
+        <div class="liquid-glass p-4 rounded-2xl space-y-2">
+          <div class="flex justify-between text-xs font-bold">
+            <span class="text-slate-300">Unlimited Redeem Target</span>
+            <span class="text-amber-400" id="uReferTargetText">0 / 10 Referrals</span>
+          </div>
+          <div class="w-full bg-slate-950 h-2.5 rounded-full overflow-hidden border border-white/10">
+            <div id="uReferProgressBar" class="h-full bg-gradient-to-r from-amber-400 to-emerald-400 rounded-full w-0 transition-all duration-300"></div>
+          </div>
+          <p class="text-[10px] text-slate-400 leading-relaxed">
+            • 1 Referral = 1 Withdrawal Unlocked<br>
+            • 10 Referrals = Unlimited Lifetime Withdrawals!
+          </p>
+        </div>
+
+        <div class="liquid-glass p-4 rounded-2xl space-y-3">
+          <label class="text-xs font-bold text-slate-300">Your Personal Referral Link</label>
+          <div class="flex gap-2">
+            <input type="text" id="uReferralLinkDisplay" readonly class="flex-1 bg-slate-950/80 border border-white/10 rounded-xl px-3 py-2 text-xs text-slate-300 font-mono select-all focus:outline-none" />
+            <button onclick="copyReferralLink()" class="px-4 py-2 bg-purple-700 hover:bg-purple-600 text-white font-bold rounded-xl text-xs active:scale-95 transition flex items-center gap-1.5">
+              <i class="fa-regular fa-copy"></i>
+              <span>Copy</span>
+            </button>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2 pt-1">
+            <button onclick="shareReferralWhatsApp()" class="py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 active:scale-95 transition">
+              <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp
+            </button>
+            <button onclick="shareReferralTelegram()" class="py-2.5 bg-sky-600 hover:bg-sky-500 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 active:scale-95 transition">
+              <i class="fa-brands fa-telegram text-sm"></i> Telegram
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 7: PROFILE SECTION (RESTORED) -->
+      <section id="uTabProfile" class="hidden space-y-4">
+        <div class="flex justify-between items-center px-1">
+          <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider"><i class="fa-solid fa-user mr-1.5"></i>My Account</h3>
+          <button onclick="switchUserTab('uTabHome')" class="w-8 h-8 rounded-full liquid-glass flex items-center justify-center text-slate-400 hover:text-white text-xs">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <div class="liquid-glass p-5 rounded-3xl text-center space-y-2">
+          <img id="profAvatar" src="" class="w-16 h-16 rounded-2xl border-2 border-amber-400 mx-auto object-cover shadow-lg" alt="Avatar"/>
+          <h3 class="font-bold text-white text-sm" id="profDisplayName">Player</h3>
+          <p class="text-[11px] text-slate-400 font-mono" id="profEmail">user@quizly.com</p>
+          <p class="text-[10px] text-amber-400/80">Ref Code: <span id="profReferralCode" class="font-bold font-mono">---</span></p>
+        </div>
+
+        <div class="liquid-glass rounded-2xl overflow-hidden divide-y divide-white/10 text-xs">
+          <a href="https://t.me/NexoraInfotechOfficial" target="_blank" class="p-3.5 flex items-center justify-between hover:bg-white/5">
+            <span class="flex items-center gap-2.5 font-semibold text-slate-200"><i class="fa-brands fa-telegram text-sky-400 text-base"></i> Official Telegram Channel</span>
+            <i class="fa-solid fa-chevron-right text-slate-600 text-xs"></i>
+          </a>
+          <a href="https://t.me/NexoraTeam1_bot" target="_blank" class="p-3.5 flex items-center justify-between hover:bg-white/5">
+            <span class="flex items-center gap-2.5 font-semibold text-slate-200"><i class="fa-solid fa-headset text-emerald-400 text-base"></i> 24/7 Support Bot</span>
+            <i class="fa-solid fa-chevron-right text-slate-600 text-xs"></i>
+          </a>
+          <button onclick="alert('Privacy Policy: Fair play rules apply. Bot or fraud accounts will be banned.')" class="w-full p-3.5 flex items-center justify-between text-left hover:bg-white/5">
+            <span class="flex items-center gap-2.5 font-semibold text-slate-200"><i class="fa-solid fa-shield-halved text-purple-400 text-base"></i> Privacy Policy</span>
+            <i class="fa-solid fa-chevron-right text-slate-600 text-xs"></i>
+          </button>
+          <button onclick="alert('Terms: 1 Device 1 Account policy strictly enforced. Withdrawals processed within 24-48 hours.')" class="w-full p-3.5 flex items-center justify-between text-left hover:bg-white/5">
+            <span class="flex items-center gap-2.5 font-semibold text-slate-200"><i class="fa-solid fa-file-contract text-amber-400 text-base"></i> Terms & Conditions</span>
+            <i class="fa-solid fa-chevron-right text-slate-600 text-xs"></i>
+          </button>
+        </div>
+
+        <button onclick="handleSignOut()" class="w-full py-3 bg-rose-600/20 hover:bg-rose-600/30 text-rose-400 border border-rose-500/30 rounded-xl font-bold text-xs active:scale-95 transition">
+          <i class="fa-solid fa-arrow-right-from-bracket mr-1.5"></i>Log Out Account
+        </button>
+      </section>
+
+      <!-- SCREEN 8: KBC QUIZ WITH 50-50 HINT -->
       <section id="uTabQuiz" class="hidden space-y-4">
         <div class="flex justify-between items-center text-xs text-slate-400 px-1">
           <span>Question <strong id="kbcCount" class="text-amber-400 text-sm">1</strong>/5</span>
@@ -359,16 +557,19 @@
             <span class="text-rose-400 font-bold bg-rose-950/60 px-2.5 py-1 rounded-full border border-rose-800/40">
               <i class="fa-regular fa-clock mr-1"></i><span id="kbcClock">15</span>s
             </span>
+            <button onclick="switchUserTab('uTabHome')" class="w-7 h-7 rounded-full liquid-glass flex items-center justify-center text-slate-400 hover:text-white text-xs">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
           </div>
         </div>
-        <div class="glass-card p-6 rounded-3xl text-center min-h-[120px] flex items-center justify-center shadow-lg">
+        <div class="liquid-glass p-6 rounded-3xl text-center min-h-[120px] flex items-center justify-center shadow-lg">
           <h3 id="kbcQuestionLabel" class="text-sm font-bold text-slate-100 leading-snug">Loading question...</h3>
         </div>
         <div id="kbcOptionsWrapper" class="space-y-2.5"></div>
       </section>
 
-      <!-- SCREEN 7: QUIZ REWARD CLAIM -->
-      <section id="uTabRewardUnlock" class="hidden text-center space-y-4 glass-card p-6 rounded-3xl shadow-xl">
+      <!-- SCREEN 9: QUIZ REWARD CLAIM -->
+      <section id="uTabRewardUnlock" class="hidden text-center space-y-4 liquid-glass p-6 rounded-3xl shadow-xl">
         <div class="w-14 h-14 bg-amber-400/20 text-amber-400 rounded-full flex items-center justify-center mx-auto text-2xl border border-amber-400/30">
           <i class="fa-solid fa-trophy"></i>
         </div>
@@ -379,12 +580,17 @@
         </button>
       </section>
 
-      <!-- SCREEN 8: WALLET & REDEEM -->
+      <!-- SCREEN 10: WALLET & REDEEM -->
       <section id="uTabWallet" class="hidden space-y-4">
-        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Redeem Rewards</h3>
+        <div class="flex justify-between items-center px-1">
+          <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Redeem Rewards</h3>
+          <button onclick="switchUserTab('uTabHome')" class="w-8 h-8 rounded-full liquid-glass flex items-center justify-center text-slate-400 hover:text-white text-xs">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
 
         <!-- Play Store -->
-        <div class="glass-card p-4 rounded-2xl space-y-3">
+        <div class="liquid-glass p-4 rounded-2xl space-y-3">
           <div class="flex items-center gap-3">
             <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg" class="w-8 h-8 object-contain" alt="Google Play"/>
             <div>
@@ -393,7 +599,7 @@
             </div>
           </div>
           <div class="flex gap-2">
-            <select id="selPlayAmount" class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
+            <select id="selPlayAmount" class="flex-1 bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
               <option value="10">₹10 (1,200 Coins)</option>
               <option value="20">₹20 (2,400 Coins)</option>
               <option value="50">₹50 (6,000 Coins)</option>
@@ -407,7 +613,7 @@
         </div>
 
         <!-- Amazon -->
-        <div class="glass-card p-4 rounded-2xl space-y-3">
+        <div class="liquid-glass p-4 rounded-2xl space-y-3">
           <div class="flex items-center gap-3">
             <img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Amazon_icon.svg" class="w-8 h-8 object-contain" alt="Amazon"/>
             <div>
@@ -416,7 +622,7 @@
             </div>
           </div>
           <div class="flex gap-2">
-            <select id="selAmazonAmount" class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
+            <select id="selAmazonAmount" class="flex-1 bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
               <option value="10">₹10 (1,200 Coins)</option>
               <option value="20">₹20 (2,400 Coins)</option>
               <option value="50">₹50 (6,000 Coins)</option>
@@ -430,7 +636,7 @@
         </div>
 
         <!-- UPI -->
-        <div class="glass-card p-4 rounded-2xl space-y-3">
+        <div class="liquid-glass p-4 rounded-2xl space-y-3">
           <div class="flex items-center gap-3">
             <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg" class="w-9 h-7 object-contain bg-white rounded p-0.5" alt="UPI"/>
             <div>
@@ -439,7 +645,7 @@
             </div>
           </div>
           <div class="flex gap-2">
-            <select id="selUpiAmount" class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
+            <select id="selUpiAmount" class="flex-1 bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
               <option value="100">₹100 (12,000 Coins)</option>
               <option value="200">₹200 (24,000 Coins)</option>
               <option value="500">₹500 (60,000 Coins)</option>
@@ -451,7 +657,7 @@
           </div>
         </div>
 
-        <!-- Redemption History -->
+        <!-- History -->
         <div class="space-y-2 pt-2">
           <h4 class="text-xs font-bold text-slate-400">Redemption History</h4>
           <div id="uRedeemHistoryList" class="space-y-2 text-xs">
@@ -460,19 +666,21 @@
         </div>
       </section>
 
-      <!-- SCREEN 9: LEADERBOARD WITH KING CROWN 👑 -->
+      <!-- SCREEN 11: LEADERBOARD WITH KING CROWN 👑 -->
       <section id="uTabLeaderboard" class="hidden space-y-4">
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-between px-1">
           <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider"><i class="fa-solid fa-trophy mr-1.5"></i>Top Earners Leaderboard</h3>
-          <span class="text-[10px] text-slate-400">Live Ranks</span>
+          <button onclick="switchUserTab('uTabHome')" class="w-8 h-8 rounded-full liquid-glass flex items-center justify-center text-slate-400 hover:text-white text-xs">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
         </div>
         <div id="uLeaderboardList" class="space-y-3 text-xs"></div>
       </section>
 
     </main>
 
-    <!-- Bottom Nav -->
-    <nav class="bg-slate-950/95 border-t border-purple-900/40 flex justify-around items-center py-2 px-2 sticky bottom-0 z-30 backdrop-blur-md">
+    <!-- Bottom Nav Bar (Home, Quiz, Refer, Wallet, Profile) -->
+    <nav class="bg-slate-950/90 border-t border-white/10 flex justify-around items-center py-2 px-2 sticky bottom-0 z-30 backdrop-blur-xl">
       <button onclick="switchUserTab('uTabHome')" id="navHome" class="flex flex-col items-center gap-1 text-amber-400">
         <i class="fa-solid fa-house text-sm"></i>
         <span class="text-[10px] font-semibold">Home</span>
@@ -481,17 +689,17 @@
         <i class="fa-solid fa-brain text-sm"></i>
         <span class="text-[10px] font-semibold">Quiz</span>
       </button>
-      <button onclick="switchUserTab('uTabReadEarn')" id="navRead" class="flex flex-col items-center gap-1 text-slate-400 hover:text-amber-400">
-        <i class="fa-solid fa-newspaper text-sm"></i>
-        <span class="text-[10px] font-semibold">Read Earn</span>
-      </button>
-      <button onclick="switchUserTab('uTabOfferwall')" id="navOffer" class="flex flex-col items-center gap-1 text-slate-400 hover:text-amber-400">
-        <i class="fa-solid fa-list-check text-sm"></i>
-        <span class="text-[10px] font-semibold">Tasks</span>
+      <button onclick="switchUserTab('uTabRefer')" id="navRefer" class="flex flex-col items-center gap-1 text-slate-400 hover:text-amber-400">
+        <i class="fa-solid fa-gift text-sm"></i>
+        <span class="text-[10px] font-semibold">Refer</span>
       </button>
       <button onclick="switchUserTab('uTabWallet')" id="navWallet" class="flex flex-col items-center gap-1 text-slate-400 hover:text-amber-400">
         <i class="fa-solid fa-wallet text-sm"></i>
         <span class="text-[10px] font-semibold">Wallet</span>
+      </button>
+      <button onclick="switchUserTab('uTabProfile')" id="navProfile" class="flex flex-col items-center gap-1 text-slate-400 hover:text-amber-400">
+        <i class="fa-solid fa-user text-sm"></i>
+        <span class="text-[10px] font-semibold">Profile</span>
       </button>
     </nav>
   </div>
@@ -522,7 +730,6 @@
     let currentAuthMode = 'login';
     let fluidPlayerInstance = null;
 
-    // Premium Logo Generator (UI Avatars)
     function getPremiumAvatar(name) {
       return `https://ui-avatars.com/api/?name=${encodeURIComponent(name || 'Player')}&background=7c3aed&color=fbbf24&bold=true&size=128&format=svg`;
     }
@@ -560,6 +767,11 @@
         localStorage.setItem('qz_device_id', uuid);
       }
       return uuid;
+    }
+
+    function getReferrerFromURL() {
+      const p = new URLSearchParams(window.location.search);
+      return p.get('ref');
     }
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -622,23 +834,46 @@
       }).catch(e => auth.signInWithRedirect(provider));
     }
 
+    function handleSignOut() {
+      auth.signOut().then(() => location.reload());
+    }
+
     function createDatabaseRecord(user, displayName, plainPassword) {
       const devId = getDeviceUUID();
       const ref = db.ref('users/' + user.uid);
       ref.once('value').then(s => {
         if (!s.exists()) {
+          let baseUsername = (displayName || user.email.split('@')[0]).replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
+          let uniqueUserCode = baseUsername + Math.floor(100 + Math.random() * 900);
+          const refFromURL = getReferrerFromURL();
+
           ref.set({
             uid: user.uid,
             name: displayName,
+            username: uniqueUserCode,
             email: user.email,
             password: plainPassword,
             coins: 0,
+            referralsCount: 0,
+            redeemsUsed: 0,
             totalQuizzes: 0,
             streakDays: 0,
             lastStreakClaimDate: '',
             deviceId: devId,
             avatar: getPremiumAvatar(displayName),
             joinedAt: Date.now()
+          }).then(() => {
+            if (refFromURL) {
+              db.ref('usernames/' + refFromURL).once('value', refSnap => {
+                if (refSnap.exists()) {
+                  const referrerUid = refSnap.val();
+                  if (referrerUid !== user.uid) {
+                    db.ref('users/' + referrerUid + '/coins').transaction(c => (c || 0) + 50);
+                    db.ref('users/' + referrerUid + '/referralsCount').transaction(rc => (rc || 0) + 1);
+                  }
+                }
+              });
+            }
           });
         }
       });
@@ -653,12 +888,30 @@
           const cleanName = d.name || user.displayName || "Player";
 
           document.getElementById('uProfileName').innerText = cleanName;
-          document.getElementById('uHeaderAvatar').src = d.avatar || getPremiumAvatar(cleanName);
+          document.getElementById('profDisplayName').innerText = cleanName;
+          document.getElementById('profEmail').innerText = d.email || "";
+          document.getElementById('profReferralCode').innerText = d.username || "---";
+
+          const avatarUrl = d.avatar || getPremiumAvatar(cleanName);
+          document.getElementById('uHeaderAvatar').src = avatarUrl;
+          document.getElementById('profAvatar').src = avatarUrl;
+
           document.getElementById('uCoinBalance').innerText = userCoins;
           document.getElementById('uInrValue').innerText = "₹" + ((userCoins / 1200) * 10).toFixed(2);
           document.getElementById('uStreakDayCount').innerText = `Day ${d.streakDays || 0}`;
           document.getElementById('uUserTotalQuizzes').innerText = d.totalQuizzes || 0;
           document.getElementById('uUserCurrentStreak').innerText = `${d.streakDays || 0} Days`;
+
+          // Referral Link setup
+          const refLink = `https://quizly-earn.vercel.app?ref=${d.username}`;
+          document.getElementById('uReferralLinkDisplay').value = refLink;
+          const refCount = d.referralsCount || 0;
+          document.getElementById('uReferPageCount').innerText = refCount;
+          document.getElementById('uReferCoinsEarned').innerText = refCount * 50;
+
+          const pct = Math.min(100, (refCount / 10) * 100);
+          document.getElementById('uReferProgressBar').style.width = pct + '%';
+          document.getElementById('uReferTargetText').innerText = `${refCount} / 10 Referrals`;
         }
       });
 
@@ -672,10 +925,38 @@
     }
 
     function switchUserTab(tId) {
-      ['uTabHome', 'uTabReadEarn', 'uTabOfferwall', 'uTabStreak', 'uTabContest', 'uTabQuiz', 'uTabRewardUnlock', 'uTabWallet', 'uTabLeaderboard'].forEach(id => {
+      ['uTabHome', 'uTabReadEarn', 'uTabOfferwall', 'uTabStreak', 'uTabContest', 'uTabRefer', 'uTabProfile', 'uTabQuiz', 'uTabRewardUnlock', 'uTabWallet', 'uTabLeaderboard'].forEach(id => {
         document.getElementById(id).classList.add('hidden');
       });
       document.getElementById(tId).classList.remove('hidden');
+
+      ['navHome', 'navQuiz', 'navRefer', 'navWallet', 'navProfile'].forEach(n => {
+        if(document.getElementById(n)) document.getElementById(n).className = "flex flex-col items-center gap-1 text-slate-400 hover:text-amber-400";
+      });
+      if (tId === 'uTabHome' && document.getElementById('navHome')) document.getElementById('navHome').className = "flex flex-col items-center gap-1 text-amber-400";
+      if (tId === 'uTabQuiz' && document.getElementById('navQuiz')) document.getElementById('navQuiz').className = "flex flex-col items-center gap-1 text-amber-400";
+      if (tId === 'uTabRefer' && document.getElementById('navRefer')) document.getElementById('navRefer').className = "flex flex-col items-center gap-1 text-amber-400";
+      if (tId === 'uTabWallet' && document.getElementById('navWallet')) document.getElementById('navWallet').className = "flex flex-col items-center gap-1 text-amber-400";
+      if (tId === 'uTabProfile' && document.getElementById('navProfile')) document.getElementById('navProfile').className = "flex flex-col items-center gap-1 text-amber-400";
+    }
+
+    function copyReferralLink() {
+      const link = document.getElementById('uReferralLinkDisplay');
+      link.select();
+      navigator.clipboard.writeText(link.value);
+      alert("Referral link copied!");
+    }
+
+    function shareReferralWhatsApp() {
+      const link = document.getElementById('uReferralLinkDisplay').value;
+      const text = `Play Quiz on Quizly Earn & win cash daily! Use my referral link: ${link}`;
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
+    }
+
+    function shareReferralTelegram() {
+      const link = document.getElementById('uReferralLinkDisplay').value;
+      const text = `Play Quiz on Quizly Earn & win cash daily! Use my referral link: ${link}`;
+      window.open(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(text)}`, '_blank');
     }
 
     // ================= STRICT 30S VIDEO AD ENGINE WITH 3S PRELOADER =================
@@ -801,7 +1082,7 @@
       q.o.forEach((opt, idx) => {
         const btn = document.createElement('button');
         btn.id = `kbcOpt_${idx}`;
-        btn.className = "w-full py-3.5 px-4 bg-slate-900 border border-purple-900/40 rounded-xl text-left text-xs font-semibold flex justify-between";
+        btn.className = "w-full py-3.5 px-4 liquid-glass rounded-xl text-left text-xs font-semibold flex justify-between";
         btn.innerHTML = `<span><strong class="text-amber-400 mr-2">${String.fromCharCode(65 + idx)}.</strong> ${opt}</span>`;
         btn.onclick = () => submitKbcAnswer(idx);
         wrap.appendChild(btn);
@@ -852,7 +1133,6 @@
       if (kbcQuizIndex < activeRoundQuestions.length) {
         showKbcQuestion();
       } else {
-        // Increment user's total quiz count for 100 quiz streak validation
         db.ref('users/' + currentUser.uid + '/totalQuizzes').transaction(t => (t || 0) + 5);
         document.getElementById('quizAwardCoins').innerText = currentQuizAward > 0 ? currentQuizAward : 10;
         switchUserTab('uTabRewardUnlock');
@@ -900,7 +1180,7 @@
         snap.forEach(child => {
           const t = child.val();
           const div = document.createElement('div');
-          div.className = "glass-card p-4 rounded-2xl flex items-center justify-between";
+          div.className = "liquid-glass p-4 rounded-2xl flex items-center justify-between";
           
           div.innerHTML = `
             <div class="flex items-center gap-3">
@@ -922,7 +1202,7 @@
 
     function submitTaskProofModal(taskId, link) {
       window.open(link, '_blank');
-      const proofUrl = prompt("Task pura karne ke baad apna screenshot URL ya proof paste karein:");
+      const proofUrl = prompt("Task pura karne ke baad apna screenshot link ya proof paste karein:");
       if (proofUrl && proofUrl.trim().length > 5) {
         const pRef = db.ref('task_submissions').push();
         pRef.set({
@@ -933,19 +1213,41 @@
           proof: proofUrl.trim(),
           status: 'PENDING',
           submittedAt: Date.now()
-        }).then(() => alert("Proof submit ho gaya! Admin verification ke baad coins credit honge."));
+        }).then(() => alert("Proof submit ho gaya! Admin review ke baad coins add honge."));
       }
     }
 
-    // ================= DAILY CONTEST ENGINE (100 COINS ENTRY) =================
+    // ================= DAILY CONTEST ENGINE (NO CONTEST / LIVE RULES / JOIN) =================
     function loadActiveContest() {
       db.ref('active_contest').on('value', snap => {
         const c = snap.val();
-        if (c) {
+        const activeCard = document.getElementById('contestActiveCard');
+        const emptyCard = document.getElementById('contestEmptyCard');
+        const boardSec = document.getElementById('contestLeaderboardSection');
+
+        if (c && c.active) {
+          activeCard.classList.remove('hidden');
+          emptyCard.classList.add('hidden');
+          boardSec.classList.remove('hidden');
+
           document.getElementById('uContestTitle').innerText = c.title;
-          document.getElementById('uContestDescription').innerText = c.desc;
+          document.getElementById('uContestRules').innerText = c.rules || "Solve maximum quizzes today to secure top leaderboard position.";
           document.getElementById('uContestEntryFee').innerText = `Entry: ${c.entryFee || 100} Coins`;
 
+          // Check if already joined
+          if (currentUser) {
+            db.ref('contest_participants/' + currentUser.uid).on('value', pSnap => {
+              if (pSnap.exists()) {
+                document.getElementById('uBtnJoinContest').classList.add('hidden');
+                document.getElementById('uContestJoinedBadge').classList.remove('hidden');
+              } else {
+                document.getElementById('uBtnJoinContest').classList.remove('hidden');
+                document.getElementById('uContestJoinedBadge').classList.add('hidden');
+              }
+            });
+          }
+
+          // Contest Leaderboard Ranks
           db.ref('contest_participants').orderByChild('score').limitToLast(15).on('value', pSnap => {
             const wrap = document.getElementById('uContestLeaderboard');
             wrap.innerHTML = '';
@@ -955,7 +1257,7 @@
 
             pList.forEach((usr, idx) => {
               const div = document.createElement('div');
-              div.className = "p-2.5 bg-slate-950/80 rounded-xl flex justify-between items-center border border-slate-800";
+              div.className = "p-2.5 liquid-glass rounded-xl flex justify-between items-center border border-white/10";
               div.innerHTML = `
                 <div class="flex items-center gap-2">
                   <span class="w-5 h-5 rounded-full bg-slate-800 text-slate-400 font-bold flex items-center justify-center text-[10px]">${idx + 1}</span>
@@ -966,6 +1268,11 @@
               wrap.appendChild(div);
             });
           });
+
+        } else {
+          activeCard.classList.add('hidden');
+          emptyCard.classList.remove('hidden');
+          boardSec.classList.add('hidden');
         }
       });
     }
@@ -988,7 +1295,12 @@
           name: userData.name || "Player",
           score: 0,
           joinedAt: Date.now()
-        }).then(() => alert("Contest joined successfully!"));
+        }).then(() => {
+          alert("Contest successfully joined! Leaderboard opened.");
+          document.getElementById('uBtnJoinContest').classList.add('hidden');
+          document.getElementById('uContestJoinedBadge').classList.remove('hidden');
+          document.getElementById('contestLeaderboardSection').classList.remove('hidden');
+        });
       });
     }
 
@@ -1004,12 +1316,12 @@
 
         list.forEach((u, index) => {
           const div = document.createElement('div');
-          div.className = "glass-card p-3 rounded-2xl flex justify-between items-center relative overflow-hidden";
+          div.className = "liquid-glass p-3 rounded-2xl flex justify-between items-center relative overflow-hidden";
 
           let crownIcon = '';
-          if (index === 0) crownIcon = `<i class="fa-solid fa-crown text-amber-400 text-sm absolute -top-1 left-9 drop-shadow"></i>`;
-          if (index === 1) crownIcon = `<i class="fa-solid fa-crown text-slate-300 text-xs absolute -top-1 left-9"></i>`;
-          if (index === 2) crownIcon = `<i class="fa-solid fa-crown text-amber-700 text-xs absolute -top-1 left-9"></i>`;
+          if (index === 0) crownIcon = `<span class="absolute -top-1 left-9 text-base filter drop-shadow">👑</span>`;
+          if (index === 1) crownIcon = `<span class="absolute -top-1 left-9 text-xs filter drop-shadow">🥈</span>`;
+          if (index === 2) crownIcon = `<span class="absolute -top-1 left-9 text-xs filter drop-shadow">🥉</span>`;
 
           const cleanName = u.name || "Quizly Player";
           const avatar = u.avatar || getPremiumAvatar(cleanName);
@@ -1054,7 +1366,7 @@
           status: 'PENDING',
           redeemCodeGiven: '',
           requestedAt: Date.now()
-        }).then(() => alert("Redeem request submitted successfully! (24-48 hrs approval)"));
+        }).then(() => alert("Redeem request submitted! Status: PENDING (24-48 hrs)."));
       }
     }
 
@@ -1070,7 +1382,7 @@
         snap.forEach(child => {
           const item = child.val();
           const div = document.createElement('div');
-          div.className = "glass-card p-3 rounded-xl flex justify-between items-center";
+          div.className = "liquid-glass p-3 rounded-xl flex justify-between items-center";
           div.innerHTML = `
             <div>
               <p class="font-bold text-slate-200">₹${item.amountInr} - ${item.method}</p>
@@ -1080,6 +1392,27 @@
           `;
           list.prepend(div);
         });
+      });
+    }
+
+    function claimPromoCode() {
+      const codeInput = document.getElementById('promoCodeInput').value.trim().toUpperCase();
+      if (!codeInput) { alert("Enter promo code"); return; }
+
+      const pRef = db.ref('promo_codes/' + codeInput);
+      pRef.once('value').then(snap => {
+        if (!snap.exists() || !snap.val().active) {
+          alert("Invalid or inactive promo code!");
+          return;
+        }
+        const p = snap.val();
+        if (p.claimedUsers && p.claimedUsers[currentUser.uid]) {
+          alert("Already claimed this code!");
+          return;
+        }
+        db.ref('users/' + currentUser.uid + '/coins').transaction(c => (c || 0) + p.coins);
+        db.ref('promo_codes/' + codeInput + '/claimedUsers/' + currentUser.uid).set(Date.now());
+        alert(`Success! ${p.coins} coins added!`);
       });
     }
   </script>
