@@ -5,20 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Quizly Earn - Play & Earn Cash</title>
 
-  <!-- Naya HilltopAds Verification Tag -->
+  <!-- HilltopAds Verification Tag -->
   <meta name="500b95e80fc810c92ed9dd55e4b3ae8c5476fe8b" content="500b95e80fc810c92ed9dd55e4b3ae8c5476fe8b" />
-  
-  <!-- Monetag Verification Tag -->
   <meta name="monetag" content="421338142263e17d4e560ebd8aeda8c4">
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
 
+  <!-- Fluid Player for VAST Video -->
+  <link rel="stylesheet" href="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.css" type="text/css"/>
+  <script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
+
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <!-- Multi Video Slider Script -->
+  <script>
+    (function(edomr){
+      var d = document,
+          s = d.createElement('script'),
+          l = d.currentScript || d.scripts[d.scripts.length - 1];
+      s.settings = edomr || {};
+      s.src = "\/\/shameful-farm.com\/b\/XyVCs.dWG\/lL0aYyWLcz\/ke\/m\/9QuzZ\/UTlQkTPlTicI0KNPjXYMxHOqDzkFtRNxzHQE2\/NojpEd5MMqwQ";
+      s.async = true;
+      s.referrerPolicy = 'no-referrer-when-downgrade';
+      l.parentNode.insertBefore(s, l);
+    })({})
+  </script>
 
   <style>
     @keyframes pulseGlow {
@@ -37,7 +53,7 @@
 <body class="bg-[#080514] text-slate-100 font-sans min-h-screen flex flex-col justify-between select-none">
 
   <!-- ================= IN-APP NOTIFICATION BANNER ================= -->
-  <div id="inAppNotifyBanner" class="hidden fixed top-3 left-4 right-4 z-50 bg-slate-900/95 border border-amber-400/60 p-3.5 rounded-2xl shadow-2xl backdrop-blur-md flex items-start gap-3 transition-all transform duration-300">
+  <div id="inAppNotifyBanner" class="hidden fixed top-3 left-4 right-4 z-50 bg-slate-900/95 border border-amber-400/60 p-3.5 rounded-2xl shadow-2xl backdrop-blur-md flex items-start gap-3 transition-all duration-300">
     <div class="w-8 h-8 rounded-xl bg-amber-400/20 text-amber-400 flex items-center justify-center shrink-0 text-sm">
       <i class="fa-solid fa-bell"></i>
     </div>
@@ -48,6 +64,40 @@
     <button onclick="dismissNotifyBanner()" class="text-slate-500 hover:text-white text-xs p-1">
       <i class="fa-solid fa-xmark"></i>
     </button>
+  </div>
+
+  <!-- ================= EARLY RETURN ERROR POPUP MODAL ================= -->
+  <div id="earlyReturnModal" class="hidden fixed inset-0 bg-slate-950/90 z-50 flex items-center justify-center p-6 backdrop-blur-md">
+    <div class="glass-card border border-rose-500/50 p-6 rounded-3xl max-w-sm w-full text-center space-y-4 shadow-2xl relative">
+      <div class="w-16 h-16 rounded-full bg-rose-500/20 text-rose-500 flex items-center justify-center mx-auto text-3xl border border-rose-500/30">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+      </div>
+      <div>
+        <h3 class="text-base font-black text-rose-400">Reward Failed!</h3>
+        <p class="text-xs text-slate-300 mt-1 leading-relaxed">
+          Aap article page par sirf <strong id="spentSecondsLabel" class="text-rose-400 font-bold text-sm">0s</strong> ruke the.<br/>
+          Pura 10-15 coins reward pane ke liye kam se kam <strong class="text-amber-400">60 seconds</strong> rukna compulsory hai!
+        </p>
+      </div>
+      <button onclick="retryArticleReading()" class="w-full py-3 bg-gradient-to-r from-rose-600 to-amber-600 hover:from-rose-500 text-white font-black rounded-xl text-xs uppercase tracking-wider shadow-lg active:scale-95 transition flex items-center justify-center gap-2">
+        <i class="fa-solid fa-rotate-right"></i> Try Again (Read 60s)
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= 60S REST TIMER MODAL AFTER 5 QUIZZES ================= -->
+  <div id="quizCooldownModal" class="hidden fixed inset-0 bg-slate-950/90 z-50 flex items-center justify-center p-6 backdrop-blur-md">
+    <div class="glass-card border border-amber-400/40 p-6 rounded-3xl max-w-sm w-full text-center space-y-4 shadow-2xl">
+      <div class="w-16 h-16 rounded-full bg-amber-400/20 text-amber-400 flex items-center justify-center mx-auto text-3xl border border-amber-400/30">
+        <i class="fa-solid fa-hourglass-half"></i>
+      </div>
+      <div>
+        <h3 class="text-base font-black text-amber-400">Brain Recharge Time</h3>
+        <p class="text-xs text-slate-300 mt-1">Aapne 5 sawal pure kar liye hain! Agla challenge shuru hone me thoda waqt baki hai:</p>
+      </div>
+      <div class="text-3xl font-black text-white font-mono" id="cooldownTimerText">60s</div>
+      <p class="text-[10px] text-slate-500">Wait for timer to reach 0 to play next quiz round.</p>
+    </div>
   </div>
 
   <!-- ================= SPLASH SCREEN ================= -->
@@ -119,29 +169,17 @@
     </div>
   </div>
 
-  <!-- ================= READ ARTICLE COUNTDOWN MODAL ================= -->
-  <div id="articleTimerModal" class="hidden fixed inset-0 bg-slate-950/95 z-50 flex flex-col items-center justify-center p-6 backdrop-blur-md">
-    <div class="glass-card p-6 rounded-3xl max-w-sm w-full shadow-2xl text-center space-y-4 relative overflow-hidden">
-      <div class="w-16 h-16 rounded-2xl bg-amber-400/20 text-amber-400 flex items-center justify-center mx-auto text-3xl border border-amber-400/30">
-        <i class="fa-solid fa-book-open-reader"></i>
+  <!-- ================= VAST VIDEO MODAL ================= -->
+  <div id="videoAdModal" class="hidden fixed inset-0 bg-black/95 z-50 flex flex-col items-center justify-center p-4">
+    <div class="w-full max-w-sm space-y-3 text-center">
+      <div class="flex justify-between items-center text-xs text-amber-400 font-bold px-1">
+        <span><i class="fa-solid fa-film mr-1.5"></i>Sponsored Video Ad</span>
+        <span id="videoAdTimerBadge" class="bg-rose-900/80 border border-rose-500 px-2 py-0.5 rounded text-white text-[10px]">Playing...</span>
       </div>
-
-      <div>
-        <h3 class="text-base font-black text-white">Reading Article...</h3>
-        <p class="text-xs text-slate-300 mt-1">Keep this tab active for 60 seconds to earn 10–15 coins!</p>
+      <div class="w-full bg-black rounded-2xl overflow-hidden shadow-2xl border border-slate-800">
+        <video id="hilltopVideoPlayer" class="w-full h-56"></video>
       </div>
-
-      <div class="space-y-2">
-        <div class="flex justify-between text-xs font-bold px-1">
-          <span class="text-amber-400">Verifying Reading Time</span>
-          <span class="text-rose-400" id="articleSecondsText">60s</span>
-        </div>
-        <div class="w-full bg-slate-950 h-2.5 rounded-full overflow-hidden border border-slate-800">
-          <div id="articleProgressBar" class="h-full bg-gradient-to-r from-amber-400 via-purple-500 to-emerald-400 rounded-full w-0 transition-all duration-1000 linear"></div>
-        </div>
-      </div>
-
-      <p class="text-[10px] text-slate-400">Do not close this window. Coins will be added automatically.</p>
+      <p class="text-[11px] text-slate-400">Please watch the full video to claim your coins.</p>
     </div>
   </div>
 
@@ -150,7 +188,7 @@
     <!-- Top Header -->
     <header class="p-3.5 bg-slate-900/90 border-b border-purple-900/40 flex justify-between items-center sticky top-0 z-30 backdrop-blur-md">
       <div class="flex items-center gap-2.5">
-        <img id="uHeaderAvatar" src="https://api.dicebear.com/7.x/bottts/svg?seed=Player" class="w-10 h-10 rounded-2xl border border-amber-400/50 bg-purple-950 p-0.5 object-cover" alt="Avatar"/>
+        <img id="uHeaderAvatar" src="" class="w-10 h-10 rounded-2xl border-2 border-amber-400/60 object-cover shadow-lg" alt="Avatar"/>
         <div>
           <h1 class="text-sm font-black text-amber-400 leading-tight">Quizly Earn</h1>
           <p class="text-[10px] text-slate-400 truncate max-w-[130px]" id="uProfileName">Player</p>
@@ -158,7 +196,7 @@
       </div>
 
       <div class="flex items-center gap-2">
-        <button onclick="switchUserTab('uTabLeaderboard')" class="text-amber-400 p-2 bg-purple-950/80 rounded-xl border border-amber-400/30 text-xs">
+        <button onclick="switchUserTab('uTabLeaderboard')" class="text-amber-400 p-2 bg-purple-950/80 rounded-xl border border-amber-400/30 text-xs active:scale-95 transition">
           <i class="fa-solid fa-trophy"></i>
         </button>
         <div class="flex items-center gap-1.5 bg-purple-950/80 px-3.5 py-1.5 rounded-full border border-amber-500/40 shadow-inner">
@@ -193,8 +231,8 @@
           </div>
         </div>
 
-        <!-- NEW OPTION: READ ARTICLE & EARN -->
-        <div onclick="startReadArticleTask()" class="glass-card p-4 rounded-3xl flex items-center justify-between cursor-pointer active:scale-98 transition shadow-lg hover:border-amber-400/50">
+        <!-- READ ARTICLE & EARN (Hidden Background Timer Option) -->
+        <div onclick="startReadArticleTask()" class="glass-card p-4 rounded-3xl flex items-center justify-between cursor-pointer active:scale-98 transition shadow-lg hover:border-emerald-400/50">
           <div class="flex items-center gap-3">
             <div class="w-11 h-11 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl border border-emerald-500/30">
               <i class="fa-solid fa-newspaper"></i>
@@ -204,7 +242,7 @@
                 <h4 class="text-xs font-black text-white">Read Article & Earn</h4>
                 <span class="bg-emerald-500/20 text-emerald-300 text-[9px] font-bold px-1.5 py-0.5 rounded border border-emerald-500/30">10-15 Coins</span>
               </div>
-              <p class="text-[10px] text-slate-400 mt-0.5">Read for 60 seconds & claim instant coins</p>
+              <p class="text-[10px] text-slate-400 mt-0.5">Stay 60 seconds on page to earn real coins</p>
             </div>
           </div>
           <span class="text-xs text-emerald-400 font-bold bg-slate-950/60 px-3 py-1.5 rounded-xl border border-slate-800">Read</span>
@@ -247,7 +285,7 @@
             <h3 class="text-base font-extrabold text-slate-100">KBC Mind Challenge</h3>
             <p class="text-xs text-slate-400 mt-1">Play fast 5-question rounds. Earn 8–12 coins per correct answer!</p>
           </div>
-          <button onclick="startKbcQuiz()" class="w-full py-3 bg-gradient-to-r from-amber-500 to-yellow-600 text-slate-950 font-black rounded-xl text-xs uppercase tracking-wider shadow-md active:scale-95 transition">
+          <button onclick="startKbcQuiz()" id="startQuizBtn" class="w-full py-3 bg-gradient-to-r from-amber-500 to-yellow-600 text-slate-950 font-black rounded-xl text-xs uppercase tracking-wider shadow-md active:scale-95 transition">
             Start Challenge
           </button>
         </div>
@@ -309,13 +347,19 @@
         </div>
       </section>
 
-      <!-- SCREEN 3: KBC QUIZ -->
+      <!-- SCREEN 3: KBC QUIZ WITH HINT BUTTON -->
       <section id="uTabQuiz" class="hidden space-y-4">
         <div class="flex justify-between items-center text-xs text-slate-400 px-1">
           <span>Question <strong id="kbcCount" class="text-amber-400 text-sm">1</strong>/5</span>
-          <span class="text-rose-400 font-bold bg-rose-950/60 px-2.5 py-1 rounded-full border border-rose-800/40">
-            <i class="fa-regular fa-clock mr-1"></i><span id="kbcClock">15</span>s
-          </span>
+          
+          <div class="flex items-center gap-2">
+            <button onclick="useQuizHint()" id="btnQuizHint" class="bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 border border-amber-400/40 px-2.5 py-1 rounded-full text-[11px] font-bold active:scale-95 transition flex items-center gap-1">
+              <i class="fa-solid fa-lightbulb text-amber-400"></i> Hint (50:50)
+            </button>
+            <span class="text-rose-400 font-bold bg-rose-950/60 px-2.5 py-1 rounded-full border border-rose-800/40">
+              <i class="fa-regular fa-clock mr-1"></i><span id="kbcClock">15</span>s
+            </span>
+          </div>
         </div>
         <div class="glass-card p-6 rounded-3xl text-center min-h-[120px] flex items-center justify-center shadow-lg">
           <h3 id="kbcQuestionLabel" class="text-sm font-bold text-slate-100 leading-snug">Loading question...</h3>
@@ -323,15 +367,15 @@
         <div id="kbcOptionsWrapper" class="space-y-2.5"></div>
       </section>
 
-      <!-- SCREEN 4: QUIZ REWARD CLAIM -->
+      <!-- SCREEN 4: QUIZ REWARD CLAIM WITH VAST VIDEO -->
       <section id="uTabRewardUnlock" class="hidden text-center space-y-4 glass-card p-6 rounded-3xl shadow-xl">
         <div class="w-14 h-14 bg-amber-400/20 text-amber-400 rounded-full flex items-center justify-center mx-auto text-2xl border border-amber-400/30">
           <i class="fa-solid fa-trophy"></i>
         </div>
         <h3 class="text-lg font-black text-amber-400">Quiz Completed!</h3>
-        <p class="text-xs text-slate-300">You earned <strong id="quizAwardCoins" class="text-amber-300 font-bold">50</strong> coins in this round! Claim them below:</p>
-        <button onclick="claimQuizRewardDirect()" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 text-white font-black rounded-xl text-xs uppercase tracking-wider shadow-lg active:scale-95 transition">
-          <i class="fa-solid fa-coins mr-1.5"></i> Add Coins to Wallet
+        <p class="text-xs text-slate-300">You earned <strong id="quizAwardCoins" class="text-amber-300 font-bold">50</strong> coins! Watch sponsored video ad to credit:</p>
+        <button onclick="playHilltopVastAd('quiz')" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 text-white font-black rounded-xl text-xs uppercase tracking-wider shadow-lg active:scale-95 transition">
+          <i class="fa-solid fa-play mr-1.5"></i> Watch Video & Add Coins
         </button>
       </section>
 
@@ -428,7 +472,7 @@
       <!-- SCREEN 7: PROFILE -->
       <section id="uTabProfile" class="hidden space-y-4">
         <div class="glass-card p-5 rounded-3xl text-center space-y-2">
-          <img id="profAvatar" src="https://api.dicebear.com/7.x/bottts/svg?seed=Player" class="w-16 h-16 rounded-2xl border-2 border-amber-400 mx-auto bg-purple-950 p-1 object-cover" alt="Avatar"/>
+          <img id="profAvatar" src="" class="w-16 h-16 rounded-2xl border-2 border-amber-400 mx-auto object-cover shadow-lg" alt="Avatar"/>
           <h3 class="font-bold text-white text-sm" id="profDisplayName">Player</h3>
           <p class="text-[11px] text-slate-400 font-mono" id="profEmail">user@quizly.com</p>
           <p class="text-[10px] text-amber-400/80">Ref Code: <span id="profReferralCode" class="font-bold font-mono">---</span></p>
@@ -502,13 +546,21 @@
     const auth = firebase.auth();
     const db = firebase.database();
 
-    // MONETAG DIRECT LINK
+    // MONETAG DIRECT LINK & HILLTOP VAST VIDEO
     const MONETAG_DIRECT_LINK = "https://omg10.com/4/11904430";
+    const HILLTOP_VAST_TAG = "https://expensive-pollution.com/dwmEFmz/d.GyN/vFZ/GTUP/_eOmG9sutZ/UGl_kuPWTdcr0/NPj/YmxPOvDwEGt/NszdQt2aNYjLES4vNpSrZQspaNWX1/pSdLDt0Xxf";
 
     let currentAuthMode = 'login';
     let currentUser = null;
     let userData = null;
     let userCoins = 0;
+    let fluidPlayerInstance = null;
+
+    // Premium Name-Based Avatar Generator
+    function getPremiumAvatar(name) {
+      const cleanName = encodeURIComponent((name || 'Player').trim());
+      return `https://ui-avatars.com/api/?name=${cleanName}&background=7c3aed&color=fbbf24&bold=true&size=128&format=svg`;
+    }
 
     const fullQuestionBank = [
       { q: "Bharat ki aadhikarik rajdhani kya hai?", o: ["Mumbai", "New Delhi", "Kolkata", "Chennai"], a: 1 },
@@ -531,7 +583,13 @@
     let kbcTimerInterval = null;
     let kbcSeconds = 15;
     let isAnswerLocked = false;
-    let isArticleReading = false;
+    let isHintUsedInCurrentQ = false;
+    let isQuizCooldownActive = false;
+
+    // Article Hidden Tracker Variables
+    let articleStartTime = 0;
+    let isArticleActive = false;
+    let articleWindowRef = null;
 
     function getDeviceUUID() {
       let uuid = localStorage.getItem('qz_device_id');
@@ -545,10 +603,6 @@
     function getReferrerFromURL() {
       const p = new URLSearchParams(window.location.search);
       return p.get('ref');
-    }
-
-    function getAvatarUrl(seed) {
-      return `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(seed || 'Player')}`;
     }
 
     function requestNotificationPermission() {
@@ -609,6 +663,41 @@
         }
       });
     }
+
+    // ================= HIDDEN ARTICLE READING ENGINE WITH EARLY RETURN POPUP =================
+    function startReadArticleTask() {
+      isArticleActive = true;
+      articleStartTime = Date.now();
+      articleWindowRef = window.open(MONETAG_DIRECT_LINK, '_blank');
+    }
+
+    function retryArticleReading() {
+      document.getElementById('earlyReturnModal').classList.add('hidden');
+      startReadArticleTask();
+    }
+
+    // Check if user came back to app tab
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible" && isArticleActive) {
+        const elapsedSeconds = Math.floor((Date.now() - articleStartTime) / 1000);
+
+        if (elapsedSeconds < 60) {
+          // EARLY RETURN DETECTED -> SHOW RED POPUP
+          isArticleActive = false;
+          document.getElementById('spentSecondsLabel').innerText = `${elapsedSeconds}s`;
+          document.getElementById('earlyReturnModal').classList.remove('hidden');
+        } else {
+          // SUCCESSFULLY COMPLETED 60s
+          isArticleActive = false;
+          const earned = Math.floor(Math.random() * (15 - 10 + 1)) + 10;
+          const newBalance = userCoins + earned;
+
+          db.ref('users/' + currentUser.uid).update({ coins: newBalance }).then(() => {
+            alert(`Great job! You stayed on the article for ${elapsedSeconds} seconds and earned ${earned} Coins!`);
+          });
+        }
+      }
+    });
 
     window.addEventListener('DOMContentLoaded', () => {
       requestNotificationPermission();
@@ -732,7 +821,7 @@
               redeemsUsed: 0,
               adminRedeemUnlock: false,
               deviceId: deviceId,
-              avatar: getAvatarUrl(uniqueUserCode),
+              avatar: getPremiumAvatar(displayName || uniqueUserCode),
               isBanned: false,
               joinedAt: Date.now()
             }).then(() => {
@@ -770,11 +859,11 @@
 
           userData = data;
           userCoins = data.coins || 0;
-          const avatarUrl = data.avatar || getAvatarUrl(data.username || data.name);
-          const finalName = data.name || user.displayName || "Player";
+          const cleanName = data.name || user.displayName || "Player";
+          const avatarUrl = getPremiumAvatar(cleanName);
 
-          document.getElementById('uProfileName').innerText = finalName;
-          document.getElementById('profDisplayName').innerText = finalName;
+          document.getElementById('uProfileName').innerText = cleanName;
+          document.getElementById('profDisplayName').innerText = cleanName;
           document.getElementById('profEmail').innerText = data.email || "";
           document.getElementById('profReferralCode').innerText = data.username || "---";
 
@@ -869,49 +958,13 @@
       window.open(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(text)}`, '_blank');
     }
 
-    // ================= READ ARTICLE & EARN (60s COUNTDOWN & 10-15 COINS) =================
-    function startReadArticleTask() {
-      if (isArticleReading) return;
-      isArticleReading = true;
-
-      // 1. Open Monetag Direct Link in background/new tab
-      window.open(MONETAG_DIRECT_LINK, '_blank');
-
-      // 2. Open Timer Modal
-      const modal = document.getElementById('articleTimerModal');
-      const text = document.getElementById('articleSecondsText');
-      const bar = document.getElementById('articleProgressBar');
-
-      modal.classList.remove('hidden');
-      bar.style.width = '0%';
-
-      let seconds = 60;
-      text.innerText = `${seconds}s`;
-
-      const countdown = setInterval(() => {
-        seconds--;
-        text.innerText = `${seconds}s`;
-        const percentage = ((60 - seconds) / 60) * 100;
-        bar.style.width = `${percentage}%`;
-
-        if (seconds <= 0) {
-          clearInterval(countdown);
-          modal.classList.add('hidden');
-          isArticleReading = false;
-
-          // 10 to 15 random coins
-          const earned = Math.floor(Math.random() * (15 - 10 + 1)) + 10;
-          const newBalance = userCoins + earned;
-
-          db.ref('users/' + currentUser.uid).update({ coins: newBalance }).then(() => {
-            alert(`Awesome! You read the article and earned ${earned} Coins!`);
-          });
-        }
-      }, 1000);
-    }
-
-    // ================= KBC ENGINE =================
+    // ================= KBC ENGINE WITH HINT (50-50) & 60S COOLDOWN =================
     function startKbcQuiz() {
+      if (isQuizCooldownActive) {
+        document.getElementById('quizCooldownModal').classList.remove('hidden');
+        return;
+      }
+
       const shuffled = [...fullQuestionBank].sort(() => 0.5 - Math.random());
       activeRoundQuestions = shuffled.slice(0, 5);
 
@@ -924,6 +977,9 @@
     function showKbcQuestion() {
       clearInterval(kbcTimerInterval);
       isAnswerLocked = false;
+      isHintUsedInCurrentQ = false;
+      document.getElementById('btnQuizHint').classList.remove('opacity-40', 'cursor-not-allowed');
+
       kbcSeconds = 15;
       document.getElementById('kbcClock').innerText = kbcSeconds;
 
@@ -951,6 +1007,28 @@
           highlightAndProceed(-1);
         }
       }, 1000);
+    }
+
+    // 50-50 Hint Lifeline
+    function useQuizHint() {
+      if (isHintUsedInCurrentQ || isAnswerLocked) return;
+      isHintUsedInCurrentQ = true;
+      document.getElementById('btnQuizHint').classList.add('opacity-40', 'cursor-not-allowed');
+
+      const correct = activeRoundQuestions[kbcQuizIndex].a;
+      let wrongIndices = [0, 1, 2, 3].filter(i => i !== correct);
+
+      // Randomly pick 2 wrong options to eliminate
+      wrongIndices.sort(() => 0.5 - Math.random());
+      const toRemove = wrongIndices.slice(0, 2);
+
+      toRemove.forEach(idx => {
+        const el = document.getElementById(`kbcOptBtn_${idx}`);
+        if (el) {
+          el.classList.add('opacity-20', 'pointer-events-none');
+          el.innerHTML = `<span class="line-through text-slate-500">${el.innerText}</span>`;
+        }
+      });
     }
 
     function submitKbcAnswer(selectedIdx) {
@@ -991,18 +1069,84 @@
         } else {
           document.getElementById('quizAwardCoins').innerText = currentQuizAward > 0 ? currentQuizAward : 10;
           switchUserTab('uTabRewardUnlock');
+          triggerQuizCooldownTimer();
         }
       }, 1300);
     }
 
-    function claimQuizRewardDirect() {
-      const award = currentQuizAward > 0 ? currentQuizAward : 10;
-      const newBalance = userCoins + award;
+    // 60-second cooldown after 5 questions
+    function triggerQuizCooldownTimer() {
+      isQuizCooldownActive = true;
+      let cdSeconds = 60;
+      const cdText = document.getElementById('cooldownTimerText');
+      const startBtn = document.getElementById('startQuizBtn');
 
-      db.ref('users/' + currentUser.uid).update({ coins: newBalance }).then(() => {
-        alert(`Congratulations! ${award} Coins credited to your wallet!`);
-        switchUserTab('uTabHome');
-      });
+      if (startBtn) {
+        startBtn.classList.add('opacity-50', 'pointer-events-none');
+        startBtn.innerText = "Recharging (60s)...";
+      }
+
+      const cdInterval = setInterval(() => {
+        cdSeconds--;
+        if (cdText) cdText.innerText = `${cdSeconds}s`;
+        if (startBtn) startBtn.innerText = `Recharging (${cdSeconds}s)...`;
+
+        if (cdSeconds <= 0) {
+          clearInterval(cdInterval);
+          isQuizCooldownActive = false;
+          document.getElementById('quizCooldownModal').classList.add('hidden');
+          if (startBtn) {
+            startBtn.classList.remove('opacity-50', 'pointer-events-none');
+            startBtn.innerText = "Start Challenge";
+          }
+        }
+      }, 1000);
+    }
+
+    // ================= HILLTOP VAST 3.0 VIDEO AD PLAYER =================
+    function playHilltopVastAd(source) {
+      const modal = document.getElementById('videoAdModal');
+      modal.classList.remove('hidden');
+
+      if (!fluidPlayerInstance) {
+        fluidPlayerInstance = fluidPlayer('hilltopVideoPlayer', {
+          layoutControls: {
+            fillToContainer: true,
+            autoPlay: true,
+            playPauseAnimation: false,
+            mute: false
+          },
+          vastOptions: {
+            adList: [
+              {
+                roll: 'preRoll',
+                vastTag: HILLTOP_VAST_TAG
+              }
+            ]
+          }
+        });
+      }
+
+      let adTimer = 15;
+      const badge = document.getElementById('videoAdTimerBadge');
+      badge.innerText = `Reward in ${adTimer}s`;
+
+      const adCount = setInterval(() => {
+        adTimer--;
+        badge.innerText = `Reward in ${adTimer}s`;
+        if (adTimer <= 0) {
+          clearInterval(adCount);
+          modal.classList.add('hidden');
+
+          const award = (source === 'quiz') ? (currentQuizAward > 0 ? currentQuizAward : 10) : 25;
+          const newBalance = userCoins + award;
+
+          db.ref('users/' + currentUser.uid).update({ coins: newBalance }).then(() => {
+            alert(`Video Completed! ${award} Coins added to your wallet!`);
+            switchUserTab('uTabHome');
+          });
+        }
+      }, 1000);
     }
 
     function initiateRedeem(method) {
@@ -1101,7 +1245,7 @@
       alert(`Redeem code ${code} copied to clipboard!`);
     }
 
-    // ================= REALTIME LEADERBOARD WITH NAME & AVATAR FIX =================
+    // ================= LEADERBOARD WITH REAL NAME & PREMIUM AVATAR =================
     function loadRealtimeLeaderboard() {
       db.ref('users').orderByChild('coins').limitToLast(25).on('value', snap => {
         const wrap = document.getElementById('uLeaderboardList');
@@ -1120,13 +1264,13 @@
           if (index === 1) rankBadge = `<span class="w-6 h-6 rounded-full bg-slate-300 text-slate-950 font-black flex items-center justify-center text-xs shadow-md">2</span>`;
           if (index === 2) rankBadge = `<span class="w-6 h-6 rounded-full bg-amber-700 text-white font-black flex items-center justify-center text-xs shadow-md">3</span>`;
 
-          const cleanName = u.name && u.name.trim().length > 0 ? u.name : (u.username ? `@${u.username}` : (u.email ? u.email.split('@')[0] : 'Quizly Player'));
-          const avatar = u.avatar || getAvatarUrl(u.username || cleanName);
+          const cleanName = u.name && u.name.trim().length > 0 ? u.name : (u.username ? `@${u.username}` : 'Quizly Player');
+          const avatar = getPremiumAvatar(cleanName);
 
           div.innerHTML = `
             <div class="flex items-center gap-3">
               ${rankBadge}
-              <img src="${avatar}" class="w-10 h-10 rounded-xl border border-slate-700 bg-purple-950/60 p-0.5 object-cover" alt="DP"/>
+              <img src="${avatar}" class="w-10 h-10 rounded-2xl border-2 border-amber-400/50 object-cover shadow-sm" alt="DP"/>
               <div>
                 <p class="font-bold text-white text-xs">${cleanName}</p>
                 <p class="text-[10px] text-slate-400 font-mono">@${u.username || 'user'}</p>
