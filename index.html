@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Quizly Earn</title>
 
-  <!-- HilltopAds Verification -->
-  <meta name="6c29ec16ceee48f087d18c842d44b568cb6f8e15" content="6c29ec16ceee48f087d18c842d44b568cb6f8e15" />
+  <!-- Monetag Website Verification Tag -->
+  <meta name="monetag" content="421338142263e17d4e560ebd8aeda8c4">
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -115,20 +115,6 @@
     </div>
   </div>
 
-  <!-- ================= VAST VIDEO MODAL ================= -->
-  <div id="videoAdModal" class="hidden fixed inset-0 bg-black/95 z-50 flex flex-col items-center justify-center p-4">
-    <div class="w-full max-w-sm space-y-3 text-center">
-      <div class="flex justify-between items-center text-xs text-amber-400 font-bold px-1">
-        <span><i class="fa-solid fa-film mr-1.5"></i>Sponsored Video Ad</span>
-        <span id="videoAdTimerBadge" class="bg-rose-900/80 border border-rose-500 px-2 py-0.5 rounded text-white text-[10px]">Playing...</span>
-      </div>
-      <div class="w-full bg-black rounded-2xl overflow-hidden shadow-2xl border border-slate-800">
-        <video id="exoclickVideoPlayer" class="w-full h-56"></video>
-      </div>
-      <p class="text-[11px] text-slate-400">Please watch the full video to claim your coins.</p>
-    </div>
-  </div>
-
   <!-- ================= MAIN USER VIEW ================= -->
   <div id="userAppView" class="flex-1 flex flex-col justify-between hidden">
     <!-- Top Header -->
@@ -170,11 +156,6 @@
             <span>Redeem Status: <strong id="uRedeemStatusBadge" class="text-amber-400">Locked</strong></span>
             <button onclick="switchUserTab('uTabWallet')" class="text-amber-400 font-bold hover:underline">Withdraw →</button>
           </div>
-        </div>
-
-        <!-- Multi Slider Ad Container -->
-        <div id="multiSliderAdSlot" class="w-full min-h-[60px] bg-slate-900/60 border border-slate-800 rounded-2xl flex items-center justify-center overflow-hidden">
-          <!-- Multi Slider Video Script will inject here -->
         </div>
 
         <!-- Quick Refer Button -->
@@ -294,9 +275,9 @@
           <i class="fa-solid fa-trophy"></i>
         </div>
         <h3 class="text-lg font-black text-amber-400">Quiz Completed!</h3>
-        <p class="text-xs text-slate-300">You earned <strong id="quizAwardCoins" class="text-amber-300 font-bold">50</strong> coins in this round! Watch video ad to credit coins:</p>
-        <button onclick="playExoClickVastAd('quiz')" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 text-white font-black rounded-xl text-xs uppercase tracking-wider shadow-lg active:scale-95 transition">
-          <i class="fa-solid fa-play mr-1.5"></i> Watch Video & Add Coins
+        <p class="text-xs text-slate-300">You earned <strong id="quizAwardCoins" class="text-amber-300 font-bold">50</strong> coins in this round! Claim them below:</p>
+        <button onclick="claimQuizReward()" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 text-white font-black rounded-xl text-xs uppercase tracking-wider shadow-lg active:scale-95 transition">
+          <i class="fa-solid fa-coins mr-1.5"></i> Add Coins to Wallet
         </button>
       </section>
 
@@ -381,15 +362,13 @@
         </div>
       </section>
 
-      <!-- SCREEN 6: REALTIME LEADERBOARD WITH DP & NAME -->
+      <!-- SCREEN 6: REALTIME LEADERBOARD -->
       <section id="uTabLeaderboard" class="hidden space-y-4">
         <div class="flex items-center justify-between">
           <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider"><i class="fa-solid fa-trophy mr-1.5"></i>Top Earners Leaderboard</h3>
           <span class="text-[10px] text-slate-400">Live Ranks</span>
         </div>
-        <div id="uLeaderboardList" class="space-y-2 text-xs">
-          <!-- Populated with Avatars & Proper Names -->
-        </div>
+        <div id="uLeaderboardList" class="space-y-2 text-xs"></div>
       </section>
 
       <!-- SCREEN 7: PROFILE -->
@@ -452,20 +431,6 @@
     </nav>
   </div>
 
-  <!-- MULTI SLIDER ADS SCRIPT INJECTION -->
-  <script>
-    (function(siavp){
-      var d = document,
-          s = d.createElement('script'),
-          l = d.currentScript || d.scripts[d.scripts.length - 1];
-      s.settings = siavp || {};
-      s.src = "\/\/candid-revenue.com\/bNXzV\/s.d_GRlf0OYNWRcG\/Ze_m\/9OuvZjUYlmkSPwTkcU0xNfj\/MB1AMjT\/M\/tLNTz\/Qp2NMRzAUoxfNAwO";
-      s.async = true;
-      s.referrerPolicy = 'no-referrer-when-downgrade';
-      l.parentNode.insertBefore(s, l);
-    })({});
-  </script>
-
   <!-- ================= JAVASCRIPT ENGINE ================= -->
   <script>
     const firebaseConfig = {
@@ -483,14 +448,10 @@
     const auth = firebase.auth();
     const db = firebase.database();
 
-    // HILLTOP VAST 3.0 TAG
-    const HILLTOP_VAST_TAG = "https://zealousimage.com/dom.FSzudMGBNMv/ZrGTUO/-ewmP9HuZZtU-lmk/PHTTc/0/NdjLMY1oMxDKUEtfNFzjQA2dMrzuUBw/OGQc";
-
     let currentAuthMode = 'login';
     let currentUser = null;
     let userData = null;
     let userCoins = 0;
-    let fluidPlayerInstance = null;
 
     const fullQuestionBank = [
       { q: "Bharat ki aadhikarik rajdhani kya hai?", o: ["Mumbai", "New Delhi", "Kolkata", "Chennai"], a: 1 },
@@ -528,18 +489,16 @@
       return p.get('ref');
     }
 
-    // Dynamic Avatar Generator
     function getAvatarUrl(seed) {
       return `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(seed || 'Player')}`;
     }
 
-    // ================= REAL PUSH & IN-APP NOTIFICATIONS =================
     function requestNotificationPermission() {
       if ("Notification" in window) {
         if (Notification.permission === "default") {
           Notification.requestPermission().then(permission => {
             if (permission === "granted") {
-              showSystemNotification("Quizly Earn", "Notifications enabled successfully! You will receive live payout updates.");
+              showSystemNotification("Quizly Earn", "Notifications enabled! Payout updates will be shown here.");
             }
           });
         }
@@ -547,7 +506,6 @@
     }
 
     function showSystemNotification(title, body) {
-      // 1. Browser Native Notification
       if ("Notification" in window && Notification.permission === "granted") {
         try {
           new Notification(title, {
@@ -557,7 +515,6 @@
         } catch(e) {}
       }
 
-      // 2. In-App Banner Popup
       const banner = document.getElementById('inAppNotifyBanner');
       document.getElementById('notifyBannerTitle').innerText = title;
       document.getElementById('notifyBannerMsg').innerText = body;
@@ -572,12 +529,10 @@
       document.getElementById('inAppNotifyBanner').classList.add('hidden');
     }
 
-    // LISTEN FOR BROADCAST & AUTO PAYOUT NOTIFICATIONS
     function listenForLiveNotifications(uid) {
-      // 1. General Broadcast Notification from Admin
       db.ref('broadcast_notification').on('value', snap => {
         const notif = snap.val();
-        if (notif && notif.timestamp && (Date.now() - notif.timestamp < 1000 * 60 * 60)) { // within 1 hour
+        if (notif && notif.timestamp && (Date.now() - notif.timestamp < 1000 * 60 * 60)) {
           const lastSeen = localStorage.getItem('last_seen_broadcast');
           if (lastSeen != notif.timestamp) {
             localStorage.setItem('last_seen_broadcast', notif.timestamp);
@@ -586,20 +541,18 @@
         }
       });
 
-      // 2. Auto Notification on Redeem Approval
       db.ref('redeem_requests').orderByChild('uid').equalTo(uid).on('child_changed', snap => {
         const req = snap.val();
         if (req && req.status === 'APPROVED') {
           const msg = req.redeemCodeGiven 
             ? `Your ₹${req.amountInr} payout is approved! Code: ${req.redeemCodeGiven}` 
-            : `Your ₹${req.amountInr} payout has been approved and transferred successfully!`;
+            : `Your ₹${req.amountInr} payout has been approved and sent successfully!`;
           showSystemNotification("Payment Approved! 🎉", msg);
         }
       });
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      // Request notification on app open
       requestNotificationPermission();
 
       let p = 0;
@@ -942,50 +895,14 @@
       }, 1300);
     }
 
-    // HILLTOP VAST 3.0 VIDEO AD TRIGGER
-    function playExoClickVastAd(source) {
-      const modal = document.getElementById('videoAdModal');
-      modal.classList.remove('hidden');
+    function claimQuizReward() {
+      const award = currentQuizAward > 0 ? currentQuizAward : 10;
+      const newBalance = userCoins + award;
 
-      if (!fluidPlayerInstance) {
-        fluidPlayerInstance = fluidPlayer('exoclickVideoPlayer', {
-          layoutControls: {
-            fillToContainer: true,
-            autoPlay: true,
-            playPauseAnimation: false,
-            mute: false
-          },
-          vastOptions: {
-            adList: [
-              {
-                roll: 'preRoll',
-                vastTag: HILLTOP_VAST_TAG
-              }
-            ]
-          }
-        });
-      }
-
-      let adTimer = 15;
-      const badge = document.getElementById('videoAdTimerBadge');
-      badge.innerText = `Reward in ${adTimer}s`;
-
-      const adCount = setInterval(() => {
-        adTimer--;
-        badge.innerText = `Reward in ${adTimer}s`;
-        if (adTimer <= 0) {
-          clearInterval(adCount);
-          modal.classList.add('hidden');
-
-          const award = (source === 'quiz') ? (currentQuizAward > 0 ? currentQuizAward : 10) : 25;
-          const newBalance = userCoins + award;
-
-          db.ref('users/' + currentUser.uid).update({ coins: newBalance }).then(() => {
-            alert(`Video Completed! ${award} Coins added to your wallet!`);
-            switchUserTab('uTabHome');
-          });
-        }
-      }, 1000);
+      db.ref('users/' + currentUser.uid).update({ coins: newBalance }).then(() => {
+        alert(`Success! ${award} Coins added to your wallet!`);
+        switchUserTab('uTabHome');
+      });
     }
 
     function initiateRedeem(method) {
@@ -1084,7 +1001,6 @@
       alert(`Redeem code ${code} copied to clipboard!`);
     }
 
-    // ================= REALTIME LEADERBOARD WITH REAL DP & NAME =================
     function loadRealtimeLeaderboard() {
       db.ref('users').orderByChild('coins').limitToLast(25).on('value', snap => {
         const wrap = document.getElementById('uLeaderboardList');
@@ -1092,7 +1008,7 @@
         let list = [];
 
         snap.forEach(c => list.push(c.val()));
-        list.reverse(); // highest balance top
+        list.reverse();
 
         list.forEach((u, index) => {
           const div = document.createElement('div');
