@@ -3,9 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Quizly Earn</title>
+  <title>Quizly Earn - Play & Earn Cash</title>
 
-  <!-- Monetag Verification -->
+  <!-- Naya HilltopAds Verification Tag -->
+  <meta name="500b95e80fc810c92ed9dd55e4b3ae8c5476fe8b" content="500b95e80fc810c92ed9dd55e4b3ae8c5476fe8b" />
+  
+  <!-- Monetag Verification Tag -->
   <meta name="monetag" content="421338142263e17d4e560ebd8aeda8c4">
 
   <!-- Tailwind CSS -->
@@ -17,26 +20,21 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
-  <!-- MONETAG AD SCRIPTS -->
-  <!-- 1. MultiTag Script -->
-  <script src="https://quge5.com/88/tag.min.js" data-zone="287721" async data-cfasync="false"></script>
-
-  <!-- 2. Vignette Ads Script -->
-  <script>(function(s){s.dataset.zone='11904440',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-
-  <!-- 3. In-Page Push Script -->
-  <script>(function(s){s.dataset.zone='11904437',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-
   <style>
     @keyframes pulseGlow {
-      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.4)); }
-      50% { transform: scale(1.04); filter: drop-shadow(0 0 25px rgba(245, 158, 11, 0.8)); }
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.35)); }
+      50% { transform: scale(1.03); filter: drop-shadow(0 0 25px rgba(245, 158, 11, 0.7)); }
     }
-    .splash-logo { animation: pulseGlow 2s infinite ease-in-out; }
+    .splash-logo { animation: pulseGlow 2.5s infinite ease-in-out; }
     .no-scrollbar::-webkit-scrollbar { display: none; }
+    .glass-card {
+      background: linear-gradient(135deg, rgba(30, 27, 75, 0.7) 0%, rgba(15, 23, 42, 0.85) 100%);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(139, 92, 246, 0.25);
+    }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col justify-between select-none">
+<body class="bg-[#080514] text-slate-100 font-sans min-h-screen flex flex-col justify-between select-none">
 
   <!-- ================= IN-APP NOTIFICATION BANNER ================= -->
   <div id="inAppNotifyBanner" class="hidden fixed top-3 left-4 right-4 z-50 bg-slate-900/95 border border-amber-400/60 p-3.5 rounded-2xl shadow-2xl backdrop-blur-md flex items-start gap-3 transition-all transform duration-300">
@@ -53,7 +51,7 @@
   </div>
 
   <!-- ================= SPLASH SCREEN ================= -->
-  <div id="splashScreen" class="fixed inset-0 bg-[#0c051f] z-50 flex flex-col items-center justify-between p-8">
+  <div id="splashScreen" class="fixed inset-0 bg-[#070314] z-50 flex flex-col items-center justify-between p-8">
     <div class="flex-1 flex flex-col items-center justify-center text-center">
       <div class="relative w-52 h-52 flex items-center justify-center mb-5">
         <div class="absolute inset-0 bg-purple-600/30 blur-3xl rounded-full"></div>
@@ -64,34 +62,34 @@
         />
       </div>
       <h1 class="text-3xl font-black tracking-wider text-amber-400 drop-shadow-md">QUIZLY EARN</h1>
-      <p class="text-xs text-purple-300 mt-2 tracking-widest font-semibold uppercase">Play Quiz • Earn Coins • Redeem Cash</p>
+      <p class="text-xs text-purple-300 mt-2 tracking-widest font-semibold uppercase">Play Quiz • Read Articles • Redeem Cash</p>
     </div>
 
     <div class="w-full max-w-xs space-y-2 text-center">
       <div class="w-full bg-slate-900 border border-purple-500/40 h-2.5 rounded-full overflow-hidden p-0.5">
         <div id="splashProgressBar" class="h-full bg-gradient-to-r from-amber-400 via-purple-500 to-amber-300 rounded-full w-0 transition-all duration-200 ease-out"></div>
       </div>
-      <p id="splashStatus" class="text-[11px] text-purple-400 font-medium">Connecting servers...</p>
+      <p id="splashStatus" class="text-[11px] text-purple-400 font-medium">Securing connection...</p>
     </div>
   </div>
 
   <!-- ================= AUTH SCREEN ================= -->
-  <div id="authScreen" class="hidden fixed inset-0 bg-[#0c051f] z-40 flex flex-col items-center justify-center p-6 overflow-y-auto">
-    <div class="bg-slate-900/90 border border-purple-900/60 p-6 rounded-3xl max-w-sm w-full shadow-2xl backdrop-blur-md space-y-4">
+  <div id="authScreen" class="hidden fixed inset-0 bg-[#070314] z-40 flex flex-col items-center justify-center p-6 overflow-y-auto">
+    <div class="glass-card p-6 rounded-3xl max-w-sm w-full shadow-2xl space-y-4">
       <div class="text-center">
-        <img src="https://i.ibb.co/BHTcn7QD/file-0000000021988211ab800b8ece076fff.png" class="w-16 h-16 rounded-2xl mx-auto mb-2 border border-amber-400/40 shadow-md object-contain" alt="Logo"/>
+        <img src="https://i.ibb.co/BHTcn7QD/file-0000000021988211ab800b8ece076fff.png" class="w-16 h-16 rounded-2xl mx-auto mb-2 border border-amber-400/40 shadow-md object-contain bg-purple-950/60 p-1" alt="Logo"/>
         <h2 class="text-xl font-black text-white" id="authTitle">Welcome to Quizly</h2>
         <p class="text-xs text-slate-400">Play quizzes and win daily rewards</p>
       </div>
 
-      <div class="flex bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
+      <div class="flex bg-slate-950/80 p-1 rounded-xl border border-slate-800 text-xs">
         <button onclick="setAuthMode('login')" id="tabBtnLogin" class="flex-1 py-2 font-bold rounded-lg bg-amber-400 text-slate-950 transition">Log In</button>
         <button onclick="setAuthMode('signup')" id="tabBtnSignup" class="flex-1 py-2 font-bold rounded-lg text-slate-400 transition">Sign Up</button>
       </div>
 
       <div id="nameInputGroup" class="hidden space-y-1">
         <label class="text-[11px] font-semibold text-slate-400">Full Name</label>
-        <input type="text" id="authName" placeholder="Enter name" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400" />
+        <input type="text" id="authName" placeholder="Enter your full name" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400" />
       </div>
 
       <div class="space-y-1">
@@ -121,32 +119,29 @@
     </div>
   </div>
 
-  <!-- ================= CUSTOM MONETAG REWARDED VIDEO MODAL ================= -->
-  <div id="rewardVideoModal" class="hidden fixed inset-0 bg-slate-950/95 z-50 flex flex-col items-center justify-center p-6 backdrop-blur-md">
-    <div class="bg-slate-900 border border-purple-900/80 p-6 rounded-3xl max-w-sm w-full shadow-2xl text-center space-y-4 relative overflow-hidden">
-      <div class="absolute -right-8 -top-8 w-24 h-24 bg-amber-400/10 rounded-full blur-xl"></div>
-      
+  <!-- ================= READ ARTICLE COUNTDOWN MODAL ================= -->
+  <div id="articleTimerModal" class="hidden fixed inset-0 bg-slate-950/95 z-50 flex flex-col items-center justify-center p-6 backdrop-blur-md">
+    <div class="glass-card p-6 rounded-3xl max-w-sm w-full shadow-2xl text-center space-y-4 relative overflow-hidden">
       <div class="w-16 h-16 rounded-2xl bg-amber-400/20 text-amber-400 flex items-center justify-center mx-auto text-3xl border border-amber-400/30">
-        <i class="fa-solid fa-play"></i>
+        <i class="fa-solid fa-book-open-reader"></i>
       </div>
 
       <div>
-        <h3 class="text-base font-black text-white">Sponsored Video Reward</h3>
-        <p class="text-xs text-slate-400 mt-1">Watch full 15s sponsored content to credit your coins.</p>
+        <h3 class="text-base font-black text-white">Reading Article...</h3>
+        <p class="text-xs text-slate-300 mt-1">Keep this tab active for 60 seconds to earn 10–15 coins!</p>
       </div>
 
-      <!-- Animated Progress Countdown -->
       <div class="space-y-2">
         <div class="flex justify-between text-xs font-bold px-1">
-          <span class="text-amber-400">Verifying Reward...</span>
-          <span class="text-rose-400" id="videoTimerText">15s</span>
+          <span class="text-amber-400">Verifying Reading Time</span>
+          <span class="text-rose-400" id="articleSecondsText">60s</span>
         </div>
         <div class="w-full bg-slate-950 h-2.5 rounded-full overflow-hidden border border-slate-800">
-          <div id="videoProgressBar" class="h-full bg-gradient-to-r from-amber-400 via-purple-500 to-emerald-400 rounded-full w-0 transition-all duration-1000 linear"></div>
+          <div id="articleProgressBar" class="h-full bg-gradient-to-r from-amber-400 via-purple-500 to-emerald-400 rounded-full w-0 transition-all duration-1000 linear"></div>
         </div>
       </div>
 
-      <p class="text-[10px] text-slate-500">Do not close this window. Coins will be credited automatically.</p>
+      <p class="text-[10px] text-slate-400">Do not close this window. Coins will be added automatically.</p>
     </div>
   </div>
 
@@ -155,18 +150,18 @@
     <!-- Top Header -->
     <header class="p-3.5 bg-slate-900/90 border-b border-purple-900/40 flex justify-between items-center sticky top-0 z-30 backdrop-blur-md">
       <div class="flex items-center gap-2.5">
-        <img id="uHeaderAvatar" src="https://api.dicebear.com/7.x/bottts/svg?seed=Player" class="w-9 h-9 rounded-xl border border-amber-400/50 bg-purple-950 p-0.5 object-cover" alt="Avatar"/>
+        <img id="uHeaderAvatar" src="https://api.dicebear.com/7.x/bottts/svg?seed=Player" class="w-10 h-10 rounded-2xl border border-amber-400/50 bg-purple-950 p-0.5 object-cover" alt="Avatar"/>
         <div>
           <h1 class="text-sm font-black text-amber-400 leading-tight">Quizly Earn</h1>
-          <p class="text-[10px] text-slate-400 truncate max-w-[120px]" id="uProfileName">Player</p>
+          <p class="text-[10px] text-slate-400 truncate max-w-[130px]" id="uProfileName">Player</p>
         </div>
       </div>
 
       <div class="flex items-center gap-2">
-        <button onclick="switchUserTab('uTabLeaderboard')" class="text-amber-400 p-1.5 bg-purple-950/80 rounded-lg border border-amber-400/30 text-xs">
+        <button onclick="switchUserTab('uTabLeaderboard')" class="text-amber-400 p-2 bg-purple-950/80 rounded-xl border border-amber-400/30 text-xs">
           <i class="fa-solid fa-trophy"></i>
         </button>
-        <div class="flex items-center gap-1.5 bg-purple-950/80 px-3 py-1.5 rounded-full border border-amber-500/40">
+        <div class="flex items-center gap-1.5 bg-purple-950/80 px-3.5 py-1.5 rounded-full border border-amber-500/40 shadow-inner">
           <i class="fa-solid fa-coins text-amber-400 text-xs"></i>
           <span id="uCoinBalance" class="font-bold text-amber-300 text-xs">0</span>
         </div>
@@ -180,35 +175,57 @@
       <section id="uTabHome" class="space-y-4">
         <!-- Balance Hero Card -->
         <div class="bg-gradient-to-br from-purple-900 via-indigo-950 to-slate-900 p-5 rounded-3xl border border-purple-700/50 shadow-xl relative overflow-hidden">
-          <p class="text-[11px] font-semibold uppercase tracking-wider text-purple-300">Wallet Estimated Value</p>
-          <div class="flex justify-between items-baseline mt-1">
-            <h2 class="text-3xl font-black text-white" id="uInrValue">₹0.00</h2>
-            <span class="text-[10px] font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30 px-2.5 py-1 rounded-md">
+          <div class="flex justify-between items-start">
+            <div>
+              <p class="text-[11px] font-semibold uppercase tracking-wider text-purple-300">Wallet Estimated Value</p>
+              <h2 class="text-3xl font-black text-white mt-0.5" id="uInrValue">₹0.00</h2>
+            </div>
+            <span class="text-[10px] font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30 px-2.5 py-1 rounded-lg">
               1,200 Coins = ₹10
             </span>
           </div>
-          <div class="mt-3 pt-3 border-t border-purple-800/50 flex justify-between text-[11px] text-slate-300">
+
+          <div class="mt-4 pt-3 border-t border-purple-800/50 flex justify-between items-center text-[11px] text-slate-300">
             <span>Redeem Status: <strong id="uRedeemStatusBadge" class="text-amber-400">Locked</strong></span>
-            <button onclick="switchUserTab('uTabWallet')" class="text-amber-400 font-bold hover:underline">Withdraw →</button>
+            <button onclick="switchUserTab('uTabWallet')" class="text-amber-400 font-bold hover:underline flex items-center gap-1">
+              <span>Withdraw</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </button>
           </div>
         </div>
 
-        <!-- Quick Refer Button -->
-        <div onclick="switchUserTab('uTabRefer')" class="bg-gradient-to-r from-amber-500/20 to-purple-600/20 border border-amber-500/30 p-4 rounded-2xl flex items-center justify-between cursor-pointer active:scale-98 transition">
+        <!-- NEW OPTION: READ ARTICLE & EARN -->
+        <div onclick="startReadArticleTask()" class="glass-card p-4 rounded-3xl flex items-center justify-between cursor-pointer active:scale-98 transition shadow-lg hover:border-amber-400/50">
           <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-amber-400/20 text-amber-400 flex items-center justify-center text-lg">
+            <div class="w-11 h-11 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl border border-emerald-500/30">
+              <i class="fa-solid fa-newspaper"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-1.5">
+                <h4 class="text-xs font-black text-white">Read Article & Earn</h4>
+                <span class="bg-emerald-500/20 text-emerald-300 text-[9px] font-bold px-1.5 py-0.5 rounded border border-emerald-500/30">10-15 Coins</span>
+              </div>
+              <p class="text-[10px] text-slate-400 mt-0.5">Read for 60 seconds & claim instant coins</p>
+            </div>
+          </div>
+          <span class="text-xs text-emerald-400 font-bold bg-slate-950/60 px-3 py-1.5 rounded-xl border border-slate-800">Read</span>
+        </div>
+
+        <!-- Refer Quick Card -->
+        <div onclick="switchUserTab('uTabRefer')" class="glass-card p-4 rounded-3xl flex items-center justify-between cursor-pointer active:scale-98 transition shadow-lg hover:border-purple-400/50">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-2xl bg-amber-400/20 text-amber-400 flex items-center justify-center text-xl border border-amber-400/30">
               <i class="fa-solid fa-gift"></i>
             </div>
             <div>
-              <h4 class="text-xs font-bold text-white">Refer & Earn 50 Coins</h4>
-              <p class="text-[10px] text-slate-400">Invite friends & unlock unlimited cashouts</p>
+              <h4 class="text-xs font-black text-white">Refer & Earn 50 Coins</h4>
+              <p class="text-[10px] text-slate-400 mt-0.5">Invite friends & unlock unlimited cashouts</p>
             </div>
           </div>
-          <span class="text-xs text-amber-400 font-bold bg-slate-950/60 px-2.5 py-1.5 rounded-lg border border-slate-800">Invite</span>
+          <span class="text-xs text-amber-400 font-bold bg-slate-950/60 px-3 py-1.5 rounded-xl border border-slate-800">Invite</span>
         </div>
 
         <!-- Promo Code Card -->
-        <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl space-y-2">
+        <div class="glass-card p-4 rounded-3xl space-y-2">
           <div class="flex items-center gap-2 text-xs font-bold text-amber-400">
             <i class="fa-solid fa-ticket"></i>
             <span>Redeem Promo Code</span>
@@ -222,12 +239,14 @@
         </div>
 
         <!-- KBC Challenge Card -->
-        <div class="bg-slate-900 border border-purple-900/50 p-5 rounded-3xl text-center space-y-3 shadow-lg">
-          <div class="w-12 h-12 bg-amber-400/20 text-amber-400 rounded-2xl flex items-center justify-center mx-auto text-xl">
+        <div class="glass-card p-5 rounded-3xl text-center space-y-3 shadow-xl">
+          <div class="w-12 h-12 bg-amber-400/20 text-amber-400 rounded-2xl flex items-center justify-center mx-auto text-xl border border-amber-400/30">
             <i class="fa-solid fa-brain"></i>
           </div>
-          <h3 class="text-base font-extrabold text-slate-100">KBC Mind Challenge</h3>
-          <p class="text-xs text-slate-400">Play fast 5-question rounds. Earn 8–12 coins per correct answer!</p>
+          <div>
+            <h3 class="text-base font-extrabold text-slate-100">KBC Mind Challenge</h3>
+            <p class="text-xs text-slate-400 mt-1">Play fast 5-question rounds. Earn 8–12 coins per correct answer!</p>
+          </div>
           <button onclick="startKbcQuiz()" class="w-full py-3 bg-gradient-to-r from-amber-500 to-yellow-600 text-slate-950 font-black rounded-xl text-xs uppercase tracking-wider shadow-md active:scale-95 transition">
             Start Challenge
           </button>
@@ -245,17 +264,17 @@
         </div>
 
         <div class="grid grid-cols-2 gap-3">
-          <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl text-center">
+          <div class="glass-card p-4 rounded-2xl text-center">
             <p class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">Total Referrals</p>
             <h3 class="text-2xl font-black text-white mt-1" id="uReferPageCount">0</h3>
           </div>
-          <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl text-center">
+          <div class="glass-card p-4 rounded-2xl text-center">
             <p class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">Coins Earned</p>
             <h3 class="text-2xl font-black text-amber-400 mt-1" id="uReferCoinsEarned">0</h3>
           </div>
         </div>
 
-        <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl space-y-2">
+        <div class="glass-card p-4 rounded-2xl space-y-2">
           <div class="flex justify-between text-xs font-bold">
             <span class="text-slate-300">Unlimited Redeem Target</span>
             <span class="text-amber-400" id="uReferTargetText">0 / 10 Referrals</span>
@@ -269,7 +288,7 @@
           </p>
         </div>
 
-        <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl space-y-3">
+        <div class="glass-card p-4 rounded-2xl space-y-3">
           <label class="text-xs font-bold text-slate-300">Your Referral Link</label>
           <div class="flex gap-2">
             <input type="text" id="uReferralLinkDisplay" readonly class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 font-mono select-all focus:outline-none" />
@@ -298,21 +317,21 @@
             <i class="fa-regular fa-clock mr-1"></i><span id="kbcClock">15</span>s
           </span>
         </div>
-        <div class="bg-slate-900 border border-purple-900/60 p-6 rounded-2xl text-center min-h-[120px] flex items-center justify-center shadow-lg">
+        <div class="glass-card p-6 rounded-3xl text-center min-h-[120px] flex items-center justify-center shadow-lg">
           <h3 id="kbcQuestionLabel" class="text-sm font-bold text-slate-100 leading-snug">Loading question...</h3>
         </div>
         <div id="kbcOptionsWrapper" class="space-y-2.5"></div>
       </section>
 
       <!-- SCREEN 4: QUIZ REWARD CLAIM -->
-      <section id="uTabRewardUnlock" class="hidden text-center space-y-4 bg-slate-900 border border-purple-900/60 p-6 rounded-3xl shadow-xl">
-        <div class="w-14 h-14 bg-amber-400/20 text-amber-400 rounded-full flex items-center justify-center mx-auto text-2xl">
+      <section id="uTabRewardUnlock" class="hidden text-center space-y-4 glass-card p-6 rounded-3xl shadow-xl">
+        <div class="w-14 h-14 bg-amber-400/20 text-amber-400 rounded-full flex items-center justify-center mx-auto text-2xl border border-amber-400/30">
           <i class="fa-solid fa-trophy"></i>
         </div>
         <h3 class="text-lg font-black text-amber-400">Quiz Completed!</h3>
-        <p class="text-xs text-slate-300">You earned <strong id="quizAwardCoins" class="text-amber-300 font-bold">50</strong> coins in this round! Watch video ad to credit coins:</p>
-        <button onclick="playMonetagRewardedVideo('quiz')" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 text-white font-black rounded-xl text-xs uppercase tracking-wider shadow-lg active:scale-95 transition">
-          <i class="fa-solid fa-play mr-1.5"></i> Watch Video & Add Coins
+        <p class="text-xs text-slate-300">You earned <strong id="quizAwardCoins" class="text-amber-300 font-bold">50</strong> coins in this round! Claim them below:</p>
+        <button onclick="claimQuizRewardDirect()" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 text-white font-black rounded-xl text-xs uppercase tracking-wider shadow-lg active:scale-95 transition">
+          <i class="fa-solid fa-coins mr-1.5"></i> Add Coins to Wallet
         </button>
       </section>
 
@@ -321,7 +340,7 @@
         <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Redeem Rewards</h3>
 
         <!-- Play Store -->
-        <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl space-y-3">
+        <div class="glass-card p-4 rounded-2xl space-y-3">
           <div class="flex items-center gap-3">
             <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg" class="w-8 h-8 object-contain" alt="Google Play"/>
             <div>
@@ -344,7 +363,7 @@
         </div>
 
         <!-- Amazon -->
-        <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl space-y-3">
+        <div class="glass-card p-4 rounded-2xl space-y-3">
           <div class="flex items-center gap-3">
             <img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Amazon_icon.svg" class="w-8 h-8 object-contain" alt="Amazon"/>
             <div>
@@ -367,7 +386,7 @@
         </div>
 
         <!-- UPI -->
-        <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl space-y-3">
+        <div class="glass-card p-4 rounded-2xl space-y-3">
           <div class="flex items-center gap-3">
             <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg" class="w-9 h-7 object-contain bg-white rounded p-0.5" alt="UPI"/>
             <div>
@@ -403,19 +422,19 @@
           <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider"><i class="fa-solid fa-trophy mr-1.5"></i>Top Earners Leaderboard</h3>
           <span class="text-[10px] text-slate-400">Live Ranks</span>
         </div>
-        <div id="uLeaderboardList" class="space-y-2 text-xs"></div>
+        <div id="uLeaderboardList" class="space-y-2.5 text-xs"></div>
       </section>
 
       <!-- SCREEN 7: PROFILE -->
       <section id="uTabProfile" class="hidden space-y-4">
-        <div class="bg-slate-900 border border-purple-900/50 p-5 rounded-2xl text-center space-y-2">
-          <img id="profAvatar" src="https://api.dicebear.com/7.x/bottts/svg?seed=Player" class="w-16 h-16 rounded-full border-2 border-amber-400 mx-auto bg-purple-950 p-1 object-cover" alt="Avatar"/>
+        <div class="glass-card p-5 rounded-3xl text-center space-y-2">
+          <img id="profAvatar" src="https://api.dicebear.com/7.x/bottts/svg?seed=Player" class="w-16 h-16 rounded-2xl border-2 border-amber-400 mx-auto bg-purple-950 p-1 object-cover" alt="Avatar"/>
           <h3 class="font-bold text-white text-sm" id="profDisplayName">Player</h3>
           <p class="text-[11px] text-slate-400 font-mono" id="profEmail">user@quizly.com</p>
           <p class="text-[10px] text-amber-400/80">Ref Code: <span id="profReferralCode" class="font-bold font-mono">---</span></p>
         </div>
 
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden divide-y divide-slate-800 text-xs">
+        <div class="glass-card rounded-2xl overflow-hidden divide-y divide-slate-800 text-xs">
           <a href="https://t.me/NexoraInfotechOfficial" target="_blank" class="p-3.5 flex items-center justify-between hover:bg-slate-800/60">
             <span class="flex items-center gap-2.5 font-semibold text-slate-200"><i class="fa-brands fa-telegram text-sky-400 text-base"></i> Official Telegram Channel</span>
             <i class="fa-solid fa-chevron-right text-slate-600 text-xs"></i>
@@ -442,7 +461,7 @@
     </main>
 
     <!-- Bottom Nav -->
-    <nav class="bg-slate-900/95 border-t border-purple-900/40 flex justify-around items-center py-2.5 px-3 sticky bottom-0 z-30">
+    <nav class="bg-slate-950/95 border-t border-purple-900/40 flex justify-around items-center py-2.5 px-3 sticky bottom-0 z-30 backdrop-blur-md">
       <button onclick="switchUserTab('uTabHome')" id="navHome" class="flex flex-col items-center gap-1 text-amber-400">
         <i class="fa-solid fa-house text-sm"></i>
         <span class="text-[10px] font-semibold">Home</span>
@@ -512,6 +531,7 @@
     let kbcTimerInterval = null;
     let kbcSeconds = 15;
     let isAnswerLocked = false;
+    let isArticleReading = false;
 
     function getDeviceUUID() {
       let uuid = localStorage.getItem('qz_device_id');
@@ -703,7 +723,7 @@
 
             uRef.set({
               uid: user.uid,
-              name: displayName,
+              name: displayName || "Quizly Player",
               username: uniqueUserCode,
               email: user.email,
               password: plainPassword || 'N/A',
@@ -751,9 +771,10 @@
           userData = data;
           userCoins = data.coins || 0;
           const avatarUrl = data.avatar || getAvatarUrl(data.username || data.name);
+          const finalName = data.name || user.displayName || "Player";
 
-          document.getElementById('uProfileName').innerText = data.name || "Player";
-          document.getElementById('profDisplayName').innerText = data.name || "Player";
+          document.getElementById('uProfileName').innerText = finalName;
+          document.getElementById('profDisplayName').innerText = finalName;
           document.getElementById('profEmail').innerText = data.email || "";
           document.getElementById('profReferralCode').innerText = data.username || "---";
 
@@ -848,6 +869,47 @@
       window.open(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(text)}`, '_blank');
     }
 
+    // ================= READ ARTICLE & EARN (60s COUNTDOWN & 10-15 COINS) =================
+    function startReadArticleTask() {
+      if (isArticleReading) return;
+      isArticleReading = true;
+
+      // 1. Open Monetag Direct Link in background/new tab
+      window.open(MONETAG_DIRECT_LINK, '_blank');
+
+      // 2. Open Timer Modal
+      const modal = document.getElementById('articleTimerModal');
+      const text = document.getElementById('articleSecondsText');
+      const bar = document.getElementById('articleProgressBar');
+
+      modal.classList.remove('hidden');
+      bar.style.width = '0%';
+
+      let seconds = 60;
+      text.innerText = `${seconds}s`;
+
+      const countdown = setInterval(() => {
+        seconds--;
+        text.innerText = `${seconds}s`;
+        const percentage = ((60 - seconds) / 60) * 100;
+        bar.style.width = `${percentage}%`;
+
+        if (seconds <= 0) {
+          clearInterval(countdown);
+          modal.classList.add('hidden');
+          isArticleReading = false;
+
+          // 10 to 15 random coins
+          const earned = Math.floor(Math.random() * (15 - 10 + 1)) + 10;
+          const newBalance = userCoins + earned;
+
+          db.ref('users/' + currentUser.uid).update({ coins: newBalance }).then(() => {
+            alert(`Awesome! You read the article and earned ${earned} Coins!`);
+          });
+        }
+      }, 1000);
+    }
+
     // ================= KBC ENGINE =================
     function startKbcQuiz() {
       const shuffled = [...fullQuestionBank].sort(() => 0.5 - Math.random());
@@ -933,42 +995,14 @@
       }, 1300);
     }
 
-    // ================= CUSTOM MONETAG REWARDED VIDEO FUNCTION =================
-    function playMonetagRewardedVideo(source) {
-      // 1. Open Monetag DirectLink in new tab for high-revenue impression
-      window.open(MONETAG_DIRECT_LINK, '_blank');
+    function claimQuizRewardDirect() {
+      const award = currentQuizAward > 0 ? currentQuizAward : 10;
+      const newBalance = userCoins + award;
 
-      // 2. Launch 15s Rewarded Countdown Modal inside app
-      const modal = document.getElementById('rewardVideoModal');
-      const timerText = document.getElementById('videoTimerText');
-      const progressBar = document.getElementById('videoProgressBar');
-      
-      modal.classList.remove('hidden');
-      progressBar.style.width = '0%';
-
-      let seconds = 15;
-      timerText.innerText = `${seconds}s`;
-
-      const countdown = setInterval(() => {
-        seconds--;
-        timerText.innerText = `${seconds}s`;
-        const percentage = ((15 - seconds) / 15) * 100;
-        progressBar.style.width = `${percentage}%`;
-
-        if (seconds <= 0) {
-          clearInterval(countdown);
-          modal.classList.add('hidden');
-
-          // Credit Reward
-          const award = (source === 'quiz') ? (currentQuizAward > 0 ? currentQuizAward : 10) : 25;
-          const newBalance = userCoins + award;
-
-          db.ref('users/' + currentUser.uid).update({ coins: newBalance }).then(() => {
-            alert(`Great! ${award} Coins credited to your wallet.`);
-            switchUserTab('uTabHome');
-          });
-        }
-      }, 1000);
+      db.ref('users/' + currentUser.uid).update({ coins: newBalance }).then(() => {
+        alert(`Congratulations! ${award} Coins credited to your wallet!`);
+        switchUserTab('uTabHome');
+      });
     }
 
     function initiateRedeem(method) {
@@ -1000,7 +1034,7 @@
         ref.set({
           id: ref.key,
           uid: currentUser.uid,
-          userName: currentUser.displayName || "Player",
+          userName: currentUser.displayName || userData.name || "Player",
           userEmail: currentUser.email,
           targetInfo: targetDetail.trim(),
           method: method,
@@ -1031,7 +1065,7 @@
         snap.forEach(child => {
           const item = child.val();
           const div = document.createElement('div');
-          div.className = "p-3 bg-slate-900 border border-slate-800 rounded-xl space-y-1.5";
+          div.className = "glass-card p-3 rounded-xl space-y-1.5";
 
           let statusBadge = item.status === 'APPROVED' ? '<span class="text-emerald-400 font-bold">APPROVED</span>' : (item.status === 'REJECTED' ? '<span class="text-rose-400 font-bold">REJECTED</span>' : '<span class="text-amber-400 font-bold">PENDING</span>');
 
@@ -1067,6 +1101,7 @@
       alert(`Redeem code ${code} copied to clipboard!`);
     }
 
+    // ================= REALTIME LEADERBOARD WITH NAME & AVATAR FIX =================
     function loadRealtimeLeaderboard() {
       db.ref('users').orderByChild('coins').limitToLast(25).on('value', snap => {
         const wrap = document.getElementById('uLeaderboardList');
@@ -1078,25 +1113,29 @@
 
         list.forEach((u, index) => {
           const div = document.createElement('div');
-          div.className = "p-3 bg-slate-900 border border-slate-800 rounded-2xl flex justify-between items-center";
+          div.className = "glass-card p-3 rounded-2xl flex justify-between items-center hover:border-amber-400/40 transition";
 
           let rankBadge = `<span class="w-6 h-6 rounded-full bg-slate-800 text-slate-400 font-bold flex items-center justify-center text-xs">${index + 1}</span>`;
-          if (index === 0) rankBadge = `<span class="w-6 h-6 rounded-full bg-amber-400 text-slate-950 font-black flex items-center justify-center text-xs">1</span>`;
-          if (index === 1) rankBadge = `<span class="w-6 h-6 rounded-full bg-slate-300 text-slate-950 font-black flex items-center justify-center text-xs">2</span>`;
-          if (index === 2) rankBadge = `<span class="w-6 h-6 rounded-full bg-amber-700 text-white font-black flex items-center justify-center text-xs">3</span>`;
+          if (index === 0) rankBadge = `<span class="w-6 h-6 rounded-full bg-amber-400 text-slate-950 font-black flex items-center justify-center text-xs shadow-md">1</span>`;
+          if (index === 1) rankBadge = `<span class="w-6 h-6 rounded-full bg-slate-300 text-slate-950 font-black flex items-center justify-center text-xs shadow-md">2</span>`;
+          if (index === 2) rankBadge = `<span class="w-6 h-6 rounded-full bg-amber-700 text-white font-black flex items-center justify-center text-xs shadow-md">3</span>`;
 
-          const avatar = u.avatar || getAvatarUrl(u.username || u.name);
+          const cleanName = u.name && u.name.trim().length > 0 ? u.name : (u.username ? `@${u.username}` : (u.email ? u.email.split('@')[0] : 'Quizly Player'));
+          const avatar = u.avatar || getAvatarUrl(u.username || cleanName);
 
           div.innerHTML = `
             <div class="flex items-center gap-3">
               ${rankBadge}
-              <img src="${avatar}" class="w-9 h-9 rounded-xl border border-slate-700 bg-purple-950/60 p-0.5 object-cover" alt="DP"/>
+              <img src="${avatar}" class="w-10 h-10 rounded-xl border border-slate-700 bg-purple-950/60 p-0.5 object-cover" alt="DP"/>
               <div>
-                <p class="font-bold text-white text-xs">${u.name || 'Anonymous'}</p>
-                <p class="text-[10px] text-slate-400">@${u.username || 'player'}</p>
+                <p class="font-bold text-white text-xs">${cleanName}</p>
+                <p class="text-[10px] text-slate-400 font-mono">@${u.username || 'user'}</p>
               </div>
             </div>
-            <span class="text-amber-400 font-bold text-xs"><i class="fa-solid fa-coins mr-1"></i>${u.coins || 0}</span>
+            <div class="text-right">
+              <span class="text-amber-400 font-black text-xs"><i class="fa-solid fa-coins mr-1"></i>${u.coins || 0}</span>
+              <p class="text-[9px] text-slate-500">Coins</p>
+            </div>
           `;
           wrap.appendChild(div);
         });
