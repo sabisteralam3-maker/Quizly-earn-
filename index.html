@@ -24,8 +24,8 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
-  <!-- HilltopAds Multi-Slider Live Video Ads Script -->
-  <script id="hilltopSliderScript">
+  <!-- Multi Slider Video Ads Script -->
+  <script id="sliderAdScript">
     (function(bmtf){
       var d = document,
           s = d.createElement('script'),
@@ -65,7 +65,7 @@
         radial-gradient(circle at 0% 70%, rgba(126, 34, 206, 0.25) 0%, transparent 45%),
         radial-gradient(circle at 50% 100%, rgba(29, 78, 216, 0.3) 0%, transparent 50%);
       color: #ffffff;
-      font-family: 'Plus Jakarta Sans', 'Noto Sans Devanagari', -apple-system, sans-serif;
+      font-family: 'Plus Jakarta Sans', 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, sans-serif;
       min-height: 100vh;
       display: flex;
       justify-content: center;
@@ -74,6 +74,7 @@
       padding-bottom: 96px;
     }
 
+    /* Cosmic starry background effect */
     .cosmic-layer {
       position: fixed;
       top: 0;
@@ -83,7 +84,9 @@
       background-image: 
         radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)),
         radial-gradient(1.5px 1.5px at 150px 80px, rgba(255,255,255,0.7), rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 280px 140px, rgba(200,220,255,0.6), rgba(0,0,0,0));
+        radial-gradient(1px 1px at 280px 140px, rgba(200,220,255,0.6), rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 90px 230px, rgba(255,255,255,0.5), rgba(0,0,0,0)),
+        radial-gradient(1.5px 1.5px at 320px 320px, rgba(240,200,255,0.7), rgba(0,0,0,0));
       background-repeat: repeat;
       background-size: 400px 800px;
       pointer-events: none;
@@ -99,17 +102,19 @@
       padding: 10px 12px 20px 12px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      min-height: calc(100vh - 100px);
+      gap: 11px;
     }
 
+    /* Common Glass Card */
     .glass-card {
       background: linear-gradient(165deg, rgba(24, 28, 60, 0.75) 0%, rgba(10, 13, 34, 0.85) 100%);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-radius: 22px;
       border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.18), 0 10px 28px -6px rgba(0, 0, 0, 0.65);
+      box-shadow: 
+        inset 0 1px 1px rgba(255, 255, 255, 0.18),
+        0 10px 28px -6px rgba(0, 0, 0, 0.65);
       position: relative;
       overflow: hidden;
     }
@@ -125,7 +130,7 @@
       pointer-events: none;
     }
 
-    /* ---------------- HEADER ---------------- */
+    /* ---------------- 1. HEADER ---------------- */
     .header {
       display: flex;
       align-items: center;
@@ -139,28 +144,61 @@
       border-radius: 14px;
       background: rgba(22, 27, 56, 0.75);
       border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(16px);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 4.5px;
       cursor: pointer;
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2), 0 6px 16px rgba(0, 0, 0, 0.4);
+      transition: transform 0.15s ease;
     }
-    .hamburger-btn:active { transform: scale(0.92); }
-    .hamburger-bar { width: 20px; height: 2.4px; background-color: #ffffff; border-radius: 2px; }
 
-    .brand-logo { text-align: center; cursor: pointer; }
-    .brand-quizly { font-size: 26px; font-weight: 900; color: #ffffff; letter-spacing: -0.6px; line-height: 0.95; }
+    .hamburger-btn:active {
+      transform: scale(0.92);
+    }
+
+    .hamburger-bar {
+      width: 20px;
+      height: 2.4px;
+      background-color: #ffffff;
+      border-radius: 2px;
+    }
+
+    /* Logo Center */
+    .brand-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .brand-quizly {
+      font-size: 26px;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: -0.6px;
+      line-height: 0.95;
+      text-shadow: 0 0 14px rgba(255, 255, 255, 0.4);
+    }
+
     .brand-earn {
       font-size: 20px;
       font-weight: 900;
+      color: #fbbf24;
       background: linear-gradient(180deg, #fef08a 0%, #f59e0b 60%, #d97706 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       letter-spacing: -0.3px;
       line-height: 0.95;
+      margin-top: 1px;
+      filter: drop-shadow(0 2px 8px rgba(245, 158, 11, 0.5));
     }
 
+    /* Coin Wallet Right */
     .wallet-capsule {
       display: flex;
       align-items: center;
@@ -169,92 +207,428 @@
       border-radius: 24px;
       background: rgba(18, 22, 50, 0.85);
       border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.18);
       cursor: pointer;
+      transition: transform 0.15s ease;
     }
-    .wallet-capsule:active { transform: scale(0.94); }
+
+    .wallet-capsule:active {
+      transform: scale(0.94);
+    }
+
     .wallet-coin {
       width: 26px;
       height: 26px;
       border-radius: 50%;
       background: radial-gradient(circle at 35% 30%, #fef08a 0%, #f59e0b 60%, #b45309 100%);
+      border: 1.5px solid #fde047;
       display: flex;
       align-items: center;
       justify-content: center;
+      box-shadow: 0 0 10px rgba(245, 158, 11, 0.7);
     }
-    .wallet-coin svg { width: 14px; height: 14px; fill: #ffffff; }
-    .wallet-text { font-size: 15px; font-weight: 800; color: #ffffff; }
+
+    .wallet-coin svg {
+      width: 14px;
+      height: 14px;
+      fill: #ffffff;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
+    }
+
+    .wallet-text {
+      font-size: 15px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: 0.2px;
+    }
+
     .wallet-plus-btn {
       width: 24px;
       height: 24px;
       border-radius: 50%;
       background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%);
+      border: 1px solid rgba(255, 255, 255, 0.35);
       color: #ffffff;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 16px;
       font-weight: 800;
+      box-shadow: 0 0 8px rgba(168, 85, 247, 0.6);
+      line-height: 1;
     }
 
-    /* ---------------- HOME SPECIFIC CARDS ---------------- */
-    .welcome-card { padding: 14px; display: flex; align-items: center; justify-content: space-between; border: 1px solid rgba(168, 85, 247, 0.35); }
+    /* ---------------- 2. WELCOME CARD ---------------- */
+    .welcome-card {
+      padding: 14px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      box-shadow: 
+        inset 0 1px 2px rgba(255, 255, 255, 0.2),
+        0 0 24px -4px rgba(147, 51, 234, 0.35);
+    }
+
+    .welcome-avatar-col {
+      position: relative;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .crown-icon {
+      position: absolute;
+      top: -11px;
+      z-index: 4;
+      filter: drop-shadow(0 2px 6px rgba(245, 158, 11, 0.8));
+    }
+
     .avatar-ring {
       width: 58px;
       height: 58px;
       border-radius: 50%;
       padding: 2.5px;
       background: linear-gradient(135deg, #c084fc 0%, #a855f7 40%, #3b82f6 100%);
+      box-shadow: 0 0 18px rgba(168, 85, 247, 0.6);
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
     }
+
     .avatar-inner {
       width: 100%;
       height: 100%;
       border-radius: 50%;
-      background: #581c87;
+      background: radial-gradient(circle at 40% 35%, #581c87 0%, #1e1b4b 100%);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 800;
-      font-size: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      font-size: 20px;
+      font-weight: 900;
+      color: #ffffff;
     }
+
     .level-badge {
       position: absolute;
       bottom: -6px;
+      z-index: 4;
       background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
+      border: 1.5px solid rgba(255, 255, 255, 0.6);
       color: #ffffff;
       font-size: 9px;
       font-weight: 800;
       padding: 1.5px 8px;
       border-radius: 10px;
+      white-space: nowrap;
+      letter-spacing: 0.2px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
     }
 
+    .welcome-text-col {
+      flex: 1;
+      padding-left: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .welcome-sub {
+      font-size: 12px;
+      color: #cbd5e1;
+      font-weight: 500;
+      line-height: 1.2;
+    }
+
+    .welcome-user-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 1px;
+    }
+
+    .user-name {
+      font-size: 18px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.2px;
+    }
+
+    .gold-star-icon {
+      font-size: 16px;
+      filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.8));
+    }
+
+    .welcome-motivate {
+      font-size: 11px;
+      color: #e2e8f0;
+      font-weight: 500;
+      margin-top: 3px;
+    }
+
+    .motivate-gold {
+      color: #fbbf24;
+      font-weight: 800;
+      text-shadow: 0 0 8px rgba(251, 191, 36, 0.4);
+    }
+
+    .welcome-bonus-col {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .bonus-circle-btn {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #c084fc 0%, #7e22ce 60%, #4c1d95 100%);
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.65), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      transition: transform 0.2s ease;
+    }
+
+    .bonus-circle-btn:active {
+      transform: scale(0.92);
+    }
+
+    .notif-dot {
+      position: absolute;
+      top: 1px;
+      right: 1px;
+      width: 10px;
+      height: 10px;
+      background: #ef4444;
+      border: 2px solid #ffffff;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #ef4444;
+    }
+
+    .bonus-capsule-label {
+      margin-top: 5px;
+      background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      padding: 2.5px 8px;
+      border-radius: 12px;
+      font-size: 9px;
+      font-weight: 800;
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+      white-space: nowrap;
+    }
+
+    /* ---------------- 3. STATISTICS CARD ---------------- */
     .stats-card {
       padding: 12px 10px;
       display: grid;
       grid-template-columns: 1fr auto 1fr auto 1fr;
       align-items: center;
       border: 1px solid rgba(59, 130, 246, 0.35);
+      box-shadow: 0 0 22px -6px rgba(59, 130, 246, 0.3);
     }
-    .stat-item { display: flex; align-items: center; gap: 7px; cursor: pointer; }
-    .stat-sep { width: 1px; height: 32px; background: rgba(255, 255, 255, 0.16); margin: 0 4px; }
 
-    .premium-card { padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px; border: 1px solid rgba(251, 191, 36, 0.3); }
+    .stats-card::before {
+      background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.6), transparent);
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      cursor: pointer;
+    }
+
+    .stat-icon-wrapper {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .stat-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .stat-num {
+      font-size: 15px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.15;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      color: #94a3b8;
+      font-weight: 600;
+      margin-top: 1px;
+      white-space: nowrap;
+    }
+
+    .stat-sep {
+      width: 1px;
+      height: 32px;
+      background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.16), transparent);
+      margin: 0 4px;
+    }
+
+    /* ---------------- 4. PREMIUM CARD ---------------- */
+    .premium-card {
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      border: 1px solid rgba(251, 191, 36, 0.3);
+      box-shadow: 0 8px 24px -4px rgba(245, 158, 11, 0.2);
+      cursor: pointer;
+    }
+
+    .premium-card::before {
+      background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.5), transparent);
+    }
+
+    .premium-shield {
+      width: 44px;
+      height: 48px;
+      background: radial-gradient(circle at 40% 35%, #fbbf24 0%, #d97706 70%, #92400e 100%);
+      clip-path: polygon(50% 0%, 100% 12%, 100% 68%, 50% 100%, 0% 68%, 0% 12%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 0 16px rgba(245, 158, 11, 0.5);
+      border: 1px solid #fef08a;
+    }
+
+    .premium-shield svg {
+      width: 22px;
+      height: 22px;
+      fill: #ffffff;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+    }
+
+    .premium-mid {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .premium-title {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.2;
+    }
+
+    .premium-pass {
+      font-size: 11px;
+      font-weight: 800;
+      color: #fbbf24;
+      margin-top: 1.5px;
+    }
+
+    .premium-sub {
+      font-size: 9.5px;
+      color: #94a3b8;
+      font-weight: 500;
+      margin-top: 1px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .premium-right-col {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 5px;
+      flex-shrink: 0;
+    }
+
+    .premium-chevron {
+      color: #94a3b8;
+      font-size: 12px;
+      margin-right: 3px;
+    }
+
     .upgrade-btn {
       padding: 7px 14px;
       border-radius: 20px;
       background: linear-gradient(135deg, #ef4444 0%, #ec4899 50%, #8b5cf6 100%);
+      border: 1px solid rgba(255, 255, 255, 0.4);
       color: #ffffff;
       font-size: 11px;
       font-weight: 800;
-      border: 1px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 4px 14px rgba(236, 72, 153, 0.5);
       cursor: pointer;
+      white-space: nowrap;
+      transition: transform 0.15s ease;
     }
 
-    .quiz-categories-card { padding: 12px 10px 14px 10px; border: 1px solid rgba(168, 85, 247, 0.25); }
-    .quiz-grid-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; }
+    .upgrade-btn:active {
+      transform: scale(0.92);
+    }
+
+    /* ---------------- 5. QUIZ CATEGORIES CARD ---------------- */
+    .quiz-categories-card {
+      padding: 12px 10px 14px 10px;
+      border: 1px solid rgba(168, 85, 247, 0.25);
+    }
+
+    .quiz-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 11px;
+      padding: 0 2px;
+    }
+
+    .quiz-header-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.2px;
+    }
+
+    .view-all-pill {
+      background: rgba(30, 36, 72, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 14px;
+      padding: 3px 9px;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .view-all-pill:active {
+      transform: scale(0.93);
+    }
+
+    /* Exactly 4 cards in 1 single row */
+    .quiz-grid-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 7px;
+    }
+
     .quiz-box {
       border-radius: 16px;
       padding: 10px 4px 8px 4px;
@@ -263,26 +637,289 @@
       align-items: center;
       text-align: center;
       cursor: pointer;
+      position: relative;
       background: rgba(14, 18, 42, 0.85);
       border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.15), 0 6px 16px rgba(0, 0, 0, 0.4);
+      transition: transform 0.15s ease;
     }
-    .quiz-box:active { transform: scale(0.93); }
 
-    .quick-actions-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+    .quiz-box:active {
+      transform: scale(0.93);
+    }
+
+    .quiz-box.purple-cat {
+      border-color: rgba(168, 85, 247, 0.4);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2), 0 0 16px -2px rgba(168, 85, 247, 0.35);
+    }
+    .quiz-box.purple-cat .quiz-play-link { color: #c084fc; }
+
+    .quiz-box.blue-cat {
+      border-color: rgba(59, 130, 246, 0.4);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2), 0 0 16px -2px rgba(59, 130, 246, 0.35);
+    }
+    .quiz-box.blue-cat .quiz-play-link { color: #60a5fa; }
+
+    .quiz-box.green-cat {
+      border-color: rgba(16, 185, 129, 0.4);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2), 0 0 16px -2px rgba(16, 185, 129, 0.35);
+    }
+    .quiz-box.green-cat .quiz-play-link { color: #34d399; }
+
+    .quiz-box.orange-cat {
+      border-color: rgba(249, 115, 22, 0.4);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2), 0 0 16px -2px rgba(249, 115, 22, 0.35);
+    }
+    .quiz-box.orange-cat .quiz-play-link { color: #fb923c; }
+
+    .quiz-icon-frame {
+      width: 44px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 5px;
+    }
+
+    .quiz-box-title {
+      font-size: 11px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.15;
+      margin-bottom: 3px;
+      white-space: nowrap;
+    }
+
+    .quiz-play-link {
+      font-size: 9px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 1px;
+      letter-spacing: -0.2px;
+    }
+
+    /* ---------------- 6. LEADERBOARD CARD ---------------- */
+    .leaderboard-card {
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      border: 1px solid rgba(147, 51, 234, 0.35);
+      box-shadow: 0 0 24px -4px rgba(126, 34, 206, 0.35);
+      cursor: pointer;
+    }
+
+    .trophy-col {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .trophy-glow {
+      position: absolute;
+      width: 46px;
+      height: 46px;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.5) 0%, transparent 70%);
+      filter: blur(6px);
+    }
+
+    .leaderboard-mid {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .leaderboard-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.2;
+    }
+
+    .leaderboard-desc {
+      font-size: 10px;
+      color: #94a3b8;
+      font-weight: 500;
+      margin-top: 2px;
+      line-height: 1.25;
+    }
+
+    .leaderboard-btn {
+      padding: 7px 11px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      color: #ffffff;
+      font-size: 10.5px;
+      font-weight: 800;
+      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.45);
+      cursor: pointer;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      flex-shrink: 0;
+      transition: transform 0.15s ease;
+    }
+
+    .leaderboard-btn:active {
+      transform: scale(0.92);
+    }
+
+    /* ---------------- 7. QUICK ACTIONS ---------------- */
+    .quick-actions-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 7px;
+    }
+
     .action-tile {
-      padding: 12px 3px 10px 3px;
+      padding: 12px 4px 10px 4px;
       border-radius: 18px;
       background: rgba(14, 18, 42, 0.75);
       border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.12), 0 6px 18px rgba(0, 0, 0, 0.4);
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
       cursor: pointer;
+      transition: transform 0.15s ease, border-color 0.15s ease;
     }
-    .action-tile:active { transform: scale(0.92); }
 
-    /* ---------------- FULL-SIZED SUBPAGES (RESOLVES TOP-PIN PROBLEM) ---------------- */
+    .action-tile:active {
+      transform: scale(0.92);
+      border-color: rgba(168, 85, 247, 0.4);
+    }
+
+    .action-icon-wrap {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 6px;
+    }
+
+    .action-label {
+      font-size: 10.5px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.15;
+      white-space: nowrap;
+    }
+
+    /* ---------------- 8. FIXED FLOATING BOTTOM NAVIGATION ---------------- */
+    .nav-bar-wrapper {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 24px);
+      max-width: 412px;
+      z-index: 100;
+      pointer-events: none;
+    }
+
+    .nav-bar {
+      pointer-events: auto;
+      height: 60px;
+      border-radius: 34px;
+      background: rgba(8, 12, 30, 0.88);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.75), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 0 6px;
+      position: relative;
+    }
+
+    .nav-tab {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #94a3b8;
+      transition: color 0.15s ease;
+      height: 100%;
+    }
+
+    .nav-tab.active {
+      color: #c084fc;
+    }
+
+    .nav-tab svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+      margin-bottom: 2px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+    }
+
+    .nav-tab.active svg {
+      fill: #c084fc;
+      filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.8));
+    }
+
+    .nav-label {
+      font-size: 9.5px;
+      font-weight: 800;
+      letter-spacing: -0.1px;
+    }
+
+    /* Elevated Center Play Button */
+    .center-nav-holder {
+      position: relative;
+      width: 58px;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .center-play-btn {
+      position: absolute;
+      top: -18px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #c084fc 0%, #7c3aed 55%, #4f46e5 100%);
+      border: 3.5px solid #050714;
+      box-shadow: 
+        0 0 24px 3px rgba(147, 51, 234, 0.85),
+        inset 0 2px 4px rgba(255, 255, 255, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .center-play-btn:active {
+      transform: scale(0.9);
+      box-shadow: 0 0 12px rgba(147, 51, 234, 0.6);
+    }
+
+    .center-play-btn svg {
+      width: 22px;
+      height: 22px;
+      fill: #ffffff;
+      margin-left: 3px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+    }
+
+    /* ---------------- SUBPAGES HIERARCHY FIX ---------------- */
     .subpage-container {
       display: flex;
       flex-direction: column;
@@ -364,58 +1001,6 @@
     }
     .primary-action-btn:active { transform: scale(0.97); }
 
-    /* ---------------- FIXED FLOATING BOTTOM NAV ---------------- */
-    .nav-bar-wrapper {
-      position: fixed;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: calc(100% - 24px);
-      max-width: 412px;
-      z-index: 100;
-      pointer-events: none;
-    }
-
-    .nav-bar {
-      pointer-events: auto;
-      height: 62px;
-      border-radius: 34px;
-      background: rgba(8, 12, 30, 0.92);
-      backdrop-filter: blur(28px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      padding: 0 6px;
-    }
-
-    .nav-tab {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      color: #94a3b8;
-    }
-    .nav-tab.active { color: #c084fc; }
-    .nav-tab svg { width: 20px; height: 20px; fill: currentColor; margin-bottom: 2px; }
-
-    .center-play-btn {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 30%, #c084fc 0%, #7c3aed 55%, #4f46e5 100%);
-      border: 3.5px solid #050714;
-      box-shadow: 0 0 24px 3px rgba(147, 51, 234, 0.85);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      margin-top: -24px;
-    }
-    .center-play-btn svg { width: 22px; height: 22px; fill: #ffffff; margin-left: 3px; }
-
     .fixed-modal-backdrop {
       position: fixed;
       top: 0;
@@ -485,12 +1070,12 @@
     </div>
   </div>
 
-  <!-- ================= DIALOG TERMS / PRIVACY MODAL ================= -->
+  <!-- ================= TERMS & PRIVACY MODAL ================= -->
   <div id="termsPrivacyModal" class="fixed-modal-backdrop hidden">
     <div class="glass-card" style="width: 100%; max-width: 350px; padding: 20px; display: flex; flex-direction: column; gap: 12px;">
       <h3 id="termsPrivacyTitle" style="font-size: 16px; font-weight: 900; color: #fbbf24;">Privacy Policy</h3>
       <div id="termsPrivacyBody" style="font-size: 12px; color: #cbd5e1; max-height: 240px; overflow-y: auto; line-height: 1.5; padding: 4px;">
-        Policy text goes here...
+        Policy text...
       </div>
       <button onclick="document.getElementById('termsPrivacyModal').classList.add('hidden')" class="primary-action-btn" style="padding: 10px;">
         Close
@@ -558,10 +1143,10 @@
     
     <main class="app-screen">
 
-      <!-- ================= 1. HOME SCREEN (EXACT MATCH PRESERVED) ================= -->
+      <!-- ================= 1. HOME SCREEN (YOUR EXACT TEMPLATE) ================= -->
       <section id="uTabHome" style="display: flex; flex-direction: column; gap: 11px;">
         
-        <!-- HEADER -->
+        <!-- 1. HEADER -->
         <header class="header">
           <button class="hamburger-btn" id="menuBtn" onclick="switchUserTab('uTabProfile')">
             <span class="hamburger-bar"></span>
@@ -583,11 +1168,17 @@
           </div>
         </header>
 
-        <!-- WELCOME CARD -->
+        <!-- 2. WELCOME CARD -->
         <section class="glass-card welcome-card" id="welcomeCard">
           <div class="welcome-avatar-col">
+            <!-- Golden Crown -->
             <svg class="crown-icon" width="22" height="15" viewBox="0 0 24 16" fill="none">
               <path d="M2 14h20l-3-11-5 6-4-8-4 8-4-6-3 11z" fill="url(#crownGrad)" stroke="#fef08a" stroke-width="1"/>
+              <circle cx="2" cy="3" r="1.5" fill="#fef08a"/>
+              <circle cx="6" cy="1" r="1.5" fill="#fef08a"/>
+              <circle cx="12" cy="0.5" r="1.8" fill="#fef08a"/>
+              <circle cx="18" cy="1" r="1.5" fill="#fef08a"/>
+              <circle cx="22" cy="3" r="1.5" fill="#fef08a"/>
               <defs>
                 <linearGradient id="crownGrad" x1="0" y1="0" x2="0" y2="16" gradientUnits="userSpaceOnUse">
                   <stop stop-color="#fef08a"/>
@@ -598,7 +1189,9 @@
             </svg>
 
             <div class="avatar-ring">
-              <div class="avatar-inner" id="uHeaderAvatarHolder">S</div>
+              <div class="avatar-inner" id="uHeaderAvatarHolder">
+                S
+              </div>
             </div>
 
             <div class="level-badge">Level 8</div>
@@ -610,30 +1203,38 @@
               <span class="user-name" id="uProfileName">Sofiya</span>
               <span class="gold-star-icon">⭐</span>
             </div>
-            <div class="welcome-motivate">Keep playing &amp; <span class="motivate-gold">win more coins!</span></div>
+            <div class="welcome-motivate">
+              Keep playing &amp; <span class="motivate-gold">win more coins!</span>
+            </div>
           </div>
 
           <div class="welcome-bonus-col" id="dailyBonusBtn" onclick="requestStrictVideoAd('bonus')">
             <div class="bonus-circle-btn">
               <div class="notif-dot"></div>
+              <!-- 3D Gift Box SVG -->
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
                 <path d="M20 12v9a1 1 0 01-1 1H5a1 1 0 01-1-1v-9h16z" fill="#ffffff"/>
                 <path d="M21 7H3a1 1 0 00-1 1v3a1 1 0 001 1h18a1 1 0 001-1V8a1 1 0 00-1-1z" fill="#f8fafc"/>
                 <path d="M11 7v15h2V7h-2z" fill="#a855f7"/>
+                <path d="M12 7c-1.5 0-3.5-2.5-1.5-4 1.5-1.1 3 1.5 3 4M12 7c1.5 0 3.5-2.5 1.5-4-1.5-1.1-3 1.5-3 4" stroke="#a855f7" stroke-width="2" stroke-linecap="round"/>
               </svg>
             </div>
             <div class="bonus-capsule-label">Daily Bonus</div>
           </div>
         </section>
 
-        <!-- STATISTICS CARD -->
+        <!-- 3. STATISTICS CARD -->
         <section class="glass-card stats-card">
+          <!-- Total Coins -->
           <div class="stat-item" id="statCoins" onclick="switchUserTab('uTabWallet')">
             <div class="stat-icon-wrapper">
+              <!-- 3D Stack of Gold Coins -->
               <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
                 <ellipse cx="20" cy="12" rx="9" ry="4.5" fill="#fef08a" stroke="#d97706" stroke-width="1.5"/>
                 <ellipse cx="20" cy="18" rx="9" ry="4.5" fill="#f59e0b" stroke="#b45309" stroke-width="1.5"/>
+                <path d="M11 12v6c0 2.5 4 4.5 9 4.5s9-2 9-4.5v-6" stroke="#b45309" stroke-width="1.5" fill="none"/>
                 <ellipse cx="12" cy="20" rx="8" ry="4" fill="#fbbf24" stroke="#b45309" stroke-width="1.5"/>
+                <path d="M4 20v4c0 2.2 3.6 4 8 4s8-1.8 8-4v-4" stroke="#92400e" stroke-width="1.5" fill="none"/>
               </svg>
             </div>
             <div class="stat-content">
@@ -644,8 +1245,10 @@
 
           <div class="stat-sep"></div>
 
-          <div class="stat-item">
+          <!-- Daily Limit -->
+          <div class="stat-item" id="statLimit">
             <div class="stat-icon-wrapper">
+              <!-- 3D Neon Lightning Bolt -->
               <svg width="26" height="28" viewBox="0 0 24 24" fill="none">
                 <path d="M13 2L3 14h8l-2 8 12-13h-8l2-7z" fill="url(#cyanBolt)" filter="drop-shadow(0 0 6px #06b6d4)"/>
                 <defs>
@@ -665,11 +1268,15 @@
 
           <div class="stat-sep"></div>
 
+          <!-- Daily Streak -->
           <div class="stat-item" id="statStreak" onclick="requestStrictVideoAd('bonus')">
             <div class="stat-icon-wrapper">
+              <!-- 3D Neon Green Calendar with Checkmark -->
               <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
                 <rect x="3" y="4" width="18" height="17" rx="4" fill="#064e3b" stroke="#10b981" stroke-width="1.8"/>
-                <path d="M8 15l2.5 2.5L16 12" stroke="#34d399" stroke-width="2" stroke-linecap="round"/>
+                <path d="M3 9h18" stroke="#10b981" stroke-width="1.8"/>
+                <path d="M8 2v4M16 2v4" stroke="#34d399" stroke-width="2" stroke-linecap="round"/>
+                <path d="M8 15l2.5 2.5L16 12" stroke="#34d399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
             <div class="stat-content">
@@ -679,10 +1286,13 @@
           </div>
         </section>
 
-        <!-- PREMIUM CARD -->
+        <!-- 4. PREMIUM CARD -->
         <section class="glass-card premium-card" id="premiumCard" onclick="alert('Lifetime Premium Pass checkout opening soon!')">
           <div class="premium-shield">
-            <svg viewBox="0 0 24 24"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/></svg>
+            <!-- Crown inside shield -->
+            <svg viewBox="0 0 24 24">
+              <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
+            </svg>
           </div>
 
           <div class="premium-mid">
@@ -697,7 +1307,7 @@
           </div>
         </section>
 
-        <!-- QUIZ CATEGORIES -->
+        <!-- 5. QUIZ CATEGORIES -->
         <section class="glass-card quiz-categories-card">
           <div class="quiz-header-row">
             <div class="quiz-header-title">Quiz Categories</div>
@@ -707,20 +1317,36 @@
             </div>
           </div>
 
+          <!-- Exactly 4 Quiz Cards in 1 Row -->
           <div class="quiz-grid-row">
-            <div class="quiz-box purple-cat" onclick="startHindiCategoryQuiz('सामान्य ज्ञान')">
+
+            <!-- Hindi GK -->
+            <div class="quiz-box purple-cat" data-name="Hindi GK" onclick="startHindiCategoryQuiz('सामान्य ज्ञान')">
               <div class="quiz-icon-frame">
+                <!-- Open Book with glowing Hindi letter 'स' -->
                 <svg width="40" height="34" viewBox="0 0 44 38" fill="none">
-                  <path d="M22 10C17 6 6 6 3 8v22c3-2 14-2 19 2 5-4 16-4 19-2V8c-3-2-14-2-19 2z" fill="#581c87" stroke="#c084fc" stroke-width="1.8"/>
+                  <path d="M22 10C17 6 6 6 3 8v22c3-2 14-2 19 2 5-4 16-4 19-2V8c-3-2-14-2-19 2z" fill="url(#bookGrad)" stroke="#c084fc" stroke-width="1.8"/>
+                  <path d="M22 10v22" stroke="#c084fc" stroke-width="1.5"/>
                   <text x="27" y="24" font-family="'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="14" fill="#fbbf24">स</text>
+                  <defs>
+                    <linearGradient id="bookGrad" x1="0" y1="0" x2="44" y2="38" gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#7e22ce"/>
+                      <stop offset="1" stop-color="#3b0764"/>
+                    </linearGradient>
+                  </defs>
                 </svg>
               </div>
               <div class="quiz-box-title">Hindi GK</div>
-              <div class="quiz-play-link"><span>Play Now</span><span>›</span></div>
+              <div class="quiz-play-link">
+                <span>Play Now</span>
+                <span>›</span>
+              </div>
             </div>
 
-            <div class="quiz-box blue-cat" onclick="startHindiCategoryQuiz('विज्ञान क्विज')">
+            <!-- English GK -->
+            <div class="quiz-box blue-cat" data-name="English GK" onclick="startHindiCategoryQuiz('विज्ञान क्विज')">
               <div class="quiz-icon-frame">
+                <!-- 3D Alphabet Blocks ABC -->
                 <svg width="38" height="34" viewBox="0 0 40 36" fill="none">
                   <rect x="13" y="2" width="14" height="14" rx="3" fill="#1e3a8a" stroke="#60a5fa" stroke-width="1.5"/>
                   <text x="17.5" y="13" font-size="10" font-weight="900" fill="#ffffff">A</text>
@@ -731,41 +1357,80 @@
                 </svg>
               </div>
               <div class="quiz-box-title">English GK</div>
-              <div class="quiz-play-link"><span>Play Now</span><span>›</span></div>
+              <div class="quiz-play-link">
+                <span>Play Now</span>
+                <span>›</span>
+              </div>
             </div>
 
-            <div class="quiz-box green-cat" onclick="startHindiCategoryQuiz('गणित जोड़')">
+            <!-- Plus Math -->
+            <div class="quiz-box green-cat" data-name="Plus Math" onclick="startHindiCategoryQuiz('गणित जोड़')">
               <div class="quiz-icon-frame">
+                <!-- Math symbols grid + - × ÷ -->
                 <svg width="38" height="34" viewBox="0 0 38 34" fill="none">
                   <path d="M9 4v10M4 9h10" stroke="#34d399" stroke-width="3" stroke-linecap="round"/>
                   <path d="M24 9h10" stroke="#34d399" stroke-width="3" stroke-linecap="round"/>
                   <path d="M5 23l8 8M13 23l-8 8" stroke="#10b981" stroke-width="2.6" stroke-linecap="round"/>
+                  <path d="M24 27h10" stroke="#10b981" stroke-width="2.6" stroke-linecap="round"/>
+                  <circle cx="29" cy="22" r="1.5" fill="#34d399"/>
+                  <circle cx="29" cy="32" r="1.5" fill="#34d399"/>
                 </svg>
               </div>
               <div class="quiz-box-title">Plus Math</div>
-              <div class="quiz-play-link"><span>Play Now</span><span>›</span></div>
+              <div class="quiz-play-link">
+                <span>Play Now</span>
+                <span>›</span>
+              </div>
             </div>
 
-            <div class="quiz-box orange-cat" onclick="startHindiCategoryQuiz('गणित घटाव')">
+            <!-- Minus Math -->
+            <div class="quiz-box orange-cat" data-name="Minus Math" onclick="startHindiCategoryQuiz('गणित घटाव')">
               <div class="quiz-icon-frame">
+                <!-- Glowing Minus Badge -->
                 <svg width="36" height="34" viewBox="0 0 38 36" fill="none">
-                  <rect x="5" y="4" width="28" height="28" rx="8" fill="#ea580c" stroke="#fb923c" stroke-width="1.8"/>
+                  <rect x="5" y="4" width="28" height="28" rx="8" fill="url(#orangePad)" stroke="#fb923c" stroke-width="1.8"/>
+                  <rect x="14" y="1" width="10" height="4" rx="2" fill="#fed7aa" stroke="#ea580c" stroke-width="1"/>
                   <path d="M12 18h14" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round"/>
+                  <defs>
+                    <linearGradient id="orangePad" x1="0" y1="0" x2="38" y2="36" gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#ea580c"/>
+                      <stop offset="1" stop-color="#7c2d12"/>
+                    </linearGradient>
+                  </defs>
                 </svg>
               </div>
               <div class="quiz-box-title">Minus Math</div>
-              <div class="quiz-play-link"><span>Play Now</span><span>›</span></div>
+              <div class="quiz-play-link">
+                <span>Play Now</span>
+                <span>›</span>
+              </div>
             </div>
+
           </div>
         </section>
 
-        <!-- LEADERBOARD CARD -->
+        <!-- 6. LEADERBOARD CARD -->
         <section class="glass-card leaderboard-card" id="leaderboardCard" onclick="switchUserTab('uTabLeaderboard')">
           <div class="trophy-col">
             <div class="trophy-glow"></div>
+            <!-- 3D Golden Trophy with star -->
             <svg width="44" height="44" viewBox="0 0 36 36" fill="none">
-              <path d="M10 6h16v10c0 4.4-3.6 8-8 8s-8-3.6-8-8V6z" fill="#f59e0b" stroke="#fef08a" stroke-width="1.2"/>
-              <rect x="11" y="28" width="14" height="4" rx="1.5" fill="#78350f" stroke="#f59e0b" stroke-width="1"/>
+              <path d="M10 6h16v10c0 4.4-3.6 8-8 8s-8-3.6-8-8V6z" fill="url(#goldTrophy)" stroke="#fef08a" stroke-width="1.2"/>
+              <path d="M10 8H5c0 4 2 7 5 7V8zM26 8h5c0 4-2 7-5 7V8z" fill="none" stroke="#f59e0b" stroke-width="1.6"/>
+              <polygon points="18,9 19.5,13.5 24,13.5 20.5,16 22,20.5 18,18 14,20.5 15.5,16 12,13.5 16.5,13.5" fill="#dc2626"/>
+              <path d="M16 24h4v4h-4z" fill="#b45309"/>
+              <rect x="11" y="28" width="14" height="4" rx="1.5" fill="url(#goldBase)" stroke="#f59e0b" stroke-width="1"/>
+              <defs>
+                <linearGradient id="goldTrophy" x1="18" y1="6" x2="18" y2="24" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#fef08a"/>
+                  <stop offset="0.6" stop-color="#f59e0b"/>
+                  <stop offset="1" stop-color="#b45309"/>
+                </linearGradient>
+                <linearGradient id="goldBase" x1="11" y1="28" x2="25" y2="32" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#fbbf24"/>
+                  <stop offset="1" stop-color="#78350f"/>
+                </linearGradient>
+              </defs>
             </svg>
           </div>
 
@@ -780,8 +1445,10 @@
           </button>
         </section>
 
-        <!-- QUICK ACTIONS (5 TILES INCLUDING READ EARN) -->
+        <!-- 7. QUICK ACTIONS -->
         <section class="quick-actions-row">
+
+          <!-- Spin & Win -->
           <div class="action-tile" data-action="Spin & Win" onclick="openSpinWheelModal()">
             <div class="action-icon-wrap">
               <svg width="34" height="34" viewBox="0 0 36 36" fill="none">
@@ -790,12 +1457,15 @@
                 <path d="M18 18L31.8 10A16 16 0 0 1 31.8 26z" fill="#3b82f6"/>
                 <path d="M18 18L31.8 26A16 16 0 0 1 18 34z" fill="#10b981"/>
                 <path d="M18 18L18 34A16 16 0 0 1 4.2 26z" fill="#f59e0b"/>
+                <path d="M18 18L4.2 26A16 16 0 0 1 4.2 10z" fill="#8b5cf6"/>
+                <path d="M18 18L4.2 10A16 16 0 0 1 18 2z" fill="#06b6d4"/>
                 <circle cx="18" cy="18" r="4.5" fill="#fef08a" stroke="#d97706" stroke-width="1.2"/>
               </svg>
             </div>
             <div class="action-label">Spin &amp; Win</div>
           </div>
 
+          <!-- Daily Bonus -->
           <div class="action-tile" data-action="Daily Bonus" onclick="requestStrictVideoAd('bonus')">
             <div class="action-icon-wrap">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
@@ -808,12 +1478,7 @@
             <div class="action-label">Daily Bonus</div>
           </div>
 
-          <!-- Read Earn -->
-          <div class="action-tile" data-action="Read Earn" onclick="startReadArticleTask()">
-            <div class="action-icon-wrap"><span style="font-size: 24px;">📖</span></div>
-            <div class="action-label">Read Earn</div>
-          </div>
-
+          <!-- Invite & Earn -->
           <div class="action-tile" data-action="Invite & Earn" onclick="switchUserTab('uTabRefer')">
             <div class="action-icon-wrap">
               <svg width="34" height="32" viewBox="0 0 24 24" fill="none">
@@ -826,17 +1491,26 @@
             <div class="action-label">Invite &amp; Earn</div>
           </div>
 
+          <!-- Redeem -->
           <div class="action-tile" data-action="Redeem" onclick="switchUserTab('uTabWallet')">
             <div class="action-icon-wrap">
               <svg width="34" height="32" viewBox="0 0 34 32" fill="none">
                 <rect x="8" y="4" width="18" height="8" rx="2" fill="#34d399"/>
-                <rect x="3" y="9" width="28" height="20" rx="5" fill="#d97706" stroke="#f59e0b" stroke-width="1.4"/>
+                <rect x="3" y="9" width="28" height="20" rx="5" fill="url(#walletGrad)" stroke="#f59e0b" stroke-width="1.4"/>
                 <path d="M22 15h9v8h-9a4 4 0 010-8z" fill="#b45309" stroke="#fbbf24" stroke-width="1"/>
                 <circle cx="26" cy="19" r="1.5" fill="#fef08a"/>
+                <defs>
+                  <linearGradient id="walletGrad" x1="0" y1="9" x2="34" y2="29" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#f59e0b"/>
+                    <stop offset="0.6" stop-color="#d97706"/>
+                    <stop offset="1" stop-color="#78350f"/>
+                  </linearGradient>
+                </defs>
               </svg>
             </div>
             <div class="action-label">Redeem</div>
           </div>
+
         </section>
 
       </section>
@@ -899,7 +1573,7 @@
         <div id="uLeaderboardList" style="display: flex; flex-direction: column; gap: 8px;"></div>
       </section>
 
-      <!-- ================= 4. HINDI KBC QUIZ SCREEN (PROPER SIZE FIX) ================= -->
+      <!-- ================= 4. HINDI KBC QUIZ SCREEN ================= -->
       <section id="uTabQuiz" class="subpage-container hidden">
         <div class="subpage-header">
           <div class="subpage-title">
@@ -1143,7 +1817,7 @@
 
   </div>
 
-  <!-- ================= JAVASCRIPT ENGINE ================= -->
+  <!-- ================= JAVASCRIPT ================= -->
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyAy3Zs3J3j-hFu3A9OfG68M4LRLFbwHwaA",
@@ -1491,28 +2165,6 @@
       const v = document.getElementById('watchEarnVastVideo');
       if (v) v.pause();
     }
-
-    // ================= READ & EARN (60S) =================
-    function startReadArticleTask() {
-      isArticleActive = true;
-      articleStartTime = Date.now();
-      window.open(MONETAG_DIRECT_LINK, '_blank');
-    }
-
-    document.addEventListener("visibilitychange", () => {
-      if (document.visibilityState === "visible" && isArticleActive) {
-        const spent = Math.floor((Date.now() - articleStartTime) / 1000);
-        isArticleActive = false;
-
-        if (spent < 60) {
-          alert(`रिवार्ड रद्द हुआ! आप सिर्फ ${spent}s रुके। न्यूनतम 60 सेकंड रुकना अनिवार्य है।`);
-        } else {
-          const earned = Math.floor(Math.random() * 20) + 1;
-          db.ref('users/' + currentUser.uid + '/coins').transaction(c => (c || 0) + earned);
-          alert(`बधाई हो! आपने 60 सेकंड आर्टिकल पढ़ा और ${earned} Coins कमाए!`);
-        }
-      }
-    });
 
     // ================= SPIN WHEEL (3/DAY) =================
     function openSpinWheelModal() {
