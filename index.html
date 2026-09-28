@@ -166,10 +166,11 @@
     }
     .progress-bar-fill {
       height: 100%;
-      width: 64%;
+      width: 0%;
       background: linear-gradient(90deg, #A855F7, #EC4899);
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(236, 72, 153, 0.6);
+      transition: width 0.3s ease;
     }
     .btn-pill {
       background: linear-gradient(135deg, #7C3AED, #9333EA);
@@ -296,30 +297,6 @@
     .earn-mini-icon { font-size: 20px; margin-bottom: 6px; display: block; }
     .earn-mini-text { font-size: 9px; font-weight: 600; color: #FFF; line-height: 1.1; }
 
-    /* Go Premium Card */
-    .premium-banner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px;
-      background: radial-gradient(120% 120% at 10% 50%, rgba(255, 210, 31, 0.15) 0%, rgba(13, 16, 38, 0.9) 70%);
-      border: 1px solid rgba(255, 210, 31, 0.3);
-    }
-    .prem-left { display: flex; align-items: center; gap: 12px; }
-    .prem-title { font-size: 14px; font-weight: 800; color: #FFD21F; }
-    .prem-sub { font-size: 10px; color: #A8AEC0; }
-    .prem-price { font-size: 14px; font-weight: 800; color: #FFF; margin-left: 8px; }
-    .btn-upgrade {
-      background: linear-gradient(135deg, #FFD21F, #FF8A00);
-      color: #03040A;
-      font-weight: 800;
-      font-size: 12px;
-      padding: 8px 16px;
-      border-radius: 20px;
-      border: none;
-      cursor: pointer;
-    }
-
     /* Screen Views */
     .screen-view { display: none; }
     .screen-view.active { display: block; animation: fadeIn 0.25s ease-in-out; }
@@ -344,20 +321,6 @@
       position: relative;
     }
     .profile-avatar-lg { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
-    .avatar-edit-badge {
-      position: absolute;
-      bottom: 2px;
-      right: 2px;
-      width: 22px;
-      height: 22px;
-      background: #7C3AED;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      border: 2px solid #03040A;
-    }
     .profile-name { font-size: 18px; font-weight: 800; margin-bottom: 2px; }
     .profile-meta { font-size: 12px; color: #A8AEC0; margin-bottom: 2px; }
     .profile-stats-row {
@@ -367,7 +330,7 @@
       padding-top: 14px;
     }
 
-    /* List Items */
+    /* Action List */
     .action-list-card { padding: 4px 16px; }
     .action-row {
       display: flex;
@@ -423,7 +386,23 @@
       padding: 16px 20px;
       margin-bottom: 12px;
     }
-    .redeem-amt { font-size: 19px; font-weight: 800; color: #FFF; }
+    .redeem-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .redeem-brand-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .redeem-amt { font-size: 17px; font-weight: 800; color: #FFF; }
     .redeem-cost { font-size: 12px; color: #FFD21F; font-weight: 700; margin-top: 2px; }
     .btn-redeem {
       background: linear-gradient(135deg, #7C3AED, #9333EA);
@@ -435,6 +414,80 @@
       border-radius: 20px;
       cursor: pointer;
       box-shadow: 0 4px 15px rgba(147, 51, 234, 0.4);
+    }
+
+    /* DAILY CONTEST SCREEN */
+    .arena-banner {
+      background: linear-gradient(135deg, #241442, #4c1d95);
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      border-radius: 22px;
+      padding: 20px;
+      position: relative;
+      margin-bottom: 16px;
+    }
+    .arena-tag { font-size: 11px; font-weight: 800; color: #A8AEC0; letter-spacing: 0.8px; text-transform: uppercase; }
+    .arena-win-val { font-size: 26px; font-weight: 800; color: #FFD21F; margin: 4px 0; display: flex; align-items: center; gap: 8px; }
+    .arena-sub { font-size: 12px; color: #DDD6FE; font-weight: 500; }
+    .arena-trophy { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 44px; opacity: 0.85; }
+
+    .contest-tabs-row { display: flex; gap: 10px; margin-bottom: 16px; }
+    .contest-tab-btn {
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #A8AEC0;
+      cursor: pointer;
+    }
+    .contest-tab-btn.active {
+      background: #7C3AED;
+      color: #FFF;
+      border-color: #A855F7;
+    }
+
+    .contest-card-orange {
+      background: linear-gradient(180deg, #ea580c 0%, #151128 65%);
+      border: 1px solid rgba(249, 115, 22, 0.4);
+      border-radius: 22px;
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+    .contest-card-purple {
+      background: linear-gradient(180deg, #7c3aed 0%, #151128 65%);
+      border: 1px solid rgba(168, 85, 247, 0.4);
+      border-radius: 22px;
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+    .contest-top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .contest-pill-label { background: rgba(0, 0, 0, 0.35); padding: 4px 10px; border-radius: 12px; font-size: 10px; font-weight: 800; color: #FFF; letter-spacing: 0.5px; }
+    .contest-timer-pill { background: rgba(239, 68, 68, 0.85); padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 800; color: #FFF; display: flex; align-items: center; gap: 4px; }
+    .contest-title { font-size: 17px; font-weight: 800; margin-bottom: 4px; }
+    .contest-pool { font-size: 12px; color: #FFD21F; font-weight: 700; margin-bottom: 14px; }
+    .contest-footer-row { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 12px; }
+    .btn-join-contest {
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: #FFF;
+      font-weight: 800;
+      border: none;
+      padding: 9px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 12px;
+      box-shadow: 0 4px 12px rgba(234, 88, 12, 0.4);
+    }
+    .btn-join-contest-purple {
+      background: linear-gradient(135deg, #9333ea, #7c3aed);
+      color: #FFF;
+      font-weight: 800;
+      border: none;
+      padding: 9px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 12px;
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
     }
 
     /* Floating Bottom Nav */
@@ -486,7 +539,62 @@
       cursor: pointer;
     }
 
-    /* Auth Modal Overlay */
+    /* Modal Popups Overlay */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 4, 10, 0.85);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-box {
+      width: 100%;
+      max-width: 350px;
+      background: #11142f;
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      border-radius: 24px;
+      padding: 24px;
+      text-align: center;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+      position: relative;
+    }
+
+    /* Wheel Container */
+    #wheelCanvas {
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      margin: 12px auto;
+      box-shadow: 0 0 25px rgba(168, 85, 247, 0.4);
+    }
+
+    /* Splash Screen */
+    #appSplashScreen {
+      position: fixed;
+      inset: 0;
+      background: #03040A;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.5s ease;
+    }
+    #appSplashScreen img {
+      max-width: 240px;
+      max-height: 240px;
+      border-radius: 24px;
+      animation: pulseSplash 1.4s infinite alternate;
+    }
+    @keyframes pulseSplash {
+      from { transform: scale(0.95); opacity: 0.85; }
+      to { transform: scale(1.05); opacity: 1; }
+    }
+
+    /* Auth Overlay */
     .auth-overlay {
       position: fixed;
       inset: 0;
@@ -557,6 +665,11 @@
 </head>
 <body>
 
+  <!-- APP OPENING ANIMATION SPLASH SCREEN -->
+  <div id="appSplashScreen">
+    <img src="https://i.ibb.co/BHTcn7QD/file-0000000021988211ab800b8ece076fff.png" alt="Quizly Earn Logo" />
+  </div>
+
   <!-- Ambient Backdrop -->
   <div class="ambient-glow glow-purple"></div>
   <div class="ambient-glow glow-blue"></div>
@@ -610,9 +723,9 @@
             <span class="progress-count"><span id="userTasksDone">0</span> / 50</span>
           </div>
           <div class="progress-bar-bg">
-            <div id="userProgressBar" class="progress-bar-fill" style="width: 0%;"></div>
+            <div id="userProgressBar" class="progress-bar-fill"></div>
           </div>
-          <button class="btn-pill" onclick="alert('Starting Daily Challenge!')">Continue Quiz →</button>
+          <button class="btn-pill" onclick="openQuizModal('सामान्य ज्ञान')">Continue Quiz →</button>
         </div>
         <!-- 3D Coin Stack SVG -->
         <svg class="hero-coins-visual" viewBox="0 0 100 100">
@@ -653,10 +766,10 @@
       <!-- Hindi Quiz Categories -->
       <div class="sec-head">
         <div class="sec-title">Choose Your Challenge</div>
-        <div class="sec-link">View All →</div>
+        <div class="sec-link" onclick="openQuizModal('सामान्य ज्ञान')">View All →</div>
       </div>
       <div class="quiz-grid">
-        <div class="quiz-card quiz-card-purple" onclick="recordTask(100)">
+        <div class="quiz-card quiz-card-purple" onclick="openQuizModal('सामान्य ज्ञान')">
           <div>
             <div style="font-size:24px;">🎓</div>
             <div class="cat-name">सामान्य ज्ञान</div>
@@ -664,7 +777,7 @@
           </div>
           <div class="cat-play">Play →</div>
         </div>
-        <div class="quiz-card quiz-card-blue" onclick="recordTask(100)">
+        <div class="quiz-card quiz-card-blue" onclick="openQuizModal('विज्ञान')">
           <div>
             <div style="font-size:24px;">🧪</div>
             <div class="cat-name">विज्ञान</div>
@@ -672,7 +785,7 @@
           </div>
           <div class="cat-play">Play →</div>
         </div>
-        <div class="quiz-card quiz-card-green" onclick="recordTask(100)">
+        <div class="quiz-card quiz-card-green" onclick="openQuizModal('गणित जोड़')">
           <div>
             <div style="font-size:24px;">➕</div>
             <div class="cat-name">गणित जोड़</div>
@@ -680,7 +793,7 @@
           </div>
           <div class="cat-play">Play →</div>
         </div>
-        <div class="quiz-card quiz-card-orange" onclick="recordTask(100)">
+        <div class="quiz-card quiz-card-orange" onclick="openQuizModal('गणित घटाव')">
           <div>
             <div style="font-size:24px;">➖</div>
             <div class="cat-name">गणित घटाव</div>
@@ -696,20 +809,19 @@
         <div class="sec-link">View Full Leaderboard →</div>
       </div>
       <div class="glass-card leaderboard-list" id="leaderboardContainer">
-        <!-- Rendered from Firebase -->
         <div style="text-align: center; color: #A8AEC0; font-size: 12px; padding: 10px;">Loading Leaderboard...</div>
       </div>
 
-      <!-- Earn More Quick Actions -->
+      <!-- Earn More Quick Actions (All Functional) -->
       <div class="sec-head">
         <div class="sec-title">Earn More</div>
       </div>
       <div class="earn-more-grid">
-        <div class="earn-mini-card" onclick="alert('Spin & Win unlocks soon!')">
+        <div class="earn-mini-card" onclick="openSpinModal()">
           <span class="earn-mini-icon">🎡</span>
           <span class="earn-mini-text">Spin & Win</span>
         </div>
-        <div class="earn-mini-card" onclick="recordDailyBonus()">
+        <div class="earn-mini-card" onclick="openDailyBonusModal()">
           <span class="earn-mini-icon">🎁</span>
           <span class="earn-mini-text">Daily Bonus</span>
         </div>
@@ -717,31 +829,82 @@
           <span class="earn-mini-icon">👥</span>
           <span class="earn-mini-text">Invite</span>
         </div>
-        <div class="earn-mini-card" onclick="recordTask(50)">
+        <div class="earn-mini-card" onclick="startWatchAndEarn()">
           <span class="earn-mini-icon">📺</span>
           <span class="earn-mini-text">Watch Video</span>
         </div>
-        <div class="earn-mini-card" onclick="recordTask(30)">
+        <div class="earn-mini-card" onclick="startReadAndEarn()">
           <span class="earn-mini-icon">📖</span>
           <span class="earn-mini-text">Read & Earn</span>
         </div>
       </div>
+    </div>
 
-      <!-- Go Premium -->
-      <div class="glass-card premium-banner">
-        <div class="prem-left">
-          <div style="font-size: 26px;">👑</div>
-          <div>
-            <div class="prem-title">Go Premium</div>
-            <div class="prem-sub">Remove ads & 2x coins</div>
-          </div>
-          <div class="prem-price">₹199</div>
+    <!-- ================= SCREEN 2: DAILY CONTESTS ================= -->
+    <div id="screen-contest" class="screen-view">
+      <div class="header">
+        <div style="font-size: 20px; cursor: pointer;" onclick="switchScreen('home')">←</div>
+        <div class="brand-title">Contests</div>
+        <div style="font-size: 20px; cursor: pointer;">🏆</div>
+      </div>
+
+      <!-- Today's Arena Banner -->
+      <div class="arena-banner">
+        <div class="arena-tag">TODAY'S ARENA</div>
+        <div class="arena-win-val">
+          <svg width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#FFD21F"/><text x="12" y="16" font-size="12" font-weight="800" text-anchor="middle" fill="#78350F">₹</text></svg>
+          3,540 Coins to win
         </div>
-        <button class="btn-upgrade" onclick="alert('Payment gateway linking in progress!')">Upgrade</button>
+        <div class="arena-sub">2 races live • join free, win Coins</div>
+        <div class="arena-trophy">🏆</div>
+      </div>
+
+      <!-- Contest Tabs -->
+      <div class="contest-tabs-row">
+        <button class="contest-tab-btn active">🔴 Live (2)</button>
+        <button class="contest-tab-btn">📁 Archive</button>
+      </div>
+
+      <!-- Daily Earning Contest Card -->
+      <div class="contest-card-orange">
+        <div class="contest-top-row">
+          <span class="contest-pill-label">EARN RACE</span>
+          <span class="contest-timer-pill">⏱ <span class="contest-countdown">00:10:00</span></span>
+        </div>
+        <div class="contest-title">Daily Earning Contest</div>
+        <div class="contest-pool">PRIZE POOL 🪙 1,770 • 1st wins 150</div>
+
+        <div style="font-size: 11px; color: #fed7aa; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
+          <span>👥 148 playing</span>
+          <span>🎯 Min 10 Coins</span>
+        </div>
+        <div class="contest-footer-row">
+          <span style="font-size: 10px; color: #FED7AA;">Only coins earned after joining count</span>
+          <button class="btn-join-contest" onclick="joinContestRace('Daily Earning Contest', 150)">Join FREE</button>
+        </div>
+      </div>
+
+      <!-- Daily Referral Contest Card -->
+      <div class="contest-card-purple">
+        <div class="contest-top-row">
+          <span class="contest-pill-label">INVITE RACE</span>
+          <span class="contest-timer-pill">⏱ <span class="contest-countdown">00:10:00</span></span>
+        </div>
+        <div class="contest-title">Daily Referral Contest</div>
+        <div class="contest-pool">PRIZE POOL 🪙 1,770 • 1st wins 150</div>
+
+        <div style="font-size: 11px; color: #e9d5ff; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
+          <span>👥 59 playing</span>
+          <span>🎯 Min 1 referral</span>
+        </div>
+        <div class="contest-footer-row">
+          <span style="font-size: 10px; color: #E9D5FF;">Only friends who join after you count</span>
+          <button class="btn-join-contest-purple" onclick="joinContestRace('Daily Referral Contest', 150)">Join FREE</button>
+        </div>
       </div>
     </div>
 
-    <!-- ================= SCREEN 2: PROFILE ================= -->
+    <!-- ================= SCREEN 3: PROFILE ================= -->
     <div id="screen-profile" class="screen-view">
       <div class="header">
         <div style="font-size: 20px; cursor: pointer;" onclick="switchScreen('home')">←</div>
@@ -752,7 +915,6 @@
       <div class="glass-card profile-hero">
         <div class="profile-avatar-wrap">
           <img id="profileUserImg" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" class="profile-avatar-lg" alt="Profile" />
-          <div class="avatar-edit-badge">✎</div>
         </div>
         <div class="profile-name" id="profileName">Sofiya Khan ⭐</div>
         <div class="profile-meta" id="profileEmail">sofiya@gmail.com</div>
@@ -776,21 +938,27 @@
         </div>
       </div>
 
-      <!-- Invite Friends -->
+      <!-- Invite Friends with Unique Referral Code -->
       <div class="glass-card" style="padding: 16px;">
         <div style="font-size: 14px; font-weight: 700; margin-bottom: 4px;">Invite Friends & Earn More</div>
-        <div style="font-size: 11px; color: #A8AEC0; margin-bottom: 12px;">Share your link and earn unlimited coins per referral.</div>
+        <div style="font-size: 11px; color: #A8AEC0; margin-bottom: 12px;">Share your link and earn 250 coins per referral!</div>
+
+        <div style="margin-bottom: 10px;">
+          <label style="font-size: 11px; color: #FFD21F; font-weight: 700;">YOUR UNIQUE REFERRAL CODE:</label>
+          <div style="font-size: 18px; font-weight: 800; letter-spacing: 2px; color: #FFF; margin-top: 3px;" id="displayUserRefCode">QZLY01</div>
+        </div>
+
         <div style="display: flex; gap: 8px; margin-bottom: 14px;">
           <input type="text" id="referralLinkInput" readonly style="flex:1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px; color: #FFF; font-size: 12px;" />
           <button class="btn-pill" onclick="copyReferralLink()">Copy</button>
         </div>
         <div style="display: flex; gap: 12px; justify-content: center;">
-          <a href="https://t.me/share/url?url=https://quizlyearn.app" target="_blank" style="text-decoration:none;" class="btn-pill">Telegram</a>
-          <a href="whatsapp://send?text=Join Quizly Earn to earn real rewards!" style="text-decoration:none;" class="btn-pill">WhatsApp</a>
+          <a id="btnShareTg" href="https://t.me/share/url?url=https://quizly-earn.vercel.app" target="_blank" style="text-decoration:none;" class="btn-pill">Telegram</a>
+          <a id="btnShareWa" href="whatsapp://send?text=Join Quizly Earn to win real money!" style="text-decoration:none;" class="btn-pill">WhatsApp</a>
         </div>
       </div>
 
-      <!-- Official Support Links & History -->
+      <!-- Official Support Links -->
       <div class="glass-card action-list-card">
         <a href="https://t.me/NexoraInfotechOfficial" target="_blank" class="action-row">
           <div class="action-left"><span class="action-icon">📢</span> Official Telegram Channel</div>
@@ -800,14 +968,6 @@
           <div class="action-left"><span class="action-icon">🤖</span> 24/7 Support Bot</div>
           <span class="action-arrow">→</span>
         </a>
-        <div class="action-row" onclick="alert('Withdrawal history will load here.')">
-          <div class="action-left"><span class="action-icon">📜</span> Withdraw History</div>
-          <span class="action-arrow">→</span>
-        </div>
-        <div class="action-row" onclick="alert('Quizly Earn v1.0 - Safe & Verified')">
-          <div class="action-left"><span class="action-icon">🛡️</span> Privacy Policy & Terms</div>
-          <span class="action-arrow">→</span>
-        </div>
       </div>
 
       <button style="width: 100%; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #EF4444; padding: 14px; border-radius: 18px; font-weight: 700; font-size: 14px; cursor: pointer; margin-top: 6px;" onclick="handleLogout()">
@@ -815,7 +975,7 @@
       </button>
     </div>
 
-    <!-- ================= SCREEN 3: REDEEM ================= -->
+    <!-- ================= SCREEN 4: REDEEM ================= -->
     <div id="screen-redeem" class="screen-view">
       <div class="header">
         <div style="font-size: 20px; cursor: pointer;" onclick="switchScreen('home')">←</div>
@@ -850,83 +1010,96 @@
       <!-- UPI Options -->
       <div id="tab-upi">
         <div class="glass-card redeem-card">
-          <div>
-            <div class="redeem-amt">₹100 UPI</div>
-            <div class="redeem-cost">12,000 Coins</div>
+          <div class="redeem-left">
+            <div class="redeem-brand-icon">
+              <!-- Official UPI Vector -->
+              <svg width="34" height="20" viewBox="0 0 100 45">
+                <polygon points="15,40 35,5 45,5 25,40" fill="#097939"/>
+                <polygon points="35,40 55,5 65,5 45,40" fill="#ED7524"/>
+                <text x="70" y="32" font-size="28" font-weight="900" fill="#FFF">UPI</text>
+              </svg>
+            </div>
+            <div>
+              <div class="redeem-amt">₹100 UPI</div>
+              <div class="redeem-cost">12,000 Coins</div>
+            </div>
           </div>
           <button class="btn-redeem" onclick="submitRedeemRequest(100, 12000, 'UPI')">Redeem</button>
         </div>
         <div class="glass-card redeem-card">
-          <div>
-            <div class="redeem-amt">₹200 UPI</div>
-            <div class="redeem-cost">24,000 Coins</div>
+          <div class="redeem-left">
+            <div class="redeem-brand-icon">
+              <svg width="34" height="20" viewBox="0 0 100 45">
+                <polygon points="15,40 35,5 45,5 25,40" fill="#097939"/>
+                <polygon points="35,40 55,5 65,5 45,40" fill="#ED7524"/>
+                <text x="70" y="32" font-size="28" font-weight="900" fill="#FFF">UPI</text>
+              </svg>
+            </div>
+            <div>
+              <div class="redeem-amt">₹200 UPI</div>
+              <div class="redeem-cost">24,000 Coins</div>
+            </div>
           </div>
           <button class="btn-redeem" onclick="submitRedeemRequest(200, 24000, 'UPI')">Redeem</button>
-        </div>
-        <div class="glass-card redeem-card">
-          <div>
-            <div class="redeem-amt">₹500 UPI</div>
-            <div class="redeem-cost">60,000 Coins</div>
-          </div>
-          <button class="btn-redeem" onclick="submitRedeemRequest(500, 60000, 'UPI')">Redeem</button>
         </div>
       </div>
 
       <!-- Google Play Options -->
       <div id="tab-gplay" style="display:none;">
         <div class="glass-card redeem-card">
-          <div>
-            <div class="redeem-amt">₹50 Play Code</div>
-            <div class="redeem-cost">6,000 Coins</div>
+          <div class="redeem-left">
+            <div class="redeem-brand-icon">
+              <!-- Official Google Play Vector -->
+              <svg width="24" height="26" viewBox="0 0 24 26">
+                <path fill="#4285F4" d="M1.3 0.6C0.8 1.1 0.5 1.9 0.5 2.9V23.1C0.5 24.1 0.8 24.9 1.3 25.4L1.4 25.5L13.1 13.8V13.5L1.4 1.8L1.3 0.6Z"/>
+                <path fill="#FBBC04" d="M17 17.8L13.1 13.9V13.4L17 9.5L17.1 9.6L21.7 12.2C23 12.9 23 14.1 21.7 14.8L17.1 17.4L17 17.8Z"/>
+                <path fill="#EA4335" d="M17.1 17.4L13.1 13.5L1.3 25.3C1.8 25.8 2.6 25.9 3.5 25.4L17.1 17.4Z"/>
+                <path fill="#34A853" d="M17.1 9.6L3.5 1.6C2.6 1.1 1.8 1.2 1.3 1.7L13.1 13.5L17.1 9.6Z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="redeem-amt">₹50 Play Code</div>
+              <div class="redeem-cost">6,000 Coins</div>
+            </div>
           </div>
           <button class="btn-redeem" onclick="submitRedeemRequest(50, 6000, 'Google Play')">Redeem</button>
-        </div>
-        <div class="glass-card redeem-card">
-          <div>
-            <div class="redeem-amt">₹100 Play Code</div>
-            <div class="redeem-cost">12,000 Coins</div>
-          </div>
-          <button class="btn-redeem" onclick="submitRedeemRequest(100, 12000, 'Google Play')">Redeem</button>
         </div>
       </div>
 
       <!-- Amazon Options -->
       <div id="tab-amazon" style="display:none;">
         <div class="glass-card redeem-card">
-          <div>
-            <div class="redeem-amt">₹100 Amazon Voucher</div>
-            <div class="redeem-cost">12,000 Coins</div>
+          <div class="redeem-left">
+            <div class="redeem-brand-icon">
+              <!-- Official Amazon "a" Vector -->
+              <svg width="24" height="26" viewBox="0 0 24 24">
+                <path fill="#FF9900" d="M18.8 17.2c-3.1 2.3-7.5 3.5-11.4 3.5-5.4 0-10.2-2.1-13.9-5.6-.3-.3-.1-.7.3-.5 4.3 2.5 9.5 4 14.8 4 3.5 0 7.4-.9 10.6-2.8.5-.3.8.3.4.6z"/>
+                <path fill="#FFF" d="M13.7 13.2c0-1.8-.4-3.1-1.3-4-1-.9-2.3-1.4-4-1.4-2.5 0-4.4 1-5.3 2.1-.3.3-.2.7.1.9l1.4 1c.3.2.7.2 1-.1.6-.7 1.5-1.2 2.7-1.2 1.8 0 2.7 1 2.7 2.7v.5c-4 .2-6.5 1.6-6.5 4.2 0 1.9 1.4 3.1 3.4 3.1 1.7 0 3-1 3.7-2.3v1.8c0 .3.2.5.5.5h2.1c.3 0 .5-.2.5-.5v-7.3h-.9zm-2.7 2.8c0 1.6-1.1 2.8-2.6 2.8-1 0-1.8-.6-1.8-1.7 0-1.5 1.3-2.3 4.4-2.4v1.3z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="redeem-amt">₹100 Amazon Voucher</div>
+              <div class="redeem-cost">12,000 Coins</div>
+            </div>
           </div>
           <button class="btn-redeem" onclick="submitRedeemRequest(100, 12000, 'Amazon')">Redeem</button>
         </div>
-      </div>
-
-      <!-- Rules Card -->
-      <div class="glass-card" style="padding: 16px;">
-        <div style="font-size: 13px; font-weight: 700; margin-bottom: 8px; display:flex; align-items:center; gap:6px;">
-          <span>🛡️</span> Redeem Rules
-        </div>
-        <ul style="font-size: 11px; color: #A8AEC0; line-height: 1.6; padding-left: 18px;">
-          <li>Minimum 1 referral required to unlock first withdrawal.</li>
-          <li>Redeem requests are processed within 24–48 hours.</li>
-          <li>Make sure your UPI ID / details are completely accurate.</li>
-        </ul>
       </div>
     </div>
 
   </div>
 
-  <!-- Bottom Navigation -->
+  <!-- Bottom Navigation Bar -->
   <div class="bottom-nav">
     <div class="nav-item active" id="nav-home" onclick="switchScreen('home')">
       <span class="nav-icon">🏠</span>
       <span>Home</span>
     </div>
-    <div class="nav-item" id="nav-quiz" onclick="switchScreen('home')">
+    <div class="nav-item" id="nav-quiz" onclick="openQuizModal('सामान्य ज्ञान')">
       <span class="nav-icon">❓</span>
       <span>Quiz</span>
     </div>
-    <div class="nav-contest-btn" onclick="alert('Weekly contest starting Sunday!')">🏆</div>
+    <div class="nav-contest-btn" onclick="switchScreen('contest')">🏆</div>
     <div class="nav-item" id="nav-redeem" onclick="switchScreen('redeem')">
       <span class="nav-icon">🎁</span>
       <span>Redeem</span>
@@ -937,8 +1110,68 @@
     </div>
   </div>
 
-  <!-- APPLICATION LOGIC -->
+  <!-- ================= POPUP MODALS ================= -->
+
+  <!-- 1. Interactive Spin & Win Modal -->
+  <div id="modalSpin" class="modal-overlay">
+    <div class="modal-box">
+      <div style="font-size: 18px; font-weight: 800; margin-bottom: 6px;">🎡 Spin & Win</div>
+      <div style="font-size: 12px; color: #A8AEC0;">Spin the lucky wheel to get free coins!</div>
+      <canvas id="wheelCanvas" width="250" height="250"></canvas>
+      <button id="btnSpinWheel" class="btn-auth" onclick="spinWheelAction()">SPIN NOW</button>
+      <button class="contest-tab-btn" onclick="closeModal('modalSpin')">Close</button>
+    </div>
+  </div>
+
+  <!-- 2. Daily Bonus Modal -->
+  <div id="modalDailyBonus" class="modal-overlay">
+    <div class="modal-box">
+      <div style="font-size: 36px; margin-bottom: 8px;">🎁</div>
+      <div style="font-size: 18px; font-weight: 800; margin-bottom: 6px;">Daily Check-in Bonus</div>
+      <div style="font-size: 12px; color: #A8AEC0; margin-bottom: 18px;">Claim your free +100 Coins for Day <span id="bonusDayCount">1</span>!</div>
+      <button class="btn-auth" onclick="claimDailyBonusReward()">Claim +100 Coins</button>
+      <button class="contest-tab-btn" onclick="closeModal('modalDailyBonus')">Close</button>
+    </div>
+  </div>
+
+  <!-- 3. Interactive Quiz Modal -->
+  <div id="modalQuiz" class="modal-overlay">
+    <div class="modal-box" style="text-align: left;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <span id="quizCatTitle" style="font-size: 14px; font-weight: 700; color: #A855F7;">सामान्य ज्ञान</span>
+        <span style="font-size: 12px; color: #EF4444; font-weight: 800;">⏱ <span id="quizTimer">15</span>s</span>
+      </div>
+      <div id="quizQuestionText" style="font-size: 15px; font-weight: 700; margin-bottom: 16px;">भारत की राजधानी क्या है?</div>
+      <div id="quizOptionsContainer" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;"></div>
+      <button class="contest-tab-btn" style="width: 100%;" onclick="closeModal('modalQuiz')">Quit Quiz</button>
+    </div>
+  </div>
+
+  <!-- 4. Contest Join "YOU'RE IN THE RACE!" Popup Modal -->
+  <div id="modalContestJoined" class="modal-overlay">
+    <div class="modal-box" style="background: linear-gradient(180deg, #ea580c 0%, #11142f 50%); border-color: #f97316;">
+      <div style="font-size: 40px; margin-bottom: 8px;">🔥</div>
+      <div style="font-size: 19px; font-weight: 800; color: #FFF; margin-bottom: 6px;">YOU'RE IN THE RACE!</div>
+      <div class="contest-timer-pill" style="display: inline-flex; margin-bottom: 16px;">⏱ 00:10:00</div>
+      <div style="font-size: 16px; font-weight: 800; color: #FFD21F; margin-bottom: 4px;">Up to 🪙 150 Coins</div>
+      <div style="font-size: 11px; color: #fed7aa; margin-bottom: 20px;">Every task & referral you do from now counts toward winning the race.</div>
+      <button class="btn-auth" style="background: linear-gradient(135deg, #f97316, #ea580c);" onclick="closeModal('modalContestJoined'); switchScreen('home');">Start Earning Now</button>
+    </div>
+  </div>
+
+  <!-- ================= SCRIPTS & LOGIC ================= -->
   <script>
+    // Splash screen dismissal
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const splash = document.getElementById('appSplashScreen');
+        if (splash) {
+          splash.style.opacity = '0';
+          setTimeout(() => splash.style.display = 'none', 500);
+        }
+      }, 1800);
+    });
+
     const firebaseConfig = {
       apiKey: "AIzaSyAy3Zs3J3j-hFu3A9OfG68M4LRLFbwHwaA",
       authDomain: "quizly-earn.firebaseapp.com",
@@ -956,6 +1189,11 @@
 
     let currentUser = null;
     let isSignUpMode = false;
+    let quizInterval = null;
+
+    // Check referral query param on signup (?ref=XXXXX)
+    const urlParams = new URLSearchParams(window.location.search);
+    const referredByCode = urlParams.get('ref');
 
     // Monitor Auth State
     auth.onAuthStateChanged(user => {
@@ -981,7 +1219,7 @@
     async function handleEmailAuth() {
       const email = document.getElementById('authEmail').value.trim();
       const pass = document.getElementById('authPassword').value.trim();
-      if (!email || !pass) return alert("Please enter both email and password.");
+      if (!email || !pass) return alert("Please enter email & password.");
 
       try {
         if (isSignUpMode) {
@@ -1007,12 +1245,13 @@
       auth.signOut();
     }
 
-    // Sync Live User Data in Realtime Database
+    // Sync Live User Data in Realtime Database with Unique Referral Code
     function syncUserData(user) {
       const userRef = db.ref('users/' + user.uid);
       userRef.on('value', snapshot => {
         let data = snapshot.val();
         if (!data) {
+          const uniqueCode = 'QZ' + Math.random().toString(36).substring(2, 6).toUpperCase();
           data = {
             name: user.displayName || user.email.split('@')[0],
             email: user.email,
@@ -1021,10 +1260,30 @@
             tasksDone: 0,
             streak: 1,
             referrals: 0,
-            earnedToday: 0
+            earnedToday: 0,
+            referralCode: uniqueCode,
+            lastBonusDate: ''
           };
           userRef.set(data);
+
+          // Credit referrer if joined through referral code
+          if (referredByCode) {
+            db.ref('users').orderByChild('referralCode').equalTo(referredByCode).once('value', snap => {
+              snap.forEach(refParent => {
+                db.ref('users/' + refParent.key).transaction(u => {
+                  if (u) {
+                    u.coins = (u.coins || 0) + 250;
+                    u.referrals = (u.referrals || 0) + 1;
+                  }
+                  return u;
+                });
+              });
+            });
+          }
         }
+
+        const userCode = data.referralCode || user.uid.substring(0, 6).toUpperCase();
+        const customRefLink = `https://quizly-earn.vercel.app?ref=${userCode}`;
 
         // Render to UI
         document.querySelectorAll('.user-coins-val').forEach(el => el.innerText = (data.coins || 0).toLocaleString());
@@ -1039,7 +1298,11 @@
         document.getElementById('profileName').innerText = data.name + ' ⭐';
         document.getElementById('profileEmail').innerText = data.email;
         document.getElementById('profileUID').innerText = 'UID: ' + user.uid.substring(0, 10).toUpperCase();
-        document.getElementById('referralLinkInput').value = 'https://quizlyearn.app/invite/' + user.uid.substring(0, 8);
+
+        document.getElementById('displayUserRefCode').innerText = userCode;
+        document.getElementById('referralLinkInput').value = customRefLink;
+        document.getElementById('btnShareTg').href = `https://t.me/share/url?url=${encodeURIComponent(customRefLink)}&text=${encodeURIComponent('Join Quizly Earn & Get 250 Free Coins!')}`;
+        document.getElementById('btnShareWa').href = `whatsapp://send?text=${encodeURIComponent('Join Quizly Earn & Get 250 Free Coins! ' + customRefLink)}`;
 
         if (data.photoURL) {
           document.getElementById('userHeaderAvatar').src = data.photoURL;
@@ -1048,32 +1311,11 @@
       });
     }
 
-    // Task Execution & Coin Increment Logic
-    function recordTask(earned) {
-      if (!currentUser) return;
-      const ref = db.ref('users/' + currentUser.uid);
-      ref.transaction(user => {
-        if (user) {
-          user.coins = (user.coins || 0) + earned;
-          user.tasksDone = (user.tasksDone || 0) + 1;
-          user.earnedToday = (user.earnedToday || 0) + earned;
-        }
-        return user;
-      });
-      alert(`+${earned} Coins Added!`);
-    }
-
-    function recordDailyBonus() {
-      recordTask(100);
-    }
-
     // Dynamic Leaderboard Listener
     function listenLeaderboard() {
       db.ref('users').orderByChild('coins').limitToLast(5).on('value', snap => {
         const list = [];
-        snap.forEach(child => {
-          list.push(child.val());
-        });
+        snap.forEach(child => list.push(child.val()));
         list.reverse();
 
         let html = '';
@@ -1094,7 +1336,243 @@
       });
     }
 
-    // Submit Withdrawal Request to Database
+    // Interactive Spin Wheel
+    const spinPrizes = [20, 50, 100, 30, 200, 40, 150, 10];
+    let isSpinning = false;
+    let currentWheelAngle = 0;
+
+    function openSpinModal() {
+      document.getElementById('modalSpin').style.display = 'flex';
+      drawWheel(currentWheelAngle);
+    }
+
+    function drawWheel(angle) {
+      const canvas = document.getElementById('wheelCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const numSegments = 8;
+      const arc = (2 * Math.PI) / numSegments;
+      ctx.clearRect(0, 0, 250, 250);
+
+      for (let i = 0; i < numSegments; i++) {
+        const segAngle = angle + i * arc;
+        ctx.beginPath();
+        ctx.fillStyle = i % 2 === 0 ? '#7C3AED' : '#2563EB';
+        ctx.moveTo(125, 125);
+        ctx.arc(125, 125, 120, segAngle, segAngle + arc);
+        ctx.lineTo(125, 125);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.save();
+        ctx.translate(125, 125);
+        ctx.rotate(segAngle + arc / 2);
+        ctx.fillStyle = '#FFD21F';
+        ctx.font = 'bold 14px Plus Jakarta Sans';
+        ctx.fillText(`+${spinPrizes[i]}`, 65, 5);
+        ctx.restore();
+      }
+
+      // Center pointer
+      ctx.beginPath();
+      ctx.arc(125, 125, 20, 0, 2 * Math.PI);
+      ctx.fillStyle = '#03040A';
+      ctx.fill();
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = '#FFD21F';
+      ctx.stroke();
+    }
+
+    function spinWheelAction() {
+      if (isSpinning) return;
+      isSpinning = true;
+      const randomRotations = 5 + Math.floor(Math.random() * 5);
+      const prizeIndex = Math.floor(Math.random() * spinPrizes.length);
+      const arc = (2 * Math.PI) / 8;
+      const targetAngle = (randomRotations * 2 * Math.PI) + (prizeIndex * arc);
+
+      let start = null;
+      function animate(time) {
+        if (!start) start = time;
+        const progress = Math.min((time - start) / 3000, 1);
+        const ease = 1 - Math.pow(1 - progress, 3);
+        currentWheelAngle = ease * targetAngle;
+        drawWheel(currentWheelAngle);
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          isSpinning = false;
+          const won = spinPrizes[prizeIndex];
+          rewardCoins(won);
+          alert(`🎉 Congratulations! You won +${won} Coins!`);
+          closeModal('modalSpin');
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+
+    // Daily Bonus Logic
+    function openDailyBonusModal() {
+      document.getElementById('modalDailyBonus').style.display = 'flex';
+    }
+
+    function claimDailyBonusReward() {
+      if (!currentUser) return;
+      const today = new Date().toDateString();
+      const ref = db.ref('users/' + currentUser.uid);
+      ref.once('value', snap => {
+        const u = snap.val();
+        if (u.lastBonusDate === today) {
+          return alert('You already claimed your Daily Bonus today! Come back tomorrow.');
+        }
+        ref.update({
+          coins: (u.coins || 0) + 100,
+          earnedToday: (u.earnedToday || 0) + 100,
+          streak: (u.streak || 1) + 1,
+          lastBonusDate: today
+        });
+        alert('🎉 Daily Bonus Claimed: +100 Coins credited!');
+        closeModal('modalDailyBonus');
+      });
+    }
+
+    // Interactive Quiz Questions Engine
+    const quizBank = {
+      'सामान्य ज्ञान': [
+        { q: "भारत की राजधानी क्या है?", options: ["मुंबई", "नई दिल्ली", "कोलकाता", "जयपुर"], ans: 1 },
+        { q: "भारत का राष्ट्रीय पक्षी कौन सा है?", options: ["कौवा", "मोर", "तोता", "कबूतर"], ans: 1 }
+      ],
+      'विज्ञान': [
+        { q: "पानी का रासायनिक सूत्र क्या है?", options: ["CO2", "H2O", "O2", "NaCl"], ans: 1 },
+        { q: "पेड़-पौधे सांस लेते समय क्या छोड़ते हैं?", options: ["ऑक्सीजन", "कार्बन", "नाइट्रोजन", "हाइड्रोजन"], ans: 0 }
+      ],
+      'गणित जोड़': [
+        { q: "25 + 45 कितना होता है?", options: ["60", "70", "75", "65"], ans: 1 },
+        { q: "120 + 80 कितना होता है?", options: ["190", "200", "210", "220"], ans: 1 }
+      ],
+      'गणित घटाव': [
+        { q: "100 - 35 कितना होता है?", options: ["55", "65", "75", "60"], ans: 1 },
+        { q: "85 - 20 कितना होता है?", options: ["65", "55", "70", "60"], ans: 0 }
+      ]
+    };
+
+    function openQuizModal(category) {
+      document.getElementById('modalQuiz').style.display = 'flex';
+      document.getElementById('quizCatTitle').innerText = category;
+      const list = quizBank[category] || quizBank['सामान्य ज्ञान'];
+      const qObj = list[Math.floor(Math.random() * list.length)];
+
+      document.getElementById('quizQuestionText').innerText = qObj.q;
+      const optContainer = document.getElementById('quizOptionsContainer');
+      optContainer.innerHTML = '';
+
+      let timerVal = 15;
+      document.getElementById('quizTimer').innerText = timerVal;
+      clearInterval(quizInterval);
+      quizInterval = setInterval(() => {
+        timerVal--;
+        document.getElementById('quizTimer').innerText = timerVal;
+        if (timerVal <= 0) {
+          clearInterval(quizInterval);
+          alert('Time up! Try again.');
+          closeModal('modalQuiz');
+        }
+      }, 1000);
+
+      qObj.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'contest-tab-btn';
+        btn.style.width = '100%';
+        btn.style.textAlign = 'left';
+        btn.style.padding = '12px 16px';
+        btn.innerText = opt;
+        btn.onclick = () => {
+          clearInterval(quizInterval);
+          if (idx === qObj.ans) {
+            rewardCoins(100);
+            alert('✅ सही उत्तर! +100 Coins Added!');
+          } else {
+            alert('❌ गलत उत्तर! Next time try harder.');
+          }
+          closeModal('modalQuiz');
+        };
+        optContainer.appendChild(btn);
+      });
+    }
+
+    // Watch Video & Read Article Simulators
+    function startWatchAndEarn() {
+      alert('Playing 15-second sponsor video...');
+      setTimeout(() => {
+        rewardCoins(50);
+        alert('🎉 Video Complete: +50 Coins Added!');
+      }, 2500);
+    }
+
+    function startReadAndEarn() {
+      alert('Reading sponsor news article...');
+      setTimeout(() => {
+        rewardCoins(30);
+        alert('🎉 Article Read: +30 Coins Added!');
+      }, 2000);
+    }
+
+    // Common Reward Function
+    function rewardCoins(amt) {
+      if (!currentUser) return;
+      const ref = db.ref('users/' + currentUser.uid);
+      ref.transaction(u => {
+        if (u) {
+          u.coins = (u.coins || 0) + amt;
+          u.tasksDone = (u.tasksDone || 0) + 1;
+          u.earnedToday = (u.earnedToday || 0) + amt;
+        }
+        return u;
+      });
+    }
+
+    // Contest Join Modal Trigger
+    function joinContestRace(title, pool) {
+      document.getElementById('modalContestJoined').style.display = 'flex';
+    }
+
+    // Modal Helpers
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
+      if (id === 'modalQuiz') clearInterval(quizInterval);
+    }
+
+    // Copy Referral Link
+    function copyReferralLink() {
+      const copyText = document.getElementById('referralLinkInput');
+      copyText.select();
+      navigator.clipboard.writeText(copyText.value);
+      alert("Referral link copied!");
+    }
+
+    // Screen Switching
+    function switchScreen(screen) {
+      document.querySelectorAll('.screen-view').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+      document.getElementById('screen-' + screen).classList.add('active');
+      const activeNav = document.getElementById('nav-' + screen);
+      if (activeNav) activeNav.classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    // Switch Redeem Channels
+    function switchRedeemTab(tab) {
+      ['upi', 'gplay', 'amazon'].forEach(t => {
+        document.getElementById('tab-' + t).style.display = (t === tab) ? 'block' : 'none';
+      });
+      document.querySelectorAll('.tab-pill').forEach(pill => {
+        pill.classList.toggle('active', pill.innerText.toLowerCase().includes(tab.replace('gplay','google')));
+      });
+    }
+
+    // Submit Withdrawal Request
     function submitRedeemRequest(inr, requiredCoins, method) {
       if (!currentUser) return;
       const userRef = db.ref('users/' + currentUser.uid);
@@ -1125,33 +1603,6 @@
 
         alert("Redeem request submitted successfully! Processing time: 24-48 hours.");
       });
-    }
-
-    // Screen Switching Navigation
-    function switchScreen(screen) {
-      document.querySelectorAll('.screen-view').forEach(s => s.classList.remove('active'));
-      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-
-      document.getElementById('screen-' + screen).classList.add('active');
-      const activeNav = document.getElementById('nav-' + screen);
-      if (activeNav) activeNav.classList.add('active');
-      window.scrollTo(0, 0);
-    }
-
-    function switchRedeemTab(tab) {
-      ['upi', 'gplay', 'amazon'].forEach(t => {
-        document.getElementById('tab-' + t).style.display = (t === tab) ? 'block' : 'none';
-      });
-      document.querySelectorAll('.tab-pill').forEach(pill => {
-        pill.classList.toggle('active', pill.innerText.toLowerCase().includes(tab.replace('gplay','google')));
-      });
-    }
-
-    function copyReferralLink() {
-      const copyText = document.getElementById('referralLinkInput');
-      copyText.select();
-      navigator.clipboard.writeText(copyText.value);
-      alert("Referral link copied!");
     }
   </script>
 </body>
