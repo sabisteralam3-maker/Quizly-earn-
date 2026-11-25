@@ -11,7 +11,7 @@
   <!-- Official Telegram WebApp SDK -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <!-- Monetag Rewarded Interstitial SDK (Zone 12347886) -->
-  <script src="https://niphaumeenses.net/vignette.min.js" data-zone="12347886" data-sdk="show_12347886" async></script>
+  <script src="//libtl.com/sdk.js" data-zone="12347886" data-sdk="show_12347886" async></script>
   <!-- Google Fonts: Fredoka & Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -43,6 +43,13 @@
       color: var(--indigo-ink);
       min-height: 100vh;
       overflow-x: hidden;
+    }
+
+    /* Lock background scroll cleanly when full-screen Claim Coins or Game Arena overlay is open */
+    body.modal-open {
+      overflow: hidden !important;
+      touch-action: none;
+      height: 100dvh;
     }
 
     .font-display {
@@ -126,9 +133,9 @@
       transform: translateY(3px) scale(0.98);
     }
     button:disabled {
-      opacity: 0.55;
+      opacity: 0.58;
       cursor: not-allowed;
-      filter: grayscale(0.2);
+      filter: grayscale(0.18);
     }
 
     .btn-3d-gold {
@@ -165,6 +172,20 @@
       color: #FFFFFF;
     }
     .btn-3d-pink:active:not(:disabled) { box-shadow: 0 2px 0 #9D174D; }
+
+    @keyframes pulseGlowBtn {
+      0%, 100% {
+        box-shadow: 0 5px 0 #065F46, 0 0 0 0 rgba(16, 185, 129, 0.65);
+        transform: scale(1);
+      }
+      50% {
+        box-shadow: 0 5px 0 #065F46, 0 0 24px 6px rgba(16, 185, 129, 0.45);
+        transform: scale(1.02);
+      }
+    }
+    .btn-claim-ready {
+      animation: pulseGlowBtn 1.5s ease-in-out infinite;
+    }
 
     /* Distinct 3D Feature Icon Capsules */
     .icon-cap-home {
@@ -238,6 +259,24 @@
       animation: float3D 3s ease-in-out infinite;
     }
 
+    @keyframes coinSpin3D {
+      0% { transform: perspective(500px) rotateY(0deg) translateY(0px); }
+      50% { transform: perspective(500px) rotateY(180deg) translateY(-7px); }
+      100% { transform: perspective(500px) rotateY(360deg) translateY(0px); }
+    }
+    .animate-coin-spin-3d {
+      animation: coinSpin3D 2.6s ease-in-out infinite;
+    }
+
+    @keyframes popupZoomIn {
+      0% { opacity: 0; transform: scale(0.72) translateY(20px); }
+      70% { opacity: 1; transform: scale(1.03) translateY(-2px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .animate-popup-zoom {
+      animation: popupZoomIn 0.36s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
     @keyframes coinBurst {
       0% { transform: scale(0.3) rotate(-25deg); opacity: 0; }
       65% { transform: scale(1.12) rotate(8deg); opacity: 1; }
@@ -257,6 +296,27 @@
       border-radius: 9999px;
       pointer-events: none;
       animation: particleDrift 3.2s ease-in infinite;
+    }
+
+    /* Full-Screen Claim Coins Overlay (Top-level child of <body>, above all nav & modals) */
+    #claimCoinsOverlay {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100dvh;
+      z-index: 99999;
+      background: radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.92) 0%, rgba(235, 224, 255, 0.88) 55%, rgba(214, 238, 255, 0.92) 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      padding-top: max(16px, var(--safe-top));
+      padding-bottom: max(16px, var(--safe-bottom));
+    }
+    #claimCoinsOverlay.is-visible {
+      display: flex;
     }
 
     /* Page Transitions */
@@ -657,7 +717,7 @@
           <div>
             <span class="bg-white/25 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase">60-Second Timed Sessions</span>
             <h3 class="font-display text-lg font-bold mt-1 leading-snug">Play 60s & Claim Verified Coins</h3>
-            <p class="text-[11px] text-sky-100 mt-0.5">Auto Game Over at 00:00 + Monetag reward claim</p>
+            <p class="text-[11px] text-sky-100 mt-0.5">Auto Game Over opens the 3D Claim Coins popup</p>
           </div>
           <div class="w-16 h-16 rounded-3xl icon-cap-games flex items-center justify-center shrink-0 animate-float-3d">
             <i class="fa-solid fa-stopwatch text-3xl text-white"></i>
@@ -723,7 +783,7 @@
       </div>
     </section>
 
-    <!-- ==================== PAGE 4: SPIN & WIN (SEPARATE PAGE + 20s TIMER) ==================== -->
+    <!-- ==================== PAGE 4: SPIN & WIN ==================== -->
     <section id="page-spin" class="screen-page px-4 pt-3 pb-4">
       <div class="flex items-center justify-between mb-3">
         <button onclick="navigateTo('home')" class="w-10 h-10 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900">
@@ -739,7 +799,7 @@
            style="background: linear-gradient(135deg, #EC4899 0%, #8B5CF6 100%);">
         <div>
           <h3 class="font-display font-bold text-base">Spin & Win <span id="spinRangeText">1 – 100</span> Coins</h3>
-          <p class="text-xs text-pink-100">20s timer + Monetag ad verification</p>
+          <p class="text-xs text-pink-100">Spin wheel to unlock the 3D Claim popup</p>
         </div>
         <div class="bg-white/25 backdrop-blur px-3 py-1.5 rounded-2xl text-center">
           <p class="text-[10px] uppercase font-bold">Remaining</p>
@@ -747,8 +807,8 @@
         </div>
       </div>
 
-      <div class="glass-3d-card glow-rim-purple rounded-3xl p-4 flex flex-col items-center relative mb-3">
-        <div class="w-0 h-0 border-l-[15px] border-l-transparent border-r-[15px] border-r-transparent border-t-[26px] border-t-rose-600 drop-shadow-md z-10 -mb-2"></div>
+      <div class="glass-3d-card glow-rim-purple rounded-3xl p-5 flex flex-col items-center relative mb-3">
+        <div class="w-0 h-0 border-l-[16px] border-l-transparent border-r-[16px] border-r-transparent border-t-[28px] border-t-rose-600 drop-shadow-md z-10 -mb-2"></div>
 
         <div class="relative w-64 h-64 flex items-center justify-center">
           <canvas id="spinCanvas" width="280" height="280" class="w-full h-full rounded-full shadow-2xl"></canvas>
@@ -758,22 +818,14 @@
           </button>
         </div>
 
-        <div id="spinVerificationBox" class="hidden w-full mt-4 p-3.5 rounded-2xl bg-indigo-50 border-2 border-indigo-200 text-center">
-          <p class="text-xs font-extrabold text-indigo-950">You won <span id="spinWonPreview" class="text-purple-700">0</span> Coins! Wait 20s to unlock Claim</p>
-          <div class="my-2 flex items-center justify-center gap-2">
-            <span class="w-9 h-9 rounded-full bg-purple-600 text-white font-display font-bold text-sm flex items-center justify-center shadow" id="spinCountdownNum">20</span>
-            <div class="flex-1 h-3 rounded-full bg-purple-200 overflow-hidden p-0.5">
-              <div id="spinCountdownBar" class="h-full rounded-full bg-gradient-to-r from-purple-600 to-pink-500 transition-all duration-300" style="width: 0%;"></div>
-            </div>
-          </div>
-          <button id="spinClaimBtn" disabled onclick="claimSpinReward()" class="btn-3d btn-3d-gold w-full py-2.5 rounded-2xl font-display font-bold text-sm">
-            Wait 20s to Claim Coins
-          </button>
-        </div>
+        <button onclick="startSpinWheel()" class="btn-3d btn-3d-gold w-full mt-5 py-3.5 rounded-2xl font-display font-bold text-base flex items-center justify-center gap-2">
+          <i class="fa-solid fa-dharmachakra"></i>
+          <span>Spin Lucky Wheel</span>
+        </button>
       </div>
     </section>
 
-    <!-- ==================== PAGE 5: SCRATCH & WIN (SEPARATE PAGE + 20s TIMER) ==================== -->
+    <!-- ==================== PAGE 5: SCRATCH & WIN ==================== -->
     <section id="page-scratch" class="screen-page px-4 pt-3 pb-4">
       <div class="flex items-center justify-between mb-3">
         <button onclick="navigateTo('home')" class="w-10 h-10 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900">
@@ -789,7 +841,7 @@
            style="background: linear-gradient(135deg, #F59E0B 0%, #EA580C 100%);">
         <div>
           <h3 class="font-display font-bold text-base">Scratch & Win <span id="scratchRangeText">1 – 100</span> Coins</h3>
-          <p class="text-xs text-amber-100">Scratch golden foil, wait 20s & claim</p>
+          <p class="text-xs text-amber-100">Scratch golden foil to unlock your prize</p>
         </div>
         <div class="bg-white/25 backdrop-blur px-3 py-1.5 rounded-2xl text-center">
           <p class="text-[10px] uppercase font-bold">Remaining</p>
@@ -798,34 +850,22 @@
       </div>
 
       <div class="glass-3d-card glow-rim-gold rounded-3xl p-4 mb-4">
-        <div class="relative w-full h-52 rounded-2xl overflow-hidden shadow-inner border-2 border-amber-400 bg-gradient-to-br from-amber-100 via-yellow-50 to-amber-200 flex flex-col items-center justify-center">
+        <div class="relative w-full h-56 rounded-2xl overflow-hidden shadow-inner border-2 border-amber-400 bg-gradient-to-br from-amber-100 via-yellow-50 to-amber-200 flex flex-col items-center justify-center">
           <div class="text-center p-4">
             <div class="w-14 h-14 mx-auto rounded-2xl icon-cap-scratch flex items-center justify-center text-amber-950 text-2xl mb-2">
               <i class="fa-solid fa-coins"></i>
             </div>
             <p class="text-xs font-extrabold text-amber-800 uppercase">Scratch Prize</p>
             <p class="font-display text-3xl font-extrabold text-indigo-950 mt-0.5">+<span id="scratchPrizePreview">0</span> Coins</p>
-            <p class="text-[11px] font-semibold text-slate-600 mt-1">Complete 20s timer + Monetag ad to claim</p>
+            <p class="text-[11px] font-semibold text-slate-600 mt-1">Scratch at least 55% of the foil!</p>
           </div>
           <canvas id="scratchFoilCanvas" class="absolute inset-0 w-full h-full cursor-pointer touch-none"></canvas>
         </div>
 
-        <div id="scratchVerificationBox" class="hidden mt-4 p-3.5 rounded-2xl bg-amber-50 border-2 border-amber-300 text-center">
-          <p class="text-xs font-extrabold text-amber-950">Card Revealed! Wait 20s to unlock Claim Coins</p>
-          <div class="my-2 flex items-center justify-center gap-2">
-            <span class="w-9 h-9 rounded-full bg-amber-600 text-white font-display font-bold text-sm flex items-center justify-center shadow" id="scratchCountdownNum">20</span>
-            <div class="flex-1 h-3 rounded-full bg-amber-200 overflow-hidden p-0.5">
-              <div id="scratchCountdownBar" class="h-full rounded-full bg-gradient-to-r from-amber-500 to-rose-500 transition-all duration-300" style="width: 0%;"></div>
-            </div>
-          </div>
-          <button id="scratchClaimBtn" disabled onclick="claimScratchReward()" class="btn-3d btn-3d-gold w-full py-2.5 rounded-2xl font-display font-bold text-sm">
-            Wait 20s to Claim Coins
-          </button>
-        </div>
-
-        <div class="mt-3 flex justify-end">
+        <div class="mt-3 flex justify-between items-center">
+          <span class="text-[11px] font-bold text-slate-500">Rub your finger across the card above</span>
           <button onclick="resetScratchFoil()" class="btn-3d btn-3d-purple px-4 py-2 rounded-xl text-xs font-bold">
-            New Scratch Card
+            New Card
           </button>
         </div>
       </div>
@@ -849,7 +889,7 @@
           Watch Ads & Earn <span id="adRewardCoinsText">20</span> Coins Per Ad!
         </h3>
         <p class="text-xs font-semibold text-slate-600 mt-1">
-          Powered by Monetag Rewarded Interstitial (<code>show_12347886</code>). Complete the 20-second timer and watch the full ad to receive verified coins.
+          Powered by Monetag Rewarded Interstitial (<code>show_12347886</code>). Tap Watch Now to open the 20-second verification popup and claim coins.
         </p>
 
         <div class="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-sky-50 border-2 border-sky-200">
@@ -858,21 +898,8 @@
           <span class="text-xs font-bold text-slate-500">/ <span id="adsLimitMaxText">50</span></span>
         </div>
 
-        <div id="adsVerificationBox" class="hidden mt-4 p-4 rounded-2xl bg-sky-50 border-2 border-sky-200">
-          <p class="text-xs font-extrabold text-sky-950">Verifying Ad Slot Availability...</p>
-          <div class="my-2.5 flex items-center justify-center gap-2">
-            <span class="w-9 h-9 rounded-full bg-sky-600 text-white font-display font-bold text-sm flex items-center justify-center shadow" id="adsCountdownNum">20</span>
-            <div class="flex-1 h-3 rounded-full bg-sky-200 overflow-hidden p-0.5">
-              <div id="adsCountdownBar" class="h-full rounded-full bg-gradient-to-r from-sky-500 to-indigo-600 transition-all duration-300" style="width: 0%;"></div>
-            </div>
-          </div>
-          <button id="adsClaimBtn" disabled onclick="claimWatchAdReward()" class="btn-3d btn-3d-green w-full py-3 rounded-2xl font-display font-bold text-sm">
-            Wait 20s to Claim Coins
-          </button>
-        </div>
-
-        <button id="watchAdStartBtn" onclick="startWatchAdTimer()" class="btn-3d btn-3d-pink w-full mt-5 py-3.5 rounded-2xl font-display font-bold text-base flex items-center justify-center gap-2">
-          <span>Start Ad Timer</span>
+        <button id="watchAdStartBtn" onclick="triggerWatchAdClaimPopup()" class="btn-3d btn-3d-pink w-full mt-5 py-3.5 rounded-2xl font-display font-bold text-base flex items-center justify-center gap-2">
+          <span>Watch Now & Earn <span id="watchBtnCoinsLabel">20</span> Coins</span>
           <i class="fa-solid fa-play"></i>
         </button>
       </div>
@@ -923,7 +950,7 @@
       </div>
     </section>
 
-    <!-- ==================== PAGE 8: REFER & EARN (https://t.me/SmartuEarninng_bot/app) ==================== -->
+    <!-- ==================== PAGE 8: REFER & EARN ==================== -->
     <section id="page-refer" class="screen-page px-4 pt-3 pb-4">
       <div class="flex items-center justify-between mb-3">
         <button onclick="navigateTo('home')" class="w-10 h-10 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900">
@@ -1094,7 +1121,7 @@
       </div>
     </section>
 
-    <!-- ==================== PAGE 11: DAILY BONUS (FIXED 7-DAY STREAK) ==================== -->
+    <!-- ==================== PAGE 11: DAILY BONUS ==================== -->
     <section id="page-daily" class="screen-page px-4 pt-3 pb-4">
       <div class="flex items-center justify-between mb-3">
         <button onclick="navigateTo('home')" class="w-10 h-10 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900">
@@ -1121,10 +1148,8 @@
         </div>
       </div>
 
-      <!-- Days 1 through 6 -->
       <div id="dailyStreakGrid" class="grid grid-cols-3 gap-2.5 mb-3"></div>
 
-      <!-- Day 7 Mega Bonus + Primary Claim Button -->
       <div class="rounded-3xl p-4 text-white flex items-center justify-between shadow-xl"
            style="background: linear-gradient(135deg, #6D28D9 0%, #EC4899 100%);">
         <div class="flex items-center gap-3">
@@ -1241,7 +1266,7 @@
         <h3 class="font-display font-bold text-base text-indigo-950 mb-1">FAQ & Reward Rules</h3>
         <details class="p-3 rounded-2xl bg-white/90 border border-purple-100" open>
           <summary class="font-extrabold text-indigo-950 cursor-pointer">How do Monetag Rewarded Ads work?</summary>
-          <p class="mt-1.5 text-slate-600">After completing a spin, scratch, 60-second game session, or watch ad timer, click Claim Coins to launch the Monetag rewarded interstitial. Coins are credited once the ad finishes and session verification succeeds.</p>
+          <p class="mt-1.5 text-slate-600">After completing a spin, scratch, 60-second game session, or Watch Now action, wait 20 seconds on the Claim Coins popup and tap "Claim Coins & Watch Ad" to view the Monetag rewarded interstitial. Coins are credited once the ad completes.</p>
         </details>
         <details class="p-3 rounded-2xl bg-white/90 border border-purple-100">
           <summary class="font-extrabold text-indigo-950 cursor-pointer">How do Google Play & Amazon Gift Codes arrive?</summary>
@@ -1345,7 +1370,7 @@
     </div>
   </div>
 
-  <!-- ==================== 60-SECOND PLAYABLE MINI-GAME ARENA & GAME OVER POPUP ==================== -->
+  <!-- ==================== 60-SECOND PLAYABLE MINI-GAME ARENA ==================== -->
   <div id="gameArenaModal" class="fixed inset-0 z-50 hidden bg-indigo-950/65 backdrop-blur-sm flex items-center justify-center p-3">
     <div class="glass-3d-card glow-rim-purple rounded-3xl max-w-sm w-full p-4 relative">
       <div class="flex items-center justify-between mb-2">
@@ -1370,20 +1395,6 @@
         <div id="gridGameBoard" class="w-full h-full"></div>
       </div>
 
-      <!-- 60s Game Over Popup Overlay -->
-      <div id="gameOverBanner" class="hidden mt-3 p-4 rounded-2xl bg-gradient-to-br from-amber-50 to-purple-50 border-2 border-amber-400 text-center shadow-lg">
-        <div class="w-12 h-12 mx-auto rounded-2xl icon-cap-rank flex items-center justify-center text-amber-950 text-xl mb-1.5">
-          <i class="fa-solid fa-flag-checkered"></i>
-        </div>
-        <h4 class="font-display font-bold text-lg text-indigo-950">Time's Up — Game Over!</h4>
-        <p class="text-xs font-bold text-slate-600 mt-0.5">
-          Score: <span id="finalGameScoreText" class="text-purple-700 font-extrabold">0</span> • Earned: <span id="finalGameCoinsText" class="text-amber-700 font-extrabold">0</span> Coins
-        </p>
-        <button id="submitGameScoreBtn" onclick="claimGameSessionCoins()" class="btn-3d btn-3d-gold w-full mt-3 py-3 rounded-2xl font-display font-bold text-sm">
-          <i class="fa-solid fa-coins mr-1"></i> Claim Coins (Watch Ad)
-        </button>
-      </div>
-
       <div class="grid grid-cols-2 gap-2 mt-3">
         <button onclick="restartCurrentGame()" class="btn-3d btn-3d-cyan py-2.5 rounded-2xl font-bold text-xs">
           <i class="fa-solid fa-rotate-right mr-1"></i> Restart 60s
@@ -1395,17 +1406,93 @@
     </div>
   </div>
 
-  <!-- ==================== 10. PREMIUM 3D REWARD SUCCESS POPUP ==================== -->
-  <div id="rewardSuccessModal" class="fixed inset-0 z-[70] hidden bg-indigo-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+  <!-- ==================== FULL-SCREEN 3D CLAIM COINS OVERLAY POPUP (TOP-LEVEL BODY CHILD, Z-INDEX 99999) ==================== -->
+  <div id="claimCoinsOverlay" role="dialog" aria-modal="true" aria-labelledby="claimPopupHeading">
+    <div id="claimPopupCard" class="glass-3d-card glow-rim-gold rounded-[32px] max-w-[390px] w-full p-6 text-center relative overflow-hidden animate-popup-zoom shadow-[0_28px_70px_rgba(91,33,182,0.38)]">
+      <!-- Rotating Light Rays Background -->
+      <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-35">
+        <div class="w-96 h-96 splash-light-rays"
+             style="background: repeating-conic-gradient(from 0deg, rgba(251, 191, 36, 0.42) 0deg 14deg, transparent 14deg 28deg); border-radius: 9999px;"></div>
+      </div>
+
+      <!-- Top-Right Close Button -->
+      <button type="button" onclick="closeClaimCoinsPopup()" aria-label="Close Claim Popup"
+              class="absolute top-3.5 right-3.5 z-20 w-9 h-9 rounded-full bg-white/95 border-2 border-purple-200 text-indigo-950 font-extrabold text-sm shadow-md flex items-center justify-center active:scale-90 transition">
+        ✕
+      </button>
+
+      <div class="relative z-10">
+        <!-- Activity Source Pill -->
+        <span id="claimPopupSourceBadge" class="inline-block px-3.5 py-1 rounded-full bg-purple-100 border border-purple-200 text-purple-800 font-extrabold text-[11px] uppercase tracking-wider">
+          Reward Unlocked
+        </span>
+
+        <!-- Animated 3D Spinning Golden Coin -->
+        <div class="my-3 flex justify-center">
+          <div class="w-24 h-24 rounded-full bg-gradient-to-br from-yellow-200 via-amber-400 to-orange-500 border-4 border-white shadow-[0_14px_30px_rgba(245,158,11,0.5)] flex items-center justify-center animate-coin-spin-3d">
+            <div class="w-16 h-16 rounded-full border-2 border-amber-200/90 flex items-center justify-center">
+              <i class="fa-solid fa-coins text-4xl text-amber-950"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Heading -->
+        <h3 id="claimPopupHeading" class="font-display text-2xl font-extrabold text-indigo-950 tracking-tight">
+          Congratulations! 🎉
+        </h3>
+
+        <!-- Exact Reward Coins Amount -->
+        <div class="my-2.5 py-2.5 px-5 rounded-2xl bg-gradient-to-r from-amber-100 via-yellow-100 to-amber-100 border-2 border-amber-400 inline-block shadow-inner">
+          <p class="font-display text-3xl font-extrabold text-amber-800">
+            +<span id="claimPopupCoinsAmount">0</span> Coins
+          </p>
+        </div>
+
+        <!-- 20-Second Animated Circular Countdown Ring -->
+        <div class="mt-2 mb-3 flex flex-col items-center">
+          <div class="relative w-20 h-20 flex items-center justify-center">
+            <svg class="w-20 h-20 -rotate-90" viewBox="0 0 80 80">
+              <circle cx="40" cy="40" r="34" stroke="#E9D5FF" stroke-width="7" fill="rgba(255,255,255,0.85)" />
+              <circle id="claimCountdownCircle" cx="40" cy="40" r="34" stroke="url(#claimRingGrad)" stroke-width="7"
+                      stroke-linecap="round" fill="none" stroke-dasharray="213.6" stroke-dashoffset="0"
+                      style="transition: stroke-dashoffset 0.35s linear;" />
+              <defs>
+                <linearGradient id="claimRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#8B5CF6" />
+                  <stop offset="50%" stop-color="#EC4899" />
+                  <stop offset="100%" stop-color="#F59E0B" />
+                </linearGradient>
+              </defs>
+            </svg>
+            <div class="absolute inset-0 flex flex-col items-center justify-center">
+              <span id="claimCountdownSecondsText" class="font-display text-xl font-extrabold text-indigo-950 leading-none">20s</span>
+              <span class="text-[9px] font-extrabold uppercase text-purple-600 mt-0.5">Verify</span>
+            </div>
+          </div>
+          <p id="claimPopupSubStatus" class="text-xs font-bold text-slate-600 mt-1.5">
+            Verifying reward eligibility... Please wait 20 seconds.
+          </p>
+        </div>
+
+        <!-- Large Glowing Action Button -->
+        <button id="claimCoinsActionBtn" type="button" disabled onclick="executeClaimCoinsAndWatchAd()"
+                class="btn-3d btn-3d-gold w-full py-4 rounded-2xl font-display font-bold text-base flex items-center justify-center gap-2 shadow-xl">
+          <i class="fa-solid fa-hourglass-half"></i>
+          <span id="claimCoinsBtnLabel">Wait 20s...</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== PREMIUM 3D REWARD SUCCESS POPUP ==================== -->
+  <div id="rewardSuccessModal" class="fixed inset-0 z-[100000] hidden bg-indigo-950/60 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="glass-3d-card glow-rim-gold rounded-3xl max-w-sm w-full p-6 text-center relative overflow-hidden">
-      <!-- Light Rays -->
       <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-35">
         <div class="w-80 h-80 splash-light-rays"
              style="background: repeating-conic-gradient(from 0deg, rgba(251, 191, 36, 0.35) 0deg 15deg, transparent 15deg 30deg); border-radius: 9999px;"></div>
       </div>
 
       <div class="relative z-10">
-        <!-- Animated 3D Golden Coins Burst -->
         <div class="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-yellow-200 via-amber-400 to-orange-500 border-4 border-white shadow-2xl flex items-center justify-center animate-coin-burst mb-3">
           <i class="fa-solid fa-coins text-4xl text-amber-950"></i>
         </div>
@@ -1415,7 +1502,7 @@
         </span>
 
         <h3 id="successPopupTitle" class="font-display text-2xl font-extrabold text-indigo-950 mt-2">
-          Congratulations!
+          Congratulations! 🎉
         </h3>
 
         <div class="my-3 py-2.5 px-4 rounded-2xl bg-amber-100/90 border-2 border-amber-300 inline-block">
@@ -1440,7 +1527,7 @@
   </div>
 
   <!-- ==================== NON-BLOCKING TOAST ==================== -->
-  <div id="appToast" class="fixed top-4 left-1/2 -translate-x-1/2 z-[80] hidden max-w-[390px] w-[92%] px-4 py-3 rounded-2xl shadow-2xl text-white font-bold text-xs flex items-center gap-2.5">
+  <div id="appToast" class="fixed top-4 left-1/2 -translate-x-1/2 z-[100001] hidden max-w-[390px] w-[92%] px-4 py-3 rounded-2xl shadow-2xl text-white font-bold text-xs flex items-center gap-2.5">
     <i id="appToastIcon" class="fa-solid fa-circle-info text-base"></i>
     <span id="appToastMsg">Status updated</span>
   </div>
@@ -1535,15 +1622,14 @@
       selectedWithdrawMethod: "UPI",
       leaderboardMode: "weekly",
       allUsersList: [],
-      pendingSpinPrize: 0,
-      pendingSpinSessionId: "",
       pendingScratchPrize: 0,
       pendingScratchSessionId: "",
-      pendingWatchAdSessionId: "",
       activeGameId: null,
       currentGameScore: 0,
       currentGameSessionId: "",
-      isClaimLockActive: false
+      // Active Claim Popup state
+      activeClaimPayload: null,
+      isClaiming: false
     };
 
     // ==================== TELEGRAM PROFILE PHOTO RENDERER ====================
@@ -1619,7 +1705,7 @@
       const icon = document.getElementById("appToastIcon");
       const msg = document.getElementById("appToastMsg");
       msg.textContent = message;
-      el.className = "fixed top-4 left-1/2 -translate-x-1/2 z-[80] max-w-[390px] w-[92%] px-4 py-3 rounded-2xl shadow-2xl text-white font-bold text-xs flex items-center gap-2.5 ";
+      el.className = "fixed top-4 left-1/2 -translate-x-1/2 z-[100001] max-w-[390px] w-[92%] px-4 py-3 rounded-2xl shadow-2xl text-white font-bold text-xs flex items-center gap-2.5 ";
       if (type === "error") {
         el.classList.add("bg-rose-600");
         icon.className = "fa-solid fa-circle-exclamation text-base";
@@ -1635,124 +1721,228 @@
       window._toastTimeout = setTimeout(() => el.classList.add("hidden"), 3400);
     };
 
-    // ==================== 10. PREMIUM 3D REWARD SUCCESS POPUP ====================
+    // ==================== UNIFIED FULL-SCREEN 3D CLAIM COINS OVERLAY ====================
+    let claimCountdownInterval = null;
+    const CIRCLE_CIRCUMFERENCE = 213.6;
+
+    window.openClaimCoinsPopup = function({ source, sourceLabel, title, reward, sessionId, dailyCounterField, dailyLimit, onCompleted }) {
+      const safeCoins = Math.max(1, Math.floor(Number(reward) || 0));
+      if (!sessionId) {
+        showToast("Invalid reward session ID.", "error");
+        return;
+      }
+
+      clearInterval(claimCountdownInterval);
+      state.isClaiming = false;
+      state.activeClaimPayload = {
+        source,
+        sourceLabel: sourceLabel || "Reward Unlocked",
+        title: title || "Verified Reward",
+        reward: safeCoins,
+        sessionId,
+        dailyCounterField: dailyCounterField || null,
+        dailyLimit: Number(dailyLimit) || 0,
+        onCompleted: typeof onCompleted === "function" ? onCompleted : null
+      };
+
+      // Populate full-screen overlay UI
+      document.getElementById("claimPopupSourceBadge").textContent = state.activeClaimPayload.sourceLabel;
+      document.getElementById("claimPopupCoinsAmount").textContent = safeCoins.toLocaleString();
+
+      const btn = document.getElementById("claimCoinsActionBtn");
+      const btnLabel = document.getElementById("claimCoinsBtnLabel");
+      const secText = document.getElementById("claimCountdownSecondsText");
+      const subStatus = document.getElementById("claimPopupSubStatus");
+      const circle = document.getElementById("claimCountdownCircle");
+
+      let secondsLeft = 20;
+      btn.disabled = true;
+      btn.classList.remove("btn-3d-green", "btn-claim-ready");
+      btn.classList.add("btn-3d-gold");
+      btn.innerHTML = `<i class="fa-solid fa-hourglass-half"></i> <span id="claimCoinsBtnLabel">Wait ${secondsLeft}s...</span>`;
+      secText.textContent = `${secondsLeft}s`;
+      circle.style.strokeDashoffset = "0";
+      subStatus.textContent = "Verifying reward session... Please wait 20 seconds.";
+
+      // Show overlay and lock background scrolling
+      const overlay = document.getElementById("claimCoinsOverlay");
+      overlay.classList.add("is-visible");
+      document.body.classList.add("modal-open");
+      playSoundEffect(760, 0.14);
+      triggerHaptic("medium");
+
+      claimCountdownInterval = setInterval(() => {
+        secondsLeft--;
+        const clamped = Math.max(0, secondsLeft);
+        secText.textContent = `${clamped}s`;
+        const progress = (20 - clamped) / 20;
+        circle.style.strokeDashoffset = String(CIRCLE_CIRCUMFERENCE * progress);
+
+        const liveLabel = document.getElementById("claimCoinsBtnLabel");
+        if (liveLabel) liveLabel.textContent = `Wait ${clamped}s...`;
+
+        if (secondsLeft <= 0) {
+          clearInterval(claimCountdownInterval);
+          btn.disabled = false;
+          btn.classList.remove("btn-3d-gold");
+          btn.classList.add("btn-3d-green", "btn-claim-ready");
+          btn.innerHTML = `<i class="fa-solid fa-circle-play"></i> <span id="claimCoinsBtnLabel">Claim Coins & Watch Ad</span>`;
+          subStatus.textContent = "Verification ready! Tap below to watch Monetag ad & receive coins.";
+          playSoundEffect(880, 0.16);
+          triggerHaptic("heavy");
+        }
+      }, 1000);
+    };
+
+    window.closeClaimCoinsPopup = function() {
+      clearInterval(claimCountdownInterval);
+      state.activeClaimPayload = null;
+      state.isClaiming = false;
+      const overlay = document.getElementById("claimCoinsOverlay");
+      overlay.classList.remove("is-visible");
+      document.body.classList.remove("modal-open");
+    };
+
+    window.executeClaimCoinsAndWatchAd = async function() {
+      if (state.isClaiming || !state.activeClaimPayload) return;
+      const payload = { ...state.activeClaimPayload };
+
+      state.isClaiming = true;
+      const btn = document.getElementById("claimCoinsActionBtn");
+      btn.disabled = true;
+      btn.classList.remove("btn-claim-ready");
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> <span>Loading Monetag Ad...</span>`;
+
+      try {
+        // 1. Invoke official Monetag Rewarded Interstitial SDK Promise
+        if (typeof window.show_12347886 === "function") {
+          await window.show_12347886();
+        } else {
+          throw new Error("Monetag Ad SDK is not ready or blocked by an ad-blocker. Please allow ads and try again.");
+        }
+
+        btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> <span>Crediting Verified Coins...</span>`;
+
+        // 2. Credit coins atomically in Firebase Realtime Database with duplicate session lock
+        const creditedOk = await commitVerifiedRewardTransaction(payload);
+        if (creditedOk) {
+          const callbackFn = payload.onCompleted;
+          closeClaimCoinsPopup();
+          if (callbackFn) callbackFn();
+          openRewardSuccessPopup(
+            "Congratulations! 🎉",
+            payload.reward,
+            `Monetag rewarded ad completed! +${payload.reward} Coins added to your wallet.`
+          );
+        }
+      } catch (err) {
+        const msg = err && err.message ? err.message : "Ad was closed early or failed to load. No coins awarded.";
+        showToast(msg, "error");
+        state.isClaiming = false;
+        btn.disabled = false;
+        btn.classList.add("btn-claim-ready");
+        btn.innerHTML = `<i class="fa-solid fa-circle-play"></i> <span id="claimCoinsBtnLabel">Claim Coins & Watch Ad</span>`;
+      }
+    };
+
+    async function commitVerifiedRewardTransaction(payload) {
+      const { source, title, reward, sessionId, dailyCounterField, dailyLimit } = payload;
+
+      // Optional trusted backend endpoint if configured by admin
+      if (state.appSettings.rewardVerifyEndpoint) {
+        const resp = await fetch(state.appSettings.rewardVerifyEndpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            telegramId: state.telegramId,
+            initData: state.initDataRaw,
+            type: source,
+            sessionId,
+            coins: reward
+          })
+        });
+        const resData = await resp.json();
+        if (!resp.ok || !resData.ok) {
+          throw new Error(resData.error || "Server reward verification failed.");
+        }
+        return true;
+      }
+
+      // Single-claim atomic guard per sessionId
+      const sessionLockRef = ref(db, `claimedSessions/${state.telegramId}/${sessionId}`);
+      const lockSnap = await get(sessionLockRef);
+      if (lockSnap.exists()) {
+        throw new Error("This reward has already been claimed.");
+      }
+
+      const today = getTodayKey();
+      const userRef = ref(db, `users/${state.telegramId}`);
+      const txResult = await runTransaction(userRef, (current) => {
+        if (!current) return current;
+        const isNewDay = current.activityDate !== today;
+        const currentDailyCount = isNewDay ? 0 : (Number(current[dailyCounterField]) || 0);
+        if (dailyCounterField && dailyLimit > 0 && currentDailyCount >= dailyLimit) {
+          return; // Abort transaction if daily limit exceeded
+        }
+
+        current.activityDate = today;
+        current.coins = (Number(current.coins) || 0) + reward;
+        current.weeklyCoins = (Number(current.weeklyCoins) || 0) + reward;
+        current.totalEarned = (Number(current.totalEarned) || 0) + reward;
+        current.todayEarned = (isNewDay ? 0 : (Number(current.todayEarned) || 0)) + reward;
+
+        if (isNewDay) {
+          current.todaySpins = 0;
+          current.todayScratches = 0;
+          current.todayAds = 0;
+          current.todayGames = 0;
+          current.todayRedeems = 0;
+        }
+        if (dailyCounterField) {
+          current[dailyCounterField] = currentDailyCount + 1;
+        }
+        return current;
+      });
+
+      if (!txResult.committed) {
+        throw new Error("Daily limit reached or balance update failed.");
+      }
+
+      await set(sessionLockRef, {
+        source,
+        coins: reward,
+        timestamp: Date.now()
+      });
+
+      await push(ref(db, `transactions/${state.telegramId}`), {
+        type: source,
+        title,
+        amount: reward,
+        sessionId,
+        status: "Verified",
+        timestamp: Date.now()
+      });
+
+      const updatedCoins = txResult.snapshot.val()?.coins ?? (state.userProfile.coins + reward);
+      state.userProfile.coins = updatedCoins;
+      return true;
+    }
+
+    // ==================== REWARD SUCCESS POPUP ====================
     window.openRewardSuccessPopup = function(title, coinsAwarded, customMessage) {
-      playSoundEffect(880, 0.22);
+      playSoundEffect(920, 0.22);
       triggerHaptic("heavy");
-      document.getElementById("successPopupTitle").textContent = title || "Reward Unlocked!";
+      document.getElementById("successPopupTitle").textContent = title || "Congratulations! 🎉";
       document.getElementById("successPopupCoins").textContent = Number(coinsAwarded || 0).toLocaleString();
       document.getElementById("successPopupMessage").textContent = customMessage || "Your verified reward has been credited to your wallet!";
       document.getElementById("successPopupNewBalance").textContent = Number(state.userProfile.coins || 0).toLocaleString();
       document.getElementById("rewardSuccessModal").classList.remove("hidden");
+      document.body.classList.add("modal-open");
     };
 
     window.closeRewardSuccessPopup = function() {
       document.getElementById("rewardSuccessModal").classList.add("hidden");
-    };
-
-    // ==================== 1. MONETAG REWARDED INTERSTITIAL + VERIFIED CREDIT ====================
-    // Reusable Monetag show_12347886() wrapper + atomic duplicate-protected reward credit
-    window.executeMonetagAndCredit = async function({ type, sessionId, coins, title, dailyCounterField, dailyLimit }) {
-      if (state.isClaimLockActive) return;
-      if (!sessionId) return showToast("Invalid activity session ID.", "error");
-      if (coins <= 0) return showToast("Reward amount must be greater than 0.", "error");
-
-      state.isClaimLockActive = true;
-      try {
-        // 1. Invoke official Monetag Rewarded Interstitial SDK Promise
-        if (typeof window.show_12347886 !== "function") {
-          throw new Error("Monetag Ad SDK is blocked or still loading. Disable ad-blockers and retry.");
-        }
-
-        await window.show_12347886();
-
-        // 2. If a trusted backend reward-verification endpoint is configured, verify HMAC + session server-side
-        if (state.appSettings.rewardVerifyEndpoint) {
-          const resp = await fetch(state.appSettings.rewardVerifyEndpoint, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              telegramId: state.telegramId,
-              initData: state.initDataRaw,
-              type,
-              sessionId,
-              coins
-            })
-          });
-          const resData = await resp.json();
-          if (!resp.ok || !resData.ok) {
-            throw new Error(resData.error || "Server reward verification failed.");
-          }
-          openRewardSuccessPopup(title, resData.creditedCoins || coins);
-          return true;
-        }
-
-        // 3. Atomic Firebase claim lock & balance update (prevents duplicate sessionId claims)
-        const sessionLockRef = ref(db, `claimedSessions/${state.telegramId}/${sessionId}`);
-        const lockSnap = await get(sessionLockRef);
-        if (lockSnap.exists()) {
-          throw new Error("This reward session has already been claimed.");
-        }
-
-        const today = getTodayKey();
-        const userRef = ref(db, `users/${state.telegramId}`);
-        const txResult = await runTransaction(userRef, (current) => {
-          if (!current) return current;
-          const isNewDay = current.activityDate !== today;
-          const currentDailyCount = isNewDay ? 0 : (Number(current[dailyCounterField]) || 0);
-          if (dailyCounterField && dailyLimit && currentDailyCount >= dailyLimit) {
-            return; // Abort transaction if daily limit exceeded
-          }
-
-          current.activityDate = today;
-          current.coins = (Number(current.coins) || 0) + coins;
-          current.weeklyCoins = (Number(current.weeklyCoins) || 0) + coins;
-          current.totalEarned = (Number(current.totalEarned) || 0) + coins;
-          current.todayEarned = (isNewDay ? 0 : (Number(current.todayEarned) || 0)) + coins;
-
-          if (isNewDay) {
-            current.todaySpins = 0;
-            current.todayScratches = 0;
-            current.todayAds = 0;
-            current.todayGames = 0;
-            current.todayRedeems = 0;
-          }
-          if (dailyCounterField) {
-            current[dailyCounterField] = currentDailyCount + 1;
-          }
-          return current;
-        });
-
-        if (!txResult.committed) {
-          throw new Error("Daily limit reached or balance update could not be committed.");
-        }
-
-        await set(sessionLockRef, {
-          type,
-          coins,
-          timestamp: Date.now()
-        });
-
-        await push(ref(db, `transactions/${state.telegramId}`), {
-          type,
-          title,
-          amount: coins,
-          sessionId,
-          status: "Verified",
-          timestamp: Date.now()
-        });
-
-        const updatedCoins = txResult.snapshot.val()?.coins ?? (state.userProfile.coins + coins);
-        state.userProfile.coins = updatedCoins;
-        openRewardSuccessPopup(title, coins, `Monetag ad verified! +${coins} Coins added to your balance.`);
-        return true;
-      } catch (err) {
-        const msg = err && err.message ? err.message : "Ad was skipped or failed to complete. No coins awarded.";
-        showToast(msg, "error");
-        return false;
-      } finally {
-        state.isClaimLockActive = false;
-      }
+      document.body.classList.remove("modal-open");
     };
 
     // ==================== SPLASH & TELEGRAM BOOTSTRAP ====================
@@ -1797,7 +1987,13 @@
           tgUser = tg.initDataUnsafe.user;
           startParam = tg.initDataUnsafe.start_param || "";
         }
-        tg.BackButton.onClick(() => navigateTo("home"));
+        tg.BackButton.onClick(() => {
+          if (document.getElementById("claimCoinsOverlay").classList.contains("is-visible")) {
+            closeClaimCoinsPopup();
+          } else {
+            navigateTo("home");
+          }
+        });
       }
 
       if (!startParam) {
@@ -1916,7 +2112,6 @@
           createdAt: Date.now()
         };
 
-        // Process referral parameter (?startapp=SE<referrerId> or ref_<referrerId>)
         const cleanParam = (startParam || "").trim();
         const referrerId = cleanParam.replace(/^(SE|ref_)/i, "");
         if (referrerId && /^\d+$/.test(referrerId) && referrerId !== state.telegramId) {
@@ -1954,7 +2149,7 @@
       if (!referrerId || referrerId === newUserId) return;
       const refRecordRef = ref(db, `referrals/${referrerId}/${newUserId}`);
       const existingRefSnap = await get(refRecordRef);
-      if (existingRefSnap.exists()) return; // Prevent duplicate referral reward
+      if (existingRefSnap.exists()) return;
 
       const referrerSnap = await get(ref(db, `users/${referrerId}`));
       if (!referrerSnap.exists()) return;
@@ -2054,7 +2249,7 @@
               <button onclick="openTaskDestination('${t.id}', '${encodeURIComponent(t.destinationUrl || '')}')" class="btn-3d btn-3d-cyan px-3.5 py-1.5 rounded-xl font-bold text-xs">
                 Start
               </button>
-              <button id="claimTaskBtn-${t.id}" disabled onclick="claimTaskWithMonetag('${t.id}', ${Number(t.reward) || 0}, '${encodeURIComponent(t.name || t.title || 'Task')}')" class="btn-3d btn-3d-gold px-3.5 py-1.5 rounded-xl font-bold text-xs">
+              <button id="claimTaskBtn-${t.id}" disabled onclick="claimTaskWithPopup('${t.id}', ${Number(t.reward) || 0}, '${encodeURIComponent(t.name || t.title || 'Task')}')" class="btn-3d btn-3d-gold px-3.5 py-1.5 rounded-xl font-bold text-xs">
                 Claim
               </button>
             </div>
@@ -2204,6 +2399,7 @@
       document.getElementById("scratchLimitMaxText").textContent = cfg.dailyScratchLimit;
 
       document.getElementById("adRewardCoinsText").textContent = cfg.watchAdReward;
+      document.getElementById("watchBtnCoinsLabel").textContent = cfg.watchAdReward;
       document.getElementById("adsCompletedTodayText").textContent = u.todayAds || 0;
       document.getElementById("adsLimitMaxText").textContent = cfg.dailyAdLimit;
 
@@ -2232,7 +2428,7 @@
       document.getElementById("todayRedeemsUsed").textContent = u.todayRedeems || 0;
       document.getElementById("dailyRedeemMaxText").textContent = cfg.dailyRedeemLimit;
 
-      // 2. DAILY BONUS STREAK CALCULATION & UI
+      // Daily Bonus Streak UI
       const dailyArr = Array.isArray(cfg.dailyRewards) && cfg.dailyRewards.length >= 7
         ? cfg.dailyRewards
         : [100, 200, 300, 400, 500, 600, 1000];
@@ -2240,7 +2436,7 @@
       const claimedToday = u.lastDailyClaimDate === today;
       let activeStreakDay = Number(u.streakDay) || 1;
       if (!claimedToday && u.lastDailyClaimDate && u.lastDailyClaimDate !== getYesterdayKey()) {
-        activeStreakDay = 1; // Streak reset if user missed a calendar day
+        activeStreakDay = 1;
       }
       if (activeStreakDay < 1 || activeStreakDay > 7) activeStreakDay = 1;
 
@@ -2281,7 +2477,7 @@
       }).join("");
     }
 
-    // ==================== 2. FIXED DAILY BONUS CLAIM FUNCTION ====================
+    // ==================== DAILY BONUS CLAIM ====================
     window.claimDailyStreakBonus = async function() {
       const today = getTodayKey();
       const yesterday = getYesterdayKey();
@@ -2303,14 +2499,10 @@
         const userRef = ref(db, `users/${state.telegramId}`);
         const tx = await runTransaction(userRef, (curr) => {
           if (!curr) return curr;
-          if (curr.lastDailyClaimDate === today) {
-            return; // Abort duplicate daily claim
-          }
+          if (curr.lastDailyClaimDate === today) return;
 
           let day = Number(curr.streakDay) || 1;
-          if (curr.lastDailyClaimDate && curr.lastDailyClaimDate !== yesterday) {
-            day = 1;
-          }
+          if (curr.lastDailyClaimDate && curr.lastDailyClaimDate !== yesterday) day = 1;
           if (day < 1 || day > 7) day = 1;
 
           const reward = Number(dailyArr[day - 1]) || 100;
@@ -2342,7 +2534,7 @@
         });
 
         state.userProfile.coins = tx.snapshot.val()?.coins ?? (state.userProfile.coins + awardedAmount);
-        openRewardSuccessPopup(`Day ${claimedDayNum} Bonus!`, awardedAmount, `Streak updated! Come back tomorrow for Day ${tx.snapshot.val()?.streakDay || 2}.`);
+        openRewardSuccessPopup(`Day ${claimedDayNum} Bonus! 🎉`, awardedAmount, `Streak updated! Come back tomorrow for Day ${tx.snapshot.val()?.streakDay || 2}.`);
       } catch (err) {
         btn.disabled = false;
         showToast("Daily bonus claim error: " + err.message, "error");
@@ -2434,21 +2626,19 @@
       setTimeout(() => {
         const claimBtn = document.getElementById(`claimTaskBtn-${taskId}`);
         if (claimBtn) claimBtn.disabled = false;
-        showToast("Task visit complete. Tap Claim to watch ad & verify!", "info");
+        showToast("Task visit complete. Tap Claim to verify!", "info");
       }, 4000);
     };
 
-    window.claimTaskWithMonetag = async function(taskId, reward, encodedName) {
+    window.claimTaskWithPopup = function(taskId, reward, encodedName) {
       if (!startedTasks.has(taskId)) return showToast("Start the task first.", "error");
-      const btn = document.getElementById(`claimTaskBtn-${taskId}`);
-      if (btn) btn.disabled = true;
-      const ok = await executeMonetagAndCredit({
-        type: "task",
-        sessionId: `task_${taskId}_${state.telegramId}`,
-        coins: Number(reward) || 100,
-        title: `Task: ${decodeURIComponent(encodedName)}`
+      openClaimCoinsPopup({
+        source: "task",
+        sourceLabel: "Task Completed",
+        title: `Task: ${decodeURIComponent(encodedName)}`,
+        reward: Number(reward) || 100,
+        sessionId: `task_${taskId}_${state.telegramId}`
       });
-      if (!ok && btn) btn.disabled = false;
     };
 
     window.openPromoModal = () => document.getElementById("promoModalOverlay").classList.remove("hidden");
@@ -2504,7 +2694,7 @@
         document.getElementById("promoInputField").value = "";
         closePromoModal();
         state.userProfile.coins = tx.snapshot.val()?.coins ?? (state.userProfile.coins + wonCoins);
-        openRewardSuccessPopup(`Promo ${code} Redeemed!`, wonCoins);
+        openRewardSuccessPopup(`Promo ${code} Redeemed! 🎉`, wonCoins);
       } catch (err) {
         showToast(err.message, "error");
       } finally {
@@ -2512,37 +2702,7 @@
       }
     };
 
-    // ==================== 20-SECOND COUNTDOWN GATE FOR SPIN, SCRATCH & WATCH ADS ====================
-    let activeCountdownTimer = null;
-
-    function runTwentySecondGate(numElId, barElId, claimBtnElId, readyLabel) {
-      clearInterval(activeCountdownTimer);
-      let remaining = 20;
-      const numEl = document.getElementById(numElId);
-      const barEl = document.getElementById(barElId);
-      const btnEl = document.getElementById(claimBtnElId);
-
-      btnEl.disabled = true;
-      btnEl.textContent = `Wait ${remaining}s to Claim Coins`;
-      numEl.textContent = String(remaining);
-      barEl.style.width = "0%";
-
-      activeCountdownTimer = setInterval(() => {
-        remaining--;
-        numEl.textContent = String(Math.max(0, remaining));
-        barEl.style.width = `${((20 - remaining) / 20) * 100}%`;
-        btnEl.textContent = `Wait ${remaining}s to Claim Coins`;
-
-        if (remaining <= 0) {
-          clearInterval(activeCountdownTimer);
-          btnEl.disabled = false;
-          btnEl.textContent = readyLabel;
-          playSoundEffect(820, 0.15);
-        }
-      }, 1000);
-    }
-
-    // 4. SPIN & WIN
+    // ==================== 1. SPIN & WIN -> TRIGGERS FULL-SCREEN CLAIM COINS POPUP ====================
     const wheelSlices = ["10", "50", "25", "100", "15", "75", "5", "40"];
     const wheelPalette = ["#F43F5E", "#FBBF24", "#10B981", "#3B82F6", "#8B5CF6", "#F97316", "#06B6D4", "#EC4899"];
     let wheelRotation = 0;
@@ -2592,20 +2752,18 @@
       }
       wheelSpinning = true;
       document.getElementById("spinTriggerBtn").disabled = true;
-      document.getElementById("spinVerificationBox").classList.add("hidden");
 
       const minC = Number(state.appSettings.spinMin) || 1;
       const maxC = Number(state.appSettings.spinMax) || 100;
-      state.pendingSpinPrize = Math.floor(Math.random() * (maxC - minC + 1)) + minC;
-      state.pendingSpinSessionId = `spin_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
-      document.getElementById("spinWonPreview").textContent = state.pendingSpinPrize;
+      const wonCoins = Math.floor(Math.random() * (maxC - minC + 1)) + minC;
+      const spinSessionId = `spin_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
 
       const totalSpinAngle = (6 + Math.random() * 4) * Math.PI * 2;
       const startRot = wheelRotation;
       const startTime = performance.now();
 
       function step(now) {
-        const t = Math.min(1, (now - startTime) / 2800);
+        const t = Math.min(1, (now - startTime) / 2600);
         const ease = 1 - Math.pow(1 - t, 3);
         wheelRotation = startRot + totalSpinAngle * ease;
         renderSpinWheelCanvas();
@@ -2614,42 +2772,32 @@
         } else {
           wheelSpinning = false;
           document.getElementById("spinTriggerBtn").disabled = false;
-          document.getElementById("spinVerificationBox").classList.remove("hidden");
-          runTwentySecondGate("spinCountdownNum", "spinCountdownBar", "spinClaimBtn", `Claim ${state.pendingSpinPrize} Coins (Watch Ad)`);
+
+          // Immediately open full-screen 3D Claim Coins popup
+          openClaimCoinsPopup({
+            source: "spin",
+            sourceLabel: "Spin & Win Prize",
+            title: "Spin & Win Reward",
+            reward: wonCoins,
+            sessionId: spinSessionId,
+            dailyCounterField: "todaySpins",
+            dailyLimit: state.appSettings.dailySpinLimit
+          });
         }
       }
       requestAnimationFrame(step);
     };
 
-    window.claimSpinReward = async function() {
-      const btn = document.getElementById("spinClaimBtn");
-      btn.disabled = true;
-      const ok = await executeMonetagAndCredit({
-        type: "spin",
-        sessionId: state.pendingSpinSessionId,
-        coins: state.pendingSpinPrize,
-        title: "Spin & Win Reward",
-        dailyCounterField: "todaySpins",
-        dailyLimit: state.appSettings.dailySpinLimit
-      });
-      if (ok) {
-        document.getElementById("spinVerificationBox").classList.add("hidden");
-      } else {
-        btn.disabled = false;
-      }
-    };
-
-    // 5. SCRATCH & WIN
+    // ==================== 2. SCRATCH & WIN -> TRIGGERS FULL-SCREEN CLAIM COINS POPUP ====================
     let scratchCompletedFlag = false;
     window.initScratchFoilCanvas = function() {
       const canvas = document.getElementById("scratchFoilCanvas");
       if (!canvas) return;
       const rect = canvas.parentElement.getBoundingClientRect();
       canvas.width = rect.width || 320;
-      canvas.height = rect.height || 200;
+      canvas.height = rect.height || 224;
       const ctx = canvas.getContext("2d");
       scratchCompletedFlag = false;
-      document.getElementById("scratchVerificationBox").classList.add("hidden");
 
       const minC = Number(state.appSettings.scratchMin) || 1;
       const maxC = Number(state.appSettings.scratchMax) || 100;
@@ -2679,17 +2827,27 @@
         }
         ctx.globalCompositeOperation = "destination-out";
         ctx.beginPath();
-        ctx.arc(x, y, 24, 0, Math.PI * 2);
+        ctx.arc(x, y, 25, 0, Math.PI * 2);
         ctx.fill();
 
         const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
         let cleared = 0;
         for (let i = 3; i < data.length; i += 32) if (data[i] === 0) cleared++;
-        if (cleared / (data.length / 32) > 0.42 && !scratchCompletedFlag) {
+        if (cleared / (data.length / 32) > 0.45 && !scratchCompletedFlag) {
           scratchCompletedFlag = true;
           ctx.clearRect(0, 0, canvas.width, canvas.height);
-          document.getElementById("scratchVerificationBox").classList.remove("hidden");
-          runTwentySecondGate("scratchCountdownNum", "scratchCountdownBar", "scratchClaimBtn", `Claim ${state.pendingScratchPrize} Coins (Watch Ad)`);
+
+          // Immediately open full-screen 3D Claim Coins popup
+          openClaimCoinsPopup({
+            source: "scratch",
+            sourceLabel: "Scratch & Win Prize",
+            title: "Scratch & Win Reward",
+            reward: state.pendingScratchPrize,
+            sessionId: state.pendingScratchSessionId,
+            dailyCounterField: "todayScratches",
+            dailyLimit: state.appSettings.dailyScratchLimit,
+            onCompleted: () => initScratchFoilCanvas()
+          });
         }
       };
 
@@ -2699,55 +2857,23 @@
     };
     window.resetScratchFoil = () => initScratchFoilCanvas();
 
-    window.claimScratchReward = async function() {
-      const btn = document.getElementById("scratchClaimBtn");
-      btn.disabled = true;
-      const ok = await executeMonetagAndCredit({
-        type: "scratch",
-        sessionId: state.pendingScratchSessionId,
-        coins: state.pendingScratchPrize,
-        title: "Scratch & Win Reward",
-        dailyCounterField: "todayScratches",
-        dailyLimit: state.appSettings.dailyScratchLimit
-      });
-      if (ok) {
-        document.getElementById("scratchVerificationBox").classList.add("hidden");
-        initScratchFoilCanvas();
-      } else {
-        btn.disabled = false;
-      }
-    };
-
-    // 6. WATCH ADS & EARN
-    window.startWatchAdTimer = function() {
+    // ==================== 3. WATCH ADS & EARN -> TRIGGERS FULL-SCREEN CLAIM COINS POPUP ====================
+    window.triggerWatchAdClaimPopup = function() {
       if ((state.userProfile.todayAds || 0) >= state.appSettings.dailyAdLimit) {
         return showToast(`Daily Watch Ads limit (${state.appSettings.dailyAdLimit}) reached!`, "error");
       }
-      state.pendingWatchAdSessionId = `watchad_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
-      document.getElementById("watchAdStartBtn").disabled = true;
-      document.getElementById("adsVerificationBox").classList.remove("hidden");
       const adCoins = Number(state.appSettings.watchAdReward) || 20;
-      runTwentySecondGate("adsCountdownNum", "adsCountdownBar", "adsClaimBtn", `Claim ${adCoins} Coins (Watch Ad)`);
-    };
+      const adSessionId = `watchad_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
 
-    window.claimWatchAdReward = async function() {
-      const btn = document.getElementById("adsClaimBtn");
-      btn.disabled = true;
-      const adCoins = Number(state.appSettings.watchAdReward) || 20;
-      const ok = await executeMonetagAndCredit({
-        type: "watch_ad",
-        sessionId: state.pendingWatchAdSessionId,
-        coins: adCoins,
+      openClaimCoinsPopup({
+        source: "watch_ad",
+        sourceLabel: "Watch Ads & Earn",
         title: "Watch Ad Reward",
+        reward: adCoins,
+        sessionId: adSessionId,
         dailyCounterField: "todayAds",
         dailyLimit: state.appSettings.dailyAdLimit
       });
-      if (ok) {
-        document.getElementById("adsVerificationBox").classList.add("hidden");
-        document.getElementById("watchAdStartBtn").disabled = false;
-      } else {
-        btn.disabled = false;
-      }
     };
 
     // ==================== LEADERBOARD ====================
@@ -2878,7 +3004,7 @@
       navigateTo("redeemHistory");
     };
 
-    // ==================== 3. 60-SECOND GAME EARNING SYSTEM (6 PLAYABLE GAMES) ====================
+    // ==================== 4. ALL 6 PLAYABLE GAMES -> TRIGGERS FULL-SCREEN CLAIM COINS POPUP ====================
     let gameLoopRaf = null;
     let gameTimerInterval = null;
     let gameSecondsLeft = 60;
@@ -2900,6 +3026,7 @@
       state.activeGameId = gameKey;
       document.getElementById("gameArenaTitle").textContent = gameConfigs[gameKey].title;
       document.getElementById("gameArenaModal").classList.remove("hidden");
+      document.body.classList.add("modal-open");
       restartCurrentGame();
     };
 
@@ -2907,6 +3034,9 @@
       cancelAnimationFrame(gameLoopRaf);
       clearInterval(gameTimerInterval);
       document.getElementById("gameArenaModal").classList.add("hidden");
+      if (!document.getElementById("claimCoinsOverlay").classList.contains("is-visible")) {
+        document.body.classList.remove("modal-open");
+      }
     };
 
     function computeGameCoinsEarned(score, gameKey) {
@@ -2926,9 +3056,7 @@
       document.getElementById("gameLiveScore").textContent = "0";
       document.getElementById("gamePotentialCoins").textContent = "0";
       document.getElementById("gameTimerDisplay").textContent = "01:00";
-      document.getElementById("gameOverBanner").classList.add("hidden");
 
-      // Strict 60-second countdown timer
       gameTimerInterval = setInterval(() => {
         if (gameEnded) return;
         gameSecondsLeft--;
@@ -2973,40 +3101,34 @@
       gameEnded = true;
       cancelAnimationFrame(gameLoopRaf);
       clearInterval(gameTimerInterval);
-      document.getElementById("gameTimerDisplay").textContent = "00:00";
 
-      const earnedCoins = computeGameCoinsEarned(state.currentGameScore, state.activeGameId);
-      document.getElementById("finalGameScoreText").textContent = String(state.currentGameScore);
-      document.getElementById("finalGameCoinsText").textContent = String(earnedCoins);
+      const finishedGameKey = state.activeGameId;
+      const finishedGameTitle = gameConfigs[finishedGameKey].title;
+      const earnedCoins = computeGameCoinsEarned(state.currentGameScore, finishedGameKey);
+      const finishedSessionId = state.currentGameSessionId;
 
-      const claimBtn = document.getElementById("submitGameScoreBtn");
-      claimBtn.disabled = earnedCoins <= 0;
-      claimBtn.textContent = earnedCoins > 0 ? `Claim ${earnedCoins} Coins (Watch Ad)` : "Score 0 — Restart to Earn";
-      document.getElementById("gameOverBanner").classList.remove("hidden");
-    }
+      // Close game arena cleanly
+      document.getElementById("gameArenaModal").classList.add("hidden");
 
-    window.claimGameSessionCoins = async function() {
-      const earnedCoins = computeGameCoinsEarned(state.currentGameScore, state.activeGameId);
-      if (earnedCoins <= 0) return showToast("Score must be greater than 0 to earn coins.", "error");
+      if (earnedCoins <= 0) {
+        document.body.classList.remove("modal-open");
+        showToast("Game Over! Score points during the round to earn coins.", "info");
+        return;
+      }
 
-      const btn = document.getElementById("submitGameScoreBtn");
-      btn.disabled = true;
-      const ok = await executeMonetagAndCredit({
-        type: "game_session",
-        sessionId: state.currentGameSessionId,
-        coins: earnedCoins,
-        title: `${gameConfigs[state.activeGameId].title} (60s Session)`,
+      // Open full-screen 3D Claim Coins overlay popup above everything
+      openClaimCoinsPopup({
+        source: "game_session",
+        sourceLabel: `${finishedGameTitle} Completed`,
+        title: `${finishedGameTitle} Reward`,
+        reward: earnedCoins,
+        sessionId: finishedSessionId,
         dailyCounterField: "todayGames",
         dailyLimit: state.appSettings.dailyGameLimit
       });
-      if (ok) {
-        closePlayableGame();
-      } else {
-        btn.disabled = false;
-      }
-    };
+    }
 
-    // Game 1: Bubble Shooter (respawns waves so player can score throughout full 60s)
+    // Game 1: Bubble Shooter
     function startBubbleShooter() {
       const canvas = document.getElementById("arcadeGameCanvas");
       const ctx = canvas.getContext("2d");
@@ -3215,7 +3337,7 @@
       loop();
     }
 
-    // Game 5: Memory Match (auto-deals new board when solved so player can keep scoring within 60s)
+    // Game 5: Memory Match
     function startMemoryMatch() {
       const board = document.getElementById("gridGameBoard");
       board.className = "w-full h-full grid grid-cols-4 gap-2";
