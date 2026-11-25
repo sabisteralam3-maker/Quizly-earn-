@@ -5,12 +5,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <meta name="referrer" content="no-referrer" />
-  <title>Smartu Earninng — 3D Gaming Rewards Mini App</title>
-  <!-- Tailwind CSS CDN -->
+  <title>Smartu Earninng — Play • Spin • Withdraw</title>
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Official Telegram WebApp SDK -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <!-- Google Fonts: Fredoka (3D Rounded Display) & Plus Jakarta Sans (Clean Modern UI) -->
+  <!-- Monetag Rewarded Interstitial SDK (Zone 12347886) -->
+  <script src="https://niphaumeenses.net/vignette.min.js" data-zone="12347886" data-sdk="show_12347886" async></script>
+  <!-- Google Fonts: Fredoka & Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
@@ -19,13 +21,9 @@
 
   <style>
     :root {
-      --bg-sky: #E3F3FF;
-      --bg-lavender: #EFE8FF;
-      --bg-pink: #FCEEFF;
-      --bg-white: #FFFFFF;
-      --indigo-ink: #1E1B4B;
       --safe-top: env(safe-area-inset-top, 0px);
       --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --indigo-ink: #1E1B4B;
     }
 
     * {
@@ -34,14 +32,14 @@
       user-select: none;
     }
 
-    input, textarea, select {
+    input, select, textarea {
       user-select: text;
     }
 
     body {
       margin: 0;
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background: linear-gradient(155deg, #DCF0FF 0%, #EDE4FF 48%, #FCEBFF 100%);
+      background: linear-gradient(155deg, #D8F0FF 0%, #ECE4FF 48%, #FCEBFF 100%);
       color: var(--indigo-ink);
       min-height: 100vh;
       overflow-x: hidden;
@@ -51,97 +49,91 @@
       font-family: 'Fredoka', sans-serif;
     }
 
-    /* ==================== MOBILE-FIRST TELEGRAM MINI APP SHELL ==================== */
-    .app-container {
+    /* Mobile-first Telegram Mini App Shell */
+    .app-shell {
       max-width: 448px;
       margin: 0 auto;
       min-height: 100vh;
       background:
-        radial-gradient(circle at 12% 8%, rgba(56, 189, 248, 0.25) 0%, transparent 42%),
-        radial-gradient(circle at 88% 18%, rgba(236, 72, 153, 0.18) 0%, transparent 45%),
-        radial-gradient(circle at 50% 60%, rgba(168, 85, 247, 0.14) 0%, transparent 55%),
-        linear-gradient(180deg, #E6F4FF 0%, #F3ECFF 52%, #FFFFFF 100%);
+        radial-gradient(circle at 12% 6%, rgba(56, 189, 248, 0.28) 0%, transparent 42%),
+        radial-gradient(circle at 90% 18%, rgba(236, 72, 153, 0.20) 0%, transparent 45%),
+        radial-gradient(circle at 50% 62%, rgba(168, 85, 247, 0.14) 0%, transparent 55%),
+        linear-gradient(180deg, #E5F4FF 0%, #F2EBFF 52%, #FFFFFF 100%);
       position: relative;
       padding-top: var(--safe-top);
-      padding-bottom: calc(98px + var(--safe-bottom));
-      box-shadow: 0 24px 70px rgba(79, 70, 229, 0.16);
+      padding-bottom: calc(96px + var(--safe-bottom));
+      box-shadow: 0 24px 70px rgba(79, 70, 229, 0.18);
       overflow-x: hidden;
     }
 
-    /* Ambient Pastel Light Orbs (Light Theme Only) */
-    .ambient-orb {
-      position: fixed;
-      border-radius: 9999px;
-      filter: blur(42px);
-      pointer-events: none;
-      z-index: 0;
-      will-change: transform;
-    }
-
-    /* ==================== ULTRA-PREMIUM 3D GLASSMORPHISM CARDS ==================== */
+    /* Glossy 3D Glassmorphism Cards */
     .glass-3d-card {
-      background: linear-gradient(160deg, rgba(255, 255, 255, 0.94) 0%, rgba(248, 246, 255, 0.86) 100%);
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 246, 255, 0.88) 100%);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
       border: 2px solid rgba(255, 255, 255, 0.98);
       box-shadow:
-        0 14px 30px -8px rgba(91, 33, 182, 0.14),
+        0 14px 30px -8px rgba(91, 33, 182, 0.15),
         0 4px 10px -2px rgba(14, 165, 233, 0.10),
         inset 0 2px 3px rgba(255, 255, 255, 1);
       position: relative;
     }
 
-    /* Illuminated Gradient Rim Cards */
     .glow-rim-purple {
       border: 2px solid transparent;
       background-image:
-        linear-gradient(160deg, rgba(255,255,255,0.96), rgba(245,240,255,0.92)),
+        linear-gradient(160deg, rgba(255,255,255,0.97), rgba(245,240,255,0.93)),
         linear-gradient(135deg, #38BDF8, #A855F7, #F43F5E);
       background-origin: border-box;
       background-clip: padding-box, border-box;
-      box-shadow: 0 14px 32px -6px rgba(124, 58, 237, 0.22);
+      box-shadow: 0 14px 32px -6px rgba(124, 58, 237, 0.24);
     }
 
     .glow-rim-gold {
       border: 2px solid transparent;
       background-image:
-        linear-gradient(160deg, rgba(255,253,245,0.97), rgba(254,243,199,0.88)),
+        linear-gradient(160deg, rgba(255,253,245,0.98), rgba(254,243,199,0.90)),
         linear-gradient(135deg, #FDE047, #F59E0B, #EC4899);
       background-origin: border-box;
       background-clip: padding-box, border-box;
-      box-shadow: 0 14px 32px -6px rgba(245, 158, 11, 0.25);
+      box-shadow: 0 14px 32px -6px rgba(245, 158, 11, 0.26);
     }
 
-    /* ==================== GLOSSY 3D BEVELED GAMING BUTTONS ==================== */
+    /* Glossy 3D Beveled Buttons */
     .btn-3d {
       position: relative;
       overflow: hidden;
       transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.12s ease;
-      border-top: 1.5px solid rgba(255, 255, 255, 0.75);
+      border-top: 1.5px solid rgba(255, 255, 255, 0.8);
     }
     .btn-3d::after {
       content: "";
       position: absolute;
       top: 0;
-      left: -60%;
+      left: -65%;
       width: 45%;
       height: 100%;
       background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
       transform: skewX(-22deg);
-      animation: btnShineSweep 4.2s infinite;
+      animation: btnShine 4.5s infinite;
       pointer-events: none;
     }
-    @keyframes btnShineSweep {
-      0%, 65% { left: -60%; }
+    @keyframes btnShine {
+      0%, 65% { left: -65%; }
       100% { left: 135%; }
     }
     .btn-3d:active:not(:disabled) {
       transform: translateY(3px) scale(0.98);
     }
+    button:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      filter: grayscale(0.2);
+    }
 
     .btn-3d-gold {
       background: linear-gradient(180deg, #FEF08A 0%, #FBBF24 48%, #F59E0B 100%);
-      box-shadow: 0 5px 0 #B45309, 0 12px 24px rgba(245, 158, 11, 0.40);
+      box-shadow: 0 5px 0 #B45309, 0 12px 24px rgba(245, 158, 11, 0.38);
       color: #451A03;
     }
     .btn-3d-gold:active:not(:disabled) { box-shadow: 0 2px 0 #B45309; }
@@ -174,28 +166,22 @@
     }
     .btn-3d-pink:active:not(:disabled) { box-shadow: 0 2px 0 #9D174D; }
 
-    button:disabled {
-      opacity: 0.56;
-      cursor: not-allowed;
-      filter: grayscale(0.25);
-    }
-
-    /* ==================== UNIQUE 3D FEATURE ICON CAPSULES ==================== */
+    /* Distinct 3D Feature Icon Capsules */
     .icon-cap-home {
       background: linear-gradient(145deg, #D8B4FE 0%, #9333EA 55%, #581C87 100%);
-      box-shadow: 0 5px 0 #4C1D95, 0 10px 20px rgba(147, 51, 234, 0.35), inset 0 2px 3px rgba(255,255,255,0.7);
+      box-shadow: 0 5px 0 #4C1D95, 0 10px 20px rgba(147, 51, 234, 0.34), inset 0 2px 3px rgba(255,255,255,0.75);
     }
     .icon-cap-tasks {
       background: linear-gradient(145deg, #93C5FD 0%, #3B82F6 55%, #1D4ED8 100%);
-      box-shadow: 0 5px 0 #1E3A8A, 0 10px 20px rgba(59, 130, 246, 0.35), inset 0 2px 3px rgba(255,255,255,0.7);
+      box-shadow: 0 5px 0 #1E3A8A, 0 10px 20px rgba(59, 130, 246, 0.34), inset 0 2px 3px rgba(255,255,255,0.75);
     }
     .icon-cap-games {
       background: linear-gradient(145deg, #67E8F9 0%, #06B6D4 55%, #0E7490 100%);
-      box-shadow: 0 5px 0 #155E75, 0 10px 20px rgba(6, 182, 212, 0.35), inset 0 2px 3px rgba(255,255,255,0.7);
+      box-shadow: 0 5px 0 #155E75, 0 10px 20px rgba(6, 182, 212, 0.34), inset 0 2px 3px rgba(255,255,255,0.75);
     }
     .icon-cap-spin {
       background: conic-gradient(from 30deg, #F43F5E, #FBBF24, #10B981, #3B82F6, #A855F7, #F43F5E);
-      box-shadow: 0 5px 0 #6D28D9, 0 10px 20px rgba(168, 85, 247, 0.38), inset 0 2px 4px rgba(255,255,255,0.8);
+      box-shadow: 0 5px 0 #6D28D9, 0 10px 20px rgba(168, 85, 247, 0.38), inset 0 2px 4px rgba(255,255,255,0.85);
     }
     .icon-cap-scratch {
       background: linear-gradient(145deg, #FEF08A 0%, #F59E0B 55%, #D97706 100%);
@@ -203,11 +189,11 @@
     }
     .icon-cap-ads {
       background: linear-gradient(135deg, #F43F5E 0%, #8B5CF6 50%, #2563EB 100%);
-      box-shadow: 0 5px 0 #3730A3, 0 10px 20px rgba(244, 63, 94, 0.35), inset 0 2px 3px rgba(255,255,255,0.75);
+      box-shadow: 0 5px 0 #3730A3, 0 10px 20px rgba(244, 63, 94, 0.34), inset 0 2px 3px rgba(255,255,255,0.75);
     }
     .icon-cap-refer {
       background: linear-gradient(145deg, #F9A8D4 0%, #EC4899 55%, #BE185D 100%);
-      box-shadow: 0 5px 0 #831843, 0 10px 20px rgba(236, 72, 153, 0.35), inset 0 2px 3px rgba(255,255,255,0.75);
+      box-shadow: 0 5px 0 #831843, 0 10px 20px rgba(236, 72, 153, 0.34), inset 0 2px 3px rgba(255,255,255,0.75);
     }
     .icon-cap-rank {
       background: linear-gradient(145deg, #FDE047 0%, #EAB308 55%, #CA8A04 100%);
@@ -219,10 +205,10 @@
     }
     .icon-cap-rewards {
       background: linear-gradient(145deg, #6EE7B7 0%, #10B981 55%, #047857 100%);
-      box-shadow: 0 5px 0 #064E3B, 0 10px 20px rgba(16, 185, 129, 0.35), inset 0 2px 3px rgba(255,255,255,0.75);
+      box-shadow: 0 5px 0 #064E3B, 0 10px 20px rgba(16, 185, 129, 0.34), inset 0 2px 3px rgba(255,255,255,0.75);
     }
 
-    /* ==================== TELEGRAM PROFILE AVATAR FRAME ==================== */
+    /* Circular Telegram Avatar Frame */
     .tg-avatar-ring {
       background: linear-gradient(135deg, #38BDF8 0%, #A855F7 50%, #F59E0B 100%);
       padding: 2.5px;
@@ -235,24 +221,13 @@
       flex-shrink: 0;
     }
 
-    /* ==================== HARDWARE-ACCELERATED 60FPS SPLASH ANIMATIONS ==================== */
+    /* Splash & Coin Animations */
     @keyframes sunRaySpin {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
     }
     .splash-light-rays {
       animation: sunRaySpin 24s linear infinite;
-      will-change: transform;
-    }
-
-    @keyframes ringPulseRotate {
-      0% { transform: rotate(0deg) scale(0.97); }
-      50% { transform: rotate(180deg) scale(1.04); }
-      100% { transform: rotate(360deg) scale(0.97); }
-    }
-    .splash-glow-ring {
-      animation: ringPulseRotate 7s ease-in-out infinite;
-      will-change: transform;
     }
 
     @keyframes float3D {
@@ -260,16 +235,16 @@
       50% { transform: translateY(-9px) rotate(5deg); }
     }
     .animate-float-3d {
-      animation: float3D 3.2s ease-in-out infinite;
-      will-change: transform;
+      animation: float3D 3s ease-in-out infinite;
     }
 
-    @keyframes splashLogoZoom {
-      0% { transform: scale(0.72); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
+    @keyframes coinBurst {
+      0% { transform: scale(0.3) rotate(-25deg); opacity: 0; }
+      65% { transform: scale(1.12) rotate(8deg); opacity: 1; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
     }
-    .animate-logo-entrance {
-      animation: splashLogoZoom 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    .animate-coin-burst {
+      animation: coinBurst 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
     }
 
     @keyframes particleDrift {
@@ -282,7 +257,6 @@
       border-radius: 9999px;
       pointer-events: none;
       animation: particleDrift 3.2s ease-in infinite;
-      will-change: transform, opacity;
     }
 
     /* Page Transitions */
@@ -303,42 +277,31 @@
 </head>
 <body>
 
-  <!-- ==================== 1. ULTRA-PREMIUM 3D OPENING SPLASH SCREEN ==================== -->
+  <!-- ==================== 1. ANIMATED 3D SPLASH SCREEN ==================== -->
   <div id="splashOverlay" class="fixed inset-0 z-50 max-w-[448px] mx-auto flex flex-col items-center justify-between p-6 text-center overflow-hidden"
        style="background: radial-gradient(circle at 50% 35%, #FFFFFF 0%, #E3F3FF 45%, #EFE8FF 82%, #FCEEFF 100%);">
-
-    <!-- Rotating Light Rays Backdrop -->
     <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-45">
       <div class="w-[540px] h-[540px] splash-light-rays"
-           style="background: repeating-conic-gradient(from 0deg, rgba(251, 191, 36, 0.24) 0deg 12deg, transparent 12deg 24deg); border-radius: 9999px;"></div>
+           style="background: repeating-conic-gradient(from 0deg, rgba(251, 191, 36, 0.25) 0deg 12deg, transparent 12deg 24deg); border-radius: 9999px;"></div>
     </div>
-
-    <!-- Floating Particle Container -->
     <div id="splashParticles" class="absolute inset-0 pointer-events-none"></div>
 
-    <!-- Top Orbiting 3D Golden Coins & Badge -->
     <div class="w-full flex justify-between items-center pt-3 px-1 relative z-10">
-      <div class="w-13 h-13 p-2.5 rounded-full bg-gradient-to-br from-yellow-200 via-amber-400 to-orange-500 flex items-center justify-center shadow-xl border-2 border-white animate-float-3d">
+      <div class="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-200 via-amber-400 to-orange-500 flex items-center justify-center shadow-xl border-2 border-white animate-float-3d">
         <span class="font-display font-extrabold text-xl text-amber-950">₹</span>
       </div>
       <span class="px-4 py-1.5 rounded-full bg-white/95 backdrop-blur border-2 border-purple-200 text-xs font-extrabold text-purple-800 shadow-md">
-        <i class="fa-brands fa-telegram text-sky-500 mr-1"></i> Smartu Official Mini App
+        <i class="fa-brands fa-telegram text-sky-500 mr-1"></i> Smartu Earninng
       </span>
-      <div class="w-13 h-13 p-2.5 rounded-full bg-gradient-to-br from-amber-200 via-yellow-400 to-orange-500 flex items-center justify-center shadow-xl border-2 border-white animate-float-3d" style="animation-delay: 0.7s;">
+      <div class="w-12 h-12 rounded-full bg-gradient-to-br from-amber-200 via-yellow-400 to-orange-500 flex items-center justify-center shadow-xl border-2 border-white animate-float-3d" style="animation-delay:0.6s;">
         <i class="fa-solid fa-crown text-amber-950 text-lg"></i>
       </div>
     </div>
 
-    <!-- Center 3D Logo Emblem with Glowing Rings & Flying Coins -->
-    <div class="relative z-10 flex flex-col items-center my-auto animate-logo-entrance">
-      <div class="relative w-64 h-64 flex items-center justify-center">
-        <!-- Outer Illuminated Ring -->
-        <div class="absolute inset-0 rounded-full border-4 border-dashed border-purple-400/50 splash-glow-ring"></div>
-        <!-- Inner Rainbow Glow Aura -->
-        <div class="absolute inset-3 rounded-full bg-gradient-to-tr from-sky-300/40 via-purple-300/40 to-amber-300/45 blur-md"></div>
-
-        <!-- 3D Gaming Mascot & Coin Emblem SVG -->
-        <div class="relative w-52 h-52 rounded-full bg-white/90 backdrop-blur-md p-2.5 border-4 border-white shadow-[0_20px_45px_rgba(109,40,217,0.28)] flex items-center justify-center">
+    <div class="relative z-10 flex flex-col items-center my-auto">
+      <div class="relative w-60 h-60 flex items-center justify-center">
+        <div class="absolute inset-2 rounded-full bg-gradient-to-tr from-sky-300/45 via-purple-300/45 to-amber-300/45 blur-md"></div>
+        <div class="relative w-48 h-48 rounded-full bg-white/95 p-2.5 border-4 border-white shadow-[0_20px_45px_rgba(109,40,217,0.28)] flex items-center justify-center">
           <svg viewBox="0 0 240 240" class="w-full h-full">
             <defs>
               <linearGradient id="spGold" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -346,60 +309,44 @@
                 <stop offset="50%" stop-color="#FBBF24"/>
                 <stop offset="100%" stop-color="#D97706"/>
               </linearGradient>
-              <linearGradient id="spPurple" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#C084FC"/>
-                <stop offset="100%" stop-color="#5B21B6"/>
-              </linearGradient>
               <linearGradient id="spCyan" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stop-color="#67E8F9"/>
                 <stop offset="100%" stop-color="#0284C7"/>
               </linearGradient>
             </defs>
             <circle cx="120" cy="120" r="102" fill="#F5F3FF"/>
-            <!-- 3D Royal Crown -->
             <path d="M82 58 L95 36 L120 53 L145 36 L158 58 Z" fill="url(#spGold)" stroke="#FFF" stroke-width="3" stroke-linejoin="round"/>
-            <!-- Gaming Headset -->
             <path d="M58 114 C58 68, 182 68, 182 114" stroke="#4C1D95" stroke-width="14" fill="none" stroke-linecap="round"/>
             <rect x="44" y="94" width="22" height="42" rx="11" fill="url(#spCyan)" stroke="#FFF" stroke-width="3"/>
             <rect x="174" y="94" width="22" height="42" rx="11" fill="url(#spCyan)" stroke="#FFF" stroke-width="3"/>
-            <!-- Mascot Face -->
             <circle cx="120" cy="116" r="46" fill="#FFE4D6"/>
             <path d="M74 112 C74 68, 166 68, 166 112 C156 90, 134 86, 120 96 C106 86, 84 90, 74 112 Z" fill="#4C1D95"/>
             <circle cx="104" cy="116" r="5.5" fill="#1E1B4B"/>
             <circle cx="136" cy="116" r="5.5" fill="#1E1B4B"/>
-            <circle cx="106" cy="114" r="2" fill="#FFF"/>
-            <circle cx="138" cy="114" r="2" fill="#FFF"/>
             <path d="M110 132 Q120 142 130 132" stroke="#E11D48" stroke-width="4" fill="none" stroke-linecap="round"/>
-            <!-- Smartu Hoodie -->
             <path d="M64 196 C70 158, 170 158, 176 196 Z" fill="#FFFFFF" stroke="#DDD6FE" stroke-width="3"/>
             <text x="120" y="183" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="17" fill="#6D28D9">Smartu</text>
-            <!-- Orbiting 3D Coins -->
-            <circle cx="38" cy="60" r="18" fill="url(#spGold)" stroke="#FFF" stroke-width="3"/>
-            <text x="38" y="66" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="16" fill="#78350F">🪙</text>
-            <circle cx="202" cy="66" r="16" fill="url(#spGold)" stroke="#FFF" stroke-width="3"/>
-            <text x="202" y="71" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="14" fill="#78350F">₹</text>
           </svg>
         </div>
       </div>
 
-      <h1 class="font-display text-4xl font-extrabold mt-4 tracking-tight bg-gradient-to-r from-indigo-700 via-purple-600 to-amber-500 bg-clip-text text-transparent drop-shadow-xs">
+      <h1 class="font-display text-4xl font-extrabold mt-4 tracking-tight bg-gradient-to-r from-indigo-700 via-purple-600 to-amber-500 bg-clip-text text-transparent">
         Smartu Earninng
       </h1>
       <p class="mt-1 text-xs font-extrabold uppercase tracking-widest text-indigo-900/75">
-        Play 3D Games • Spin • Withdraw
+        Play 60s Games • Spin • Withdraw
       </p>
     </div>
 
-    <!-- Shimmering 3D Progress Bar -->
     <div class="w-full max-w-xs pb-6 relative z-10">
       <div class="w-full h-4 rounded-full bg-white p-1 border-2 border-purple-200 shadow-md overflow-hidden">
-        <div id="splashProgressFill" class="h-full rounded-full bg-gradient-to-r from-sky-400 via-purple-500 to-amber-400 transition-all duration-150" style="width: 8%;"></div>
+        <div id="splashProgressFill" class="h-full rounded-full bg-gradient-to-r from-sky-400 via-purple-500 to-amber-400 transition-all duration-150" style="width: 10%;"></div>
       </div>
-      <p id="splashProgressLabel" class="mt-2 text-xs font-extrabold text-indigo-950">Initializing 3D Arena... 8%</p>
+      <p id="splashProgressLabel" class="mt-2 text-xs font-extrabold text-indigo-950">Loading 3D Arena... 10%</p>
     </div>
   </div>
 
-  <!-- ==================== MAINTENANCE / TELEGRAM GATE ==================== -->
+  <!-- ==================== SYSTEM / TELEGRAM GATE ==================== -->
   <div id="systemGateOverlay" class="fixed inset-0 z-40 hidden max-w-[448px] mx-auto p-6 flex flex-col items-center justify-center text-center"
        style="background: linear-gradient(165deg, #E3F3FF 0%, #EFE8FF 100%);">
     <div class="glass-3d-card glow-rim-purple rounded-3xl p-6 w-full">
@@ -408,16 +355,16 @@
       </div>
       <h2 id="gateTitle" class="font-display text-2xl font-bold text-indigo-950">Open Inside Telegram</h2>
       <p id="gateMessage" class="text-xs font-semibold text-slate-600 mt-2 leading-relaxed">
-        Smartu Earninng authenticates your account automatically via the official Telegram WebApp SDK. Open this Mini App inside Telegram to load your profile & wallet.
+        Smartu Earninng authenticates your account automatically via the official Telegram WebApp SDK.
       </p>
       <div id="gateInstructions" class="mt-4 p-3.5 rounded-2xl bg-sky-50 border border-sky-200 text-left text-[11px] font-bold text-sky-950 space-y-1">
-        <p>1. Open your Telegram Bot in the Telegram app.</p>
-        <p>2. Tap the Menu / Launch App button to start with verified Telegram session data.</p>
+        <p>1. Open <strong>@SmartuEarninng_bot</strong> in Telegram.</p>
+        <p>2. Launch the Mini App to load your verified Telegram profile & wallet.</p>
       </div>
     </div>
   </div>
 
-  <!-- ==================== SLIDE-OUT 3D MENU DRAWER ==================== -->
+  <!-- ==================== SLIDE-OUT MENU DRAWER ==================== -->
   <div id="sideMenuOverlay" class="fixed inset-0 z-50 hidden max-w-[448px] mx-auto bg-indigo-950/35 backdrop-blur-xs flex">
     <div class="w-72 h-full bg-gradient-to-b from-[#E6F4FF] via-[#F3ECFF] to-white p-5 flex flex-col justify-between shadow-2xl border-r-2 border-white overflow-y-auto">
       <div>
@@ -436,13 +383,13 @@
             <span class="w-7 h-7 rounded-xl icon-cap-home text-white flex items-center justify-center"><i class="fa-solid fa-house text-xs"></i></span>
             Home Dashboard
           </button>
-          <button onclick="navigateFromDrawer('tasks')" class="w-full p-2.5 rounded-2xl bg-white/95 hover:bg-purple-50 text-indigo-950 flex items-center gap-3 shadow-xs">
-            <span class="w-7 h-7 rounded-xl icon-cap-tasks text-white flex items-center justify-center"><i class="fa-solid fa-clipboard-check text-xs"></i></span>
-            Tasks & Earn
+          <button onclick="navigateFromDrawer('daily')" class="w-full p-2.5 rounded-2xl bg-white/95 hover:bg-purple-50 text-indigo-950 flex items-center gap-3 shadow-xs">
+            <span class="w-7 h-7 rounded-xl icon-cap-rewards text-white flex items-center justify-center"><i class="fa-solid fa-gift text-xs"></i></span>
+            Daily Bonus (7 Days)
           </button>
           <button onclick="navigateFromDrawer('games')" class="w-full p-2.5 rounded-2xl bg-white/95 hover:bg-purple-50 text-indigo-950 flex items-center gap-3 shadow-xs">
             <span class="w-7 h-7 rounded-xl icon-cap-games text-white flex items-center justify-center"><i class="fa-solid fa-gamepad text-xs"></i></span>
-            Play Games & Earn
+            60s Arcade Games
           </button>
           <button onclick="navigateFromDrawer('spin')" class="w-full p-2.5 rounded-2xl bg-white/95 hover:bg-purple-50 text-indigo-950 flex items-center gap-3 shadow-xs">
             <span class="w-7 h-7 rounded-xl icon-cap-spin text-white flex items-center justify-center"><i class="fa-solid fa-dharmachakra text-xs"></i></span>
@@ -456,49 +403,43 @@
             <span class="w-7 h-7 rounded-xl icon-cap-ads text-white flex items-center justify-center"><i class="fa-solid fa-circle-play text-xs"></i></span>
             Watch Ads & Earn
           </button>
-          <button onclick="navigateFromDrawer('daily')" class="w-full p-2.5 rounded-2xl bg-white/95 hover:bg-purple-50 text-indigo-950 flex items-center gap-3 shadow-xs">
-            <span class="w-7 h-7 rounded-xl icon-cap-rewards text-white flex items-center justify-center"><i class="fa-solid fa-gift text-xs"></i></span>
-            Daily Rewards
+          <button onclick="navigateFromDrawer('tasks')" class="w-full p-2.5 rounded-2xl bg-white/95 hover:bg-purple-50 text-indigo-950 flex items-center gap-3 shadow-xs">
+            <span class="w-7 h-7 rounded-xl icon-cap-tasks text-white flex items-center justify-center"><i class="fa-solid fa-clipboard-check text-xs"></i></span>
+            Tasks & Earn
+          </button>
+          <button onclick="navigateFromDrawer('refer')" class="w-full p-2.5 rounded-2xl bg-white/95 hover:bg-purple-50 text-indigo-950 flex items-center gap-3 shadow-xs">
+            <span class="w-7 h-7 rounded-xl icon-cap-refer text-white flex items-center justify-center"><i class="fa-solid fa-user-group text-xs"></i></span>
+            Refer & Earn (300 🪙)
           </button>
           <button onclick="navigateFromDrawer('wallet')" class="w-full p-2.5 rounded-2xl bg-white/95 hover:bg-purple-50 text-indigo-950 flex items-center gap-3 shadow-xs">
             <span class="w-7 h-7 rounded-xl icon-cap-wallet text-white flex items-center justify-center"><i class="fa-solid fa-wallet text-xs"></i></span>
             Wallet & Redeem
           </button>
           <button onclick="navigateFromDrawer('redeemHistory')" class="w-full p-2.5 rounded-2xl bg-white/95 hover:bg-purple-50 text-indigo-950 flex items-center gap-3 shadow-xs">
-            <span class="w-7 h-7 rounded-xl icon-cap-refer text-white flex items-center justify-center"><i class="fa-solid fa-clock-rotate-left text-xs"></i></span>
+            <span class="w-7 h-7 rounded-xl icon-cap-rank text-amber-950 flex items-center justify-center"><i class="fa-solid fa-clock-rotate-left text-xs"></i></span>
             Redeem History
-          </button>
-          <button onclick="navigateFromDrawer('support')" class="w-full p-2.5 rounded-2xl bg-white/95 hover:bg-purple-50 text-indigo-950 flex items-center gap-3 shadow-xs">
-            <span class="w-7 h-7 rounded-xl icon-cap-tasks text-white flex items-center justify-center"><i class="fa-solid fa-headset text-xs"></i></span>
-            Help & Support
           </button>
         </div>
       </div>
 
       <div class="mt-4 p-3 rounded-2xl bg-white/90 border border-purple-100 text-[11px] font-bold text-slate-600 text-center">
-        Smartu Earninng 3D • Verified Telegram App
+        Smartu Earninng 3D • Monetag Verified
       </div>
     </div>
     <div onclick="closeSideMenu()" class="flex-1 h-full"></div>
   </div>
 
-  <!-- ==================== MAIN 3D GAMING APPLICATION SHELL ==================== -->
-  <div id="mainAppContainer" class="app-container hidden">
-
-    <!-- Ambient Pastel Lighting Orbs -->
-    <div class="ambient-orb w-48 h-48 bg-sky-300/35 -top-10 -left-10"></div>
-    <div class="ambient-orb w-56 h-56 bg-purple-300/30 top-40 -right-14"></div>
-    <div class="ambient-orb w-48 h-48 bg-pink-300/25 bottom-24 left-6"></div>
+  <!-- ==================== MAIN APPLICATION SHELL ==================== -->
+  <div id="mainAppContainer" class="app-shell hidden">
 
     <!-- Live Announcement Ticker -->
     <div class="relative z-10 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-white py-1.5 px-3 flex items-center gap-2 text-xs font-bold shadow-md">
-      <span class="px-2 py-0.5 rounded-full bg-amber-300 text-amber-950 text-[10px] font-extrabold uppercase shrink-0 shadow-xs">Live</span>
-      <marquee id="liveAnnouncementMarquee" scrollamount="4">Welcome to Smartu Earninng 3D! Play skill games, spin the wheel, scratch cards & withdraw via UPI, Google Play & Amazon!</marquee>
+      <span class="px-2 py-0.5 rounded-full bg-amber-300 text-amber-950 text-[10px] font-extrabold uppercase shrink-0">Live</span>
+      <marquee id="liveAnnouncementMarquee" scrollamount="4">Welcome to Smartu Earninng! Play 60s games, claim Daily Bonus, Spin & Scratch, and withdraw via UPI, Google Play & Amazon!</marquee>
     </div>
 
-    <!-- ==================== PAGE 1: ULTRA-PREMIUM 3D HOME DASHBOARD ==================== -->
+    <!-- ==================== PAGE 1: HOME DASHBOARD ==================== -->
     <section id="page-home" class="screen-page active px-4 pt-3 pb-4">
-      <!-- Top Header -->
       <header class="flex items-center justify-between mb-3">
         <button onclick="openSideMenu()" aria-label="Menu" class="w-11 h-11 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900 active:scale-95 transition">
           <i class="fa-solid fa-bars text-base"></i>
@@ -513,16 +454,15 @@
           </span>
         </div>
 
-        <button onclick="navigateTo('redeemHistory')" aria-label="Redeem Status" class="relative w-11 h-11 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900 active:scale-95 transition">
+        <button onclick="navigateTo('redeemHistory')" aria-label="Redeem History" class="relative w-11 h-11 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900 active:scale-95 transition">
           <i class="fa-solid fa-bell text-base"></i>
           <span class="absolute top-2.5 right-2.5 w-2.5 h-2.5 rounded-full bg-rose-500 ring-2 ring-white"></span>
         </button>
       </header>
 
-      <!-- Large Colorful Welcome Card with Real Telegram Profile Photo -->
+      <!-- Welcome Card with Real Telegram Profile Photo -->
       <div class="glass-3d-card glow-rim-purple rounded-3xl p-3.5 mb-3.5 flex items-center justify-between gap-2.5">
         <div class="flex items-center gap-3 min-w-0">
-          <!-- Circular Telegram Avatar Container -->
           <div id="homeAvatarContainer" class="tg-avatar-ring w-14 h-14"></div>
           <div class="min-w-0">
             <div class="flex items-center gap-1.5">
@@ -531,7 +471,7 @@
               </h2>
               <span class="text-base">👋</span>
             </div>
-            <p id="homeUsernameText" class="text-[11px] font-extrabold text-sky-600 truncate">@telegram_user</p>
+            <p id="homeUsernameText" class="text-[11px] font-extrabold text-sky-600 truncate">@username</p>
             <p class="text-[11px] font-bold text-purple-700 truncate">
               ID: <span id="homeTelegramId">—</span>
             </p>
@@ -543,21 +483,17 @@
         </button>
       </div>
 
-      <!-- Glowing 3D Coin Balance Card + Golden Wallet Button -->
+      <!-- Glowing 3D Coin Balance Card -->
       <div class="rounded-3xl p-4 mb-3.5 text-white relative overflow-hidden shadow-[0_18px_36px_-8px_rgba(91,33,182,0.45)] border-2 border-white/60"
            style="background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 52%, #EC4899 100%);">
-        <div class="absolute -right-8 -top-8 w-32 h-32 rounded-full bg-white/15 blur-xs"></div>
-        <div class="absolute -left-6 -bottom-10 w-28 h-28 rounded-full bg-amber-300/20 blur-xs"></div>
-
         <div class="relative flex items-center justify-between gap-2">
           <div class="flex items-center gap-3.5">
-            <!-- 3D Golden Coin Stack Emblem -->
-            <div class="w-15 h-15 p-3 rounded-2xl bg-gradient-to-br from-yellow-200 via-amber-400 to-orange-500 flex items-center justify-center shadow-xl border-2 border-white shrink-0 animate-float-3d">
-              <i class="fa-solid fa-coins text-3xl text-amber-950"></i>
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-yellow-200 via-amber-400 to-orange-500 flex items-center justify-center shadow-xl border-2 border-white shrink-0 animate-float-3d">
+              <i class="fa-solid fa-coins text-2xl text-amber-950"></i>
             </div>
             <div>
-              <span class="px-2 py-0.5 rounded-full bg-white/20 text-[10px] font-extrabold uppercase tracking-wider">Available Balance</span>
-              <p id="homeCoinsDisplay" class="font-display text-3xl font-extrabold tracking-tight leading-none mt-1 drop-shadow-xs">0</p>
+              <span class="px-2 py-0.5 rounded-full bg-white/20 text-[10px] font-extrabold uppercase tracking-wider">Wallet Balance</span>
+              <p id="homeCoinsDisplay" class="font-display text-3xl font-extrabold tracking-tight leading-none mt-1">0</p>
               <p class="text-xs font-extrabold text-amber-200 mt-1">≈ ₹<span id="homeRupeeEquivalent">0.00</span> INR</p>
             </div>
           </div>
@@ -569,7 +505,7 @@
         </div>
       </div>
 
-      <!-- Today's Earnings & Total Withdrawn 3D Stat Cards -->
+      <!-- Today Earned & Total Withdrawn -->
       <div class="grid grid-cols-2 gap-3 mb-3.5">
         <div class="glass-3d-card rounded-3xl p-3.5 flex items-center gap-3">
           <div class="w-11 h-11 rounded-2xl icon-cap-rewards flex items-center justify-center text-white shrink-0">
@@ -592,17 +528,17 @@
         </div>
       </div>
 
-      <!-- Daily Free Promocode 3D Gift Banner -->
+      <!-- Daily Free Promocode Gift Banner -->
       <div class="rounded-3xl p-4 mb-4 text-white relative overflow-hidden shadow-[0_14px_28px_-6px_rgba(236,72,153,0.42)] border-2 border-white/70"
            style="background: linear-gradient(125deg, #F97316 0%, #EC4899 52%, #8B5CF6 100%);">
         <div class="flex items-center justify-between gap-2">
           <div class="flex items-center gap-3">
-            <div class="w-14 h-14 rounded-2xl bg-white/25 backdrop-blur border-2 border-white/60 flex items-center justify-center shrink-0 animate-float-3d">
-              <i class="fa-solid fa-gift text-3xl text-yellow-200 drop-shadow"></i>
+            <div class="w-13 h-13 p-2.5 rounded-2xl bg-white/25 backdrop-blur border-2 border-white/60 flex items-center justify-center shrink-0 animate-float-3d">
+              <i class="fa-solid fa-gift text-2xl text-yellow-200"></i>
             </div>
             <div>
-              <span class="inline-block px-2.5 py-0.5 rounded-full bg-amber-300 text-amber-950 text-[10px] font-extrabold uppercase">Mystery Gift</span>
-              <h3 class="font-display text-base font-bold leading-tight mt-0.5">Daily Free Promocode</h3>
+              <span class="inline-block px-2.5 py-0.5 rounded-full bg-amber-300 text-amber-950 text-[10px] font-extrabold uppercase">Gift Code</span>
+              <h3 class="font-display text-base font-bold leading-tight mt-0.5">Redeem Promocode</h3>
               <p class="font-display text-sm font-extrabold text-amber-200">Win 100 – 500 Coins</p>
             </div>
           </div>
@@ -613,39 +549,35 @@
         </div>
       </div>
 
-      <!-- Primary 3D Feature Cards Grid (Distinct 3D Icon per Feature) -->
+      <!-- Primary 3D Feature Cards -->
       <div class="grid grid-cols-3 gap-2.5 mb-3.5">
-        <!-- Tasks: Blue 3D Clipboard -->
         <button onclick="navigateTo('tasks')" class="glass-3d-card rounded-3xl p-3 flex flex-col items-center text-center active:scale-95 transition">
-          <div class="w-13 h-13 p-3 rounded-2xl icon-cap-tasks flex items-center justify-center text-white mb-2">
-            <i class="fa-solid fa-clipboard-list text-2xl"></i>
+          <div class="w-12 h-12 rounded-2xl icon-cap-tasks flex items-center justify-center text-white mb-2">
+            <i class="fa-solid fa-clipboard-list text-xl"></i>
           </div>
           <span class="font-display font-bold text-xs text-indigo-950 leading-tight">Tasks & Earn</span>
           <span class="text-[10px] font-bold text-blue-600 mt-0.5">100–500 🪙</span>
         </button>
 
-        <!-- Watch Ads: Red & Blue 3D Video Player -->
         <button onclick="navigateTo('ads')" class="glass-3d-card rounded-3xl p-3 flex flex-col items-center text-center active:scale-95 transition">
-          <div class="w-13 h-13 p-3 rounded-2xl icon-cap-ads flex items-center justify-center text-white mb-2">
-            <i class="fa-solid fa-circle-play text-2xl"></i>
+          <div class="w-12 h-12 rounded-2xl icon-cap-ads flex items-center justify-center text-white mb-2">
+            <i class="fa-solid fa-circle-play text-xl"></i>
           </div>
           <span class="font-display font-bold text-xs text-indigo-950 leading-tight">Watch Ads</span>
-          <span class="text-[10px] font-bold text-rose-600 mt-0.5">+20 🪙 / Ad</span>
+          <span class="text-[10px] font-bold text-rose-600 mt-0.5">+<span id="homeAdRewardBadge">20</span> 🪙 / Ad</span>
         </button>
 
-        <!-- Spin: Multicolor 3D Lucky Wheel -->
         <button onclick="navigateTo('spin')" class="glass-3d-card rounded-3xl p-3 flex flex-col items-center text-center active:scale-95 transition">
-          <div class="w-13 h-13 p-3 rounded-2xl icon-cap-spin flex items-center justify-center text-white mb-2">
-            <i class="fa-solid fa-dharmachakra text-2xl"></i>
+          <div class="w-12 h-12 rounded-2xl icon-cap-spin flex items-center justify-center text-white mb-2">
+            <i class="fa-solid fa-dharmachakra text-xl"></i>
           </div>
           <span class="font-display font-bold text-xs text-indigo-950 leading-tight">Spin & Win</span>
           <span class="text-[10px] font-bold text-purple-600 mt-0.5">1–100 🪙</span>
         </button>
       </div>
 
-      <!-- Secondary 4-Column 3D Quick Tiles -->
+      <!-- Secondary 4-Column Quick Tiles -->
       <div class="grid grid-cols-4 gap-2 mb-3.5">
-        <!-- Games: Cyan 3D Controller -->
         <button onclick="navigateTo('games')" class="glass-3d-card rounded-2xl p-2.5 flex flex-col items-center active:scale-95 transition">
           <div class="w-11 h-11 rounded-2xl icon-cap-games flex items-center justify-center text-white mb-1.5">
             <i class="fa-solid fa-gamepad text-lg"></i>
@@ -653,7 +585,6 @@
           <span class="font-extrabold text-[11px] text-indigo-950">Games</span>
         </button>
 
-        <!-- Scratch: Golden 3D Scratch Card -->
         <button onclick="navigateTo('scratch')" class="glass-3d-card rounded-2xl p-2.5 flex flex-col items-center active:scale-95 transition">
           <div class="w-11 h-11 rounded-2xl icon-cap-scratch flex items-center justify-center text-amber-950 mb-1.5">
             <i class="fa-solid fa-wand-magic-sparkles text-lg"></i>
@@ -661,7 +592,6 @@
           <span class="font-extrabold text-[11px] text-indigo-950">Scratch</span>
         </button>
 
-        <!-- Rank: Golden 3D Trophy -->
         <button onclick="navigateTo('rank')" class="glass-3d-card rounded-2xl p-2.5 flex flex-col items-center active:scale-95 transition">
           <div class="w-11 h-11 rounded-2xl icon-cap-rank flex items-center justify-center text-amber-950 mb-1.5">
             <i class="fa-solid fa-trophy text-lg"></i>
@@ -669,7 +599,6 @@
           <span class="font-extrabold text-[11px] text-indigo-950">Rank</span>
         </button>
 
-        <!-- Refer: Pink 3D Friends Icon -->
         <button onclick="navigateTo('refer')" class="glass-3d-card rounded-2xl p-2.5 flex flex-col items-center active:scale-95 transition">
           <div class="w-11 h-11 rounded-2xl icon-cap-refer flex items-center justify-center text-white mb-1.5">
             <i class="fa-solid fa-user-group text-lg"></i>
@@ -678,18 +607,18 @@
         </button>
       </div>
 
-      <!-- Daily Rewards 3D Gift Box Card -->
+      <!-- Daily Bonus Banner -->
       <div onclick="navigateTo('daily')" class="glass-3d-card glow-rim-gold rounded-3xl p-3.5 flex items-center justify-between cursor-pointer active:scale-[0.99] transition">
         <div class="flex items-center gap-3">
           <div class="w-12 h-12 rounded-2xl icon-cap-rewards flex items-center justify-center text-white shrink-0">
             <i class="fa-solid fa-gift text-xl"></i>
           </div>
           <div>
-            <h4 class="font-display font-bold text-sm text-indigo-950">Daily Login Streak</h4>
-            <p class="text-[11px] font-bold text-amber-800">Claim daily coins & Day 7 Mega Bonus!</p>
+            <h4 class="font-display font-bold text-sm text-indigo-950">Daily Bonus (Day <span id="homeStreakTag">1</span>/7)</h4>
+            <p id="homeDailyStatusSub" class="text-[11px] font-bold text-amber-800">Tap to claim today's streak coins!</p>
           </div>
         </div>
-        <span class="btn-3d btn-3d-gold px-3.5 py-2 rounded-xl font-extrabold text-xs">Claim »</span>
+        <span class="btn-3d btn-3d-gold px-3.5 py-2 rounded-xl font-extrabold text-xs">Open »</span>
       </div>
     </section>
 
@@ -706,104 +635,90 @@
       </div>
 
       <div id="tasksContainer" class="space-y-3 mb-4">
-        <div class="glass-3d-card rounded-3xl p-6 text-center text-xs font-bold text-slate-500">Loading active tasks from Firebase...</div>
-      </div>
-
-      <div class="rounded-3xl p-4 text-white flex items-center gap-3 shadow-lg"
-           style="background: linear-gradient(135deg, #2563EB 0%, #7C3AED 100%);">
-        <div class="w-12 h-12 rounded-2xl bg-amber-300 flex items-center justify-center text-amber-950 text-2xl shrink-0">
-          <i class="fa-solid fa-shield-halved"></i>
-        </div>
-        <div>
-          <h4 class="font-display font-bold text-base">Verified Task Completion</h4>
-          <p class="text-xs text-sky-100">Tap Start to complete the action, then submit your claim for server verification.</p>
-        </div>
+        <div class="glass-3d-card rounded-3xl p-6 text-center text-xs font-bold text-slate-500">Loading active tasks...</div>
       </div>
     </section>
 
-    <!-- ==================== PAGE 3: PLAY GAMES & EARN (6 REAL PLAYABLE GAMES) ==================== -->
+    <!-- ==================== PAGE 3: PLAY GAMES & EARN (60-SECOND SESSIONS) ==================== -->
     <section id="page-games" class="screen-page px-4 pt-3 pb-4">
       <div class="flex items-center justify-between mb-3">
         <button onclick="navigateTo('home')" class="w-10 h-10 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900">
           <i class="fa-solid fa-arrow-left"></i>
         </button>
-        <h2 class="font-display text-xl font-bold text-indigo-950">Play Games & Earn</h2>
+        <h2 class="font-display text-xl font-bold text-indigo-950">60s Arcade Games</h2>
         <div class="px-3 py-1 rounded-xl bg-cyan-100 border border-cyan-300 text-cyan-900 font-extrabold text-xs">
           <span id="gamesSessionCounter">0</span>/<span id="gamesSessionMax">100</span>
         </div>
       </div>
 
-      <!-- Hero 3D Arcade Banner -->
       <div class="rounded-3xl p-4 mb-4 text-white relative overflow-hidden shadow-xl border-2 border-white/60"
            style="background: linear-gradient(135deg, #0284C7 0%, #7C3AED 55%, #EC4899 100%);">
         <div class="flex items-center justify-between gap-2">
           <div>
-            <span class="bg-white/25 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase">6 Playable 3D/HTML5 Games</span>
-            <h3 class="font-display text-lg font-bold mt-1 leading-snug">Play Skill Games & Earn Verified Coins</h3>
-            <button onclick="openPlayableGame('bubble')" class="btn-3d btn-3d-gold mt-3 px-5 py-2 rounded-2xl font-display font-bold text-sm">
-              Play Now
-            </button>
+            <span class="bg-white/25 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase">60-Second Timed Sessions</span>
+            <h3 class="font-display text-lg font-bold mt-1 leading-snug">Play 60s & Claim Verified Coins</h3>
+            <p class="text-[11px] text-sky-100 mt-0.5">Auto Game Over at 00:00 + Monetag reward claim</p>
           </div>
-          <div class="w-20 h-20 rounded-3xl icon-cap-games flex items-center justify-center shrink-0 animate-float-3d">
-            <i class="fa-solid fa-gamepad text-4xl text-white"></i>
+          <div class="w-16 h-16 rounded-3xl icon-cap-games flex items-center justify-center shrink-0 animate-float-3d">
+            <i class="fa-solid fa-stopwatch text-3xl text-white"></i>
           </div>
         </div>
       </div>
 
-      <!-- 6 Real Playable Games Grid -->
+      <!-- 6 Real Playable Games -->
       <div class="grid grid-cols-2 gap-3">
         <div class="glass-3d-card rounded-3xl p-3 flex flex-col justify-between">
           <div>
             <div class="h-24 rounded-2xl bg-gradient-to-br from-pink-400 via-purple-500 to-indigo-600 flex items-center justify-center text-4xl shadow-inner mb-2">🫧</div>
             <h4 class="font-display font-bold text-sm text-indigo-950">Bubble Shooter</h4>
-            <p class="text-[11px] font-semibold text-slate-500">Pop colorful bubble clusters</p>
+            <p class="text-[11px] font-semibold text-slate-500">60s • Up to <span id="rewardLabel-bubble">50</span> 🪙</p>
           </div>
-          <button onclick="openPlayableGame('bubble')" class="btn-3d btn-3d-purple w-full mt-2.5 py-2 rounded-xl font-bold text-xs">Play Game</button>
+          <button onclick="openPlayableGame('bubble')" class="btn-3d btn-3d-purple w-full mt-2.5 py-2 rounded-xl font-bold text-xs">Play 60s</button>
         </div>
 
         <div class="glass-3d-card rounded-3xl p-3 flex flex-col justify-between">
           <div>
             <div class="h-24 rounded-2xl bg-gradient-to-br from-emerald-400 via-lime-500 to-teal-600 flex items-center justify-center text-4xl shadow-inner mb-2">🍉</div>
             <h4 class="font-display font-bold text-sm text-indigo-950">Fruit Cut</h4>
-            <p class="text-[11px] font-semibold text-slate-500">Slice flying fruits, dodge bombs</p>
+            <p class="text-[11px] font-semibold text-slate-500">60s • Up to <span id="rewardLabel-fruit">50</span> 🪙</p>
           </div>
-          <button onclick="openPlayableGame('fruit')" class="btn-3d btn-3d-green w-full mt-2.5 py-2 rounded-xl font-bold text-xs">Play Game</button>
+          <button onclick="openPlayableGame('fruit')" class="btn-3d btn-3d-green w-full mt-2.5 py-2 rounded-xl font-bold text-xs">Play 60s</button>
         </div>
 
         <div class="glass-3d-card rounded-3xl p-3 flex flex-col justify-between">
           <div>
             <div class="h-24 rounded-2xl bg-gradient-to-br from-sky-400 via-blue-500 to-indigo-700 flex items-center justify-center text-4xl shadow-inner mb-2">🏎️</div>
             <h4 class="font-display font-bold text-sm text-indigo-950">Car Racing</h4>
-            <p class="text-[11px] font-semibold text-slate-500">Switch lanes & collect coins</p>
+            <p class="text-[11px] font-semibold text-slate-500">60s • Up to <span id="rewardLabel-racing">50</span> 🪙</p>
           </div>
-          <button onclick="openPlayableGame('racing')" class="btn-3d btn-3d-cyan w-full mt-2.5 py-2 rounded-xl font-bold text-xs">Play Game</button>
+          <button onclick="openPlayableGame('racing')" class="btn-3d btn-3d-cyan w-full mt-2.5 py-2 rounded-xl font-bold text-xs">Play 60s</button>
         </div>
 
         <div class="glass-3d-card rounded-3xl p-3 flex flex-col justify-between">
           <div>
             <div class="h-24 rounded-2xl bg-gradient-to-br from-amber-400 via-orange-500 to-red-600 flex items-center justify-center text-4xl shadow-inner mb-2">🗿</div>
             <h4 class="font-display font-bold text-sm text-indigo-950">Temple Run</h4>
-            <p class="text-[11px] font-semibold text-slate-500">Jump obstacles & dash far</p>
+            <p class="text-[11px] font-semibold text-slate-500">60s • Up to <span id="rewardLabel-temple">50</span> 🪙</p>
           </div>
-          <button onclick="openPlayableGame('temple')" class="btn-3d btn-3d-gold w-full mt-2.5 py-2 rounded-xl font-bold text-xs">Play Game</button>
+          <button onclick="openPlayableGame('temple')" class="btn-3d btn-3d-gold w-full mt-2.5 py-2 rounded-xl font-bold text-xs">Play 60s</button>
         </div>
 
         <div class="glass-3d-card rounded-3xl p-3 flex flex-col justify-between">
           <div>
             <div class="h-24 rounded-2xl bg-gradient-to-br from-fuchsia-500 via-rose-500 to-amber-500 flex items-center justify-center text-4xl shadow-inner mb-2">🃏</div>
             <h4 class="font-display font-bold text-sm text-indigo-950">Memory Match</h4>
-            <p class="text-[11px] font-semibold text-slate-500">Flip & match 3D icon pairs</p>
+            <p class="text-[11px] font-semibold text-slate-500">60s • Up to <span id="rewardLabel-memory">50</span> 🪙</p>
           </div>
-          <button onclick="openPlayableGame('memory')" class="btn-3d btn-3d-pink w-full mt-2.5 py-2 rounded-xl font-bold text-xs">Play Game</button>
+          <button onclick="openPlayableGame('memory')" class="btn-3d btn-3d-pink w-full mt-2.5 py-2 rounded-xl font-bold text-xs">Play 60s</button>
         </div>
 
         <div class="glass-3d-card rounded-3xl p-3 flex flex-col justify-between">
           <div>
             <div class="h-24 rounded-2xl bg-gradient-to-br from-cyan-400 via-teal-500 to-emerald-600 flex items-center justify-center text-4xl shadow-inner mb-2">🔢</div>
             <h4 class="font-display font-bold text-sm text-indigo-950">Number Puzzle</h4>
-            <p class="text-[11px] font-semibold text-slate-500">Slide tiles into 1–8 order</p>
+            <p class="text-[11px] font-semibold text-slate-500">60s • Up to <span id="rewardLabel-puzzle">50</span> 🪙</p>
           </div>
-          <button onclick="openPlayableGame('puzzle')" class="btn-3d btn-3d-purple w-full mt-2.5 py-2 rounded-xl font-bold text-xs">Play Game</button>
+          <button onclick="openPlayableGame('puzzle')" class="btn-3d btn-3d-purple w-full mt-2.5 py-2 rounded-xl font-bold text-xs">Play 60s</button>
         </div>
       </div>
     </section>
@@ -823,13 +738,11 @@
       <div class="rounded-3xl p-3.5 mb-3 text-white flex items-center justify-between shadow-lg border border-white/50"
            style="background: linear-gradient(135deg, #EC4899 0%, #8B5CF6 100%);">
         <div>
-          <h3 class="font-display font-bold text-base">
-            Spin & Win <span id="spinRangeText">1 – 100</span> Coins
-          </h3>
+          <h3 class="font-display font-bold text-base">Spin & Win <span id="spinRangeText">1 – 100</span> Coins</h3>
           <p class="text-xs text-pink-100">20s timer + Monetag ad verification</p>
         </div>
         <div class="bg-white/25 backdrop-blur px-3 py-1.5 rounded-2xl text-center">
-          <p class="text-[10px] uppercase font-bold">Daily Left</p>
+          <p class="text-[10px] uppercase font-bold">Remaining</p>
           <p class="font-display font-bold text-sm"><span id="spinRemainingText">20</span>/<span id="spinLimitMaxText">20</span></p>
         </div>
       </div>
@@ -845,17 +758,16 @@
           </button>
         </div>
 
-        <!-- 20-Second Animated Timer & Monetag Claim Box -->
         <div id="spinVerificationBox" class="hidden w-full mt-4 p-3.5 rounded-2xl bg-indigo-50 border-2 border-indigo-200 text-center">
-          <p class="text-xs font-extrabold text-indigo-950">Spin Complete! Wait 20s & Watch Ad to Claim</p>
+          <p class="text-xs font-extrabold text-indigo-950">You won <span id="spinWonPreview" class="text-purple-700">0</span> Coins! Wait 20s to unlock Claim</p>
           <div class="my-2 flex items-center justify-center gap-2">
             <span class="w-9 h-9 rounded-full bg-purple-600 text-white font-display font-bold text-sm flex items-center justify-center shadow" id="spinCountdownNum">20</span>
             <div class="flex-1 h-3 rounded-full bg-purple-200 overflow-hidden p-0.5">
               <div id="spinCountdownBar" class="h-full rounded-full bg-gradient-to-r from-purple-600 to-pink-500 transition-all duration-300" style="width: 0%;"></div>
             </div>
           </div>
-          <button id="spinClaimBtn" disabled onclick="claimWithMonetagVerification('spin')" class="btn-3d btn-3d-gold w-full py-2.5 rounded-2xl font-display font-bold text-sm">
-            Wait 20s to Claim
+          <button id="spinClaimBtn" disabled onclick="claimSpinReward()" class="btn-3d btn-3d-gold w-full py-2.5 rounded-2xl font-display font-bold text-sm">
+            Wait 20s to Claim Coins
           </button>
         </div>
       </div>
@@ -877,10 +789,10 @@
            style="background: linear-gradient(135deg, #F59E0B 0%, #EA580C 100%);">
         <div>
           <h3 class="font-display font-bold text-base">Scratch & Win <span id="scratchRangeText">1 – 100</span> Coins</h3>
-          <p class="text-xs text-amber-100">Scratch golden foil, wait 20s & verify ad</p>
+          <p class="text-xs text-amber-100">Scratch golden foil, wait 20s & claim</p>
         </div>
         <div class="bg-white/25 backdrop-blur px-3 py-1.5 rounded-2xl text-center">
-          <p class="text-[10px] uppercase font-bold">Daily Left</p>
+          <p class="text-[10px] uppercase font-bold">Remaining</p>
           <p class="font-display font-bold text-sm"><span id="scratchRemainingText">20</span>/<span id="scratchLimitMaxText">20</span></p>
         </div>
       </div>
@@ -889,31 +801,31 @@
         <div class="relative w-full h-52 rounded-2xl overflow-hidden shadow-inner border-2 border-amber-400 bg-gradient-to-br from-amber-100 via-yellow-50 to-amber-200 flex flex-col items-center justify-center">
           <div class="text-center p-4">
             <div class="w-14 h-14 mx-auto rounded-2xl icon-cap-scratch flex items-center justify-center text-amber-950 text-2xl mb-2">
-              <i class="fa-solid fa-gift"></i>
+              <i class="fa-solid fa-coins"></i>
             </div>
-            <p class="text-xs font-extrabold text-amber-800 uppercase">Card Scratched!</p>
-            <p class="font-display text-xl font-bold text-indigo-950 mt-1">Reward Unlocked</p>
-            <p class="text-[11px] font-semibold text-slate-600">Complete 20s timer + Monetag ad to claim</p>
+            <p class="text-xs font-extrabold text-amber-800 uppercase">Scratch Prize</p>
+            <p class="font-display text-3xl font-extrabold text-indigo-950 mt-0.5">+<span id="scratchPrizePreview">0</span> Coins</p>
+            <p class="text-[11px] font-semibold text-slate-600 mt-1">Complete 20s timer + Monetag ad to claim</p>
           </div>
           <canvas id="scratchFoilCanvas" class="absolute inset-0 w-full h-full cursor-pointer touch-none"></canvas>
         </div>
 
         <div id="scratchVerificationBox" class="hidden mt-4 p-3.5 rounded-2xl bg-amber-50 border-2 border-amber-300 text-center">
-          <p class="text-xs font-extrabold text-amber-950">Scratch Verified! Wait 20s & Watch Ad to Claim</p>
+          <p class="text-xs font-extrabold text-amber-950">Card Revealed! Wait 20s to unlock Claim Coins</p>
           <div class="my-2 flex items-center justify-center gap-2">
             <span class="w-9 h-9 rounded-full bg-amber-600 text-white font-display font-bold text-sm flex items-center justify-center shadow" id="scratchCountdownNum">20</span>
             <div class="flex-1 h-3 rounded-full bg-amber-200 overflow-hidden p-0.5">
               <div id="scratchCountdownBar" class="h-full rounded-full bg-gradient-to-r from-amber-500 to-rose-500 transition-all duration-300" style="width: 0%;"></div>
             </div>
           </div>
-          <button id="scratchClaimBtn" disabled onclick="claimWithMonetagVerification('scratch')" class="btn-3d btn-3d-gold w-full py-2.5 rounded-2xl font-display font-bold text-sm">
-            Wait 20s to Claim
+          <button id="scratchClaimBtn" disabled onclick="claimScratchReward()" class="btn-3d btn-3d-gold w-full py-2.5 rounded-2xl font-display font-bold text-sm">
+            Wait 20s to Claim Coins
           </button>
         </div>
 
         <div class="mt-3 flex justify-end">
           <button onclick="resetScratchFoil()" class="btn-3d btn-3d-purple px-4 py-2 rounded-xl text-xs font-bold">
-            New Card
+            New Scratch Card
           </button>
         </div>
       </div>
@@ -937,7 +849,7 @@
           Watch Ads & Earn <span id="adRewardCoinsText">20</span> Coins Per Ad!
         </h3>
         <p class="text-xs font-semibold text-slate-600 mt-1">
-          Powered by Monetag Rewarded SDK. Coins are awarded only after the 20s countdown and Monetag completion callback succeed.
+          Powered by Monetag Rewarded Interstitial (<code>show_12347886</code>). Complete the 20-second timer and watch the full ad to receive verified coins.
         </p>
 
         <div class="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-sky-50 border-2 border-sky-200">
@@ -947,26 +859,26 @@
         </div>
 
         <div id="adsVerificationBox" class="hidden mt-4 p-4 rounded-2xl bg-sky-50 border-2 border-sky-200">
-          <p class="text-xs font-extrabold text-sky-950">Preparing Monetag Rewarded Video...</p>
+          <p class="text-xs font-extrabold text-sky-950">Verifying Ad Slot Availability...</p>
           <div class="my-2.5 flex items-center justify-center gap-2">
             <span class="w-9 h-9 rounded-full bg-sky-600 text-white font-display font-bold text-sm flex items-center justify-center shadow" id="adsCountdownNum">20</span>
             <div class="flex-1 h-3 rounded-full bg-sky-200 overflow-hidden p-0.5">
               <div id="adsCountdownBar" class="h-full rounded-full bg-gradient-to-r from-sky-500 to-indigo-600 transition-all duration-300" style="width: 0%;"></div>
             </div>
           </div>
-          <button id="adsClaimBtn" disabled onclick="claimWithMonetagVerification('watch_ad')" class="btn-3d btn-3d-green w-full py-3 rounded-2xl font-display font-bold text-sm">
-            Wait 20s to Launch Ad & Claim
+          <button id="adsClaimBtn" disabled onclick="claimWatchAdReward()" class="btn-3d btn-3d-green w-full py-3 rounded-2xl font-display font-bold text-sm">
+            Wait 20s to Claim Coins
           </button>
         </div>
 
         <button id="watchAdStartBtn" onclick="startWatchAdTimer()" class="btn-3d btn-3d-pink w-full mt-5 py-3.5 rounded-2xl font-display font-bold text-base flex items-center justify-center gap-2">
-          <span>Watch Now</span>
+          <span>Start Ad Timer</span>
           <i class="fa-solid fa-play"></i>
         </button>
       </div>
     </section>
 
-    <!-- ==================== PAGE 7: REAL-TIME LEADERBOARD (3D TROPHIES & REAL PHOTOS) ==================== -->
+    <!-- ==================== PAGE 7: REAL-TIME LEADERBOARD ==================== -->
     <section id="page-rank" class="screen-page px-4 pt-3 pb-4">
       <div class="flex items-center justify-between mb-3">
         <button onclick="navigateTo('home')" class="w-10 h-10 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900">
@@ -979,11 +891,9 @@
         <div class="w-10"></div>
       </div>
 
-      <!-- Top 3 Animated 3D Gold, Silver & Bronze Trophies Podium -->
       <div class="glass-3d-card glow-rim-purple rounded-3xl p-4 mb-3">
         <div id="podiumContainer" class="grid grid-cols-3 gap-2 items-end pt-2 text-center"></div>
 
-        <!-- Weekly / All-Time Switch -->
         <div class="grid grid-cols-2 gap-2 mt-4 p-1.5 rounded-2xl bg-indigo-100/90">
           <button id="lbTabWeekly" onclick="setLeaderboardMode('weekly')" class="py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold text-xs shadow">
             Weekly Rank
@@ -993,13 +903,11 @@
           </button>
         </div>
 
-        <!-- Real-Time Leaderboard Rows with Telegram Profile Photos -->
         <div id="leaderboardRows" class="mt-3 space-y-2">
           <p class="text-center text-xs font-bold text-slate-500 py-4">Syncing live leaderboard...</p>
         </div>
       </div>
 
-      <!-- Current User Rank Card -->
       <div class="rounded-3xl p-3.5 text-white flex items-center justify-between shadow-lg"
            style="background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);">
         <div class="flex items-center gap-3">
@@ -1009,13 +917,13 @@
             <p class="text-xs font-bold">Coins: <span id="currentUserRankCoins" class="text-amber-300">0</span></p>
           </div>
         </div>
-        <button onclick="navigateTo('tasks')" class="btn-3d btn-3d-gold px-3.5 py-2 rounded-xl font-bold text-xs">
-          Boost Rank »
+        <button onclick="navigateTo('games')" class="btn-3d btn-3d-gold px-3.5 py-2 rounded-xl font-bold text-xs">
+          Play & Climb »
         </button>
       </div>
     </section>
 
-    <!-- ==================== PAGE 8: REFER & EARN ==================== -->
+    <!-- ==================== PAGE 8: REFER & EARN (https://t.me/SmartuEarninng_bot/app) ==================== -->
     <section id="page-refer" class="screen-page px-4 pt-3 pb-4">
       <div class="flex items-center justify-between mb-3">
         <button onclick="navigateTo('home')" class="w-10 h-10 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900">
@@ -1033,13 +941,14 @@
           Invite Friends & Earn <span class="text-purple-700"><span id="referBonusCoinsText">300</span> Coins (₹<span id="referBonusRupeeText">3</span>)</span> Per Refer
         </h3>
         <p class="text-xs font-semibold text-slate-600 mt-1.5">
-          Share your personal Telegram Mini App referral link. Self-referrals and duplicate accounts are automatically blocked.
+          Share your unique Telegram Mini App referral link. Self-referrals & duplicate accounts are strictly blocked.
         </p>
 
         <div class="mt-4 p-3 rounded-2xl bg-indigo-950 text-white flex items-center justify-between">
           <div class="text-left min-w-0 pr-2">
             <p class="text-[10px] uppercase text-indigo-300 font-bold">Your Referral Code</p>
             <p id="userReferralCodeText" class="font-display text-lg font-bold tracking-wider text-amber-300 truncate">—</p>
+            <p id="userReferralUrlPreview" class="text-[10px] text-sky-300 truncate mt-0.5">https://t.me/SmartuEarninng_bot/app?startapp=...</p>
           </div>
           <button onclick="copyUserReferralLink()" class="btn-3d btn-3d-purple px-4 py-2 rounded-xl text-xs font-bold shrink-0">
             Copy Link
@@ -1068,21 +977,21 @@
       </div>
 
       <div class="glass-3d-card rounded-3xl p-4">
-        <h4 class="font-display font-bold text-sm text-indigo-950 mb-2">Referral History</h4>
+        <h4 class="font-display font-bold text-sm text-indigo-950 mb-2">Referral Reward History</h4>
         <div id="referralHistoryList" class="space-y-2 text-xs">
           <p class="text-slate-500 text-center py-3 font-semibold">No referrals recorded yet.</p>
         </div>
       </div>
     </section>
 
-    <!-- ==================== PAGE 9: WALLET & WITHDRAW (ONLY 3 METHODS) ==================== -->
+    <!-- ==================== PAGE 9: WALLET & WITHDRAW ==================== -->
     <section id="page-wallet" class="screen-page px-4 pt-3 pb-4">
       <div class="flex items-center justify-between mb-3">
         <button onclick="navigateTo('home')" class="w-10 h-10 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900">
           <i class="fa-solid fa-arrow-left"></i>
         </button>
         <h2 class="font-display text-xl font-bold text-indigo-950">Wallet & Redeem</h2>
-        <button onclick="navigateTo('redeemHistory')" class="w-10 h-10 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900" title="Redeem History">
+        <button onclick="navigateTo('redeemHistory')" class="w-10 h-10 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900">
           <i class="fa-solid fa-clock-rotate-left"></i>
         </button>
       </div>
@@ -1104,7 +1013,6 @@
         </div>
       </div>
 
-      <!-- Strictly 3 Withdrawal Methods -->
       <div class="glass-3d-card rounded-3xl p-4 mb-4">
         <h3 class="font-extrabold text-xs text-indigo-950 mb-2.5">Select Withdrawal Method</h3>
         <div class="grid grid-cols-3 gap-2.5 mb-4">
@@ -1186,29 +1094,37 @@
       </div>
     </section>
 
-    <!-- ==================== PAGE 11: DAILY REWARDS ==================== -->
+    <!-- ==================== PAGE 11: DAILY BONUS (FIXED 7-DAY STREAK) ==================== -->
     <section id="page-daily" class="screen-page px-4 pt-3 pb-4">
       <div class="flex items-center justify-between mb-3">
         <button onclick="navigateTo('home')" class="w-10 h-10 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900">
           <i class="fa-solid fa-arrow-left"></i>
         </button>
-        <h2 class="font-display text-xl font-bold text-indigo-950">Daily Rewards</h2>
+        <h2 class="font-display text-xl font-bold text-indigo-950">Daily Bonus</h2>
         <div class="w-10"></div>
       </div>
 
-      <div class="rounded-3xl p-4 mb-4 text-white flex items-center gap-3 shadow-lg"
+      <div class="rounded-3xl p-4 mb-4 text-white flex items-center justify-between gap-3 shadow-lg"
            style="background: linear-gradient(135deg, #F59E0B 0%, #EA580C 100%);">
-        <div class="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center text-2xl text-yellow-200">
-          <i class="fa-solid fa-calendar-check"></i>
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center text-2xl text-yellow-200">
+            <i class="fa-solid fa-calendar-check"></i>
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-base">7-Day Login Streak</h3>
+            <p class="text-xs text-amber-100">Current: <span id="dailyStreakDisplay" class="font-extrabold">Day 1</span></p>
+          </div>
         </div>
-        <div>
-          <h3 class="font-display font-bold text-base">Login Daily & Earn Streak Rewards</h3>
-          <p class="text-xs text-amber-100">Current Streak: <span id="dailyStreakDisplay" class="font-extrabold">Day 1</span></p>
+        <div class="bg-white/20 backdrop-blur px-3 py-1.5 rounded-2xl text-right">
+          <p class="text-[9px] uppercase font-extrabold">Next Reset</p>
+          <p id="dailyNextCountdownText" class="font-display font-bold text-xs text-yellow-200">Ready Now</p>
         </div>
       </div>
 
+      <!-- Days 1 through 6 -->
       <div id="dailyStreakGrid" class="grid grid-cols-3 gap-2.5 mb-3"></div>
 
+      <!-- Day 7 Mega Bonus + Primary Claim Button -->
       <div class="rounded-3xl p-4 text-white flex items-center justify-between shadow-xl"
            style="background: linear-gradient(135deg, #6D28D9 0%, #EC4899 100%);">
         <div class="flex items-center gap-3">
@@ -1216,18 +1132,18 @@
             <i class="fa-solid fa-gift"></i>
           </div>
           <div>
-            <span class="text-[10px] font-extrabold uppercase bg-white/25 px-2 py-0.5 rounded-full">Day 7</span>
-            <h4 class="font-display text-lg font-bold">Mega Bonus</h4>
+            <span class="text-[10px] font-extrabold uppercase bg-white/25 px-2 py-0.5 rounded-full">Day 7 Mega</span>
+            <h4 class="font-display text-lg font-bold">Grand Streak</h4>
             <p class="font-display text-base font-extrabold text-amber-300"><span id="day7BonusText">1,000</span> Coins</p>
           </div>
         </div>
-        <button id="claimDailyBtn" onclick="claimDailyStreakBonus()" class="btn-3d btn-3d-gold px-4 py-2.5 rounded-2xl font-display font-bold text-xs">
-          Claim Today
+        <button id="claimDailyBtn" onclick="claimDailyStreakBonus()" class="btn-3d btn-3d-gold px-4 py-3 rounded-2xl font-display font-bold text-xs">
+          Claim Day 1
         </button>
       </div>
     </section>
 
-    <!-- ==================== PAGE 12: MY PROFILE (REAL TELEGRAM PHOTO + FALLBACK) ==================== -->
+    <!-- ==================== PAGE 12: MY PROFILE ==================== -->
     <section id="page-profile" class="screen-page px-4 pt-3 pb-4">
       <div class="flex items-center justify-between mb-3">
         <button onclick="navigateTo('home')" class="w-10 h-10 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900">
@@ -1241,7 +1157,7 @@
 
       <div class="glass-3d-card glow-rim-purple rounded-3xl p-4 mb-4">
         <div class="flex items-center gap-3.5 pb-4 border-b border-indigo-100">
-          <div id="profileAvatarContainer" class="tg-avatar-ring w-18 h-18" style="width:72px;height:72px;"></div>
+          <div id="profileAvatarContainer" class="tg-avatar-ring" style="width:72px;height:72px;"></div>
           <div class="min-w-0">
             <h3 id="profileFullName" class="font-display text-xl font-bold text-indigo-950 truncate">Player</h3>
             <p id="profileUsername" class="text-xs font-extrabold text-sky-600 truncate">@username</p>
@@ -1289,7 +1205,7 @@
 
         <button onclick="navigateTo('settings')" class="w-full p-3.5 flex items-center justify-between text-left hover:bg-white/60">
           <span class="flex items-center gap-3 text-sm font-bold text-indigo-950">
-            <i class="fa-solid fa-sliders text-emerald-600 w-5"></i> Settings & Photo Info
+            <i class="fa-solid fa-sliders text-emerald-600 w-5"></i> Settings
           </span>
           <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
         </button>
@@ -1322,19 +1238,19 @@
       </div>
 
       <div class="glass-3d-card rounded-3xl p-4 space-y-2.5 text-xs">
-        <h3 class="font-display font-bold text-base text-indigo-950 mb-1">FAQ & Verification Rules</h3>
+        <h3 class="font-display font-bold text-base text-indigo-950 mb-1">FAQ & Reward Rules</h3>
         <details class="p-3 rounded-2xl bg-white/90 border border-purple-100" open>
-          <summary class="font-extrabold text-indigo-950 cursor-pointer">How are rewards & ads verified?</summary>
-          <p class="mt-1.5 text-slate-600">All Spin, Scratch, Watch Ad, Game Score, and Promo Code claims are submitted with your signed Telegram payload to Firebase for server-side validation before coins are credited.</p>
+          <summary class="font-extrabold text-indigo-950 cursor-pointer">How do Monetag Rewarded Ads work?</summary>
+          <p class="mt-1.5 text-slate-600">After completing a spin, scratch, 60-second game session, or watch ad timer, click Claim Coins to launch the Monetag rewarded interstitial. Coins are credited once the ad finishes and session verification succeeds.</p>
         </details>
         <details class="p-3 rounded-2xl bg-white/90 border border-purple-100">
-          <summary class="font-extrabold text-indigo-950 cursor-pointer">Where do I find my Google Play or Amazon Gift Code?</summary>
-          <p class="mt-1.5 text-slate-600">Once an authorized admin approves your request, your redeem code appears inside <strong>Redeem History</strong> with a Copy Code button.</p>
+          <summary class="font-extrabold text-indigo-950 cursor-pointer">How do Google Play & Amazon Gift Codes arrive?</summary>
+          <p class="mt-1.5 text-slate-600">Submit your redeem request in Wallet. Once approved by an authorized admin, your code appears inside <strong>Redeem History</strong> with a Copy button.</p>
         </details>
       </div>
     </section>
 
-    <!-- ==================== PAGE 15: SETTINGS & TELEGRAM PHOTO ARCHITECTURE NOTE ==================== -->
+    <!-- ==================== PAGE 15: SETTINGS ==================== -->
     <section id="page-settings" class="screen-page px-4 pt-3 pb-4">
       <div class="flex items-center justify-between mb-3">
         <button onclick="navigateTo('profile')" class="w-10 h-10 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900">
@@ -1348,7 +1264,7 @@
         <div class="flex items-center justify-between">
           <div>
             <p class="font-bold text-sm text-indigo-950">3D Sound Effects</p>
-            <p class="text-[11px] text-slate-500">WebAudio chimes for spins, wins & games</p>
+            <p class="text-[11px] text-slate-500">Audio feedback on wins & taps</p>
           </div>
           <input id="soundPrefToggle" type="checkbox" checked class="w-5 h-5 accent-purple-600" />
         </div>
@@ -1356,26 +1272,22 @@
         <div class="flex items-center justify-between">
           <div>
             <p class="font-bold text-sm text-indigo-950">Telegram Haptic Feedback</p>
-            <p class="text-[11px] text-slate-500">Vibrate on button taps & rewards</p>
+            <p class="text-[11px] text-slate-500">Vibrate on button interactions</p>
           </div>
           <input id="hapticPrefToggle" type="checkbox" checked class="w-5 h-5 accent-purple-600" />
         </div>
 
         <div class="pt-3 border-t border-indigo-100 text-xs space-y-2">
-          <p class="font-bold text-indigo-950">Telegram Auth & Profile Photo Status</p>
+          <p class="font-bold text-indigo-950">Telegram Session & Security Status</p>
           <div id="authVerificationStatusBox" class="p-3 rounded-2xl bg-sky-50 border border-sky-200 text-sky-950 font-semibold leading-relaxed">
-            Checking Telegram WebApp user object...
+            Verifying Telegram WebApp session...
           </div>
-          <p class="text-[11px] text-slate-500 leading-relaxed">
-            <strong>Technical Note:</strong> When Telegram includes <code>photo_url</code> in the Mini App user payload, it is displayed directly and synced to your profile. If a user's Telegram privacy settings omit <code>photo_url</code>, fetching high-res avatars via Bot API <code>getUserProfilePhotos</code> requires a trusted server backend (keeping the Bot Token strictly off client HTML), while the app displays your personalized 3D initials avatar.
-          </p>
         </div>
       </div>
     </section>
 
-    <!-- ==================== GLOSSY 5-TAB 3D BOTTOM NAVIGATION BAR ==================== -->
+    <!-- ==================== 5-TAB 3D BOTTOM NAVIGATION BAR ==================== -->
     <nav class="fixed bottom-0 left-0 right-0 max-w-[448px] mx-auto z-30 bg-white/95 backdrop-blur-lg border-t-2 border-purple-100 px-2 pt-2 pb-[calc(0.5rem+var(--safe-bottom))] flex items-center justify-around shadow-[0_-10px_30px_rgba(79,70,229,0.14)] rounded-t-3xl">
-      <!-- Home: Purple 3D House -->
       <button onclick="navigateTo('home')" data-tab="home" class="bottom-tab flex flex-col items-center text-purple-700 font-extrabold text-[11px]">
         <div class="w-10 h-8 rounded-xl bg-purple-100 flex items-center justify-center mb-0.5">
           <i class="fa-solid fa-house text-base text-purple-700"></i>
@@ -1383,7 +1295,6 @@
         <span>Home</span>
       </button>
 
-      <!-- Games: Cyan 3D Controller -->
       <button onclick="navigateTo('games')" data-tab="games" class="bottom-tab flex flex-col items-center text-slate-500 font-bold text-[11px]">
         <div class="w-10 h-8 rounded-xl flex items-center justify-center mb-0.5">
           <i class="fa-solid fa-gamepad text-base text-cyan-600"></i>
@@ -1391,13 +1302,12 @@
         <span>Games</span>
       </button>
 
-      <!-- Center Elevated 3D Golden Coin FAB -->
-      <button onclick="navigateTo('spin')" aria-label="Spin & Earn Center"
-              class="-mt-8 w-15 h-15 p-3.5 rounded-full bg-gradient-to-b from-yellow-200 via-amber-400 to-orange-500 border-4 border-white shadow-[0_8px_22px_rgba(245,158,11,0.5)] flex items-center justify-center text-amber-950 active:scale-95 transition">
+      <!-- Elevated Central 3D Golden Coin FAB -->
+      <button onclick="navigateTo('spin')" aria-label="Spin & Win"
+              class="-mt-8 w-14 h-14 rounded-full bg-gradient-to-b from-yellow-200 via-amber-400 to-orange-500 border-4 border-white shadow-[0_8px_22px_rgba(245,158,11,0.5)] flex items-center justify-center text-amber-950 active:scale-95 transition">
         <i class="fa-solid fa-coins text-2xl"></i>
       </button>
 
-      <!-- Rank: Golden 3D Trophy -->
       <button onclick="navigateTo('rank')" data-tab="rank" class="bottom-tab flex flex-col items-center text-slate-500 font-bold text-[11px]">
         <div class="w-10 h-8 rounded-xl flex items-center justify-center mb-0.5">
           <i class="fa-solid fa-trophy text-base text-amber-500"></i>
@@ -1405,7 +1315,6 @@
         <span>Rank</span>
       </button>
 
-      <!-- Profile: Circular Avatar Tab -->
       <button onclick="navigateTo('profile')" data-tab="profile" class="bottom-tab flex flex-col items-center text-slate-500 font-bold text-[11px]">
         <div id="navAvatarMiniContainer" class="w-8 h-8 rounded-full border-2 border-purple-400 overflow-hidden flex items-center justify-center mb-0.5 bg-purple-100 text-purple-800 font-extrabold text-[10px]">
           ME
@@ -1423,7 +1332,7 @@
       </div>
       <h3 class="font-display text-xl font-bold text-indigo-950">Redeem Promo Code</h3>
       <p class="text-xs font-semibold text-slate-600 mt-1">
-        Enter an active admin promo code. Random reward range & usage limits are validated securely on the server.
+        Enter an active promo code to win random bonus coins (100 – 500 Coins).
       </p>
 
       <input id="promoInputField" type="text" placeholder="e.g. SMARTU500"
@@ -1431,23 +1340,26 @@
 
       <div class="grid grid-cols-2 gap-2.5 mt-4">
         <button onclick="closePromoModal()" class="py-2.5 rounded-2xl bg-slate-100 text-slate-700 font-bold text-xs">Cancel</button>
-        <button onclick="submitPromoRedeemClaim()" class="btn-3d btn-3d-gold py-2.5 rounded-2xl font-extrabold text-xs">Submit Claim</button>
+        <button id="promoSubmitBtn" onclick="redeemPromoCode()" class="btn-3d btn-3d-gold py-2.5 rounded-2xl font-extrabold text-xs">Redeem Code</button>
       </div>
     </div>
   </div>
 
-  <!-- ==================== REAL PLAYABLE MINI-GAME ARENA MODAL ==================== -->
+  <!-- ==================== 60-SECOND PLAYABLE MINI-GAME ARENA & GAME OVER POPUP ==================== -->
   <div id="gameArenaModal" class="fixed inset-0 z-50 hidden bg-indigo-950/65 backdrop-blur-sm flex items-center justify-center p-3">
-    <div class="glass-3d-card glow-rim-purple rounded-3xl max-w-sm w-full p-4">
+    <div class="glass-3d-card glow-rim-purple rounded-3xl max-w-sm w-full p-4 relative">
       <div class="flex items-center justify-between mb-2">
         <h3 id="gameArenaTitle" class="font-display font-bold text-lg text-indigo-950">Mini Game</h3>
         <button onclick="closePlayableGame()" class="w-8 h-8 rounded-full bg-slate-100 text-slate-700 font-bold">✕</button>
       </div>
 
-      <div class="flex items-center justify-between text-xs font-extrabold px-3 py-1.5 rounded-2xl bg-purple-50 mb-2">
-        <span class="text-purple-700">Score: <span id="gameLiveScore">0</span></span>
-        <span id="gameStatusLabel" class="text-emerald-700">Ready</span>
-        <span class="text-amber-700">Target: <span id="gameTargetScore">100</span></span>
+      <!-- 60-Second Countdown & Score HUD -->
+      <div class="flex items-center justify-between text-xs font-extrabold px-3 py-2 rounded-2xl bg-indigo-950 text-white mb-2">
+        <span class="text-amber-300">Score: <span id="gameLiveScore">0</span></span>
+        <span class="px-2.5 py-0.5 rounded-full bg-rose-600 text-white font-display tracking-wider">
+          <i class="fa-solid fa-clock mr-1"></i><span id="gameTimerDisplay">01:00</span>
+        </span>
+        <span class="text-emerald-300">Reward: <span id="gamePotentialCoins">0</span> 🪙</span>
       </div>
 
       <div id="canvasGameWrapper" class="relative w-full h-72 rounded-2xl overflow-hidden border-2 border-indigo-200 bg-sky-100">
@@ -1458,17 +1370,23 @@
         <div id="gridGameBoard" class="w-full h-full"></div>
       </div>
 
-      <div id="gameOverBanner" class="hidden mt-3 p-3 rounded-2xl bg-amber-50 border border-amber-300 text-center">
-        <p class="font-display font-bold text-base text-indigo-950">Session Complete!</p>
-        <p class="text-xs font-bold text-slate-600">Final Score: <span id="finalGameScoreText" class="text-purple-700">0</span></p>
-        <button id="submitGameScoreBtn" onclick="submitVerifiedGameScore()" class="btn-3d btn-3d-gold w-full mt-2 py-2.5 rounded-2xl font-display font-bold text-xs">
-          Submit Score for Reward Verification
+      <!-- 60s Game Over Popup Overlay -->
+      <div id="gameOverBanner" class="hidden mt-3 p-4 rounded-2xl bg-gradient-to-br from-amber-50 to-purple-50 border-2 border-amber-400 text-center shadow-lg">
+        <div class="w-12 h-12 mx-auto rounded-2xl icon-cap-rank flex items-center justify-center text-amber-950 text-xl mb-1.5">
+          <i class="fa-solid fa-flag-checkered"></i>
+        </div>
+        <h4 class="font-display font-bold text-lg text-indigo-950">Time's Up — Game Over!</h4>
+        <p class="text-xs font-bold text-slate-600 mt-0.5">
+          Score: <span id="finalGameScoreText" class="text-purple-700 font-extrabold">0</span> • Earned: <span id="finalGameCoinsText" class="text-amber-700 font-extrabold">0</span> Coins
+        </p>
+        <button id="submitGameScoreBtn" onclick="claimGameSessionCoins()" class="btn-3d btn-3d-gold w-full mt-3 py-3 rounded-2xl font-display font-bold text-sm">
+          <i class="fa-solid fa-coins mr-1"></i> Claim Coins (Watch Ad)
         </button>
       </div>
 
       <div class="grid grid-cols-2 gap-2 mt-3">
         <button onclick="restartCurrentGame()" class="btn-3d btn-3d-cyan py-2.5 rounded-2xl font-bold text-xs">
-          <i class="fa-solid fa-rotate-right mr-1"></i> Start / Restart
+          <i class="fa-solid fa-rotate-right mr-1"></i> Restart 60s
         </button>
         <button onclick="closePlayableGame()" class="py-2.5 rounded-2xl bg-slate-100 text-slate-700 font-bold text-xs">
           Exit Game
@@ -1477,17 +1395,61 @@
     </div>
   </div>
 
+  <!-- ==================== 10. PREMIUM 3D REWARD SUCCESS POPUP ==================== -->
+  <div id="rewardSuccessModal" class="fixed inset-0 z-[70] hidden bg-indigo-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="glass-3d-card glow-rim-gold rounded-3xl max-w-sm w-full p-6 text-center relative overflow-hidden">
+      <!-- Light Rays -->
+      <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-35">
+        <div class="w-80 h-80 splash-light-rays"
+             style="background: repeating-conic-gradient(from 0deg, rgba(251, 191, 36, 0.35) 0deg 15deg, transparent 15deg 30deg); border-radius: 9999px;"></div>
+      </div>
+
+      <div class="relative z-10">
+        <!-- Animated 3D Golden Coins Burst -->
+        <div class="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-yellow-200 via-amber-400 to-orange-500 border-4 border-white shadow-2xl flex items-center justify-center animate-coin-burst mb-3">
+          <i class="fa-solid fa-coins text-4xl text-amber-950"></i>
+        </div>
+
+        <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 font-extrabold text-[10px] uppercase tracking-wider">
+          Verified Reward Credited
+        </span>
+
+        <h3 id="successPopupTitle" class="font-display text-2xl font-extrabold text-indigo-950 mt-2">
+          Congratulations!
+        </h3>
+
+        <div class="my-3 py-2.5 px-4 rounded-2xl bg-amber-100/90 border-2 border-amber-300 inline-block">
+          <p class="font-display text-3xl font-extrabold text-amber-800">
+            +<span id="successPopupCoins">0</span> Coins
+          </p>
+        </div>
+
+        <p id="successPopupMessage" class="text-xs font-bold text-slate-600">
+          Your reward has been added to your wallet balance!
+        </p>
+
+        <div class="mt-3 p-2.5 rounded-2xl bg-indigo-50 border border-indigo-100 text-xs font-extrabold text-indigo-950">
+          Updated Balance: <span id="successPopupNewBalance" class="text-purple-700">0</span> Coins
+        </div>
+
+        <button onclick="closeRewardSuccessPopup()" class="btn-3d btn-3d-gold w-full mt-4 py-3.5 rounded-2xl font-display font-bold text-base">
+          Continue
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- ==================== NON-BLOCKING TOAST ==================== -->
-  <div id="appToast" class="fixed top-4 left-1/2 -translate-x-1/2 z-[60] hidden max-w-[390px] w-[92%] px-4 py-3 rounded-2xl shadow-2xl text-white font-bold text-xs flex items-center gap-2.5">
+  <div id="appToast" class="fixed top-4 left-1/2 -translate-x-1/2 z-[80] hidden max-w-[390px] w-[92%] px-4 py-3 rounded-2xl shadow-2xl text-white font-bold text-xs flex items-center gap-2.5">
     <i id="appToastIcon" class="fa-solid fa-circle-info text-base"></i>
     <span id="appToastMsg">Status updated</span>
   </div>
 
-  <!-- ==================== FIREBASE & TELEGRAM PROFILE PHOTO ENGINE ==================== -->
+  <!-- ==================== APPLICATION LOGIC (FIREBASE + TELEGRAM + MONETAG) ==================== -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { getDatabase, ref, get, set, update, push, onValue, query, orderByChild, limitToLast } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+    import { getDatabase, ref, get, set, update, push, onValue, runTransaction, query, orderByChild, limitToLast } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBSjOsX5ZltyoKKNsthv81ruJJkCctweeE",
@@ -1504,16 +1466,27 @@
     const auth = getAuth(app);
     const db = getDatabase(app);
 
-    const todayDateStr = new Date().toISOString().slice(0, 10);
+    const REFERRAL_BASE_URL = "https://t.me/SmartuEarninng_bot/app";
+
+    function getTodayKey() {
+      return new Date().toISOString().slice(0, 10);
+    }
+
+    function getYesterdayKey() {
+      const d = new Date();
+      d.setUTCDate(d.getUTCDate() - 1);
+      return d.toISOString().slice(0, 10);
+    }
 
     window.state = {
       telegramId: null,
       initDataRaw: "",
-      isTelegramVerified: false,
+      isBackendVerified: false,
       userProfile: {
         firstName: "",
         username: "",
         photoUrl: "",
+        referralCode: "",
         coins: 0,
         weeklyCoins: 0,
         totalEarned: 0,
@@ -1533,42 +1506,53 @@
       },
       appSettings: {
         maintenanceMode: false,
-        botUsername: "SmartuEarninngBot",
         authEndpoint: "",
-        monetagZoneId: "",
+        rewardVerifyEndpoint: "",
         coinConversionRate: 100,
-        spinMinCoins: 1,
-        spinMaxCoins: 100,
+        spinMin: 1,
+        spinMax: 100,
         dailySpinLimit: 20,
-        scratchMinCoins: 1,
-        scratchMaxCoins: 100,
+        scratchMin: 1,
+        scratchMax: 100,
         dailyScratchLimit: 20,
-        watchAdRewardCoins: 20,
+        watchAdReward: 20,
         dailyAdLimit: 50,
-        dailyGameplayLimit: 100,
+        dailyGameLimit: 100,
         minRedeemAmount: 10,
         maxRedeemAmount: 1000,
         dailyRedeemLimit: 2,
-        referralRewardCoins: 300,
-        dailyRewards: [100, 200, 300, 400, 500, 600, 1000]
+        referralReward: 300,
+        dailyRewards: [100, 200, 300, 400, 500, 600, 1000],
+        gameRewards: {
+          bubble: 50,
+          fruit: 50,
+          racing: 50,
+          temple: 50,
+          memory: 50,
+          puzzle: 50
+        }
       },
       selectedWithdrawMethod: "UPI",
       leaderboardMode: "weekly",
       allUsersList: [],
+      pendingSpinPrize: 0,
+      pendingSpinSessionId: "",
+      pendingScratchPrize: 0,
+      pendingScratchSessionId: "",
+      pendingWatchAdSessionId: "",
       activeGameId: null,
       currentGameScore: 0,
-      gameSessionToken: ""
+      currentGameSessionId: "",
+      isClaimLockActive: false
     };
 
-    // ==================== REUSABLE REAL TELEGRAM AVATAR RENDERER ====================
-    // Renders a real <img> with referrerPolicy="no-referrer" and object-fit:cover,
-    // automatically falling back to a vibrant 3D gradient initials badge on load error or missing photo_url.
+    // ==================== TELEGRAM PROFILE PHOTO RENDERER ====================
     window.renderTelegramAvatarInto = function(containerEl, photoUrl, firstName, textSizeClass = "text-lg") {
       if (!containerEl) return;
       const safeName = (firstName || "User").trim();
       const initials = safeName.slice(0, 2).toUpperCase();
 
-      const buildFallbackNode = () => {
+      const renderFallback = () => {
         containerEl.innerHTML = "";
         const badge = document.createElement("div");
         badge.className = `w-full h-full rounded-full bg-gradient-to-br from-sky-400 via-purple-600 to-pink-500 text-white font-display font-bold ${textSizeClass} flex items-center justify-center`;
@@ -1583,17 +1567,27 @@
         img.alt = safeName;
         img.referrerPolicy = "no-referrer";
         img.className = "w-full h-full rounded-full object-cover bg-white block";
-        img.onerror = () => buildFallbackNode();
+        img.onerror = () => renderFallback();
         containerEl.appendChild(img);
       } else {
-        buildFallbackNode();
+        renderFallback();
       }
     };
 
-    // Drawer & UI Helpers
+    function renderAllUserAvatars() {
+      const p = state.userProfile.photoUrl || "";
+      const n = state.userProfile.firstName || "Player";
+      renderTelegramAvatarInto(document.getElementById("homeAvatarContainer"), p, n, "text-lg");
+      renderTelegramAvatarInto(document.getElementById("profileAvatarContainer"), p, n, "text-xl");
+      renderTelegramAvatarInto(document.getElementById("referAvatarContainer"), p, n, "text-xl");
+      renderTelegramAvatarInto(document.getElementById("rankFooterAvatarContainer"), p, n, "text-sm");
+      renderTelegramAvatarInto(document.getElementById("navAvatarMiniContainer"), p, n, "text-[10px]");
+    }
+
+    // ==================== AUDIO, HAPTICS & TOASTS ====================
     window.openSideMenu = () => document.getElementById("sideMenuOverlay").classList.remove("hidden");
     window.closeSideMenu = () => document.getElementById("sideMenuOverlay").classList.add("hidden");
-    window.navigateFromDrawer = (pageKey) => { closeSideMenu(); navigateTo(pageKey); };
+    window.navigateFromDrawer = (page) => { closeSideMenu(); navigateTo(page); };
 
     window.playSoundEffect = function(freq = 640, duration = 0.12) {
       const toggle = document.getElementById("soundPrefToggle");
@@ -1625,7 +1619,7 @@
       const icon = document.getElementById("appToastIcon");
       const msg = document.getElementById("appToastMsg");
       msg.textContent = message;
-      el.className = "fixed top-4 left-1/2 -translate-x-1/2 z-[60] max-w-[390px] w-[92%] px-4 py-3 rounded-2xl shadow-2xl text-white font-bold text-xs flex items-center gap-2.5 ";
+      el.className = "fixed top-4 left-1/2 -translate-x-1/2 z-[80] max-w-[390px] w-[92%] px-4 py-3 rounded-2xl shadow-2xl text-white font-bold text-xs flex items-center gap-2.5 ";
       if (type === "error") {
         el.classList.add("bg-rose-600");
         icon.className = "fa-solid fa-circle-exclamation text-base";
@@ -1641,7 +1635,127 @@
       window._toastTimeout = setTimeout(() => el.classList.add("hidden"), 3400);
     };
 
-    // ==================== SPLASH PARTICLES & BOOTSTRAP ====================
+    // ==================== 10. PREMIUM 3D REWARD SUCCESS POPUP ====================
+    window.openRewardSuccessPopup = function(title, coinsAwarded, customMessage) {
+      playSoundEffect(880, 0.22);
+      triggerHaptic("heavy");
+      document.getElementById("successPopupTitle").textContent = title || "Reward Unlocked!";
+      document.getElementById("successPopupCoins").textContent = Number(coinsAwarded || 0).toLocaleString();
+      document.getElementById("successPopupMessage").textContent = customMessage || "Your verified reward has been credited to your wallet!";
+      document.getElementById("successPopupNewBalance").textContent = Number(state.userProfile.coins || 0).toLocaleString();
+      document.getElementById("rewardSuccessModal").classList.remove("hidden");
+    };
+
+    window.closeRewardSuccessPopup = function() {
+      document.getElementById("rewardSuccessModal").classList.add("hidden");
+    };
+
+    // ==================== 1. MONETAG REWARDED INTERSTITIAL + VERIFIED CREDIT ====================
+    // Reusable Monetag show_12347886() wrapper + atomic duplicate-protected reward credit
+    window.executeMonetagAndCredit = async function({ type, sessionId, coins, title, dailyCounterField, dailyLimit }) {
+      if (state.isClaimLockActive) return;
+      if (!sessionId) return showToast("Invalid activity session ID.", "error");
+      if (coins <= 0) return showToast("Reward amount must be greater than 0.", "error");
+
+      state.isClaimLockActive = true;
+      try {
+        // 1. Invoke official Monetag Rewarded Interstitial SDK Promise
+        if (typeof window.show_12347886 !== "function") {
+          throw new Error("Monetag Ad SDK is blocked or still loading. Disable ad-blockers and retry.");
+        }
+
+        await window.show_12347886();
+
+        // 2. If a trusted backend reward-verification endpoint is configured, verify HMAC + session server-side
+        if (state.appSettings.rewardVerifyEndpoint) {
+          const resp = await fetch(state.appSettings.rewardVerifyEndpoint, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              telegramId: state.telegramId,
+              initData: state.initDataRaw,
+              type,
+              sessionId,
+              coins
+            })
+          });
+          const resData = await resp.json();
+          if (!resp.ok || !resData.ok) {
+            throw new Error(resData.error || "Server reward verification failed.");
+          }
+          openRewardSuccessPopup(title, resData.creditedCoins || coins);
+          return true;
+        }
+
+        // 3. Atomic Firebase claim lock & balance update (prevents duplicate sessionId claims)
+        const sessionLockRef = ref(db, `claimedSessions/${state.telegramId}/${sessionId}`);
+        const lockSnap = await get(sessionLockRef);
+        if (lockSnap.exists()) {
+          throw new Error("This reward session has already been claimed.");
+        }
+
+        const today = getTodayKey();
+        const userRef = ref(db, `users/${state.telegramId}`);
+        const txResult = await runTransaction(userRef, (current) => {
+          if (!current) return current;
+          const isNewDay = current.activityDate !== today;
+          const currentDailyCount = isNewDay ? 0 : (Number(current[dailyCounterField]) || 0);
+          if (dailyCounterField && dailyLimit && currentDailyCount >= dailyLimit) {
+            return; // Abort transaction if daily limit exceeded
+          }
+
+          current.activityDate = today;
+          current.coins = (Number(current.coins) || 0) + coins;
+          current.weeklyCoins = (Number(current.weeklyCoins) || 0) + coins;
+          current.totalEarned = (Number(current.totalEarned) || 0) + coins;
+          current.todayEarned = (isNewDay ? 0 : (Number(current.todayEarned) || 0)) + coins;
+
+          if (isNewDay) {
+            current.todaySpins = 0;
+            current.todayScratches = 0;
+            current.todayAds = 0;
+            current.todayGames = 0;
+            current.todayRedeems = 0;
+          }
+          if (dailyCounterField) {
+            current[dailyCounterField] = currentDailyCount + 1;
+          }
+          return current;
+        });
+
+        if (!txResult.committed) {
+          throw new Error("Daily limit reached or balance update could not be committed.");
+        }
+
+        await set(sessionLockRef, {
+          type,
+          coins,
+          timestamp: Date.now()
+        });
+
+        await push(ref(db, `transactions/${state.telegramId}`), {
+          type,
+          title,
+          amount: coins,
+          sessionId,
+          status: "Verified",
+          timestamp: Date.now()
+        });
+
+        const updatedCoins = txResult.snapshot.val()?.coins ?? (state.userProfile.coins + coins);
+        state.userProfile.coins = updatedCoins;
+        openRewardSuccessPopup(title, coins, `Monetag ad verified! +${coins} Coins added to your balance.`);
+        return true;
+      } catch (err) {
+        const msg = err && err.message ? err.message : "Ad was skipped or failed to complete. No coins awarded.";
+        showToast(msg, "error");
+        return false;
+      } finally {
+        state.isClaimLockActive = false;
+      }
+    };
+
+    // ==================== SPLASH & TELEGRAM BOOTSTRAP ====================
     function spawnSplashParticles() {
       const container = document.getElementById("splashParticles");
       const colors = ["#FBBF24", "#A855F7", "#38BDF8", "#F43F5E", "#34D399"];
@@ -1666,12 +1780,11 @@
 
       let progress = 12;
       const interval = setInterval(() => {
-        progress = Math.min(92, progress + 15);
+        progress = Math.min(92, progress + 16);
         fill.style.width = progress + "%";
-        label.textContent = `Initializing 3D Arena... ${progress}%`;
-      }, 150);
+        label.textContent = `Loading 3D Arena... ${progress}%`;
+      }, 140);
 
-      // Initialize official Telegram WebApp SDK
       const tg = window.Telegram && window.Telegram.WebApp;
       let tgUser = null;
       let startParam = "";
@@ -1687,6 +1800,11 @@
         tg.BackButton.onClick(() => navigateTo("home"));
       }
 
+      if (!startParam) {
+        const urlParams = new URLSearchParams(window.location.search);
+        startParam = urlParams.get("startapp") || urlParams.get("tgWebAppStartParam") || "";
+      }
+
       try {
         await signInAnonymously(auth);
         const settingsSnap = await get(ref(db, "appSettings"));
@@ -1694,7 +1812,7 @@
           state.appSettings = { ...state.appSettings, ...settingsSnap.val() };
         }
       } catch (err) {
-        console.warn("Initial settings read note:", err.message);
+        console.warn("Firebase bootstrap warning:", err.message);
       }
 
       clearInterval(interval);
@@ -1705,38 +1823,33 @@
         document.getElementById("splashOverlay").classList.add("hidden");
 
         if (state.appSettings.maintenanceMode === true) {
-          showSystemGate(
-            "Under Scheduled Maintenance",
-            "Smartu Earninng is currently being upgraded by the admin team. Please check back shortly!",
-            "fa-screwdriver-wrench",
-            false
-          );
+          showSystemGate("Under Maintenance", "Smartu Earninng is undergoing scheduled maintenance. Please return soon!", "fa-screwdriver-wrench", false);
           return;
         }
 
         if (!tgUser || !tgUser.id) {
           showSystemGate(
             "Open Inside Telegram Mini App",
-            "No fake profiles or stock photos are permitted. Open Smartu Earninng inside Telegram so the official Telegram WebApp SDK can load your real Telegram profile.",
+            "Smartu Earninng requires your official Telegram WebApp identity. Launch @SmartuEarninng_bot in Telegram to load your profile & wallet.",
             "fa-telegram",
             true
           );
           return;
         }
 
-        // Extract verified Telegram user fields including optional photo_url
         state.telegramId = String(tgUser.id);
         state.userProfile.firstName = tgUser.first_name || "Player";
         state.userProfile.username = tgUser.username || "";
         state.userProfile.photoUrl = tgUser.photo_url || "";
+        state.userProfile.referralCode = `SE${state.telegramId}`;
 
-        // Render avatar immediately before network sync completes
         renderAllUserAvatars();
+        await initOrSyncTelegramProfile(tgUser, startParam);
 
-        await verifyAndInitializeTelegramUser(tgUser, startParam);
         document.getElementById("mainAppContainer").classList.remove("hidden");
         attachRealtimeDatabaseListeners();
-      }, 360);
+        startDailyResetCountdownClock();
+      }, 340);
     }
 
     function showSystemGate(title, message, faIcon, showSteps) {
@@ -1748,9 +1861,7 @@
       gate.classList.remove("hidden");
     }
 
-    async function verifyAndInitializeTelegramUser(tgUser, startParam) {
-      const statusBox = document.getElementById("authVerificationStatusBox");
-
+    async function initOrSyncTelegramProfile(tgUser, startParam) {
       if (state.appSettings.authEndpoint && state.initDataRaw) {
         try {
           const resp = await fetch(state.appSettings.authEndpoint, {
@@ -1761,110 +1872,132 @@
           const data = await resp.json();
           if (data && data.customToken) {
             await signInWithCustomToken(auth, data.customToken);
-            state.isTelegramVerified = true;
-            if (data.photoUrl) state.userProfile.photoUrl = data.photoUrl;
+            state.isBackendVerified = true;
           }
         } catch (err) {
-          console.warn("Backend verification endpoint note:", err.message);
+          console.warn("Backend initData verify note:", err.message);
         }
       }
 
-      statusBox.innerHTML = state.userProfile.photoUrl
-        ? `Telegram ID <strong>${state.telegramId}</strong> connected • Live Telegram <code>photo_url</code> loaded.`
-        : `Telegram ID <strong>${state.telegramId}</strong> connected • Telegram did not return a public <code>photo_url</code> (showing 3D initials fallback).`;
+      document.getElementById("authVerificationStatusBox").innerHTML = state.userProfile.photoUrl
+        ? `Telegram ID <strong>${state.telegramId}</strong> active • Live Telegram <code>photo_url</code> loaded.`
+        : `Telegram ID <strong>${state.telegramId}</strong> active • Public <code>photo_url</code> not provided by Telegram (using 3D initials fallback).`;
 
+      const today = getTodayKey();
       const userRef = ref(db, `users/${state.telegramId}`);
-      try {
-        const snap = await get(userRef);
-        if (!snap.exists()) {
-          const newProfile = {
-            telegramId: state.telegramId,
-            firstName: state.userProfile.firstName,
-            username: state.userProfile.username,
-            photoUrl: state.userProfile.photoUrl,
-            coins: 0,
-            weeklyCoins: 0,
-            totalEarned: 0,
+      const snap = await get(userRef);
+
+      if (!snap.exists()) {
+        const myRefCode = `SE${state.telegramId}`;
+        const newProfile = {
+          telegramId: state.telegramId,
+          firstName: state.userProfile.firstName,
+          username: state.userProfile.username,
+          photoUrl: state.userProfile.photoUrl,
+          referralCode: myRefCode,
+          coins: 0,
+          weeklyCoins: 0,
+          totalEarned: 0,
+          todayEarned: 0,
+          totalWithdrawn: 0,
+          streakDay: 1,
+          lastDailyClaimDate: "",
+          todaySpins: 0,
+          todayScratches: 0,
+          todayAds: 0,
+          todayGames: 0,
+          todayRedeems: 0,
+          activityDate: today,
+          totalReferrals: 0,
+          successfulReferrals: 0,
+          referralCoinsEarned: 0,
+          referredBy: "",
+          blocked: false,
+          createdAt: Date.now()
+        };
+
+        // Process referral parameter (?startapp=SE<referrerId> or ref_<referrerId>)
+        const cleanParam = (startParam || "").trim();
+        const referrerId = cleanParam.replace(/^(SE|ref_)/i, "");
+        if (referrerId && /^\d+$/.test(referrerId) && referrerId !== state.telegramId) {
+          newProfile.referredBy = referrerId;
+          await set(userRef, newProfile);
+          await processVerifiedReferralBonus(referrerId, state.telegramId, state.userProfile.firstName, state.userProfile.photoUrl);
+        } else {
+          await set(userRef, newProfile);
+        }
+      } else {
+        const existing = snap.val();
+        const resetDaily = existing.activityDate !== today;
+        const resolvedPhoto = state.userProfile.photoUrl || existing.photoUrl || "";
+        state.userProfile.photoUrl = resolvedPhoto;
+
+        await update(userRef, {
+          firstName: state.userProfile.firstName,
+          username: state.userProfile.username,
+          photoUrl: resolvedPhoto,
+          referralCode: existing.referralCode || `SE${state.telegramId}`,
+          activityDate: today,
+          ...(resetDaily ? {
             todayEarned: 0,
-            totalWithdrawn: 0,
-            streakDay: 1,
-            lastDailyClaimDate: "",
             todaySpins: 0,
             todayScratches: 0,
             todayAds: 0,
             todayGames: 0,
-            todayRedeems: 0,
-            activityDate: todayDateStr,
-            totalReferrals: 0,
-            successfulReferrals: 0,
-            referralCoinsEarned: 0,
-            referredBy: "",
-            blocked: false,
-            createdAt: Date.now()
-          };
-
-          if (startParam && startParam.startsWith("ref_")) {
-            const referrerId = startParam.replace("ref_", "").trim();
-            if (referrerId && referrerId !== state.telegramId) {
-              newProfile.referredBy = referrerId;
-              await push(ref(db, `rewardClaims/${state.telegramId}`), {
-                type: "referral_signup",
-                telegramId: state.telegramId,
-                referrerId: referrerId,
-                initData: state.initDataRaw,
-                status: "pending",
-                timestamp: Date.now()
-              });
-            }
-          }
-
-          await set(userRef, newProfile);
-        } else {
-          const existing = snap.val();
-          const resetDaily = existing.activityDate !== todayDateStr;
-          const resolvedPhotoUrl = state.userProfile.photoUrl || existing.photoUrl || "";
-          state.userProfile.photoUrl = resolvedPhotoUrl;
-
-          await update(userRef, {
-            firstName: state.userProfile.firstName,
-            username: state.userProfile.username,
-            photoUrl: resolvedPhotoUrl,
-            activityDate: todayDateStr,
-            ...(resetDaily ? {
-              todayEarned: 0,
-              todaySpins: 0,
-              todayScratches: 0,
-              todayAds: 0,
-              todayGames: 0,
-              todayRedeems: 0
-            } : {})
-          });
-        }
-      } catch (err) {
-        console.warn("User profile sync rule notice:", err.message);
+            todayRedeems: 0
+          } : {})
+        });
       }
     }
 
-    function renderAllUserAvatars() {
-      const photoUrl = state.userProfile.photoUrl || "";
-      const firstName = state.userProfile.firstName || "Player";
-      renderTelegramAvatarInto(document.getElementById("homeAvatarContainer"), photoUrl, firstName, "text-lg");
-      renderTelegramAvatarInto(document.getElementById("profileAvatarContainer"), photoUrl, firstName, "text-xl");
-      renderTelegramAvatarInto(document.getElementById("referAvatarContainer"), photoUrl, firstName, "text-xl");
-      renderTelegramAvatarInto(document.getElementById("rankFooterAvatarContainer"), photoUrl, firstName, "text-sm");
-      renderTelegramAvatarInto(document.getElementById("navAvatarMiniContainer"), photoUrl, firstName, "text-[10px]");
+    async function processVerifiedReferralBonus(referrerId, newUserId, newUserName, newUserPhoto) {
+      if (!referrerId || referrerId === newUserId) return;
+      const refRecordRef = ref(db, `referrals/${referrerId}/${newUserId}`);
+      const existingRefSnap = await get(refRecordRef);
+      if (existingRefSnap.exists()) return; // Prevent duplicate referral reward
+
+      const referrerSnap = await get(ref(db, `users/${referrerId}`));
+      if (!referrerSnap.exists()) return;
+
+      const bonusCoins = Number(state.appSettings.referralReward) || 300;
+      await set(refRecordRef, {
+        referredId: newUserId,
+        referredName: newUserName || `User ${newUserId}`,
+        referredPhotoUrl: newUserPhoto || "",
+        reward: bonusCoins,
+        status: "Verified",
+        timestamp: Date.now()
+      });
+
+      await runTransaction(ref(db, `users/${referrerId}`), (curr) => {
+        if (!curr) return curr;
+        curr.coins = (Number(curr.coins) || 0) + bonusCoins;
+        curr.weeklyCoins = (Number(curr.weeklyCoins) || 0) + bonusCoins;
+        curr.totalEarned = (Number(curr.totalEarned) || 0) + bonusCoins;
+        curr.totalReferrals = (Number(curr.totalReferrals) || 0) + 1;
+        curr.successfulReferrals = (Number(curr.successfulReferrals) || 0) + 1;
+        curr.referralCoinsEarned = (Number(curr.referralCoinsEarned) || 0) + bonusCoins;
+        return curr;
+      });
+
+      await push(ref(db, `transactions/${referrerId}`), {
+        type: "referral",
+        title: `Referral Bonus (${newUserName || newUserId})`,
+        amount: bonusCoins,
+        status: "Verified",
+        timestamp: Date.now()
+      });
     }
 
     // ==================== REAL-TIME FIREBASE LISTENERS ====================
     function attachRealtimeDatabaseListeners() {
       onValue(ref(db, `users/${state.telegramId}`), (snap) => {
         if (snap.exists()) {
-          const dbData = snap.val();
-          // Preserve live Telegram SDK photoUrl if DB field is blank
-          const mergedPhoto = dbData.photoUrl || state.userProfile.photoUrl || "";
-          state.userProfile = { ...state.userProfile, ...dbData, photoUrl: mergedPhoto };
+          const data = snap.val();
+          const mergedPhoto = data.photoUrl || state.userProfile.photoUrl || "";
+          state.userProfile = { ...state.userProfile, ...data, photoUrl: mergedPhoto };
           if (state.userProfile.blocked) {
-            showSystemGate("Account Suspended", "Your account has been restricted by the Smartu Earninng administrator.", "fa-ban", false);
+            showSystemGate("Account Suspended", "Your account has been restricted by the administrator.", "fa-ban", false);
           }
           renderUserInterface();
         }
@@ -1921,7 +2054,7 @@
               <button onclick="openTaskDestination('${t.id}', '${encodeURIComponent(t.destinationUrl || '')}')" class="btn-3d btn-3d-cyan px-3.5 py-1.5 rounded-xl font-bold text-xs">
                 Start
               </button>
-              <button id="claimTaskBtn-${t.id}" disabled onclick="submitTaskClaim('${t.id}', ${Number(t.reward) || 0})" class="btn-3d btn-3d-gold px-3.5 py-1.5 rounded-xl font-bold text-xs">
+              <button id="claimTaskBtn-${t.id}" disabled onclick="claimTaskWithMonetag('${t.id}', ${Number(t.reward) || 0}, '${encodeURIComponent(t.name || t.title || 'Task')}')" class="btn-3d btn-3d-gold px-3.5 py-1.5 rounded-xl font-bold text-xs">
                 Claim
               </button>
             </div>
@@ -1951,7 +2084,7 @@
                 <p class="text-[10px] text-slate-500">${new Date(r.timestamp || Date.now()).toLocaleDateString()} • ${r.status || "Verified"}</p>
               </div>
             </div>
-            <span class="font-display font-bold text-emerald-600">+${r.reward || state.appSettings.referralRewardCoins} 🪙</span>
+            <span class="font-display font-bold text-emerald-600">+${r.reward || state.appSettings.referralReward} 🪙</span>
           </div>
         `).join("");
         refs.forEach((r, i) => {
@@ -1988,17 +2121,14 @@
                 </div>
                 <span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase ${statusClass}">${w.status || "Pending"}</span>
               </div>
-
               ${w.upiId ? `<p class="text-xs font-bold text-slate-700">UPI ID: <span class="text-indigo-950">${w.upiId}</span></p>` : ""}
               ${w.paymentReference ? `<p class="text-xs font-bold text-emerald-700">Payment Ref: ${w.paymentReference}</p>` : ""}
               ${w.adminRemarks ? `<p class="text-[11px] font-semibold text-slate-600 bg-slate-50 p-2 rounded-xl">Admin Note: ${w.adminRemarks}</p>` : ""}
-
               ${isApproved && isGiftCard && w.redeemCode ? `
                 <div class="p-3 rounded-2xl bg-emerald-50 border-2 border-emerald-300 flex items-center justify-between gap-2">
                   <div>
                     <p class="text-[10px] font-extrabold uppercase text-emerald-800">Approved ${w.method} Code</p>
                     <p class="font-display font-bold text-sm text-indigo-950 tracking-wider select-all">${w.redeemCode}</p>
-                    ${w.approvedAt ? `<p class="text-[10px] text-slate-500">Approved: ${new Date(w.approvedAt).toLocaleDateString()}</p>` : ""}
                   </div>
                   <button onclick="copyToClipboard('${w.redeemCode}', 'Redeem code copied!')" class="btn-3d btn-3d-green px-3.5 py-2 rounded-xl font-bold text-xs shrink-0">
                     Copy Code
@@ -2027,7 +2157,7 @@
                 </div>
                 <div>
                   <p class="font-bold text-xs text-indigo-950">${t.title || t.type}</p>
-                  <p class="text-[10px] font-semibold text-slate-500">${new Date(t.timestamp || Date.now()).toLocaleString()} • ${t.status || "Verified"}</p>
+                  <p class="text-[10px] font-semibold text-slate-500">${new Date(t.timestamp || Date.now()).toLocaleString()}</p>
                 </div>
               </div>
               <span class="font-display font-bold text-sm ${positive ? 'text-emerald-600' : 'text-rose-600'}">
@@ -2039,14 +2169,15 @@
       });
     }
 
-    // ==================== RENDER USER INTERFACE ====================
+    // ==================== RENDER UI & DAILY BONUS STREAK ====================
     function renderUserInterface() {
       const u = state.userProfile;
       const cfg = state.appSettings;
       const rupees = (Number(u.coins || 0) / Number(cfg.coinConversionRate || 100)).toFixed(2);
+      const today = getTodayKey();
 
       document.getElementById("homeFirstName").textContent = u.firstName || "Player";
-      document.getElementById("homeUsernameText").textContent = u.username ? `@${u.username}` : `Telegram Member`;
+      document.getElementById("homeUsernameText").textContent = u.username ? `@${u.username}` : "Telegram Member";
       document.getElementById("homeTelegramId").textContent = state.telegramId || "—";
       document.getElementById("profileFullName").textContent = u.firstName || "Player";
       document.getElementById("profileUsername").textContent = u.username ? `@${u.username}` : `ID: ${state.telegramId}`;
@@ -2058,29 +2189,37 @@
       document.getElementById("homeRupeeEquivalent").textContent = rupees;
       document.getElementById("homeTodayEarned").textContent = Number(u.todayEarned || 0).toLocaleString();
       document.getElementById("homeTotalWithdrawn").textContent = Number(u.totalWithdrawn || 0).toLocaleString();
+      document.getElementById("homeAdRewardBadge").textContent = cfg.watchAdReward || 20;
 
       document.getElementById("profileStatCoins").textContent = Number(u.coins || 0).toLocaleString();
       document.getElementById("profileStatWithdrawn").textContent = Number(u.totalWithdrawn || 0).toLocaleString();
       document.getElementById("profileStatStreak").textContent = u.streakDay || 1;
 
-      document.getElementById("spinRangeText").textContent = `${cfg.spinMinCoins} – ${cfg.spinMaxCoins}`;
+      document.getElementById("spinRangeText").textContent = `${cfg.spinMin} – ${cfg.spinMax}`;
       document.getElementById("spinRemainingText").textContent = Math.max(0, cfg.dailySpinLimit - (u.todaySpins || 0));
       document.getElementById("spinLimitMaxText").textContent = cfg.dailySpinLimit;
 
-      document.getElementById("scratchRangeText").textContent = `${cfg.scratchMinCoins} – ${cfg.scratchMaxCoins}`;
+      document.getElementById("scratchRangeText").textContent = `${cfg.scratchMin} – ${cfg.scratchMax}`;
       document.getElementById("scratchRemainingText").textContent = Math.max(0, cfg.dailyScratchLimit - (u.todayScratches || 0));
       document.getElementById("scratchLimitMaxText").textContent = cfg.dailyScratchLimit;
 
-      document.getElementById("adRewardCoinsText").textContent = cfg.watchAdRewardCoins;
+      document.getElementById("adRewardCoinsText").textContent = cfg.watchAdReward;
       document.getElementById("adsCompletedTodayText").textContent = u.todayAds || 0;
       document.getElementById("adsLimitMaxText").textContent = cfg.dailyAdLimit;
 
       document.getElementById("gamesSessionCounter").textContent = u.todayGames || 0;
-      document.getElementById("gamesSessionMax").textContent = cfg.dailyGameplayLimit;
+      document.getElementById("gamesSessionMax").textContent = cfg.dailyGameLimit;
+      ["bubble", "fruit", "racing", "temple", "memory", "puzzle"].forEach(g => {
+        const el = document.getElementById(`rewardLabel-${g}`);
+        if (el) el.textContent = (cfg.gameRewards && cfg.gameRewards[g]) || 50;
+      });
 
-      document.getElementById("userReferralCodeText").textContent = `ref_${state.telegramId}`;
-      document.getElementById("referBonusCoinsText").textContent = cfg.referralRewardCoins;
-      document.getElementById("referBonusRupeeText").textContent = (cfg.referralRewardCoins / cfg.coinConversionRate).toFixed(0);
+      const refCode = u.referralCode || `SE${state.telegramId}`;
+      const fullRefUrl = `${REFERRAL_BASE_URL}?startapp=${refCode}`;
+      document.getElementById("userReferralCodeText").textContent = refCode;
+      document.getElementById("userReferralUrlPreview").textContent = fullRefUrl;
+      document.getElementById("referBonusCoinsText").textContent = cfg.referralReward;
+      document.getElementById("referBonusRupeeText").textContent = (cfg.referralReward / cfg.coinConversionRate).toFixed(0);
       document.getElementById("statTotalReferrals").textContent = u.totalReferrals || 0;
       document.getElementById("statSuccessReferrals").textContent = u.successfulReferrals || 0;
       document.getElementById("statReferralCoins").textContent = u.referralCoinsEarned || 0;
@@ -2093,25 +2232,139 @@
       document.getElementById("todayRedeemsUsed").textContent = u.todayRedeems || 0;
       document.getElementById("dailyRedeemMaxText").textContent = cfg.dailyRedeemLimit;
 
-      const dailyArr = Array.isArray(cfg.dailyRewards) ? cfg.dailyRewards : [100, 200, 300, 400, 500, 600, 1000];
-      document.getElementById("dailyStreakDisplay").textContent = `Day ${u.streakDay || 1}`;
-      document.getElementById("day7BonusText").textContent = Number(dailyArr[6] || 1000).toLocaleString();
+      // 2. DAILY BONUS STREAK CALCULATION & UI
+      const dailyArr = Array.isArray(cfg.dailyRewards) && cfg.dailyRewards.length >= 7
+        ? cfg.dailyRewards
+        : [100, 200, 300, 400, 500, 600, 1000];
+
+      const claimedToday = u.lastDailyClaimDate === today;
+      let activeStreakDay = Number(u.streakDay) || 1;
+      if (!claimedToday && u.lastDailyClaimDate && u.lastDailyClaimDate !== getYesterdayKey()) {
+        activeStreakDay = 1; // Streak reset if user missed a calendar day
+      }
+      if (activeStreakDay < 1 || activeStreakDay > 7) activeStreakDay = 1;
+
+      document.getElementById("homeStreakTag").textContent = activeStreakDay;
+      document.getElementById("homeDailyStatusSub").textContent = claimedToday
+        ? "Today's bonus claimed! Come back tomorrow."
+        : `Day ${activeStreakDay} reward (${dailyArr[activeStreakDay - 1]} Coins) ready to claim!`;
+
+      document.getElementById("dailyStreakDisplay").textContent = `Day ${activeStreakDay} of 7`;
+      document.getElementById("day7BonusText").textContent = Number(dailyArr[6]).toLocaleString();
+
+      const claimBtn = document.getElementById("claimDailyBtn");
+      if (claimedToday) {
+        claimBtn.disabled = true;
+        claimBtn.textContent = "Claimed Today ✓";
+      } else {
+        claimBtn.disabled = false;
+        claimBtn.textContent = `Claim Day ${activeStreakDay} (+${dailyArr[activeStreakDay - 1]})`;
+      }
 
       document.getElementById("dailyStreakGrid").innerHTML = [0, 1, 2, 3, 4, 5].map(idx => {
         const dayNum = idx + 1;
-        const done = dayNum < (u.streakDay || 1) || (dayNum === (u.streakDay || 1) && u.lastDailyClaimDate === todayDateStr);
-        const isToday = dayNum === (u.streakDay || 1) && u.lastDailyClaimDate !== todayDateStr;
+        const isCompleted = claimedToday ? dayNum <= activeStreakDay : dayNum < activeStreakDay;
+        const isClaimableToday = !claimedToday && dayNum === activeStreakDay;
         return `
-          <div onclick="${isToday ? 'claimDailyStreakBonus()' : ''}"
-               class="glass-3d-card rounded-2xl p-3 text-center cursor-pointer ${isToday ? 'glow-rim-gold' : ''}">
+          <div onclick="${isClaimableToday ? 'claimDailyStreakBonus()' : ''}"
+               class="glass-3d-card rounded-2xl p-3 text-center transition ${isClaimableToday ? 'glow-rim-gold cursor-pointer active:scale-95' : ''}">
             <p class="text-xs font-extrabold text-indigo-950 mb-1.5">Day ${dayNum}</p>
-            <div class="w-10 h-10 mx-auto rounded-2xl ${done ? 'icon-cap-rewards text-white' : 'icon-cap-scratch text-amber-950'} flex items-center justify-center mb-1">
-              <i class="fa-solid ${done ? 'fa-check' : 'fa-coins'}"></i>
+            <div class="w-10 h-10 mx-auto rounded-2xl ${isCompleted ? 'icon-cap-rewards text-white' : 'icon-cap-scratch text-amber-950'} flex items-center justify-center mb-1">
+              <i class="fa-solid ${isCompleted ? 'fa-check' : 'fa-coins'}"></i>
             </div>
-            <p class="font-display font-bold text-xs text-indigo-900">${dailyArr[idx]}</p>
+            <p class="font-display font-bold text-xs text-indigo-900">${dailyArr[idx]} 🪙</p>
+            <p class="text-[9px] font-extrabold mt-0.5 ${isClaimableToday ? 'text-emerald-600' : 'text-slate-400'}">
+              ${isCompleted ? 'Claimed' : isClaimableToday ? 'Tap to Claim' : 'Locked'}
+            </p>
           </div>
         `;
       }).join("");
+    }
+
+    // ==================== 2. FIXED DAILY BONUS CLAIM FUNCTION ====================
+    window.claimDailyStreakBonus = async function() {
+      const today = getTodayKey();
+      const yesterday = getYesterdayKey();
+      if (state.userProfile.lastDailyClaimDate === today) {
+        return showToast("You already claimed today's Daily Bonus!", "info");
+      }
+
+      const btn = document.getElementById("claimDailyBtn");
+      btn.disabled = true;
+
+      const dailyArr = Array.isArray(state.appSettings.dailyRewards) && state.appSettings.dailyRewards.length >= 7
+        ? state.appSettings.dailyRewards
+        : [100, 200, 300, 400, 500, 600, 1000];
+
+      let awardedAmount = 0;
+      let claimedDayNum = 1;
+
+      try {
+        const userRef = ref(db, `users/${state.telegramId}`);
+        const tx = await runTransaction(userRef, (curr) => {
+          if (!curr) return curr;
+          if (curr.lastDailyClaimDate === today) {
+            return; // Abort duplicate daily claim
+          }
+
+          let day = Number(curr.streakDay) || 1;
+          if (curr.lastDailyClaimDate && curr.lastDailyClaimDate !== yesterday) {
+            day = 1;
+          }
+          if (day < 1 || day > 7) day = 1;
+
+          const reward = Number(dailyArr[day - 1]) || 100;
+          awardedAmount = reward;
+          claimedDayNum = day;
+
+          const isNewDay = curr.activityDate !== today;
+          curr.activityDate = today;
+          curr.lastDailyClaimDate = today;
+          curr.lastDailyClaimTimestamp = Date.now();
+          curr.streakDay = day >= 7 ? 1 : day + 1;
+          curr.coins = (Number(curr.coins) || 0) + reward;
+          curr.weeklyCoins = (Number(curr.weeklyCoins) || 0) + reward;
+          curr.totalEarned = (Number(curr.totalEarned) || 0) + reward;
+          curr.todayEarned = (isNewDay ? 0 : (Number(curr.todayEarned) || 0)) + reward;
+          return curr;
+        });
+
+        if (!tx.committed) {
+          return showToast("Today's Daily Bonus has already been claimed!", "info");
+        }
+
+        await push(ref(db, `transactions/${state.telegramId}`), {
+          type: "daily_bonus",
+          title: `Daily Bonus (Day ${claimedDayNum})`,
+          amount: awardedAmount,
+          status: "Verified",
+          timestamp: Date.now()
+        });
+
+        state.userProfile.coins = tx.snapshot.val()?.coins ?? (state.userProfile.coins + awardedAmount);
+        openRewardSuccessPopup(`Day ${claimedDayNum} Bonus!`, awardedAmount, `Streak updated! Come back tomorrow for Day ${tx.snapshot.val()?.streakDay || 2}.`);
+      } catch (err) {
+        btn.disabled = false;
+        showToast("Daily bonus claim error: " + err.message, "error");
+      }
+    };
+
+    function startDailyResetCountdownClock() {
+      setInterval(() => {
+        const el = document.getElementById("dailyNextCountdownText");
+        if (!el) return;
+        if (state.userProfile.lastDailyClaimDate !== getTodayKey()) {
+          el.textContent = "Available Now";
+          return;
+        }
+        const now = new Date();
+        const nextUtcMidnight = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1, 0, 0, 0);
+        const diffSec = Math.max(0, Math.floor((nextUtcMidnight - now.getTime()) / 1000));
+        const hrs = String(Math.floor(diffSec / 3600)).padStart(2, "0");
+        const mins = String(Math.floor((diffSec % 3600) / 60)).padStart(2, "0");
+        const secs = String(diffSec % 60).padStart(2, "0");
+        el.textContent = `${hrs}:${mins}:${secs}`;
+      }, 1000);
     }
 
     // ==================== NAVIGATION & CLIPBOARD ====================
@@ -2155,36 +2408,24 @@
     };
 
     window.copyUserTelegramId = () => copyToClipboard(state.telegramId, `Telegram ID ${state.telegramId} copied!`);
+
     window.copyUserReferralLink = () => {
-      const url = `https://t.me/${state.appSettings.botUsername}?startapp=ref_${state.telegramId}`;
+      const code = state.userProfile.referralCode || `SE${state.telegramId}`;
+      const url = `${REFERRAL_BASE_URL}?startapp=${code}`;
       copyToClipboard(url, "Unique Telegram referral link copied!");
     };
 
     window.shareReferralOnTelegram = function() {
-      const url = encodeURIComponent(`https://t.me/${state.appSettings.botUsername}?startapp=ref_${state.telegramId}`);
-      const text = encodeURIComponent(`Join Smartu Earninng & get ${state.appSettings.referralRewardCoins} Coins bonus! Play 3D games, spin & redeem UPI/Google Play/Amazon!`);
+      const code = state.userProfile.referralCode || `SE${state.telegramId}`;
+      const url = encodeURIComponent(`${REFERRAL_BASE_URL}?startapp=${code}`);
+      const text = encodeURIComponent(`Join Smartu Earninng & earn ${state.appSettings.referralReward} Coins! Play 60s games, spin & withdraw to UPI, Google Play & Amazon!`);
       const shareUrl = `https://t.me/share/url?url=${url}&text=${text}`;
       const tg = window.Telegram && window.Telegram.WebApp;
       if (tg && tg.openTelegramLink) tg.openTelegramLink(shareUrl);
       else window.open(shareUrl, "_blank");
     };
 
-    async function submitRewardClaimPayload(claimType, extraData = {}) {
-      if (!state.telegramId) return showToast("Telegram user not authenticated.", "error");
-      const claimRef = push(ref(db, `rewardClaims/${state.telegramId}`));
-      await set(claimRef, {
-        claimId: claimRef.key,
-        telegramId: state.telegramId,
-        type: claimType,
-        initData: state.initDataRaw,
-        status: "pending",
-        timestamp: Date.now(),
-        ...extraData
-      });
-      return claimRef.key;
-    }
-
-    // ==================== TASKS, PROMO & DAILY STREAK ====================
+    // ==================== TASKS & PROMOCODES ====================
     const startedTasks = new Set();
     window.openTaskDestination = function(taskId, encodedUrl) {
       const url = decodeURIComponent(encodedUrl);
@@ -2193,44 +2434,85 @@
       setTimeout(() => {
         const claimBtn = document.getElementById(`claimTaskBtn-${taskId}`);
         if (claimBtn) claimBtn.disabled = false;
-        showToast("Task visit recorded. Tap Claim to submit for verification.", "info");
+        showToast("Task visit complete. Tap Claim to watch ad & verify!", "info");
       }, 4000);
     };
 
-    window.submitTaskClaim = async function(taskId, reward) {
-      if (!startedTasks.has(taskId)) return showToast("Start the task first before claiming.", "error");
+    window.claimTaskWithMonetag = async function(taskId, reward, encodedName) {
+      if (!startedTasks.has(taskId)) return showToast("Start the task first.", "error");
       const btn = document.getElementById(`claimTaskBtn-${taskId}`);
       if (btn) btn.disabled = true;
-      await submitRewardClaimPayload("task", { taskId, requestedReward: reward });
-      playSoundEffect(760, 0.16);
-      showToast("Task claim submitted for server verification!", "success");
+      const ok = await executeMonetagAndCredit({
+        type: "task",
+        sessionId: `task_${taskId}_${state.telegramId}`,
+        coins: Number(reward) || 100,
+        title: `Task: ${decodeURIComponent(encodedName)}`
+      });
+      if (!ok && btn) btn.disabled = false;
     };
 
     window.openPromoModal = () => document.getElementById("promoModalOverlay").classList.remove("hidden");
     window.closePromoModal = () => document.getElementById("promoModalOverlay").classList.add("hidden");
 
-    window.submitPromoRedeemClaim = async function() {
+    window.redeemPromoCode = async function() {
       const code = document.getElementById("promoInputField").value.trim().toUpperCase();
       if (!code) return showToast("Enter a promo code first.", "error");
-      await submitRewardClaimPayload("promocode", { promoCode: code });
-      document.getElementById("promoInputField").value = "";
-      closePromoModal();
-      showToast(`Promo code "${code}" submitted for server validation!`, "success");
-    };
 
-    window.claimDailyStreakBonus = async function() {
-      if (state.userProfile.lastDailyClaimDate === todayDateStr) {
-        return showToast("Today's daily reward has already been claimed!", "info");
+      const btn = document.getElementById("promoSubmitBtn");
+      btn.disabled = true;
+
+      try {
+        const promoSnap = await get(ref(db, `promocodes/${code}`));
+        if (!promoSnap.exists()) throw new Error("Invalid or expired promo code.");
+        const promo = promoSnap.val();
+        if (promo.status !== "Active" && promo.active !== true) throw new Error("This promo code is inactive.");
+        if (promo.expiryDate && new Date(promo.expiryDate).getTime() < Date.now()) throw new Error("This promo code has expired.");
+
+        const claimLockRef = ref(db, `claimedSessions/${state.telegramId}/promo_${code}`);
+        if ((await get(claimLockRef)).exists()) throw new Error("You have already redeemed this promo code.");
+
+        const totalUsed = Number(promo.usedCount) || 0;
+        if (promo.totalLimit && totalUsed >= Number(promo.totalLimit)) throw new Error("Promo code total redemption limit reached.");
+
+        const minC = Number(promo.minCoins) || 100;
+        const maxC = Number(promo.maxCoins) || 500;
+        const wonCoins = Math.floor(Math.random() * (maxC - minC + 1)) + minC;
+
+        await set(claimLockRef, { code, coins: wonCoins, timestamp: Date.now() });
+        await update(ref(db, `promocodes/${code}`), { usedCount: totalUsed + 1 });
+
+        const tx = await runTransaction(ref(db, `users/${state.telegramId}`), (curr) => {
+          if (!curr) return curr;
+          const today = getTodayKey();
+          const isNewDay = curr.activityDate !== today;
+          curr.activityDate = today;
+          curr.coins = (Number(curr.coins) || 0) + wonCoins;
+          curr.weeklyCoins = (Number(curr.weeklyCoins) || 0) + wonCoins;
+          curr.totalEarned = (Number(curr.totalEarned) || 0) + wonCoins;
+          curr.todayEarned = (isNewDay ? 0 : (Number(curr.todayEarned) || 0)) + wonCoins;
+          return curr;
+        });
+
+        await push(ref(db, `transactions/${state.telegramId}`), {
+          type: "promocode",
+          title: `Promo Code (${code})`,
+          amount: wonCoins,
+          status: "Verified",
+          timestamp: Date.now()
+        });
+
+        document.getElementById("promoInputField").value = "";
+        closePromoModal();
+        state.userProfile.coins = tx.snapshot.val()?.coins ?? (state.userProfile.coins + wonCoins);
+        openRewardSuccessPopup(`Promo ${code} Redeemed!`, wonCoins);
+      } catch (err) {
+        showToast(err.message, "error");
+      } finally {
+        btn.disabled = false;
       }
-      await submitRewardClaimPayload("daily_reward", {
-        streakDay: state.userProfile.streakDay || 1,
-        date: todayDateStr
-      });
-      playSoundEffect(780, 0.18);
-      showToast("Daily login reward claim submitted for verification!", "success");
     };
 
-    // ==================== 20-SECOND TIMER + MONETAG VERIFICATION ====================
+    // ==================== 20-SECOND COUNTDOWN GATE FOR SPIN, SCRATCH & WATCH ADS ====================
     let activeCountdownTimer = null;
 
     function runTwentySecondGate(numElId, barElId, claimBtnElId, readyLabel) {
@@ -2241,7 +2523,7 @@
       const btnEl = document.getElementById(claimBtnElId);
 
       btnEl.disabled = true;
-      btnEl.textContent = `Wait ${remaining}s to Claim`;
+      btnEl.textContent = `Wait ${remaining}s to Claim Coins`;
       numEl.textContent = String(remaining);
       barEl.style.width = "0%";
 
@@ -2249,7 +2531,7 @@
         remaining--;
         numEl.textContent = String(Math.max(0, remaining));
         barEl.style.width = `${((20 - remaining) / 20) * 100}%`;
-        btnEl.textContent = `Wait ${remaining}s to Claim`;
+        btnEl.textContent = `Wait ${remaining}s to Claim Coins`;
 
         if (remaining <= 0) {
           clearInterval(activeCountdownTimer);
@@ -2260,35 +2542,7 @@
       }, 1000);
     }
 
-    window.claimWithMonetagVerification = async function(sourceType) {
-      const monetagFnName = state.appSettings.monetagZoneId ? `show_${state.appSettings.monetagZoneId}` : null;
-      const monetagInvoker = monetagFnName && typeof window[monetagFnName] === "function" ? window[monetagFnName] : null;
-
-      if (!monetagInvoker) {
-        showToast("Monetag SDK callback required: configure your Monetag Zone ID in Admin Settings.", "error");
-        return;
-      }
-
-      try {
-        await monetagInvoker();
-        await submitRewardClaimPayload(sourceType, {
-          adProvider: "monetag",
-          monetagZoneId: state.appSettings.monetagZoneId,
-          verifiedCallback: true
-        });
-        playSoundEffect(880, 0.2);
-        showToast("Monetag ad completion verified! Reward claim sent to server.", "success");
-
-        document.getElementById("spinVerificationBox").classList.add("hidden");
-        document.getElementById("scratchVerificationBox").classList.add("hidden");
-        document.getElementById("adsVerificationBox").classList.add("hidden");
-        document.getElementById("watchAdStartBtn").disabled = false;
-      } catch (adErr) {
-        showToast("Ad was closed before completion. No coins awarded.", "error");
-      }
-    };
-
-    // SPIN WHEEL
+    // 4. SPIN & WIN
     const wheelSlices = ["10", "50", "25", "100", "15", "75", "5", "40"];
     const wheelPalette = ["#F43F5E", "#FBBF24", "#10B981", "#3B82F6", "#8B5CF6", "#F97316", "#06B6D4", "#EC4899"];
     let wheelRotation = 0;
@@ -2334,11 +2588,17 @@
     window.startSpinWheel = function() {
       if (wheelSpinning) return;
       if ((state.userProfile.todaySpins || 0) >= state.appSettings.dailySpinLimit) {
-        return showToast("Daily Spin limit reached!", "error");
+        return showToast(`Daily Spin limit (${state.appSettings.dailySpinLimit}) reached!`, "error");
       }
       wheelSpinning = true;
       document.getElementById("spinTriggerBtn").disabled = true;
       document.getElementById("spinVerificationBox").classList.add("hidden");
+
+      const minC = Number(state.appSettings.spinMin) || 1;
+      const maxC = Number(state.appSettings.spinMax) || 100;
+      state.pendingSpinPrize = Math.floor(Math.random() * (maxC - minC + 1)) + minC;
+      state.pendingSpinSessionId = `spin_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
+      document.getElementById("spinWonPreview").textContent = state.pendingSpinPrize;
 
       const totalSpinAngle = (6 + Math.random() * 4) * Math.PI * 2;
       const startRot = wheelRotation;
@@ -2355,13 +2615,31 @@
           wheelSpinning = false;
           document.getElementById("spinTriggerBtn").disabled = false;
           document.getElementById("spinVerificationBox").classList.remove("hidden");
-          runTwentySecondGate("spinCountdownNum", "spinCountdownBar", "spinClaimBtn", "Watch Ad & Claim Reward");
+          runTwentySecondGate("spinCountdownNum", "spinCountdownBar", "spinClaimBtn", `Claim ${state.pendingSpinPrize} Coins (Watch Ad)`);
         }
       }
       requestAnimationFrame(step);
     };
 
-    // SCRATCH CARD
+    window.claimSpinReward = async function() {
+      const btn = document.getElementById("spinClaimBtn");
+      btn.disabled = true;
+      const ok = await executeMonetagAndCredit({
+        type: "spin",
+        sessionId: state.pendingSpinSessionId,
+        coins: state.pendingSpinPrize,
+        title: "Spin & Win Reward",
+        dailyCounterField: "todaySpins",
+        dailyLimit: state.appSettings.dailySpinLimit
+      });
+      if (ok) {
+        document.getElementById("spinVerificationBox").classList.add("hidden");
+      } else {
+        btn.disabled = false;
+      }
+    };
+
+    // 5. SCRATCH & WIN
     let scratchCompletedFlag = false;
     window.initScratchFoilCanvas = function() {
       const canvas = document.getElementById("scratchFoilCanvas");
@@ -2372,6 +2650,12 @@
       const ctx = canvas.getContext("2d");
       scratchCompletedFlag = false;
       document.getElementById("scratchVerificationBox").classList.add("hidden");
+
+      const minC = Number(state.appSettings.scratchMin) || 1;
+      const maxC = Number(state.appSettings.scratchMax) || 100;
+      state.pendingScratchPrize = Math.floor(Math.random() * (maxC - minC + 1)) + minC;
+      state.pendingScratchSessionId = `scratch_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
+      document.getElementById("scratchPrizePreview").textContent = state.pendingScratchPrize;
 
       const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
       grad.addColorStop(0, "#FDE047");
@@ -2391,7 +2675,7 @@
         if (scratchCompletedFlag) return;
         if ((state.userProfile.todayScratches || 0) >= state.appSettings.dailyScratchLimit) {
           scratchCompletedFlag = true;
-          return showToast("Daily Scratch limit reached!", "error");
+          return showToast(`Daily Scratch limit (${state.appSettings.dailyScratchLimit}) reached!`, "error");
         }
         ctx.globalCompositeOperation = "destination-out";
         ctx.beginPath();
@@ -2405,7 +2689,7 @@
           scratchCompletedFlag = true;
           ctx.clearRect(0, 0, canvas.width, canvas.height);
           document.getElementById("scratchVerificationBox").classList.remove("hidden");
-          runTwentySecondGate("scratchCountdownNum", "scratchCountdownBar", "scratchClaimBtn", "Watch Ad & Claim Reward");
+          runTwentySecondGate("scratchCountdownNum", "scratchCountdownBar", "scratchClaimBtn", `Claim ${state.pendingScratchPrize} Coins (Watch Ad)`);
         }
       };
 
@@ -2415,17 +2699,58 @@
     };
     window.resetScratchFoil = () => initScratchFoilCanvas();
 
-    // WATCH ADS
-    window.startWatchAdTimer = function() {
-      if ((state.userProfile.todayAds || 0) >= state.appSettings.dailyAdLimit) {
-        return showToast("Daily Watch Ads limit reached!", "error");
+    window.claimScratchReward = async function() {
+      const btn = document.getElementById("scratchClaimBtn");
+      btn.disabled = true;
+      const ok = await executeMonetagAndCredit({
+        type: "scratch",
+        sessionId: state.pendingScratchSessionId,
+        coins: state.pendingScratchPrize,
+        title: "Scratch & Win Reward",
+        dailyCounterField: "todayScratches",
+        dailyLimit: state.appSettings.dailyScratchLimit
+      });
+      if (ok) {
+        document.getElementById("scratchVerificationBox").classList.add("hidden");
+        initScratchFoilCanvas();
+      } else {
+        btn.disabled = false;
       }
-      document.getElementById("watchAdStartBtn").disabled = true;
-      document.getElementById("adsVerificationBox").classList.remove("hidden");
-      runTwentySecondGate("adsCountdownNum", "adsCountdownBar", "adsClaimBtn", "Launch Monetag Ad & Claim");
     };
 
-    // ==================== REAL-TIME LEADERBOARD WITH 3D TROPHIES & REAL AVATARS ====================
+    // 6. WATCH ADS & EARN
+    window.startWatchAdTimer = function() {
+      if ((state.userProfile.todayAds || 0) >= state.appSettings.dailyAdLimit) {
+        return showToast(`Daily Watch Ads limit (${state.appSettings.dailyAdLimit}) reached!`, "error");
+      }
+      state.pendingWatchAdSessionId = `watchad_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
+      document.getElementById("watchAdStartBtn").disabled = true;
+      document.getElementById("adsVerificationBox").classList.remove("hidden");
+      const adCoins = Number(state.appSettings.watchAdReward) || 20;
+      runTwentySecondGate("adsCountdownNum", "adsCountdownBar", "adsClaimBtn", `Claim ${adCoins} Coins (Watch Ad)`);
+    };
+
+    window.claimWatchAdReward = async function() {
+      const btn = document.getElementById("adsClaimBtn");
+      btn.disabled = true;
+      const adCoins = Number(state.appSettings.watchAdReward) || 20;
+      const ok = await executeMonetagAndCredit({
+        type: "watch_ad",
+        sessionId: state.pendingWatchAdSessionId,
+        coins: adCoins,
+        title: "Watch Ad Reward",
+        dailyCounterField: "todayAds",
+        dailyLimit: state.appSettings.dailyAdLimit
+      });
+      if (ok) {
+        document.getElementById("adsVerificationBox").classList.add("hidden");
+        document.getElementById("watchAdStartBtn").disabled = false;
+      } else {
+        btn.disabled = false;
+      }
+    };
+
+    // ==================== LEADERBOARD ====================
     window.setLeaderboardMode = function(mode) {
       state.leaderboardMode = mode;
       const wBtn = document.getElementById("lbTabWeekly");
@@ -2469,12 +2794,7 @@
       }).join("");
 
       top3.forEach((player, idx) => {
-        renderTelegramAvatarInto(
-          document.getElementById(`podiumAvatar-${idx}`),
-          player ? player.photoUrl : "",
-          player ? player.firstName : "—",
-          "text-sm"
-        );
+        renderTelegramAvatarInto(document.getElementById(`podiumAvatar-${idx}`), player ? player.photoUrl : "", player ? player.firstName : "—", "text-sm");
       });
 
       const listSlice = sorted.slice(0, 25);
@@ -2493,12 +2813,7 @@
       }).join("");
 
       listSlice.forEach((u, idx) => {
-        renderTelegramAvatarInto(
-          document.getElementById(`lbRowAvatar-${idx}`),
-          u.photoUrl || "",
-          u.firstName || "Player",
-          "text-xs"
-        );
+        renderTelegramAvatarInto(document.getElementById(`lbRowAvatar-${idx}`), u.photoUrl || "", u.firstName || "Player", "text-xs");
       });
 
       const myIndex = sorted.findIndex(u => String(u.telegramId) === String(state.telegramId));
@@ -2506,7 +2821,7 @@
       document.getElementById("currentUserRankCoins").textContent = Number(state.userProfile[sortField] || 0).toLocaleString();
     }
 
-    // ==================== WALLET & WITHDRAW (ONLY 3 METHODS) ====================
+    // ==================== WALLET & WITHDRAW ====================
     window.chooseWithdrawMethod = function(method, btnEl) {
       state.selectedWithdrawMethod = method;
       document.querySelectorAll(".wd-method-card").forEach(c => {
@@ -2531,21 +2846,11 @@
       const upiId = document.getElementById("wdUpiIdInput").value.trim();
       const requiredCoins = rupees * cfg.coinConversionRate;
 
-      if (!["UPI", "Google Play", "Amazon Gift Card"].includes(method)) {
-        return showToast("Invalid withdrawal method.", "error");
-      }
-      if (method === "UPI" && (!upiId || !upiId.includes("@"))) {
-        return showToast("Please enter a valid UPI ID (e.g. name@upi).", "error");
-      }
-      if (!rupees || rupees < cfg.minRedeemAmount || rupees > cfg.maxRedeemAmount) {
-        return showToast(`Amount must be between ₹${cfg.minRedeemAmount} and ₹${cfg.maxRedeemAmount}.`, "error");
-      }
-      if ((u.todayRedeems || 0) >= cfg.dailyRedeemLimit) {
-        return showToast(`Daily redeem limit (${cfg.dailyRedeemLimit} per day) reached!`, "error");
-      }
-      if (Number(u.coins || 0) < requiredCoins) {
-        return showToast(`Insufficient balance! Need ${requiredCoins.toLocaleString()} Coins.`, "error");
-      }
+      if (!["UPI", "Google Play", "Amazon Gift Card"].includes(method)) return showToast("Invalid withdrawal method.", "error");
+      if (method === "UPI" && (!upiId || !upiId.includes("@"))) return showToast("Enter a valid UPI ID (e.g. name@upi).", "error");
+      if (!rupees || rupees < cfg.minRedeemAmount || rupees > cfg.maxRedeemAmount) return showToast(`Amount must be ₹${cfg.minRedeemAmount} – ₹${cfg.maxRedeemAmount}.`, "error");
+      if ((u.todayRedeems || 0) >= cfg.dailyRedeemLimit) return showToast(`Daily redeem limit (${cfg.dailyRedeemLimit}/day) reached!`, "error");
+      if (Number(u.coins || 0) < requiredCoins) return showToast(`Insufficient balance! Need ${requiredCoins.toLocaleString()} Coins.`, "error");
 
       const reqRef = push(ref(db, "withdrawals"));
       const reqId = reqRef.key;
@@ -2569,47 +2874,72 @@
 
       document.getElementById("wdAmountInput").value = "";
       playSoundEffect(700, 0.16);
-      showToast("Redeem request submitted! Track status in Redeem History.", "success");
+      showToast("Withdrawal request submitted! View status in Redeem History.", "success");
       navigateTo("redeemHistory");
     };
 
-    // ==================== 6 REAL PLAYABLE HTML5 MINI-GAMES ====================
+    // ==================== 3. 60-SECOND GAME EARNING SYSTEM (6 PLAYABLE GAMES) ====================
     let gameLoopRaf = null;
+    let gameTimerInterval = null;
+    let gameSecondsLeft = 60;
     let gameEnded = false;
 
     const gameConfigs = {
-      bubble: { title: "Bubble Shooter", target: 100, mode: "canvas" },
-      fruit: { title: "Fruit Cut", target: 100, mode: "canvas" },
-      racing: { title: "Car Racing", target: 100, mode: "canvas" },
-      temple: { title: "Temple Run", target: 100, mode: "canvas" },
-      memory: { title: "Memory Match", target: 80, mode: "grid" },
-      puzzle: { title: "Number Puzzle", target: 100, mode: "grid" }
+      bubble: { title: "Bubble Shooter", mode: "canvas" },
+      fruit: { title: "Fruit Cut", mode: "canvas" },
+      racing: { title: "Car Racing", mode: "canvas" },
+      temple: { title: "Temple Run", mode: "canvas" },
+      memory: { title: "Memory Match", mode: "grid" },
+      puzzle: { title: "Number Puzzle", mode: "grid" }
     };
 
     window.openPlayableGame = function(gameKey) {
-      if ((state.userProfile.todayGames || 0) >= state.appSettings.dailyGameplayLimit) {
-        return showToast("Daily 100 gameplay sessions limit reached!", "error");
+      if ((state.userProfile.todayGames || 0) >= state.appSettings.dailyGameLimit) {
+        return showToast(`Daily ${state.appSettings.dailyGameLimit} gameplay sessions limit reached!`, "error");
       }
       state.activeGameId = gameKey;
-      state.gameSessionToken = `${state.telegramId}_${gameKey}_${Date.now()}`;
       document.getElementById("gameArenaTitle").textContent = gameConfigs[gameKey].title;
-      document.getElementById("gameTargetScore").textContent = gameConfigs[gameKey].target;
       document.getElementById("gameArenaModal").classList.remove("hidden");
       restartCurrentGame();
     };
 
     window.closePlayableGame = function() {
       cancelAnimationFrame(gameLoopRaf);
+      clearInterval(gameTimerInterval);
       document.getElementById("gameArenaModal").classList.add("hidden");
     };
 
+    function computeGameCoinsEarned(score, gameKey) {
+      const maxReward = Number((state.appSettings.gameRewards && state.appSettings.gameRewards[gameKey]) || 50);
+      if (score <= 0) return 0;
+      return Math.min(maxReward, Math.max(5, Math.floor(score / 4)));
+    }
+
     window.restartCurrentGame = function() {
       cancelAnimationFrame(gameLoopRaf);
+      clearInterval(gameTimerInterval);
       gameEnded = false;
+      gameSecondsLeft = 60;
       state.currentGameScore = 0;
+      state.currentGameSessionId = `game_${state.activeGameId}_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
+
       document.getElementById("gameLiveScore").textContent = "0";
-      document.getElementById("gameStatusLabel").textContent = "Playing";
+      document.getElementById("gamePotentialCoins").textContent = "0";
+      document.getElementById("gameTimerDisplay").textContent = "01:00";
       document.getElementById("gameOverBanner").classList.add("hidden");
+
+      // Strict 60-second countdown timer
+      gameTimerInterval = setInterval(() => {
+        if (gameEnded) return;
+        gameSecondsLeft--;
+        const mins = String(Math.floor(Math.max(0, gameSecondsLeft) / 60)).padStart(2, "0");
+        const secs = String(Math.max(0, gameSecondsLeft) % 60).padStart(2, "0");
+        document.getElementById("gameTimerDisplay").textContent = `${mins}:${secs}`;
+
+        if (gameSecondsLeft <= 0) {
+          finishGameSession();
+        }
+      }, 1000);
 
       const cfg = gameConfigs[state.activeGameId];
       const canvasWrap = document.getElementById("canvasGameWrapper");
@@ -2631,8 +2961,10 @@
     };
 
     function updateGameScore(pts) {
+      if (gameEnded) return;
       state.currentGameScore += pts;
       document.getElementById("gameLiveScore").textContent = String(state.currentGameScore);
+      document.getElementById("gamePotentialCoins").textContent = String(computeGameCoinsEarned(state.currentGameScore, state.activeGameId));
       playSoundEffect(660, 0.06);
     }
 
@@ -2640,35 +2972,55 @@
       if (gameEnded) return;
       gameEnded = true;
       cancelAnimationFrame(gameLoopRaf);
-      document.getElementById("gameStatusLabel").textContent = "Game Over";
+      clearInterval(gameTimerInterval);
+      document.getElementById("gameTimerDisplay").textContent = "00:00";
+
+      const earnedCoins = computeGameCoinsEarned(state.currentGameScore, state.activeGameId);
       document.getElementById("finalGameScoreText").textContent = String(state.currentGameScore);
+      document.getElementById("finalGameCoinsText").textContent = String(earnedCoins);
+
+      const claimBtn = document.getElementById("submitGameScoreBtn");
+      claimBtn.disabled = earnedCoins <= 0;
+      claimBtn.textContent = earnedCoins > 0 ? `Claim ${earnedCoins} Coins (Watch Ad)` : "Score 0 — Restart to Earn";
       document.getElementById("gameOverBanner").classList.remove("hidden");
     }
 
-    window.submitVerifiedGameScore = async function() {
-      if (state.currentGameScore <= 0) return showToast("Score must be greater than 0 to submit.", "error");
+    window.claimGameSessionCoins = async function() {
+      const earnedCoins = computeGameCoinsEarned(state.currentGameScore, state.activeGameId);
+      if (earnedCoins <= 0) return showToast("Score must be greater than 0 to earn coins.", "error");
+
       const btn = document.getElementById("submitGameScoreBtn");
       btn.disabled = true;
-      await submitRewardClaimPayload("game_session", {
-        gameId: state.activeGameId,
-        score: state.currentGameScore,
-        sessionToken: state.gameSessionToken
+      const ok = await executeMonetagAndCredit({
+        type: "game_session",
+        sessionId: state.currentGameSessionId,
+        coins: earnedCoins,
+        title: `${gameConfigs[state.activeGameId].title} (60s Session)`,
+        dailyCounterField: "todayGames",
+        dailyLimit: state.appSettings.dailyGameLimit
       });
-      btn.disabled = false;
-      closePlayableGame();
-      showToast(`Score (${state.currentGameScore}) submitted for server reward verification!`, "success");
+      if (ok) {
+        closePlayableGame();
+      } else {
+        btn.disabled = false;
+      }
     };
 
+    // Game 1: Bubble Shooter (respawns waves so player can score throughout full 60s)
     function startBubbleShooter() {
       const canvas = document.getElementById("arcadeGameCanvas");
       const ctx = canvas.getContext("2d");
       const colors = ["#F43F5E", "#3B82F6", "#10B981", "#F59E0B"];
       let targets = [];
-      for (let r = 0; r < 3; r++) {
-        for (let c = 0; c < 7; c++) {
-          targets.push({ x: 32 + c * 42, y: 30 + r * 36, color: colors[(r + c) % colors.length], alive: true });
+      const spawnWave = () => {
+        targets = [];
+        for (let r = 0; r < 3; r++) {
+          for (let c = 0; c < 7; c++) {
+            targets.push({ x: 32 + c * 42, y: 30 + r * 36, color: colors[(r + c) % colors.length], alive: true });
+          }
         }
-      }
+      };
+      spawnWave();
       let shooterColor = colors[0];
       let bullet = null;
 
@@ -2678,10 +3030,11 @@
         const tx = ((e.clientX - rect.left) / rect.width) * canvas.width;
         const ty = ((e.clientY - rect.top) / rect.height) * canvas.height;
         const angle = Math.atan2(ty - 260, tx - 160);
-        bullet = { x: 160, y: 260, vx: Math.cos(angle) * 7, vy: Math.sin(angle) * 7, color: shooterColor };
+        bullet = { x: 160, y: 260, vx: Math.cos(angle) * 7.5, vy: Math.sin(angle) * 7.5, color: shooterColor };
       };
 
       function loop() {
+        if (gameEnded) return;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         targets.forEach(t => {
           if (!t.alive) return;
@@ -2715,12 +3068,13 @@
           }
           if (bullet && bullet.y < 0) bullet = null;
         }
-        if (targets.every(t => !t.alive)) return finishGameSession();
+        if (targets.every(t => !t.alive)) spawnWave();
         gameLoopRaf = requestAnimationFrame(loop);
       }
       loop();
     }
 
+    // Game 2: Fruit Cut
     function startFruitCut() {
       const canvas = document.getElementById("arcadeGameCanvas");
       const ctx = canvas.getContext("2d");
@@ -2743,13 +3097,14 @@
       };
 
       function loop() {
+        if (gameEnded) return;
         frames++;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        if (frames % 36 === 0) {
+        if (frames % 34 === 0) {
           items.push({
             x: 40 + Math.random() * 240,
             y: 288,
-            vy: -(7 + Math.random() * 3),
+            vy: -(7.2 + Math.random() * 3),
             emoji: emojis[Math.floor(Math.random() * emojis.length)],
             cut: false
           });
@@ -2761,12 +3116,12 @@
           if (!it.cut) ctx.fillText(it.emoji, it.x - 14, it.y);
         });
         items = items.filter(it => it.y < 320);
-        if (frames > 900) return finishGameSession();
         gameLoopRaf = requestAnimationFrame(loop);
       }
       loop();
     }
 
+    // Game 3: Car Racing
     function startCarRacing() {
       const canvas = document.getElementById("arcadeGameCanvas");
       const ctx = canvas.getContext("2d");
@@ -2784,16 +3139,17 @@
       };
 
       function loop() {
+        if (gameEnded) return;
         frames++;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = "#CBD5E1";
         ctx.fillRect(20, 0, 280, 288);
 
-        if (frames % 42 === 0) {
+        if (frames % 40 === 0) {
           obstacles.push({
             lane: Math.floor(Math.random() * 3),
             y: -20,
-            isCoin: Math.random() > 0.45
+            isCoin: Math.random() > 0.42
           });
         }
 
@@ -2802,7 +3158,7 @@
         ctx.fillText("🏎️", lanes[playerLane], 250);
 
         obstacles.forEach(ob => {
-          ob.y += 4.5;
+          ob.y += 4.6;
           ctx.fillText(ob.isCoin ? "🪙" : "🚧", lanes[ob.lane], ob.y);
           if (ob.lane === playerLane && Math.abs(ob.y - 250) < 26 && !ob.hit) {
             ob.hit = true;
@@ -2816,6 +3172,7 @@
       loop();
     }
 
+    // Game 4: Temple Run
     function startTempleRun() {
       const canvas = document.getElementById("arcadeGameCanvas");
       const ctx = canvas.getContext("2d");
@@ -2831,6 +3188,7 @@
       };
 
       function loop() {
+        if (gameEnded) return;
         frames++;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = "#D97706";
@@ -2840,13 +3198,13 @@
         vy += 0.55;
         if (py >= 210) { py = 210; vy = 0; grounded = true; }
 
-        if (frames % 55 === 0) rocks.push({ x: 330, scored: false });
+        if (frames % 52 === 0) rocks.push({ x: 330, scored: false });
 
         ctx.font = "30px sans-serif";
         ctx.fillText("🏃", 45, py + 24);
 
         rocks.forEach(r => {
-          r.x -= 4.5;
+          r.x -= 4.6;
           ctx.fillText("🗿", r.x, 236);
           if (Math.abs(r.x - 45) < 22 && py > 185) finishGameSession();
           if (!r.scored && r.x < 30) { r.scored = true; updateGameScore(15); }
@@ -2857,45 +3215,52 @@
       loop();
     }
 
+    // Game 5: Memory Match (auto-deals new board when solved so player can keep scoring within 60s)
     function startMemoryMatch() {
-      const icons = ["👑", "💎", "🚀", "🎁", "👑", "💎", "🚀", "🎁"].sort(() => Math.random() - 0.5);
-      let flipped = [];
-      let matched = 0;
       const board = document.getElementById("gridGameBoard");
       board.className = "w-full h-full grid grid-cols-4 gap-2";
-      board.innerHTML = icons.map((ic, i) => `
-        <button data-idx="${i}" data-icon="${ic}" class="mem-card rounded-2xl bg-purple-600 text-white font-display text-2xl font-bold shadow flex items-center justify-center">?</button>
-      `).join("");
 
-      board.querySelectorAll(".mem-card").forEach(btn => {
-        btn.onclick = () => {
-          if (btn.classList.contains("matched") || flipped.includes(btn) || flipped.length >= 2) return;
-          btn.textContent = btn.dataset.icon;
-          btn.classList.replace("bg-purple-600", "bg-amber-400");
-          flipped.push(btn);
+      function dealCards() {
+        if (gameEnded) return;
+        const icons = ["👑", "💎", "🚀", "🎁", "👑", "💎", "🚀", "🎁"].sort(() => Math.random() - 0.5);
+        let flipped = [];
+        let matched = 0;
+        board.innerHTML = icons.map((ic, i) => `
+          <button data-idx="${i}" data-icon="${ic}" class="mem-card rounded-2xl bg-purple-600 text-white font-display text-2xl font-bold shadow flex items-center justify-center">?</button>
+        `).join("");
 
-          if (flipped.length === 2) {
-            const [a, b] = flipped;
-            if (a.dataset.icon === b.dataset.icon) {
-              a.classList.add("matched", "bg-emerald-500");
-              b.classList.add("matched", "bg-emerald-500");
-              flipped = [];
-              matched += 2;
-              updateGameScore(20);
-              if (matched === icons.length) finishGameSession();
-            } else {
-              setTimeout(() => {
-                a.textContent = "?"; b.textContent = "?";
-                a.classList.replace("bg-amber-400", "bg-purple-600");
-                b.classList.replace("bg-amber-400", "bg-purple-600");
+        board.querySelectorAll(".mem-card").forEach(btn => {
+          btn.onclick = () => {
+            if (gameEnded || btn.classList.contains("matched") || flipped.includes(btn) || flipped.length >= 2) return;
+            btn.textContent = btn.dataset.icon;
+            btn.classList.replace("bg-purple-600", "bg-amber-400");
+            flipped.push(btn);
+
+            if (flipped.length === 2) {
+              const [a, b] = flipped;
+              if (a.dataset.icon === b.dataset.icon) {
+                a.classList.add("matched", "bg-emerald-500");
+                b.classList.add("matched", "bg-emerald-500");
                 flipped = [];
-              }, 550);
+                matched += 2;
+                updateGameScore(20);
+                if (matched === icons.length) setTimeout(dealCards, 350);
+              } else {
+                setTimeout(() => {
+                  a.textContent = "?"; b.textContent = "?";
+                  a.classList.replace("bg-amber-400", "bg-purple-600");
+                  b.classList.replace("bg-amber-400", "bg-purple-600");
+                  flipped = [];
+                }, 480);
+              }
             }
-          }
-        };
-      });
+          };
+        });
+      }
+      dealCards();
     }
 
+    // Game 6: Number Puzzle
     function startNumberPuzzle() {
       let tiles = [1, 2, 3, 4, 5, 6, 7, 0, 8];
       const board = document.getElementById("gridGameBoard");
@@ -2910,6 +3275,7 @@
       }
 
       window.slidePuzzleTile = function(idx) {
+        if (gameEnded) return;
         const emptyIdx = tiles.indexOf(0);
         const validMoves = [emptyIdx - 1, emptyIdx + 1, emptyIdx - 3, emptyIdx + 3];
         if (!validMoves.includes(idx)) return;
@@ -2918,7 +3284,8 @@
         drawBoard();
         if (tiles.join(",") === "1,2,3,4,5,6,7,8,0") {
           updateGameScore(60);
-          finishGameSession();
+          tiles = [1, 2, 3, 4, 0, 6, 7, 5, 8];
+          setTimeout(drawBoard, 300);
         }
       };
       drawBoard();
