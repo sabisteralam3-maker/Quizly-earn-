@@ -3,13 +3,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Smartu Earninng — Play • Earn • Withdraw</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="referrer" content="no-referrer" />
+  <title>Smartu Earninng — 3D Gaming Rewards Mini App</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Official Telegram WebApp SDK -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <!-- Google Fonts: Fredoka (3D Game Display) & Plus Jakarta Sans (Clean UI) -->
+  <!-- Google Fonts: Fredoka (3D Rounded Display) & Plus Jakarta Sans (Clean Modern UI) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
@@ -18,11 +19,13 @@
 
   <style>
     :root {
-      --bg-sky: #EAF5FF;
-      --bg-lavender: #F4F0FF;
+      --bg-sky: #E3F3FF;
+      --bg-lavender: #EFE8FF;
+      --bg-pink: #FCEEFF;
       --bg-white: #FFFFFF;
-      --purple-primary: #6D28D9;
-      --indigo-deep: #1E1B4B;
+      --indigo-ink: #1E1B4B;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
     }
 
     * {
@@ -31,15 +34,15 @@
       user-select: none;
     }
 
-    input, textarea {
+    input, textarea, select {
       user-select: text;
     }
 
     body {
       margin: 0;
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background: linear-gradient(165deg, #EAF5FF 0%, #F4F0FF 52%, #FAF5FF 100%);
-      color: var(--indigo-deep);
+      background: linear-gradient(155deg, #DCF0FF 0%, #EDE4FF 48%, #FCEBFF 100%);
+      color: var(--indigo-ink);
       min-height: 100vh;
       overflow-x: hidden;
     }
@@ -48,536 +51,672 @@
       font-family: 'Fredoka', sans-serif;
     }
 
-    /* Mobile-First Telegram Mini App Shell */
+    /* ==================== MOBILE-FIRST TELEGRAM MINI APP SHELL ==================== */
     .app-container {
-      max-width: 440px;
+      max-width: 448px;
       margin: 0 auto;
       min-height: 100vh;
-      background: linear-gradient(180deg, #EAF5FF 0%, #F4F0FF 48%, #FFFFFF 100%);
+      background:
+        radial-gradient(circle at 12% 8%, rgba(56, 189, 248, 0.25) 0%, transparent 42%),
+        radial-gradient(circle at 88% 18%, rgba(236, 72, 153, 0.18) 0%, transparent 45%),
+        radial-gradient(circle at 50% 60%, rgba(168, 85, 247, 0.14) 0%, transparent 55%),
+        linear-gradient(180deg, #E6F4FF 0%, #F3ECFF 52%, #FFFFFF 100%);
       position: relative;
-      padding-bottom: 92px;
-      box-shadow: 0 20px 60px rgba(76, 29, 149, 0.14);
+      padding-top: var(--safe-top);
+      padding-bottom: calc(98px + var(--safe-bottom));
+      box-shadow: 0 24px 70px rgba(79, 70, 229, 0.16);
       overflow-x: hidden;
     }
 
-    /* Light Glassmorphism Cards */
-    .glass-card {
-      background: rgba(255, 255, 255, 0.90);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1.5px solid rgba(255, 255, 255, 0.98);
-      box-shadow: 0 10px 26px -6px rgba(91, 33, 182, 0.11), 0 3px 8px -2px rgba(14, 165, 233, 0.08);
+    /* Ambient Pastel Light Orbs (Light Theme Only) */
+    .ambient-orb {
+      position: fixed;
+      border-radius: 9999px;
+      filter: blur(42px);
+      pointer-events: none;
+      z-index: 0;
+      will-change: transform;
     }
 
-    /* Glossy 3D Buttons */
-    .btn-glossy-gold {
-      background: linear-gradient(180deg, #FFE66D 0%, #FFB703 58%, #F59E0B 100%);
-      box-shadow: 0 4px 0 #B45309, 0 8px 18px rgba(245, 158, 11, 0.34);
+    /* ==================== ULTRA-PREMIUM 3D GLASSMORPHISM CARDS ==================== */
+    .glass-3d-card {
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.94) 0%, rgba(248, 246, 255, 0.86) 100%);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 2px solid rgba(255, 255, 255, 0.98);
+      box-shadow:
+        0 14px 30px -8px rgba(91, 33, 182, 0.14),
+        0 4px 10px -2px rgba(14, 165, 233, 0.10),
+        inset 0 2px 3px rgba(255, 255, 255, 1);
+      position: relative;
+    }
+
+    /* Illuminated Gradient Rim Cards */
+    .glow-rim-purple {
+      border: 2px solid transparent;
+      background-image:
+        linear-gradient(160deg, rgba(255,255,255,0.96), rgba(245,240,255,0.92)),
+        linear-gradient(135deg, #38BDF8, #A855F7, #F43F5E);
+      background-origin: border-box;
+      background-clip: padding-box, border-box;
+      box-shadow: 0 14px 32px -6px rgba(124, 58, 237, 0.22);
+    }
+
+    .glow-rim-gold {
+      border: 2px solid transparent;
+      background-image:
+        linear-gradient(160deg, rgba(255,253,245,0.97), rgba(254,243,199,0.88)),
+        linear-gradient(135deg, #FDE047, #F59E0B, #EC4899);
+      background-origin: border-box;
+      background-clip: padding-box, border-box;
+      box-shadow: 0 14px 32px -6px rgba(245, 158, 11, 0.25);
+    }
+
+    /* ==================== GLOSSY 3D BEVELED GAMING BUTTONS ==================== */
+    .btn-3d {
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.12s ease;
+      border-top: 1.5px solid rgba(255, 255, 255, 0.75);
+    }
+    .btn-3d::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -60%;
+      width: 45%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+      transform: skewX(-22deg);
+      animation: btnShineSweep 4.2s infinite;
+      pointer-events: none;
+    }
+    @keyframes btnShineSweep {
+      0%, 65% { left: -60%; }
+      100% { left: 135%; }
+    }
+    .btn-3d:active:not(:disabled) {
+      transform: translateY(3px) scale(0.98);
+    }
+
+    .btn-3d-gold {
+      background: linear-gradient(180deg, #FEF08A 0%, #FBBF24 48%, #F59E0B 100%);
+      box-shadow: 0 5px 0 #B45309, 0 12px 24px rgba(245, 158, 11, 0.40);
       color: #451A03;
-      transition: transform 0.1s ease, box-shadow 0.1s ease;
     }
-    .btn-glossy-gold:active:not(:disabled) {
-      transform: translateY(3px);
-      box-shadow: 0 1px 0 #B45309;
-    }
+    .btn-3d-gold:active:not(:disabled) { box-shadow: 0 2px 0 #B45309; }
 
-    .btn-glossy-purple {
-      background: linear-gradient(180deg, #9333EA 0%, #6D28D9 100%);
-      box-shadow: 0 4px 0 #4C1D95, 0 8px 18px rgba(109, 40, 217, 0.32);
+    .btn-3d-purple {
+      background: linear-gradient(180deg, #C084FC 0%, #8B5CF6 48%, #6D28D9 100%);
+      box-shadow: 0 5px 0 #4C1D95, 0 12px 24px rgba(109, 40, 217, 0.36);
       color: #FFFFFF;
-      transition: transform 0.1s ease, box-shadow 0.1s ease;
     }
-    .btn-glossy-purple:active:not(:disabled) {
-      transform: translateY(3px);
-      box-shadow: 0 1px 0 #4C1D95;
-    }
+    .btn-3d-purple:active:not(:disabled) { box-shadow: 0 2px 0 #4C1D95; }
 
-    .btn-glossy-green {
-      background: linear-gradient(180deg, #34D399 0%, #10B981 55%, #059669 100%);
-      box-shadow: 0 4px 0 #047857, 0 8px 18px rgba(16, 185, 129, 0.32);
+    .btn-3d-green {
+      background: linear-gradient(180deg, #6EE7B7 0%, #10B981 48%, #059669 100%);
+      box-shadow: 0 5px 0 #065F46, 0 12px 24px rgba(16, 185, 129, 0.36);
       color: #FFFFFF;
-      transition: transform 0.1s ease, box-shadow 0.1s ease;
     }
-    .btn-glossy-green:active:not(:disabled) {
-      transform: translateY(3px);
-      box-shadow: 0 1px 0 #047857;
-    }
+    .btn-3d-green:active:not(:disabled) { box-shadow: 0 2px 0 #065F46; }
 
-    .btn-glossy-blue {
-      background: linear-gradient(180deg, #38BDF8 0%, #2563EB 100%);
-      box-shadow: 0 4px 0 #1D4ED8, 0 8px 18px rgba(37, 99, 235, 0.3);
+    .btn-3d-cyan {
+      background: linear-gradient(180deg, #67E8F9 0%, #0EA5E9 48%, #2563EB 100%);
+      box-shadow: 0 5px 0 #1E40AF, 0 12px 24px rgba(14, 165, 233, 0.36);
       color: #FFFFFF;
-      transition: transform 0.1s ease, box-shadow 0.1s ease;
     }
-    .btn-glossy-blue:active:not(:disabled) {
-      transform: translateY(3px);
-      box-shadow: 0 1px 0 #1D4ED8;
-    }
+    .btn-3d-cyan:active:not(:disabled) { box-shadow: 0 2px 0 #1E40AF; }
 
-    .btn-glossy-rose {
-      background: linear-gradient(180deg, #FB7185 0%, #E11D48 100%);
-      box-shadow: 0 4px 0 #9F1239, 0 8px 18px rgba(225, 29, 72, 0.3);
+    .btn-3d-pink {
+      background: linear-gradient(180deg, #F9A8D4 0%, #EC4899 48%, #DB2777 100%);
+      box-shadow: 0 5px 0 #9D174D, 0 12px 24px rgba(236, 72, 153, 0.36);
       color: #FFFFFF;
-      transition: transform 0.1s ease, box-shadow 0.1s ease;
     }
-    .btn-glossy-rose:active:not(:disabled) {
-      transform: translateY(3px);
-      box-shadow: 0 1px 0 #9F1239;
-    }
+    .btn-3d-pink:active:not(:disabled) { box-shadow: 0 2px 0 #9D174D; }
 
     button:disabled {
-      opacity: 0.58;
+      opacity: 0.56;
       cursor: not-allowed;
       filter: grayscale(0.25);
     }
 
-    /* Unique 3D Icon Tiles per Feature */
-    .icon-3d-blue {
-      background: linear-gradient(145deg, #60A5FA 0%, #2563EB 100%);
-      box-shadow: 0 5px 0 #1E40AF, 0 10px 18px rgba(37, 99, 235, 0.25);
+    /* ==================== UNIQUE 3D FEATURE ICON CAPSULES ==================== */
+    .icon-cap-home {
+      background: linear-gradient(145deg, #D8B4FE 0%, #9333EA 55%, #581C87 100%);
+      box-shadow: 0 5px 0 #4C1D95, 0 10px 20px rgba(147, 51, 234, 0.35), inset 0 2px 3px rgba(255,255,255,0.7);
     }
-    .icon-3d-green {
-      background: linear-gradient(145deg, #4ADE80 0%, #16A34A 100%);
-      box-shadow: 0 5px 0 #166534, 0 10px 18px rgba(22, 163, 74, 0.25);
+    .icon-cap-tasks {
+      background: linear-gradient(145deg, #93C5FD 0%, #3B82F6 55%, #1D4ED8 100%);
+      box-shadow: 0 5px 0 #1E3A8A, 0 10px 20px rgba(59, 130, 246, 0.35), inset 0 2px 3px rgba(255,255,255,0.7);
     }
-    .icon-3d-purple {
-      background: linear-gradient(145deg, #C084FC 0%, #7C3AED 100%);
-      box-shadow: 0 5px 0 #5B21B6, 0 10px 18px rgba(124, 58, 237, 0.25);
+    .icon-cap-games {
+      background: linear-gradient(145deg, #67E8F9 0%, #06B6D4 55%, #0E7490 100%);
+      box-shadow: 0 5px 0 #155E75, 0 10px 20px rgba(6, 182, 212, 0.35), inset 0 2px 3px rgba(255,255,255,0.7);
     }
-    .icon-3d-amber {
-      background: linear-gradient(145deg, #FCD34D 0%, #EA580C 100%);
-      box-shadow: 0 5px 0 #9A3412, 0 10px 18px rgba(234, 88, 12, 0.25);
+    .icon-cap-spin {
+      background: conic-gradient(from 30deg, #F43F5E, #FBBF24, #10B981, #3B82F6, #A855F7, #F43F5E);
+      box-shadow: 0 5px 0 #6D28D9, 0 10px 20px rgba(168, 85, 247, 0.38), inset 0 2px 4px rgba(255,255,255,0.8);
     }
-    .icon-3d-pink {
-      background: linear-gradient(145deg, #F472B6 0%, #DB2777 100%);
-      box-shadow: 0 5px 0 #9D174D, 0 10px 18px rgba(219, 39, 119, 0.25);
+    .icon-cap-scratch {
+      background: linear-gradient(145deg, #FEF08A 0%, #F59E0B 55%, #D97706 100%);
+      box-shadow: 0 5px 0 #92400E, 0 10px 20px rgba(245, 158, 11, 0.38), inset 0 2px 3px rgba(255,255,255,0.85);
     }
-    .icon-3d-cyan {
-      background: linear-gradient(145deg, #22D3EE 0%, #0284C7 100%);
-      box-shadow: 0 5px 0 #075985, 0 10px 18px rgba(2, 132, 199, 0.25);
+    .icon-cap-ads {
+      background: linear-gradient(135deg, #F43F5E 0%, #8B5CF6 50%, #2563EB 100%);
+      box-shadow: 0 5px 0 #3730A3, 0 10px 20px rgba(244, 63, 94, 0.35), inset 0 2px 3px rgba(255,255,255,0.75);
     }
-    .icon-3d-rose {
-      background: linear-gradient(145deg, #FB7185 0%, #E11D48 100%);
-      box-shadow: 0 5px 0 #9F1239, 0 10px 18px rgba(225, 29, 72, 0.25);
+    .icon-cap-refer {
+      background: linear-gradient(145deg, #F9A8D4 0%, #EC4899 55%, #BE185D 100%);
+      box-shadow: 0 5px 0 #831843, 0 10px 20px rgba(236, 72, 153, 0.35), inset 0 2px 3px rgba(255,255,255,0.75);
+    }
+    .icon-cap-rank {
+      background: linear-gradient(145deg, #FDE047 0%, #EAB308 55%, #CA8A04 100%);
+      box-shadow: 0 5px 0 #854D0E, 0 10px 20px rgba(234, 179, 8, 0.38), inset 0 2px 3px rgba(255,255,255,0.85);
+    }
+    .icon-cap-wallet {
+      background: linear-gradient(145deg, #FDBA74 0%, #F97316 55%, #C2410C 100%);
+      box-shadow: 0 5px 0 #7C2D12, 0 10px 20px rgba(249, 115, 22, 0.36), inset 0 2px 3px rgba(255,255,255,0.75);
+    }
+    .icon-cap-rewards {
+      background: linear-gradient(145deg, #6EE7B7 0%, #10B981 55%, #047857 100%);
+      box-shadow: 0 5px 0 #064E3B, 0 10px 20px rgba(16, 185, 129, 0.35), inset 0 2px 3px rgba(255,255,255,0.75);
     }
 
-    /* Keyframe Animations */
-    @keyframes floatCoin {
+    /* ==================== TELEGRAM PROFILE AVATAR FRAME ==================== */
+    .tg-avatar-ring {
+      background: linear-gradient(135deg, #38BDF8 0%, #A855F7 50%, #F59E0B 100%);
+      padding: 2.5px;
+      border-radius: 9999px;
+      box-shadow: 0 6px 16px rgba(124, 58, 237, 0.28);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    /* ==================== HARDWARE-ACCELERATED 60FPS SPLASH ANIMATIONS ==================== */
+    @keyframes sunRaySpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .splash-light-rays {
+      animation: sunRaySpin 24s linear infinite;
+      will-change: transform;
+    }
+
+    @keyframes ringPulseRotate {
+      0% { transform: rotate(0deg) scale(0.97); }
+      50% { transform: rotate(180deg) scale(1.04); }
+      100% { transform: rotate(360deg) scale(0.97); }
+    }
+    .splash-glow-ring {
+      animation: ringPulseRotate 7s ease-in-out infinite;
+      will-change: transform;
+    }
+
+    @keyframes float3D {
       0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-9px) rotate(6deg); }
+      50% { transform: translateY(-9px) rotate(5deg); }
     }
-    .animate-float-coin {
-      animation: floatCoin 3s ease-in-out infinite;
-    }
-
-    @keyframes logoPulseGlow {
-      0%, 100% { filter: drop-shadow(0 0 12px rgba(251, 191, 36, 0.55)); transform: scale(1); }
-      50% { filter: drop-shadow(0 0 24px rgba(139, 92, 246, 0.75)); transform: scale(1.03); }
-    }
-    .animate-logo-glow {
-      animation: logoPulseGlow 2.6s ease-in-out infinite;
+    .animate-float-3d {
+      animation: float3D 3.2s ease-in-out infinite;
+      will-change: transform;
     }
 
-    @keyframes sparkleRise {
-      0% { transform: translateY(20px) scale(0.4); opacity: 0; }
-      50% { opacity: 0.95; }
-      100% { transform: translateY(-95px) scale(1.1); opacity: 0; }
+    @keyframes splashLogoZoom {
+      0% { transform: scale(0.72); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
     }
-    .sparkle-particle {
+    .animate-logo-entrance {
+      animation: splashLogoZoom 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    @keyframes particleDrift {
+      0% { transform: translateY(15px) scale(0.5); opacity: 0; }
+      45% { opacity: 0.95; }
+      100% { transform: translateY(-110px) scale(1.15); opacity: 0; }
+    }
+    .splash-particle {
       position: absolute;
       border-radius: 9999px;
       pointer-events: none;
-      animation: sparkleRise 3.4s ease-in infinite;
+      animation: particleDrift 3.2s ease-in infinite;
+      will-change: transform, opacity;
     }
 
     /* Page Transitions */
     .screen-page {
       display: none;
-      animation: pageReveal 0.22s ease-out;
+      animation: pageSpringIn 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+      position: relative;
+      z-index: 1;
     }
     .screen-page.active {
       display: block;
     }
-    @keyframes pageReveal {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes pageSpringIn {
+      from { opacity: 0; transform: translateY(10px) scale(0.99); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
   </style>
 </head>
 <body>
 
-  <!-- ==================== 1. ANIMATED SPLASH SCREEN ==================== -->
-  <div id="splashOverlay" class="fixed inset-0 z-50 max-w-[440px] mx-auto flex flex-col items-center justify-between p-6 text-center overflow-hidden"
-       style="background: radial-gradient(circle at 50% 24%, #FFFBEB 0%, #EAF5FF 46%, #F4F0FF 100%);">
+  <!-- ==================== 1. ULTRA-PREMIUM 3D OPENING SPLASH SCREEN ==================== -->
+  <div id="splashOverlay" class="fixed inset-0 z-50 max-w-[448px] mx-auto flex flex-col items-center justify-between p-6 text-center overflow-hidden"
+       style="background: radial-gradient(circle at 50% 35%, #FFFFFF 0%, #E3F3FF 45%, #EFE8FF 82%, #FCEEFF 100%);">
 
-    <!-- Floating Sparkle Particles Container -->
+    <!-- Rotating Light Rays Backdrop -->
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-45">
+      <div class="w-[540px] h-[540px] splash-light-rays"
+           style="background: repeating-conic-gradient(from 0deg, rgba(251, 191, 36, 0.24) 0deg 12deg, transparent 12deg 24deg); border-radius: 9999px;"></div>
+    </div>
+
+    <!-- Floating Particle Container -->
     <div id="splashParticles" class="absolute inset-0 pointer-events-none"></div>
 
-    <!-- Top Floating 3D Coins -->
-    <div class="w-full flex justify-between items-center pt-3 px-2 relative z-10">
-      <div class="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-300 via-amber-400 to-orange-500 flex items-center justify-center shadow-lg border-2 border-white animate-float-coin">
+    <!-- Top Orbiting 3D Golden Coins & Badge -->
+    <div class="w-full flex justify-between items-center pt-3 px-1 relative z-10">
+      <div class="w-13 h-13 p-2.5 rounded-full bg-gradient-to-br from-yellow-200 via-amber-400 to-orange-500 flex items-center justify-center shadow-xl border-2 border-white animate-float-3d">
         <span class="font-display font-extrabold text-xl text-amber-950">₹</span>
       </div>
-      <span class="px-3.5 py-1 rounded-full bg-white/90 backdrop-blur border border-purple-200 text-xs font-extrabold text-purple-700 shadow-sm">
-        <i class="fa-brands fa-telegram text-sky-500 mr-1"></i> Official Mini App
+      <span class="px-4 py-1.5 rounded-full bg-white/95 backdrop-blur border-2 border-purple-200 text-xs font-extrabold text-purple-800 shadow-md">
+        <i class="fa-brands fa-telegram text-sky-500 mr-1"></i> Smartu Official Mini App
       </span>
-      <div class="w-12 h-12 rounded-full bg-gradient-to-br from-amber-300 via-yellow-400 to-orange-500 flex items-center justify-center shadow-lg border-2 border-white animate-float-coin" style="animation-delay: 0.6s;">
+      <div class="w-13 h-13 p-2.5 rounded-full bg-gradient-to-br from-amber-200 via-yellow-400 to-orange-500 flex items-center justify-center shadow-xl border-2 border-white animate-float-3d" style="animation-delay: 0.7s;">
         <i class="fa-solid fa-crown text-amber-950 text-lg"></i>
       </div>
     </div>
 
-    <!-- Central Glowing Smartu Earninng Emblem & 3D Artwork -->
-    <div class="relative z-10 flex flex-col items-center my-auto">
-      <div class="w-56 h-56 rounded-full bg-white/70 backdrop-blur-md p-3 border-2 border-white shadow-2xl flex items-center justify-center animate-logo-glow">
-        <svg viewBox="0 0 240 240" class="w-full h-full">
-          <defs>
-            <linearGradient id="haloGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#38BDF8"/>
-              <stop offset="50%" stop-color="#8B5CF6"/>
-              <stop offset="100%" stop-color="#F59E0B"/>
-            </linearGradient>
-            <linearGradient id="coin3dGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#FEF08A"/>
-              <stop offset="50%" stop-color="#FBBF24"/>
-              <stop offset="100%" stop-color="#D97706"/>
-            </linearGradient>
-            <linearGradient id="gift3dGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#F43F5E"/>
-              <stop offset="100%" stop-color="#7C3AED"/>
-            </linearGradient>
-          </defs>
-          <circle cx="120" cy="120" r="98" fill="url(#haloGrad)" opacity="0.16"/>
-          <!-- Crown -->
-          <path d="M84 62 L96 42 L120 58 L144 42 L156 62 Z" fill="url(#coin3dGrad)" stroke="#FFF" stroke-width="3" stroke-linejoin="round"/>
-          <!-- Headphones -->
-          <path d="M62 114 C62 72, 178 72, 178 114" stroke="#5B21B6" stroke-width="13" fill="none" stroke-linecap="round"/>
-          <rect x="48" y="96" width="22" height="40" rx="11" fill="#7C3AED" stroke="#FFF" stroke-width="3"/>
-          <rect x="170" y="96" width="22" height="40" rx="11" fill="#7C3AED" stroke="#FFF" stroke-width="3"/>
-          <!-- Character Head -->
-          <circle cx="120" cy="116" r="46" fill="#FFE4D6"/>
-          <path d="M74 112 C74 68, 166 68, 166 112 C156 90, 134 86, 120 96 C106 86, 84 90, 74 112 Z" fill="#4C1D95"/>
-          <circle cx="104" cy="116" r="5.5" fill="#1E1B4B"/>
-          <circle cx="136" cy="116" r="5.5" fill="#1E1B4B"/>
-          <circle cx="106" cy="114" r="2" fill="#FFF"/>
-          <circle cx="138" cy="114" r="2" fill="#FFF"/>
-          <path d="M110 132 Q120 142 130 132" stroke="#E11D48" stroke-width="4" fill="none" stroke-linecap="round"/>
-          <!-- Hoodie -->
-          <path d="M66 194 C72 158, 168 158, 174 194 Z" fill="#FFFFFF" stroke="#DDD6FE" stroke-width="3"/>
-          <text x="120" y="182" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="16" fill="#6D28D9">Smartu</text>
-          <!-- 3D Coins & Gift -->
-          <circle cx="42" cy="64" r="18" fill="url(#coin3dGrad)" stroke="#FFF" stroke-width="3"/>
-          <text x="42" y="70" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="17" fill="#78350F">₹</text>
-          <rect x="160" y="156" width="48" height="42" rx="10" fill="url(#gift3dGrad)" stroke="#FFF" stroke-width="3"/>
-          <rect x="180" y="156" width="8" height="42" fill="#FDE047"/>
-          <rect x="160" y="173" width="48" height="8" fill="#FDE047"/>
-        </svg>
+    <!-- Center 3D Logo Emblem with Glowing Rings & Flying Coins -->
+    <div class="relative z-10 flex flex-col items-center my-auto animate-logo-entrance">
+      <div class="relative w-64 h-64 flex items-center justify-center">
+        <!-- Outer Illuminated Ring -->
+        <div class="absolute inset-0 rounded-full border-4 border-dashed border-purple-400/50 splash-glow-ring"></div>
+        <!-- Inner Rainbow Glow Aura -->
+        <div class="absolute inset-3 rounded-full bg-gradient-to-tr from-sky-300/40 via-purple-300/40 to-amber-300/45 blur-md"></div>
+
+        <!-- 3D Gaming Mascot & Coin Emblem SVG -->
+        <div class="relative w-52 h-52 rounded-full bg-white/90 backdrop-blur-md p-2.5 border-4 border-white shadow-[0_20px_45px_rgba(109,40,217,0.28)] flex items-center justify-center">
+          <svg viewBox="0 0 240 240" class="w-full h-full">
+            <defs>
+              <linearGradient id="spGold" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FEF08A"/>
+                <stop offset="50%" stop-color="#FBBF24"/>
+                <stop offset="100%" stop-color="#D97706"/>
+              </linearGradient>
+              <linearGradient id="spPurple" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#C084FC"/>
+                <stop offset="100%" stop-color="#5B21B6"/>
+              </linearGradient>
+              <linearGradient id="spCyan" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#67E8F9"/>
+                <stop offset="100%" stop-color="#0284C7"/>
+              </linearGradient>
+            </defs>
+            <circle cx="120" cy="120" r="102" fill="#F5F3FF"/>
+            <!-- 3D Royal Crown -->
+            <path d="M82 58 L95 36 L120 53 L145 36 L158 58 Z" fill="url(#spGold)" stroke="#FFF" stroke-width="3" stroke-linejoin="round"/>
+            <!-- Gaming Headset -->
+            <path d="M58 114 C58 68, 182 68, 182 114" stroke="#4C1D95" stroke-width="14" fill="none" stroke-linecap="round"/>
+            <rect x="44" y="94" width="22" height="42" rx="11" fill="url(#spCyan)" stroke="#FFF" stroke-width="3"/>
+            <rect x="174" y="94" width="22" height="42" rx="11" fill="url(#spCyan)" stroke="#FFF" stroke-width="3"/>
+            <!-- Mascot Face -->
+            <circle cx="120" cy="116" r="46" fill="#FFE4D6"/>
+            <path d="M74 112 C74 68, 166 68, 166 112 C156 90, 134 86, 120 96 C106 86, 84 90, 74 112 Z" fill="#4C1D95"/>
+            <circle cx="104" cy="116" r="5.5" fill="#1E1B4B"/>
+            <circle cx="136" cy="116" r="5.5" fill="#1E1B4B"/>
+            <circle cx="106" cy="114" r="2" fill="#FFF"/>
+            <circle cx="138" cy="114" r="2" fill="#FFF"/>
+            <path d="M110 132 Q120 142 130 132" stroke="#E11D48" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <!-- Smartu Hoodie -->
+            <path d="M64 196 C70 158, 170 158, 176 196 Z" fill="#FFFFFF" stroke="#DDD6FE" stroke-width="3"/>
+            <text x="120" y="183" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="17" fill="#6D28D9">Smartu</text>
+            <!-- Orbiting 3D Coins -->
+            <circle cx="38" cy="60" r="18" fill="url(#spGold)" stroke="#FFF" stroke-width="3"/>
+            <text x="38" y="66" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="16" fill="#78350F">🪙</text>
+            <circle cx="202" cy="66" r="16" fill="url(#spGold)" stroke="#FFF" stroke-width="3"/>
+            <text x="202" y="71" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="14" fill="#78350F">₹</text>
+          </svg>
+        </div>
       </div>
 
-      <h1 class="font-display text-4xl font-extrabold mt-5 tracking-tight bg-gradient-to-r from-indigo-700 via-purple-600 to-amber-500 bg-clip-text text-transparent">
+      <h1 class="font-display text-4xl font-extrabold mt-4 tracking-tight bg-gradient-to-r from-indigo-700 via-purple-600 to-amber-500 bg-clip-text text-transparent drop-shadow-xs">
         Smartu Earninng
       </h1>
-      <p class="mt-1 text-sm font-extrabold text-indigo-900/80 tracking-wider">
-        Play • Earn • Withdraw
+      <p class="mt-1 text-xs font-extrabold uppercase tracking-widest text-indigo-900/75">
+        Play 3D Games • Spin • Withdraw
       </p>
     </div>
 
-    <!-- Smooth Loading Progress Bar -->
+    <!-- Shimmering 3D Progress Bar -->
     <div class="w-full max-w-xs pb-6 relative z-10">
-      <div class="w-full h-4 rounded-full bg-white/95 p-1 border border-purple-200 shadow-inner overflow-hidden">
-        <div id="splashProgressFill" class="h-full rounded-full bg-gradient-to-r from-sky-400 via-purple-500 to-amber-400 transition-all duration-150" style="width: 5%;"></div>
+      <div class="w-full h-4 rounded-full bg-white p-1 border-2 border-purple-200 shadow-md overflow-hidden">
+        <div id="splashProgressFill" class="h-full rounded-full bg-gradient-to-r from-sky-400 via-purple-500 to-amber-400 transition-all duration-150" style="width: 8%;"></div>
       </div>
-      <p id="splashProgressLabel" class="mt-2 text-xs font-extrabold text-indigo-950">Loading... 5%</p>
+      <p id="splashProgressLabel" class="mt-2 text-xs font-extrabold text-indigo-950">Initializing 3D Arena... 8%</p>
     </div>
   </div>
 
-  <!-- ==================== MAINTENANCE / TELEGRAM AUTH GATE ==================== -->
-  <div id="systemGateOverlay" class="fixed inset-0 z-40 hidden max-w-[440px] mx-auto p-6 flex flex-col items-center justify-center text-center"
-       style="background: linear-gradient(165deg, #EAF5FF 0%, #F4F0FF 100%);">
-    <div class="glass-card rounded-3xl p-6 w-full">
-      <div id="gateIconBox" class="w-20 h-20 mx-auto rounded-3xl icon-3d-purple flex items-center justify-center text-white text-3xl mb-4">
+  <!-- ==================== MAINTENANCE / TELEGRAM GATE ==================== -->
+  <div id="systemGateOverlay" class="fixed inset-0 z-40 hidden max-w-[448px] mx-auto p-6 flex flex-col items-center justify-center text-center"
+       style="background: linear-gradient(165deg, #E3F3FF 0%, #EFE8FF 100%);">
+    <div class="glass-3d-card glow-rim-purple rounded-3xl p-6 w-full">
+      <div id="gateIconBox" class="w-20 h-20 mx-auto rounded-3xl icon-cap-home flex items-center justify-center text-white text-3xl mb-4">
         <i class="fa-brands fa-telegram"></i>
       </div>
       <h2 id="gateTitle" class="font-display text-2xl font-bold text-indigo-950">Open Inside Telegram</h2>
       <p id="gateMessage" class="text-xs font-semibold text-slate-600 mt-2 leading-relaxed">
-        Smartu Earninng authenticates your account automatically via the official Telegram Mini App SDK (<code>initData</code>). Open this app through your Telegram Bot to continue.
+        Smartu Earninng authenticates your account automatically via the official Telegram WebApp SDK. Open this Mini App inside Telegram to load your profile & wallet.
       </p>
       <div id="gateInstructions" class="mt-4 p-3.5 rounded-2xl bg-sky-50 border border-sky-200 text-left text-[11px] font-bold text-sky-950 space-y-1">
-        <p>1. Launch your Telegram Bot in the Telegram app.</p>
-        <p>2. Tap the Menu / Launch App button to open the Mini App with signed <code>initData</code>.</p>
+        <p>1. Open your Telegram Bot in the Telegram app.</p>
+        <p>2. Tap the Menu / Launch App button to start with verified Telegram session data.</p>
       </div>
     </div>
   </div>
 
-  <!-- ==================== SLIDE-OUT MENU DRAWER ==================== -->
-  <div id="sideMenuOverlay" class="fixed inset-0 z-50 hidden max-w-[440px] mx-auto bg-indigo-950/40 backdrop-blur-xs flex">
-    <div class="w-72 h-full bg-gradient-to-b from-[#EAF5FF] via-[#F4F0FF] to-white p-5 flex flex-col justify-between shadow-2xl border-r border-white">
+  <!-- ==================== SLIDE-OUT 3D MENU DRAWER ==================== -->
+  <div id="sideMenuOverlay" class="fixed inset-0 z-50 hidden max-w-[448px] mx-auto bg-indigo-950/35 backdrop-blur-xs flex">
+    <div class="w-72 h-full bg-gradient-to-b from-[#E6F4FF] via-[#F3ECFF] to-white p-5 flex flex-col justify-between shadow-2xl border-r-2 border-white overflow-y-auto">
       <div>
-        <div class="flex items-center justify-between pb-4 border-b border-purple-200/70">
-          <div class="flex items-center gap-2">
-            <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-300 to-orange-500 flex items-center justify-center shadow text-white">
+        <div class="flex items-center justify-between pb-4 border-b border-purple-200/80">
+          <div class="flex items-center gap-2.5">
+            <div class="w-10 h-10 rounded-2xl icon-cap-rank flex items-center justify-center text-amber-950">
               <i class="fa-solid fa-crown"></i>
             </div>
             <span class="font-display font-bold text-lg text-indigo-950">Smartu Menu</span>
           </div>
-          <button onclick="closeSideMenu()" class="w-8 h-8 rounded-full bg-white text-slate-600 font-bold shadow">✕</button>
+          <button onclick="closeSideMenu()" class="w-8 h-8 rounded-full bg-white text-slate-700 font-extrabold shadow">✕</button>
         </div>
 
-        <div class="mt-4 space-y-1.5 text-xs font-extrabold">
-          <button onclick="navigateFromDrawer('home')" class="w-full p-3 rounded-2xl bg-white/90 hover:bg-purple-50 text-indigo-950 flex items-center gap-3 shadow-xs">
-            <i class="fa-solid fa-house text-purple-600 w-4"></i> Home Dashboard
+        <div class="mt-4 space-y-2 text-xs font-extrabold">
+          <button onclick="navigateFromDrawer('home')" class="w-full p-2.5 rounded-2xl bg-white/95 hover:bg-purple-50 text-indigo-950 flex items-center gap-3 shadow-xs">
+            <span class="w-7 h-7 rounded-xl icon-cap-home text-white flex items-center justify-center"><i class="fa-solid fa-house text-xs"></i></span>
+            Home Dashboard
           </button>
-          <button onclick="navigateFromDrawer('tasks')" class="w-full p-3 rounded-2xl bg-white/90 hover:bg-purple-50 text-indigo-950 flex items-center gap-3 shadow-xs">
-            <i class="fa-solid fa-list-check text-blue-600 w-4"></i> Tasks & Earn
+          <button onclick="navigateFromDrawer('tasks')" class="w-full p-2.5 rounded-2xl bg-white/95 hover:bg-purple-50 text-indigo-950 flex items-center gap-3 shadow-xs">
+            <span class="w-7 h-7 rounded-xl icon-cap-tasks text-white flex items-center justify-center"><i class="fa-solid fa-clipboard-check text-xs"></i></span>
+            Tasks & Earn
           </button>
-          <button onclick="navigateFromDrawer('games')" class="w-full p-3 rounded-2xl bg-white/90 hover:bg-purple-50 text-indigo-950 flex items-center gap-3 shadow-xs">
-            <i class="fa-solid fa-gamepad text-indigo-600 w-4"></i> Play Games & Earn
+          <button onclick="navigateFromDrawer('games')" class="w-full p-2.5 rounded-2xl bg-white/95 hover:bg-purple-50 text-indigo-950 flex items-center gap-3 shadow-xs">
+            <span class="w-7 h-7 rounded-xl icon-cap-games text-white flex items-center justify-center"><i class="fa-solid fa-gamepad text-xs"></i></span>
+            Play Games & Earn
           </button>
-          <button onclick="navigateFromDrawer('spin')" class="w-full p-3 rounded-2xl bg-white/90 hover:bg-purple-50 text-indigo-950 flex items-center gap-3 shadow-xs">
-            <i class="fa-solid fa-dharmachakra text-pink-600 w-4"></i> Spin & Win
+          <button onclick="navigateFromDrawer('spin')" class="w-full p-2.5 rounded-2xl bg-white/95 hover:bg-purple-50 text-indigo-950 flex items-center gap-3 shadow-xs">
+            <span class="w-7 h-7 rounded-xl icon-cap-spin text-white flex items-center justify-center"><i class="fa-solid fa-dharmachakra text-xs"></i></span>
+            Spin & Win
           </button>
-          <button onclick="navigateFromDrawer('scratch')" class="w-full p-3 rounded-2xl bg-white/90 hover:bg-purple-50 text-indigo-950 flex items-center gap-3 shadow-xs">
-            <i class="fa-solid fa-wand-magic-sparkles text-amber-600 w-4"></i> Scratch & Win
+          <button onclick="navigateFromDrawer('scratch')" class="w-full p-2.5 rounded-2xl bg-white/95 hover:bg-purple-50 text-indigo-950 flex items-center gap-3 shadow-xs">
+            <span class="w-7 h-7 rounded-xl icon-cap-scratch text-amber-950 flex items-center justify-center"><i class="fa-solid fa-wand-magic-sparkles text-xs"></i></span>
+            Scratch & Win
           </button>
-          <button onclick="navigateFromDrawer('ads')" class="w-full p-3 rounded-2xl bg-white/90 hover:bg-purple-50 text-indigo-950 flex items-center gap-3 shadow-xs">
-            <i class="fa-solid fa-circle-play text-emerald-600 w-4"></i> Watch Ads & Earn
+          <button onclick="navigateFromDrawer('ads')" class="w-full p-2.5 rounded-2xl bg-white/95 hover:bg-purple-50 text-indigo-950 flex items-center gap-3 shadow-xs">
+            <span class="w-7 h-7 rounded-xl icon-cap-ads text-white flex items-center justify-center"><i class="fa-solid fa-circle-play text-xs"></i></span>
+            Watch Ads & Earn
           </button>
-          <button onclick="navigateFromDrawer('daily')" class="w-full p-3 rounded-2xl bg-white/90 hover:bg-purple-50 text-indigo-950 flex items-center gap-3 shadow-xs">
-            <i class="fa-solid fa-calendar-check text-orange-600 w-4"></i> Daily Rewards
+          <button onclick="navigateFromDrawer('daily')" class="w-full p-2.5 rounded-2xl bg-white/95 hover:bg-purple-50 text-indigo-950 flex items-center gap-3 shadow-xs">
+            <span class="w-7 h-7 rounded-xl icon-cap-rewards text-white flex items-center justify-center"><i class="fa-solid fa-gift text-xs"></i></span>
+            Daily Rewards
           </button>
-          <button onclick="navigateFromDrawer('wallet')" class="w-full p-3 rounded-2xl bg-white/90 hover:bg-purple-50 text-indigo-950 flex items-center gap-3 shadow-xs">
-            <i class="fa-solid fa-wallet text-violet-600 w-4"></i> Wallet & Withdraw
+          <button onclick="navigateFromDrawer('wallet')" class="w-full p-2.5 rounded-2xl bg-white/95 hover:bg-purple-50 text-indigo-950 flex items-center gap-3 shadow-xs">
+            <span class="w-7 h-7 rounded-xl icon-cap-wallet text-white flex items-center justify-center"><i class="fa-solid fa-wallet text-xs"></i></span>
+            Wallet & Redeem
           </button>
-          <button onclick="navigateFromDrawer('redeemHistory')" class="w-full p-3 rounded-2xl bg-white/90 hover:bg-purple-50 text-indigo-950 flex items-center gap-3 shadow-xs">
-            <i class="fa-solid fa-clock-rotate-left text-rose-600 w-4"></i> Redeem & Tx History
+          <button onclick="navigateFromDrawer('redeemHistory')" class="w-full p-2.5 rounded-2xl bg-white/95 hover:bg-purple-50 text-indigo-950 flex items-center gap-3 shadow-xs">
+            <span class="w-7 h-7 rounded-xl icon-cap-refer text-white flex items-center justify-center"><i class="fa-solid fa-clock-rotate-left text-xs"></i></span>
+            Redeem History
           </button>
-          <button onclick="navigateFromDrawer('support')" class="w-full p-3 rounded-2xl bg-white/90 hover:bg-purple-50 text-indigo-950 flex items-center gap-3 shadow-xs">
-            <i class="fa-solid fa-headset text-sky-600 w-4"></i> Help & Support
+          <button onclick="navigateFromDrawer('support')" class="w-full p-2.5 rounded-2xl bg-white/95 hover:bg-purple-50 text-indigo-950 flex items-center gap-3 shadow-xs">
+            <span class="w-7 h-7 rounded-xl icon-cap-tasks text-white flex items-center justify-center"><i class="fa-solid fa-headset text-xs"></i></span>
+            Help & Support
           </button>
         </div>
       </div>
 
-      <div class="p-3 rounded-2xl bg-white/90 border border-purple-100 text-[11px] font-bold text-slate-600 text-center">
-        Smartu Earninng v2.0 • Telegram Mini App
+      <div class="mt-4 p-3 rounded-2xl bg-white/90 border border-purple-100 text-[11px] font-bold text-slate-600 text-center">
+        Smartu Earninng 3D • Verified Telegram App
       </div>
     </div>
     <div onclick="closeSideMenu()" class="flex-1 h-full"></div>
   </div>
 
-  <!-- ==================== MAIN APPLICATION SHELL ==================== -->
+  <!-- ==================== MAIN 3D GAMING APPLICATION SHELL ==================== -->
   <div id="mainAppContainer" class="app-container hidden">
 
-    <!-- Live Announcement Banner -->
-    <div class="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-white py-1.5 px-3 flex items-center gap-2 text-xs font-bold shadow-sm">
-      <span class="px-2 py-0.5 rounded-full bg-amber-300 text-amber-950 text-[10px] font-extrabold uppercase shrink-0">Notice</span>
-      <marquee id="liveAnnouncementMarquee" scrollamount="4">Welcome to Smartu Earninng! Complete verified tasks, play mini-games, spin & withdraw to UPI, Google Play & Amazon!</marquee>
+    <!-- Ambient Pastel Lighting Orbs -->
+    <div class="ambient-orb w-48 h-48 bg-sky-300/35 -top-10 -left-10"></div>
+    <div class="ambient-orb w-56 h-56 bg-purple-300/30 top-40 -right-14"></div>
+    <div class="ambient-orb w-48 h-48 bg-pink-300/25 bottom-24 left-6"></div>
+
+    <!-- Live Announcement Ticker -->
+    <div class="relative z-10 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-white py-1.5 px-3 flex items-center gap-2 text-xs font-bold shadow-md">
+      <span class="px-2 py-0.5 rounded-full bg-amber-300 text-amber-950 text-[10px] font-extrabold uppercase shrink-0 shadow-xs">Live</span>
+      <marquee id="liveAnnouncementMarquee" scrollamount="4">Welcome to Smartu Earninng 3D! Play skill games, spin the wheel, scratch cards & withdraw via UPI, Google Play & Amazon!</marquee>
     </div>
 
-    <!-- ==================== PAGE 1: HOME DASHBOARD ==================== -->
+    <!-- ==================== PAGE 1: ULTRA-PREMIUM 3D HOME DASHBOARD ==================== -->
     <section id="page-home" class="screen-page active px-4 pt-3 pb-4">
-      <!-- Top Bar matching reference -->
+      <!-- Top Header -->
       <header class="flex items-center justify-between mb-3">
-        <button onclick="openSideMenu()" aria-label="Menu" class="w-10 h-10 rounded-2xl glass-card flex items-center justify-center text-indigo-800 active:scale-95 transition">
+        <button onclick="openSideMenu()" aria-label="Menu" class="w-11 h-11 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900 active:scale-95 transition">
           <i class="fa-solid fa-bars text-base"></i>
         </button>
 
         <div class="flex items-center gap-2">
-          <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-amber-300 to-orange-500 flex items-center justify-center shadow border border-white">
-            <i class="fa-solid fa-crown text-white text-sm"></i>
+          <div class="w-9 h-9 rounded-2xl icon-cap-rank flex items-center justify-center text-amber-950">
+            <i class="fa-solid fa-crown text-base"></i>
           </div>
-          <span class="font-display text-xl font-bold bg-gradient-to-r from-indigo-800 via-purple-700 to-indigo-900 bg-clip-text text-transparent">
+          <span class="font-display text-xl font-bold bg-gradient-to-r from-indigo-900 via-purple-700 to-pink-600 bg-clip-text text-transparent">
             Smartu Earninng
           </span>
         </div>
 
-        <button onclick="navigateTo('redeemHistory')" aria-label="Notifications" class="relative w-10 h-10 rounded-2xl glass-card flex items-center justify-center text-indigo-800 active:scale-95 transition">
+        <button onclick="navigateTo('redeemHistory')" aria-label="Redeem Status" class="relative w-11 h-11 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900 active:scale-95 transition">
           <i class="fa-solid fa-bell text-base"></i>
-          <span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-white"></span>
+          <span class="absolute top-2.5 right-2.5 w-2.5 h-2.5 rounded-full bg-rose-500 ring-2 ring-white"></span>
         </button>
       </header>
 
-      <!-- User Profile Identity Bar (Real Telegram Data) -->
-      <div class="glass-card rounded-2xl p-3 mb-3 flex items-center justify-between">
+      <!-- Large Colorful Welcome Card with Real Telegram Profile Photo -->
+      <div class="glass-3d-card glow-rim-purple rounded-3xl p-3.5 mb-3.5 flex items-center justify-between gap-2.5">
         <div class="flex items-center gap-3 min-w-0">
-          <div id="homeAvatarWrapper" class="w-12 h-12 rounded-2xl bg-gradient-to-br from-sky-400 to-purple-600 p-0.5 shrink-0 shadow">
-            <img id="homeUserAvatar" alt="Telegram Profile" class="hidden w-full h-full rounded-[14px] object-cover bg-white" />
-            <div id="homeUserInitials" class="w-full h-full rounded-[14px] bg-white flex items-center justify-center font-display font-bold text-lg text-purple-700">TG</div>
-          </div>
+          <!-- Circular Telegram Avatar Container -->
+          <div id="homeAvatarContainer" class="tg-avatar-ring w-14 h-14"></div>
           <div class="min-w-0">
-            <h2 class="font-bold text-sm text-indigo-950 truncate">
-              Hello, <span id="homeFirstName">Player</span> 👋
-            </h2>
-            <p class="text-[11px] font-bold text-sky-600 truncate" id="homeUsernameText">@telegram_user</p>
+            <div class="flex items-center gap-1.5">
+              <h2 class="font-display font-bold text-base text-indigo-950 truncate">
+                Hi, <span id="homeFirstName">Player</span>
+              </h2>
+              <span class="text-base">👋</span>
+            </div>
+            <p id="homeUsernameText" class="text-[11px] font-extrabold text-sky-600 truncate">@telegram_user</p>
             <p class="text-[11px] font-bold text-purple-700 truncate">
               ID: <span id="homeTelegramId">—</span>
             </p>
           </div>
         </div>
 
-        <button onclick="copyUserTelegramId()" class="btn-glossy-blue px-3.5 py-1.5 rounded-xl text-xs font-extrabold shrink-0">
-          Copy
+        <button onclick="copyUserTelegramId()" class="btn-3d btn-3d-cyan px-3.5 py-2 rounded-2xl text-xs font-extrabold shrink-0">
+          <i class="fa-regular fa-copy mr-1"></i> Copy ID
         </button>
       </div>
 
-      <!-- Main Balance Card ("Your Coins" + "Wallet" Pill Button) -->
-      <div class="rounded-3xl p-4 mb-3 text-white relative overflow-hidden shadow-xl"
-           style="background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 55%, #3B82F6 100%);">
-        <div class="absolute -right-6 -top-6 w-28 h-28 rounded-full bg-white/10"></div>
+      <!-- Glowing 3D Coin Balance Card + Golden Wallet Button -->
+      <div class="rounded-3xl p-4 mb-3.5 text-white relative overflow-hidden shadow-[0_18px_36px_-8px_rgba(91,33,182,0.45)] border-2 border-white/60"
+           style="background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 52%, #EC4899 100%);">
+        <div class="absolute -right-8 -top-8 w-32 h-32 rounded-full bg-white/15 blur-xs"></div>
+        <div class="absolute -left-6 -bottom-10 w-28 h-28 rounded-full bg-amber-300/20 blur-xs"></div>
+
         <div class="relative flex items-center justify-between gap-2">
-          <div class="flex items-center gap-3">
-            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-yellow-300 via-amber-400 to-orange-500 flex items-center justify-center shadow-lg border-2 border-amber-100 shrink-0 animate-float-coin">
-              <i class="fa-solid fa-coins text-2xl text-amber-950"></i>
+          <div class="flex items-center gap-3.5">
+            <!-- 3D Golden Coin Stack Emblem -->
+            <div class="w-15 h-15 p-3 rounded-2xl bg-gradient-to-br from-yellow-200 via-amber-400 to-orange-500 flex items-center justify-center shadow-xl border-2 border-white shrink-0 animate-float-3d">
+              <i class="fa-solid fa-coins text-3xl text-amber-950"></i>
             </div>
             <div>
-              <p class="text-xs font-semibold text-indigo-100">Your Coins</p>
-              <p id="homeCoinsDisplay" class="font-display text-3xl font-bold tracking-tight leading-none mt-0.5">0</p>
-              <p class="text-[11px] font-bold text-amber-300 mt-1">≈ ₹<span id="homeRupeeEquivalent">0.00</span></p>
+              <span class="px-2 py-0.5 rounded-full bg-white/20 text-[10px] font-extrabold uppercase tracking-wider">Available Balance</span>
+              <p id="homeCoinsDisplay" class="font-display text-3xl font-extrabold tracking-tight leading-none mt-1 drop-shadow-xs">0</p>
+              <p class="text-xs font-extrabold text-amber-200 mt-1">≈ ₹<span id="homeRupeeEquivalent">0.00</span> INR</p>
             </div>
           </div>
 
-          <button onclick="navigateTo('wallet')" class="btn-glossy-gold px-4 py-2.5 rounded-2xl font-display font-bold text-sm shrink-0">
-            Wallet
+          <button onclick="navigateTo('wallet')" class="btn-3d btn-3d-gold px-4 py-3 rounded-2xl font-display font-bold text-sm shrink-0 flex items-center gap-1.5">
+            <i class="fa-solid fa-wallet"></i>
+            <span>Wallet</span>
           </button>
         </div>
       </div>
 
-      <!-- 2-Column Stat Cards: Today Earned (Green) & Total Withdrawn (Purple) -->
-      <div class="grid grid-cols-2 gap-3 mb-3">
-        <div class="glass-card rounded-2xl p-3 flex items-center gap-2.5 border-emerald-200/80">
-          <div class="w-10 h-10 rounded-xl icon-3d-green flex items-center justify-center text-white shrink-0">
-            <i class="fa-solid fa-arrow-trend-up text-base"></i>
+      <!-- Today's Earnings & Total Withdrawn 3D Stat Cards -->
+      <div class="grid grid-cols-2 gap-3 mb-3.5">
+        <div class="glass-3d-card rounded-3xl p-3.5 flex items-center gap-3">
+          <div class="w-11 h-11 rounded-2xl icon-cap-rewards flex items-center justify-center text-white shrink-0">
+            <i class="fa-solid fa-chart-line text-lg"></i>
           </div>
           <div>
             <p class="text-[11px] font-bold text-slate-500">Today Earned</p>
-            <p class="font-display text-lg font-bold text-emerald-600">+<span id="homeTodayEarned">0</span></p>
+            <p class="font-display text-lg font-extrabold text-emerald-600">+<span id="homeTodayEarned">0</span></p>
           </div>
         </div>
 
-        <div class="glass-card rounded-2xl p-3 flex items-center gap-2.5 border-purple-200/80">
-          <div class="w-10 h-10 rounded-xl icon-3d-purple flex items-center justify-center text-white shrink-0">
-            <i class="fa-solid fa-receipt text-base"></i>
+        <div class="glass-3d-card rounded-3xl p-3.5 flex items-center gap-3">
+          <div class="w-11 h-11 rounded-2xl icon-cap-wallet flex items-center justify-center text-white shrink-0">
+            <i class="fa-solid fa-indian-rupee-sign text-lg"></i>
           </div>
           <div>
-            <p class="text-[11px] font-bold text-slate-500">Total Withdrawn</p>
-            <p class="font-display text-lg font-bold text-purple-700">₹<span id="homeTotalWithdrawn">0</span></p>
+            <p class="text-[11px] font-bold text-slate-500">Withdrawn</p>
+            <p class="font-display text-lg font-extrabold text-purple-700">₹<span id="homeTotalWithdrawn">0</span></p>
           </div>
         </div>
       </div>
 
-      <!-- Daily Free Promocode Hero Banner -->
-      <div class="rounded-3xl p-4 mb-3.5 text-white relative overflow-hidden shadow-lg"
-           style="background: linear-gradient(125deg, #F97316 0%, #E11D48 52%, #7C3AED 100%);">
+      <!-- Daily Free Promocode 3D Gift Banner -->
+      <div class="rounded-3xl p-4 mb-4 text-white relative overflow-hidden shadow-[0_14px_28px_-6px_rgba(236,72,153,0.42)] border-2 border-white/70"
+           style="background: linear-gradient(125deg, #F97316 0%, #EC4899 52%, #8B5CF6 100%);">
         <div class="flex items-center justify-between gap-2">
           <div class="flex items-center gap-3">
-            <div class="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur border border-white/40 flex items-center justify-center shrink-0 animate-float-coin">
-              <i class="fa-solid fa-gift text-3xl text-amber-300"></i>
+            <div class="w-14 h-14 rounded-2xl bg-white/25 backdrop-blur border-2 border-white/60 flex items-center justify-center shrink-0 animate-float-3d">
+              <i class="fa-solid fa-gift text-3xl text-yellow-200 drop-shadow"></i>
             </div>
             <div>
-              <span class="inline-block px-2 py-0.5 rounded-full bg-amber-300 text-amber-950 text-[10px] font-extrabold uppercase">Promo Code</span>
+              <span class="inline-block px-2.5 py-0.5 rounded-full bg-amber-300 text-amber-950 text-[10px] font-extrabold uppercase">Mystery Gift</span>
               <h3 class="font-display text-base font-bold leading-tight mt-0.5">Daily Free Promocode</h3>
-              <p class="font-display text-sm font-bold text-amber-200">100 – 500 Coins</p>
+              <p class="font-display text-sm font-extrabold text-amber-200">Win 100 – 500 Coins</p>
             </div>
           </div>
 
-          <button onclick="openPromoModal()" class="btn-glossy-gold px-3.5 py-2 rounded-xl font-extrabold text-xs shrink-0">
+          <button onclick="openPromoModal()" class="btn-3d btn-3d-gold px-3.5 py-2.5 rounded-2xl font-extrabold text-xs shrink-0">
             Claim Now »
           </button>
         </div>
       </div>
 
-      <!-- 3-Column Glossy Action Cards: Tasks & Earn, Watch Ads & Earn, Spin & Scratch -->
-      <div class="grid grid-cols-3 gap-2.5 mb-3">
-        <button onclick="navigateTo('tasks')" class="glass-card rounded-2xl p-2.5 flex flex-col items-center text-center active:scale-95 transition">
-          <div class="w-12 h-12 rounded-2xl icon-3d-blue flex items-center justify-center text-white mb-2">
-            <i class="fa-solid fa-list-check text-xl"></i>
+      <!-- Primary 3D Feature Cards Grid (Distinct 3D Icon per Feature) -->
+      <div class="grid grid-cols-3 gap-2.5 mb-3.5">
+        <!-- Tasks: Blue 3D Clipboard -->
+        <button onclick="navigateTo('tasks')" class="glass-3d-card rounded-3xl p-3 flex flex-col items-center text-center active:scale-95 transition">
+          <div class="w-13 h-13 p-3 rounded-2xl icon-cap-tasks flex items-center justify-center text-white mb-2">
+            <i class="fa-solid fa-clipboard-list text-2xl"></i>
           </div>
-          <span class="font-extrabold text-xs text-indigo-950 leading-tight">Tasks & Earn</span>
+          <span class="font-display font-bold text-xs text-indigo-950 leading-tight">Tasks & Earn</span>
+          <span class="text-[10px] font-bold text-blue-600 mt-0.5">100–500 🪙</span>
         </button>
 
-        <button onclick="navigateTo('ads')" class="glass-card rounded-2xl p-2.5 flex flex-col items-center text-center active:scale-95 transition">
-          <div class="w-12 h-12 rounded-2xl icon-3d-green flex items-center justify-center text-white mb-2">
-            <i class="fa-solid fa-circle-play text-xl"></i>
+        <!-- Watch Ads: Red & Blue 3D Video Player -->
+        <button onclick="navigateTo('ads')" class="glass-3d-card rounded-3xl p-3 flex flex-col items-center text-center active:scale-95 transition">
+          <div class="w-13 h-13 p-3 rounded-2xl icon-cap-ads flex items-center justify-center text-white mb-2">
+            <i class="fa-solid fa-circle-play text-2xl"></i>
           </div>
-          <span class="font-extrabold text-xs text-indigo-950 leading-tight">Watch Ads & Earn</span>
+          <span class="font-display font-bold text-xs text-indigo-950 leading-tight">Watch Ads</span>
+          <span class="text-[10px] font-bold text-rose-600 mt-0.5">+20 🪙 / Ad</span>
         </button>
 
-        <button onclick="navigateTo('spin')" class="glass-card rounded-2xl p-2.5 flex flex-col items-center text-center active:scale-95 transition">
-          <div class="w-12 h-12 rounded-2xl icon-3d-purple flex items-center justify-center text-white mb-2">
-            <i class="fa-solid fa-dharmachakra text-xl"></i>
+        <!-- Spin: Multicolor 3D Lucky Wheel -->
+        <button onclick="navigateTo('spin')" class="glass-3d-card rounded-3xl p-3 flex flex-col items-center text-center active:scale-95 transition">
+          <div class="w-13 h-13 p-3 rounded-2xl icon-cap-spin flex items-center justify-center text-white mb-2">
+            <i class="fa-solid fa-dharmachakra text-2xl"></i>
           </div>
-          <span class="font-extrabold text-xs text-indigo-950 leading-tight">Spin & Scratch</span>
+          <span class="font-display font-bold text-xs text-indigo-950 leading-tight">Spin & Win</span>
+          <span class="text-[10px] font-bold text-purple-600 mt-0.5">1–100 🪙</span>
         </button>
       </div>
 
-      <!-- 4-Column Quick Icon Bar: Games, Rank, Refer, Profile -->
-      <div class="grid grid-cols-4 gap-2 mb-3">
-        <button onclick="navigateTo('games')" class="glass-card rounded-2xl p-2.5 flex flex-col items-center active:scale-95 transition">
-          <div class="w-10 h-10 rounded-xl icon-3d-purple flex items-center justify-center text-white mb-1.5">
-            <i class="fa-solid fa-gamepad text-base"></i>
+      <!-- Secondary 4-Column 3D Quick Tiles -->
+      <div class="grid grid-cols-4 gap-2 mb-3.5">
+        <!-- Games: Cyan 3D Controller -->
+        <button onclick="navigateTo('games')" class="glass-3d-card rounded-2xl p-2.5 flex flex-col items-center active:scale-95 transition">
+          <div class="w-11 h-11 rounded-2xl icon-cap-games flex items-center justify-center text-white mb-1.5">
+            <i class="fa-solid fa-gamepad text-lg"></i>
           </div>
           <span class="font-extrabold text-[11px] text-indigo-950">Games</span>
         </button>
 
-        <button onclick="navigateTo('rank')" class="glass-card rounded-2xl p-2.5 flex flex-col items-center active:scale-95 transition">
-          <div class="w-10 h-10 rounded-xl icon-3d-amber flex items-center justify-center text-white mb-1.5">
-            <i class="fa-solid fa-trophy text-base"></i>
+        <!-- Scratch: Golden 3D Scratch Card -->
+        <button onclick="navigateTo('scratch')" class="glass-3d-card rounded-2xl p-2.5 flex flex-col items-center active:scale-95 transition">
+          <div class="w-11 h-11 rounded-2xl icon-cap-scratch flex items-center justify-center text-amber-950 mb-1.5">
+            <i class="fa-solid fa-wand-magic-sparkles text-lg"></i>
+          </div>
+          <span class="font-extrabold text-[11px] text-indigo-950">Scratch</span>
+        </button>
+
+        <!-- Rank: Golden 3D Trophy -->
+        <button onclick="navigateTo('rank')" class="glass-3d-card rounded-2xl p-2.5 flex flex-col items-center active:scale-95 transition">
+          <div class="w-11 h-11 rounded-2xl icon-cap-rank flex items-center justify-center text-amber-950 mb-1.5">
+            <i class="fa-solid fa-trophy text-lg"></i>
           </div>
           <span class="font-extrabold text-[11px] text-indigo-950">Rank</span>
         </button>
 
-        <button onclick="navigateTo('refer')" class="glass-card rounded-2xl p-2.5 flex flex-col items-center active:scale-95 transition">
-          <div class="w-10 h-10 rounded-xl icon-3d-pink flex items-center justify-center text-white mb-1.5">
-            <i class="fa-solid fa-user-plus text-base"></i>
+        <!-- Refer: Pink 3D Friends Icon -->
+        <button onclick="navigateTo('refer')" class="glass-3d-card rounded-2xl p-2.5 flex flex-col items-center active:scale-95 transition">
+          <div class="w-11 h-11 rounded-2xl icon-cap-refer flex items-center justify-center text-white mb-1.5">
+            <i class="fa-solid fa-user-group text-lg"></i>
           </div>
           <span class="font-extrabold text-[11px] text-indigo-950">Refer</span>
         </button>
-
-        <button onclick="navigateTo('profile')" class="glass-card rounded-2xl p-2.5 flex flex-col items-center active:scale-95 transition">
-          <div class="w-10 h-10 rounded-xl icon-3d-cyan flex items-center justify-center text-white mb-1.5">
-            <i class="fa-solid fa-user-astronaut text-base"></i>
-          </div>
-          <span class="font-extrabold text-[11px] text-indigo-950">Profile</span>
-        </button>
       </div>
 
-      <!-- Daily Rewards Streak Strip -->
-      <div onclick="navigateTo('daily')" class="glass-card rounded-2xl p-3 flex items-center justify-between cursor-pointer active:scale-[0.99] transition border-2 border-amber-300/75">
+      <!-- Daily Rewards 3D Gift Box Card -->
+      <div onclick="navigateTo('daily')" class="glass-3d-card glow-rim-gold rounded-3xl p-3.5 flex items-center justify-between cursor-pointer active:scale-[0.99] transition">
         <div class="flex items-center gap-3">
-          <div class="w-11 h-11 rounded-2xl icon-3d-amber flex items-center justify-center text-white">
-            <i class="fa-solid fa-calendar-check text-lg"></i>
+          <div class="w-12 h-12 rounded-2xl icon-cap-rewards flex items-center justify-center text-white shrink-0">
+            <i class="fa-solid fa-gift text-xl"></i>
           </div>
           <div>
-            <h4 class="font-extrabold text-xs text-indigo-950">Daily Login Streak</h4>
-            <p class="text-[11px] font-bold text-amber-700">Claim daily coins & Day 7 Mega Bonus!</p>
+            <h4 class="font-display font-bold text-sm text-indigo-950">Daily Login Streak</h4>
+            <p class="text-[11px] font-bold text-amber-800">Claim daily coins & Day 7 Mega Bonus!</p>
           </div>
         </div>
-        <span class="px-3 py-1.5 rounded-xl bg-amber-100 text-amber-900 font-extrabold text-xs">Open »</span>
+        <span class="btn-3d btn-3d-gold px-3.5 py-2 rounded-xl font-extrabold text-xs">Claim »</span>
       </div>
     </section>
 
     <!-- ==================== PAGE 2: TASKS & EARN ==================== -->
     <section id="page-tasks" class="screen-page px-4 pt-3 pb-4">
       <div class="flex items-center justify-between mb-4">
-        <button onclick="navigateTo('home')" class="w-10 h-10 rounded-2xl glass-card flex items-center justify-center text-indigo-800">
+        <button onclick="navigateTo('home')" class="w-10 h-10 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900">
           <i class="fa-solid fa-arrow-left"></i>
         </button>
         <h2 class="font-display text-xl font-bold text-indigo-950">Tasks & Earn</h2>
-        <button onclick="navigateTo('daily')" class="w-10 h-10 rounded-2xl icon-3d-amber flex items-center justify-center text-white">
+        <button onclick="navigateTo('daily')" class="w-10 h-10 rounded-2xl icon-cap-rewards flex items-center justify-center text-white">
           <i class="fa-solid fa-gift"></i>
         </button>
       </div>
 
       <div id="tasksContainer" class="space-y-3 mb-4">
-        <div class="glass-card rounded-2xl p-6 text-center text-xs font-bold text-slate-500">Loading active tasks from Firebase...</div>
+        <div class="glass-3d-card rounded-3xl p-6 text-center text-xs font-bold text-slate-500">Loading active tasks from Firebase...</div>
       </div>
 
       <div class="rounded-3xl p-4 text-white flex items-center gap-3 shadow-lg"
-           style="background: linear-gradient(135deg, #6D28D9 0%, #2563EB 100%);">
-        <div class="w-12 h-12 rounded-2xl bg-amber-400 flex items-center justify-center text-amber-950 text-2xl shrink-0">
+           style="background: linear-gradient(135deg, #2563EB 0%, #7C3AED 100%);">
+        <div class="w-12 h-12 rounded-2xl bg-amber-300 flex items-center justify-center text-amber-950 text-2xl shrink-0">
           <i class="fa-solid fa-shield-halved"></i>
         </div>
         <div>
-          <h4 class="font-display font-bold text-base">Server-Verified Task Claims</h4>
-          <p class="text-xs text-indigo-100">Tap Start to complete the task action, then submit your claim for verification.</p>
+          <h4 class="font-display font-bold text-base">Verified Task Completion</h4>
+          <p class="text-xs text-sky-100">Tap Start to complete the action, then submit your claim for server verification.</p>
         </div>
       </div>
     </section>
@@ -585,86 +724,86 @@
     <!-- ==================== PAGE 3: PLAY GAMES & EARN (6 REAL PLAYABLE GAMES) ==================== -->
     <section id="page-games" class="screen-page px-4 pt-3 pb-4">
       <div class="flex items-center justify-between mb-3">
-        <button onclick="navigateTo('home')" class="w-10 h-10 rounded-2xl glass-card flex items-center justify-center text-indigo-800">
+        <button onclick="navigateTo('home')" class="w-10 h-10 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900">
           <i class="fa-solid fa-arrow-left"></i>
         </button>
         <h2 class="font-display text-xl font-bold text-indigo-950">Play Games & Earn</h2>
-        <div class="px-2.5 py-1 rounded-xl bg-purple-100 text-purple-800 font-extrabold text-xs">
+        <div class="px-3 py-1 rounded-xl bg-cyan-100 border border-cyan-300 text-cyan-900 font-extrabold text-xs">
           <span id="gamesSessionCounter">0</span>/<span id="gamesSessionMax">100</span>
         </div>
       </div>
 
-      <!-- Hero Arcade Banner -->
-      <div class="rounded-3xl p-4 mb-4 text-white relative overflow-hidden shadow-xl"
-           style="background: linear-gradient(135deg, #4F46E5 0%, #9333EA 55%, #EC4899 100%);">
+      <!-- Hero 3D Arcade Banner -->
+      <div class="rounded-3xl p-4 mb-4 text-white relative overflow-hidden shadow-xl border-2 border-white/60"
+           style="background: linear-gradient(135deg, #0284C7 0%, #7C3AED 55%, #EC4899 100%);">
         <div class="flex items-center justify-between gap-2">
           <div>
-            <span class="bg-white/20 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase">6 Real Arcade Games</span>
-            <h3 class="font-display text-lg font-bold mt-1 leading-snug">Play Skill Games & Submit Verified Scores</h3>
-            <button onclick="openPlayableGame('bubble')" class="btn-glossy-gold mt-3 px-5 py-2 rounded-xl font-display font-bold text-sm">
+            <span class="bg-white/25 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase">6 Playable 3D/HTML5 Games</span>
+            <h3 class="font-display text-lg font-bold mt-1 leading-snug">Play Skill Games & Earn Verified Coins</h3>
+            <button onclick="openPlayableGame('bubble')" class="btn-3d btn-3d-gold mt-3 px-5 py-2 rounded-2xl font-display font-bold text-sm">
               Play Now
             </button>
           </div>
-          <div class="w-20 h-20 rounded-2xl bg-white/15 backdrop-blur flex items-center justify-center shrink-0 animate-float-coin">
-            <i class="fa-solid fa-gamepad text-4xl text-amber-300"></i>
+          <div class="w-20 h-20 rounded-3xl icon-cap-games flex items-center justify-center shrink-0 animate-float-3d">
+            <i class="fa-solid fa-gamepad text-4xl text-white"></i>
           </div>
         </div>
       </div>
 
-      <!-- 6 Playable Mini-Games Grid -->
+      <!-- 6 Real Playable Games Grid -->
       <div class="grid grid-cols-2 gap-3">
-        <div class="glass-card rounded-3xl p-3 flex flex-col justify-between">
+        <div class="glass-3d-card rounded-3xl p-3 flex flex-col justify-between">
           <div>
             <div class="h-24 rounded-2xl bg-gradient-to-br from-pink-400 via-purple-500 to-indigo-600 flex items-center justify-center text-4xl shadow-inner mb-2">🫧</div>
             <h4 class="font-display font-bold text-sm text-indigo-950">Bubble Shooter</h4>
-            <p class="text-[11px] font-semibold text-slate-500">Aim & pop matching color bubbles</p>
+            <p class="text-[11px] font-semibold text-slate-500">Pop colorful bubble clusters</p>
           </div>
-          <button onclick="openPlayableGame('bubble')" class="btn-glossy-purple w-full mt-2.5 py-2 rounded-xl font-bold text-xs">Play Game</button>
+          <button onclick="openPlayableGame('bubble')" class="btn-3d btn-3d-purple w-full mt-2.5 py-2 rounded-xl font-bold text-xs">Play Game</button>
         </div>
 
-        <div class="glass-card rounded-3xl p-3 flex flex-col justify-between">
+        <div class="glass-3d-card rounded-3xl p-3 flex flex-col justify-between">
           <div>
             <div class="h-24 rounded-2xl bg-gradient-to-br from-emerald-400 via-lime-500 to-teal-600 flex items-center justify-center text-4xl shadow-inner mb-2">🍉</div>
             <h4 class="font-display font-bold text-sm text-indigo-950">Fruit Cut</h4>
-            <p class="text-[11px] font-semibold text-slate-500">Swipe flying fruits, dodge bombs!</p>
+            <p class="text-[11px] font-semibold text-slate-500">Slice flying fruits, dodge bombs</p>
           </div>
-          <button onclick="openPlayableGame('fruit')" class="btn-glossy-green w-full mt-2.5 py-2 rounded-xl font-bold text-xs">Play Game</button>
+          <button onclick="openPlayableGame('fruit')" class="btn-3d btn-3d-green w-full mt-2.5 py-2 rounded-xl font-bold text-xs">Play Game</button>
         </div>
 
-        <div class="glass-card rounded-3xl p-3 flex flex-col justify-between">
+        <div class="glass-3d-card rounded-3xl p-3 flex flex-col justify-between">
           <div>
             <div class="h-24 rounded-2xl bg-gradient-to-br from-sky-400 via-blue-500 to-indigo-700 flex items-center justify-center text-4xl shadow-inner mb-2">🏎️</div>
             <h4 class="font-display font-bold text-sm text-indigo-950">Car Racing</h4>
-            <p class="text-[11px] font-semibold text-slate-500">Switch lanes & collect turbo coins</p>
+            <p class="text-[11px] font-semibold text-slate-500">Switch lanes & collect coins</p>
           </div>
-          <button onclick="openPlayableGame('racing')" class="btn-glossy-blue w-full mt-2.5 py-2 rounded-xl font-bold text-xs">Play Game</button>
+          <button onclick="openPlayableGame('racing')" class="btn-3d btn-3d-cyan w-full mt-2.5 py-2 rounded-xl font-bold text-xs">Play Game</button>
         </div>
 
-        <div class="glass-card rounded-3xl p-3 flex flex-col justify-between">
+        <div class="glass-3d-card rounded-3xl p-3 flex flex-col justify-between">
           <div>
             <div class="h-24 rounded-2xl bg-gradient-to-br from-amber-400 via-orange-500 to-red-600 flex items-center justify-center text-4xl shadow-inner mb-2">🗿</div>
             <h4 class="font-display font-bold text-sm text-indigo-950">Temple Run</h4>
-            <p class="text-[11px] font-semibold text-slate-500">Jump over temple obstacles & run</p>
+            <p class="text-[11px] font-semibold text-slate-500">Jump obstacles & dash far</p>
           </div>
-          <button onclick="openPlayableGame('temple')" class="btn-glossy-gold w-full mt-2.5 py-2 rounded-xl font-bold text-xs">Play Game</button>
+          <button onclick="openPlayableGame('temple')" class="btn-3d btn-3d-gold w-full mt-2.5 py-2 rounded-xl font-bold text-xs">Play Game</button>
         </div>
 
-        <div class="glass-card rounded-3xl p-3 flex flex-col justify-between">
+        <div class="glass-3d-card rounded-3xl p-3 flex flex-col justify-between">
           <div>
             <div class="h-24 rounded-2xl bg-gradient-to-br from-fuchsia-500 via-rose-500 to-amber-500 flex items-center justify-center text-4xl shadow-inner mb-2">🃏</div>
             <h4 class="font-display font-bold text-sm text-indigo-950">Memory Match</h4>
-            <p class="text-[11px] font-semibold text-slate-500">Flip & match all icon pairs</p>
+            <p class="text-[11px] font-semibold text-slate-500">Flip & match 3D icon pairs</p>
           </div>
-          <button onclick="openPlayableGame('memory')" class="btn-glossy-rose w-full mt-2.5 py-2 rounded-xl font-bold text-xs">Play Game</button>
+          <button onclick="openPlayableGame('memory')" class="btn-3d btn-3d-pink w-full mt-2.5 py-2 rounded-xl font-bold text-xs">Play Game</button>
         </div>
 
-        <div class="glass-card rounded-3xl p-3 flex flex-col justify-between">
+        <div class="glass-3d-card rounded-3xl p-3 flex flex-col justify-between">
           <div>
             <div class="h-24 rounded-2xl bg-gradient-to-br from-cyan-400 via-teal-500 to-emerald-600 flex items-center justify-center text-4xl shadow-inner mb-2">🔢</div>
             <h4 class="font-display font-bold text-sm text-indigo-950">Number Puzzle</h4>
-            <p class="text-[11px] font-semibold text-slate-500">Slide tiles into 1–8 sequence</p>
+            <p class="text-[11px] font-semibold text-slate-500">Slide tiles into 1–8 order</p>
           </div>
-          <button onclick="openPlayableGame('puzzle')" class="btn-glossy-purple w-full mt-2.5 py-2 rounded-xl font-bold text-xs">Play Game</button>
+          <button onclick="openPlayableGame('puzzle')" class="btn-3d btn-3d-purple w-full mt-2.5 py-2 rounded-xl font-bold text-xs">Play Game</button>
         </div>
       </div>
     </section>
@@ -672,195 +811,180 @@
     <!-- ==================== PAGE 4: SPIN & WIN (SEPARATE PAGE + 20s TIMER) ==================== -->
     <section id="page-spin" class="screen-page px-4 pt-3 pb-4">
       <div class="flex items-center justify-between mb-3">
-        <button onclick="navigateTo('home')" class="w-10 h-10 rounded-2xl glass-card flex items-center justify-center text-indigo-800">
+        <button onclick="navigateTo('home')" class="w-10 h-10 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900">
           <i class="fa-solid fa-arrow-left"></i>
         </button>
         <h2 class="font-display text-xl font-bold text-indigo-950">Spin & Win</h2>
-        <button onclick="navigateTo('scratch')" class="px-3 py-1.5 rounded-xl bg-pink-100 text-pink-700 font-extrabold text-xs">
+        <button onclick="navigateTo('scratch')" class="px-3 py-1.5 rounded-xl bg-amber-100 border border-amber-300 text-amber-900 font-extrabold text-xs">
           Scratch »
         </button>
       </div>
 
-      <!-- Header Banner -->
-      <div class="rounded-2xl p-3.5 mb-3 text-white flex items-center justify-between shadow-md"
+      <div class="rounded-3xl p-3.5 mb-3 text-white flex items-center justify-between shadow-lg border border-white/50"
            style="background: linear-gradient(135deg, #EC4899 0%, #8B5CF6 100%);">
         <div>
           <h3 class="font-display font-bold text-base">
             Spin & Win <span id="spinRangeText">1 – 100</span> Coins
           </h3>
-          <p class="text-xs text-pink-100">20s verification timer + Monetag ad callback</p>
+          <p class="text-xs text-pink-100">20s timer + Monetag ad verification</p>
         </div>
-        <div class="bg-white/20 backdrop-blur px-3 py-1.5 rounded-xl text-center">
+        <div class="bg-white/25 backdrop-blur px-3 py-1.5 rounded-2xl text-center">
           <p class="text-[10px] uppercase font-bold">Daily Left</p>
           <p class="font-display font-bold text-sm"><span id="spinRemainingText">20</span>/<span id="spinLimitMaxText">20</span></p>
         </div>
       </div>
 
-      <!-- 3D Wheel Stage -->
-      <div class="glass-card rounded-3xl p-4 flex flex-col items-center relative mb-3">
-        <div class="w-0 h-0 border-l-[14px] border-l-transparent border-r-[14px] border-r-transparent border-t-[24px] border-t-rose-600 drop-shadow-md z-10 -mb-2"></div>
+      <div class="glass-3d-card glow-rim-purple rounded-3xl p-4 flex flex-col items-center relative mb-3">
+        <div class="w-0 h-0 border-l-[15px] border-l-transparent border-r-[15px] border-r-transparent border-t-[26px] border-t-rose-600 drop-shadow-md z-10 -mb-2"></div>
 
         <div class="relative w-64 h-64 flex items-center justify-center">
-          <canvas id="spinCanvas" width="280" height="280" class="w-full h-full rounded-full shadow-xl"></canvas>
+          <canvas id="spinCanvas" width="280" height="280" class="w-full h-full rounded-full shadow-2xl"></canvas>
           <button id="spinTriggerBtn" onclick="startSpinWheel()"
                   class="absolute w-16 h-16 rounded-full bg-gradient-to-b from-rose-500 to-red-700 text-white font-display font-bold text-sm border-4 border-amber-300 shadow-xl active:scale-95 transition">
             SPIN
           </button>
         </div>
 
-        <!-- Post-Spin 20-Second Countdown & Monetag Verification Box -->
-        <div id="spinVerificationBox" class="hidden w-full mt-4 p-3.5 rounded-2xl bg-indigo-50 border border-indigo-200 text-center">
-          <p class="text-xs font-extrabold text-indigo-950">Spin Completed! Complete 20s Ad Verification to Claim</p>
+        <!-- 20-Second Animated Timer & Monetag Claim Box -->
+        <div id="spinVerificationBox" class="hidden w-full mt-4 p-3.5 rounded-2xl bg-indigo-50 border-2 border-indigo-200 text-center">
+          <p class="text-xs font-extrabold text-indigo-950">Spin Complete! Wait 20s & Watch Ad to Claim</p>
           <div class="my-2 flex items-center justify-center gap-2">
-            <span class="w-9 h-9 rounded-full bg-purple-600 text-white font-display font-bold text-sm flex items-center justify-center" id="spinCountdownNum">20</span>
-            <div class="flex-1 h-2.5 rounded-full bg-purple-200 overflow-hidden">
-              <div id="spinCountdownBar" class="h-full bg-gradient-to-r from-purple-600 to-pink-500 transition-all duration-300" style="width: 0%;"></div>
+            <span class="w-9 h-9 rounded-full bg-purple-600 text-white font-display font-bold text-sm flex items-center justify-center shadow" id="spinCountdownNum">20</span>
+            <div class="flex-1 h-3 rounded-full bg-purple-200 overflow-hidden p-0.5">
+              <div id="spinCountdownBar" class="h-full rounded-full bg-gradient-to-r from-purple-600 to-pink-500 transition-all duration-300" style="width: 0%;"></div>
             </div>
           </div>
-          <button id="spinClaimBtn" disabled onclick="claimWithMonetagVerification('spin')" class="btn-glossy-gold w-full py-2.5 rounded-xl font-display font-bold text-sm">
+          <button id="spinClaimBtn" disabled onclick="claimWithMonetagVerification('spin')" class="btn-3d btn-3d-gold w-full py-2.5 rounded-2xl font-display font-bold text-sm">
             Wait 20s to Claim
           </button>
         </div>
-      </div>
-
-      <!-- Switch to Scratch Card Footer -->
-      <div class="rounded-2xl p-3 text-white flex items-center justify-between shadow-lg"
-           style="background: linear-gradient(135deg, #6D28D9 0%, #4F46E5 100%);">
-        <div>
-          <p class="font-display font-bold text-sm">Scratch & Win Card</p>
-          <p class="text-[11px] text-indigo-200">Separate daily scratch limit available!</p>
-        </div>
-        <button onclick="navigateTo('scratch')" class="btn-glossy-gold px-4 py-2 rounded-xl font-bold text-xs">
-          Scratch Here
-        </button>
       </div>
     </section>
 
     <!-- ==================== PAGE 5: SCRATCH & WIN (SEPARATE PAGE + 20s TIMER) ==================== -->
     <section id="page-scratch" class="screen-page px-4 pt-3 pb-4">
       <div class="flex items-center justify-between mb-3">
-        <button onclick="navigateTo('home')" class="w-10 h-10 rounded-2xl glass-card flex items-center justify-center text-indigo-800">
+        <button onclick="navigateTo('home')" class="w-10 h-10 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900">
           <i class="fa-solid fa-arrow-left"></i>
         </button>
         <h2 class="font-display text-xl font-bold text-indigo-950">Scratch & Win</h2>
-        <button onclick="navigateTo('spin')" class="px-3 py-1.5 rounded-xl bg-purple-100 text-purple-700 font-extrabold text-xs">
+        <button onclick="navigateTo('spin')" class="px-3 py-1.5 rounded-xl bg-purple-100 border border-purple-300 text-purple-800 font-extrabold text-xs">
           Spin »
         </button>
       </div>
 
-      <div class="rounded-2xl p-3.5 mb-3 text-white flex items-center justify-between shadow-md"
-           style="background: linear-gradient(135deg, #F43F5E 0%, #9333EA 100%);">
+      <div class="rounded-3xl p-3.5 mb-3 text-white flex items-center justify-between shadow-lg border border-white/50"
+           style="background: linear-gradient(135deg, #F59E0B 0%, #EA580C 100%);">
         <div>
           <h3 class="font-display font-bold text-base">Scratch & Win <span id="scratchRangeText">1 – 100</span> Coins</h3>
-          <p class="text-xs text-rose-100">Scratch foil cover, wait 20s & verify Monetag ad</p>
+          <p class="text-xs text-amber-100">Scratch golden foil, wait 20s & verify ad</p>
         </div>
-        <div class="bg-white/20 backdrop-blur px-3 py-1.5 rounded-xl text-center">
+        <div class="bg-white/25 backdrop-blur px-3 py-1.5 rounded-2xl text-center">
           <p class="text-[10px] uppercase font-bold">Daily Left</p>
           <p class="font-display font-bold text-sm"><span id="scratchRemainingText">20</span>/<span id="scratchLimitMaxText">20</span></p>
         </div>
       </div>
 
-      <div class="glass-card rounded-3xl p-4 mb-4">
-        <div class="relative w-full h-52 rounded-2xl overflow-hidden shadow-inner border-2 border-amber-300 bg-gradient-to-br from-amber-100 via-yellow-50 to-amber-200 flex flex-col items-center justify-center">
+      <div class="glass-3d-card glow-rim-gold rounded-3xl p-4 mb-4">
+        <div class="relative w-full h-52 rounded-2xl overflow-hidden shadow-inner border-2 border-amber-400 bg-gradient-to-br from-amber-100 via-yellow-50 to-amber-200 flex flex-col items-center justify-center">
           <div class="text-center p-4">
-            <div class="w-14 h-14 mx-auto rounded-full bg-gradient-to-br from-amber-300 to-orange-500 flex items-center justify-center text-white text-2xl shadow-md mb-2">
+            <div class="w-14 h-14 mx-auto rounded-2xl icon-cap-scratch flex items-center justify-center text-amber-950 text-2xl mb-2">
               <i class="fa-solid fa-gift"></i>
             </div>
             <p class="text-xs font-extrabold text-amber-800 uppercase">Card Scratched!</p>
-            <p class="font-display text-xl font-bold text-indigo-950 mt-1">Server Reward Eligible</p>
+            <p class="font-display text-xl font-bold text-indigo-950 mt-1">Reward Unlocked</p>
             <p class="text-[11px] font-semibold text-slate-600">Complete 20s timer + Monetag ad to claim</p>
           </div>
           <canvas id="scratchFoilCanvas" class="absolute inset-0 w-full h-full cursor-pointer touch-none"></canvas>
         </div>
 
-        <!-- Post-Scratch 20s Timer & Claim -->
-        <div id="scratchVerificationBox" class="hidden mt-4 p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-center">
-          <p class="text-xs font-extrabold text-rose-950">Scratch Verified! Complete 20s Countdown to Claim</p>
+        <div id="scratchVerificationBox" class="hidden mt-4 p-3.5 rounded-2xl bg-amber-50 border-2 border-amber-300 text-center">
+          <p class="text-xs font-extrabold text-amber-950">Scratch Verified! Wait 20s & Watch Ad to Claim</p>
           <div class="my-2 flex items-center justify-center gap-2">
-            <span class="w-9 h-9 rounded-full bg-rose-600 text-white font-display font-bold text-sm flex items-center justify-center" id="scratchCountdownNum">20</span>
-            <div class="flex-1 h-2.5 rounded-full bg-rose-200 overflow-hidden">
-              <div id="scratchCountdownBar" class="h-full bg-gradient-to-r from-rose-500 to-purple-600 transition-all duration-300" style="width: 0%;"></div>
+            <span class="w-9 h-9 rounded-full bg-amber-600 text-white font-display font-bold text-sm flex items-center justify-center shadow" id="scratchCountdownNum">20</span>
+            <div class="flex-1 h-3 rounded-full bg-amber-200 overflow-hidden p-0.5">
+              <div id="scratchCountdownBar" class="h-full rounded-full bg-gradient-to-r from-amber-500 to-rose-500 transition-all duration-300" style="width: 0%;"></div>
             </div>
           </div>
-          <button id="scratchClaimBtn" disabled onclick="claimWithMonetagVerification('scratch')" class="btn-glossy-gold w-full py-2.5 rounded-xl font-display font-bold text-sm">
+          <button id="scratchClaimBtn" disabled onclick="claimWithMonetagVerification('scratch')" class="btn-3d btn-3d-gold w-full py-2.5 rounded-2xl font-display font-bold text-sm">
             Wait 20s to Claim
           </button>
         </div>
 
         <div class="mt-3 flex justify-end">
-          <button onclick="resetScratchFoil()" class="px-3.5 py-1.5 rounded-xl bg-indigo-600 text-white text-xs font-bold shadow">
-            Reset Card
+          <button onclick="resetScratchFoil()" class="btn-3d btn-3d-purple px-4 py-2 rounded-xl text-xs font-bold">
+            New Card
           </button>
         </div>
       </div>
     </section>
 
-    <!-- ==================== PAGE 6: WATCH ADS & EARN (MONETAG + 20s TIMER) ==================== -->
+    <!-- ==================== PAGE 6: WATCH ADS & EARN ==================== -->
     <section id="page-ads" class="screen-page px-4 pt-3 pb-4">
       <div class="flex items-center justify-between mb-3">
-        <button onclick="navigateTo('home')" class="w-10 h-10 rounded-2xl glass-card flex items-center justify-center text-indigo-800">
+        <button onclick="navigateTo('home')" class="w-10 h-10 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900">
           <i class="fa-solid fa-arrow-left"></i>
         </button>
         <h2 class="font-display text-xl font-bold text-indigo-950">Watch Ads & Earn</h2>
         <div class="w-10"></div>
       </div>
 
-      <div class="glass-card rounded-3xl p-5 text-center mb-4">
-        <div class="w-24 h-24 mx-auto rounded-3xl icon-3d-rose flex items-center justify-center text-white text-4xl mb-3 animate-float-coin">
+      <div class="glass-3d-card glow-rim-purple rounded-3xl p-5 text-center mb-4">
+        <div class="w-24 h-24 mx-auto rounded-3xl icon-cap-ads flex items-center justify-center text-white text-4xl mb-3 animate-float-3d">
           <i class="fa-solid fa-clapperboard"></i>
         </div>
         <h3 class="font-display text-xl font-bold text-indigo-950">
           Watch Ads & Earn <span id="adRewardCoinsText">20</span> Coins Per Ad!
         </h3>
         <p class="text-xs font-semibold text-slate-600 mt-1">
-          Powered by Monetag Rewarded SDK. Coins are credited only after the 20s timer and Monetag ad completion callback succeed.
+          Powered by Monetag Rewarded SDK. Coins are awarded only after the 20s countdown and Monetag completion callback succeed.
         </p>
 
-        <div class="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-indigo-50 border border-indigo-200">
+        <div class="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-sky-50 border-2 border-sky-200">
           <span class="text-xs font-bold text-indigo-950">Today Watched:</span>
           <span id="adsCompletedTodayText" class="font-display font-bold text-purple-700 text-base">0</span>
           <span class="text-xs font-bold text-slate-500">/ <span id="adsLimitMaxText">50</span></span>
         </div>
 
-        <!-- 20s Countdown & Monetag Claim Box -->
-        <div id="adsVerificationBox" class="hidden mt-4 p-4 rounded-2xl bg-sky-50 border border-sky-200">
-          <p class="text-xs font-extrabold text-sky-950">Preparing Monetag Rewarded Ad...</p>
+        <div id="adsVerificationBox" class="hidden mt-4 p-4 rounded-2xl bg-sky-50 border-2 border-sky-200">
+          <p class="text-xs font-extrabold text-sky-950">Preparing Monetag Rewarded Video...</p>
           <div class="my-2.5 flex items-center justify-center gap-2">
-            <span class="w-9 h-9 rounded-full bg-sky-600 text-white font-display font-bold text-sm flex items-center justify-center" id="adsCountdownNum">20</span>
-            <div class="flex-1 h-2.5 rounded-full bg-sky-200 overflow-hidden">
-              <div id="adsCountdownBar" class="h-full bg-gradient-to-r from-sky-500 to-indigo-600 transition-all duration-300" style="width: 0%;"></div>
+            <span class="w-9 h-9 rounded-full bg-sky-600 text-white font-display font-bold text-sm flex items-center justify-center shadow" id="adsCountdownNum">20</span>
+            <div class="flex-1 h-3 rounded-full bg-sky-200 overflow-hidden p-0.5">
+              <div id="adsCountdownBar" class="h-full rounded-full bg-gradient-to-r from-sky-500 to-indigo-600 transition-all duration-300" style="width: 0%;"></div>
             </div>
           </div>
-          <button id="adsClaimBtn" disabled onclick="claimWithMonetagVerification('watch_ad')" class="btn-glossy-green w-full py-3 rounded-xl font-display font-bold text-sm">
+          <button id="adsClaimBtn" disabled onclick="claimWithMonetagVerification('watch_ad')" class="btn-3d btn-3d-green w-full py-3 rounded-2xl font-display font-bold text-sm">
             Wait 20s to Launch Ad & Claim
           </button>
         </div>
 
-        <button id="watchAdStartBtn" onclick="startWatchAdTimer()" class="btn-glossy-rose w-full mt-5 py-3.5 rounded-2xl font-display font-bold text-base flex items-center justify-center gap-2">
+        <button id="watchAdStartBtn" onclick="startWatchAdTimer()" class="btn-3d btn-3d-pink w-full mt-5 py-3.5 rounded-2xl font-display font-bold text-base flex items-center justify-center gap-2">
           <span>Watch Now</span>
           <i class="fa-solid fa-play"></i>
         </button>
       </div>
     </section>
 
-    <!-- ==================== PAGE 7: REAL-TIME LEADERBOARD (RANK) ==================== -->
+    <!-- ==================== PAGE 7: REAL-TIME LEADERBOARD (3D TROPHIES & REAL PHOTOS) ==================== -->
     <section id="page-rank" class="screen-page px-4 pt-3 pb-4">
       <div class="flex items-center justify-between mb-3">
-        <button onclick="navigateTo('home')" class="w-10 h-10 rounded-2xl glass-card flex items-center justify-center text-indigo-800">
+        <button onclick="navigateTo('home')" class="w-10 h-10 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900">
           <i class="fa-solid fa-arrow-left"></i>
         </button>
-        <h2 class="font-display text-xl font-bold text-indigo-950 flex items-center gap-1.5">
-          <i class="fa-solid fa-crown text-amber-500"></i> Rank
+        <h2 class="font-display text-xl font-bold text-indigo-950 flex items-center gap-2">
+          <span class="w-7 h-7 rounded-xl icon-cap-rank inline-flex items-center justify-center text-amber-950 text-xs"><i class="fa-solid fa-trophy"></i></span>
+          Leaderboard
         </h2>
         <div class="w-10"></div>
       </div>
 
-      <!-- Top 3 3D Podium -->
-      <div class="glass-card rounded-3xl p-4 mb-3">
-        <div id="podiumContainer" class="grid grid-cols-3 gap-2 items-end pt-3 text-center"></div>
+      <!-- Top 3 Animated 3D Gold, Silver & Bronze Trophies Podium -->
+      <div class="glass-3d-card glow-rim-purple rounded-3xl p-4 mb-3">
+        <div id="podiumContainer" class="grid grid-cols-3 gap-2 items-end pt-2 text-center"></div>
 
-        <!-- Weekly / All-Time Toggle -->
-        <div class="grid grid-cols-2 gap-2 mt-4 p-1 rounded-2xl bg-indigo-100/80">
+        <!-- Weekly / All-Time Switch -->
+        <div class="grid grid-cols-2 gap-2 mt-4 p-1.5 rounded-2xl bg-indigo-100/90">
           <button id="lbTabWeekly" onclick="setLeaderboardMode('weekly')" class="py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold text-xs shadow">
             Weekly Rank
           </button>
@@ -869,21 +993,24 @@
           </button>
         </div>
 
-        <!-- Real-Time Firebase Leaderboard Rows -->
+        <!-- Real-Time Leaderboard Rows with Telegram Profile Photos -->
         <div id="leaderboardRows" class="mt-3 space-y-2">
           <p class="text-center text-xs font-bold text-slate-500 py-4">Syncing live leaderboard...</p>
         </div>
       </div>
 
-      <!-- Current User Rank Highlight Footer -->
-      <div class="rounded-2xl p-3 text-white flex items-center justify-between shadow-lg"
+      <!-- Current User Rank Card -->
+      <div class="rounded-3xl p-3.5 text-white flex items-center justify-between shadow-lg"
            style="background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);">
-        <div>
-          <p class="text-xs font-bold text-indigo-100">Your Rank: <span id="currentUserRankBadge" class="text-amber-300 font-extrabold">#—</span></p>
-          <p class="text-xs font-bold">Your Coins: <span id="currentUserRankCoins" class="text-amber-300">0</span></p>
+        <div class="flex items-center gap-3">
+          <div id="rankFooterAvatarContainer" class="tg-avatar-ring w-11 h-11"></div>
+          <div>
+            <p class="text-xs font-bold text-indigo-100">Your Rank: <span id="currentUserRankBadge" class="text-amber-300 font-extrabold">#—</span></p>
+            <p class="text-xs font-bold">Coins: <span id="currentUserRankCoins" class="text-amber-300">0</span></p>
+          </div>
         </div>
-        <button onclick="navigateTo('tasks')" class="btn-glossy-gold px-3.5 py-1.5 rounded-xl font-bold text-xs">
-          Earn More »
+        <button onclick="navigateTo('tasks')" class="btn-3d btn-3d-gold px-3.5 py-2 rounded-xl font-bold text-xs">
+          Boost Rank »
         </button>
       </div>
     </section>
@@ -891,41 +1018,39 @@
     <!-- ==================== PAGE 8: REFER & EARN ==================== -->
     <section id="page-refer" class="screen-page px-4 pt-3 pb-4">
       <div class="flex items-center justify-between mb-3">
-        <button onclick="navigateTo('home')" class="w-10 h-10 rounded-2xl glass-card flex items-center justify-center text-indigo-800">
+        <button onclick="navigateTo('home')" class="w-10 h-10 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900">
           <i class="fa-solid fa-arrow-left"></i>
         </button>
         <h2 class="font-display text-xl font-bold text-indigo-950">Refer & Earn</h2>
         <div class="w-10"></div>
       </div>
 
-      <div class="glass-card rounded-3xl p-5 text-center mb-4">
-        <div class="w-24 h-24 mx-auto rounded-3xl icon-3d-pink flex items-center justify-center text-white text-4xl mb-3 animate-float-coin">
-          <i class="fa-solid fa-gift"></i>
+      <div class="glass-3d-card glow-rim-purple rounded-3xl p-5 text-center mb-4">
+        <div class="flex justify-center mb-3">
+          <div id="referAvatarContainer" class="tg-avatar-ring w-16 h-16"></div>
         </div>
         <h3 class="font-display text-xl font-bold text-indigo-950 leading-snug">
-          Refer Your Friends & Earn <span class="text-purple-700"><span id="referBonusCoinsText">300</span> Coins (₹<span id="referBonusRupeeText">3</span>)</span> Per Refer
+          Invite Friends & Earn <span class="text-purple-700"><span id="referBonusCoinsText">300</span> Coins (₹<span id="referBonusRupeeText">3</span>)</span> Per Refer
         </h3>
         <p class="text-xs font-semibold text-slate-600 mt-1.5">
-          Share your unique Telegram referral link. Self-referrals and duplicate accounts are automatically blocked.
+          Share your personal Telegram Mini App referral link. Self-referrals and duplicate accounts are automatically blocked.
         </p>
 
-        <!-- Referral Code Box -->
         <div class="mt-4 p-3 rounded-2xl bg-indigo-950 text-white flex items-center justify-between">
           <div class="text-left min-w-0 pr-2">
             <p class="text-[10px] uppercase text-indigo-300 font-bold">Your Referral Code</p>
             <p id="userReferralCodeText" class="font-display text-lg font-bold tracking-wider text-amber-300 truncate">—</p>
           </div>
-          <button onclick="copyUserReferralLink()" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-xs font-bold shrink-0">
+          <button onclick="copyUserReferralLink()" class="btn-3d btn-3d-purple px-4 py-2 rounded-xl text-xs font-bold shrink-0">
             Copy Link
           </button>
         </div>
 
-        <button onclick="shareReferralOnTelegram()" class="btn-glossy-gold w-full mt-4 py-3.5 rounded-2xl font-display font-bold text-base flex items-center justify-center gap-2">
+        <button onclick="shareReferralOnTelegram()" class="btn-3d btn-3d-gold w-full mt-4 py-3.5 rounded-2xl font-display font-bold text-base flex items-center justify-center gap-2">
           <i class="fa-brands fa-telegram text-lg"></i>
           <span>Share on Telegram</span>
         </button>
 
-        <!-- 3 Referral Metrics -->
         <div class="grid grid-cols-3 gap-2 mt-4 pt-3 border-t border-indigo-100 text-center">
           <div>
             <p class="text-[10px] font-bold text-slate-500">Total Invites</p>
@@ -942,8 +1067,7 @@
         </div>
       </div>
 
-      <!-- Real-time Referral History -->
-      <div class="glass-card rounded-3xl p-4">
+      <div class="glass-3d-card rounded-3xl p-4">
         <h4 class="font-display font-bold text-sm text-indigo-950 mb-2">Referral History</h4>
         <div id="referralHistoryList" class="space-y-2 text-xs">
           <p class="text-slate-500 text-center py-3 font-semibold">No referrals recorded yet.</p>
@@ -954,25 +1078,24 @@
     <!-- ==================== PAGE 9: WALLET & WITHDRAW (ONLY 3 METHODS) ==================== -->
     <section id="page-wallet" class="screen-page px-4 pt-3 pb-4">
       <div class="flex items-center justify-between mb-3">
-        <button onclick="navigateTo('home')" class="w-10 h-10 rounded-2xl glass-card flex items-center justify-center text-indigo-800">
+        <button onclick="navigateTo('home')" class="w-10 h-10 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900">
           <i class="fa-solid fa-arrow-left"></i>
         </button>
-        <h2 class="font-display text-xl font-bold text-indigo-950">Wallet & Withdraw</h2>
-        <button onclick="navigateTo('redeemHistory')" class="w-10 h-10 rounded-2xl glass-card flex items-center justify-center text-indigo-800" title="Redeem History">
+        <h2 class="font-display text-xl font-bold text-indigo-950">Wallet & Redeem</h2>
+        <button onclick="navigateTo('redeemHistory')" class="w-10 h-10 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900" title="Redeem History">
           <i class="fa-solid fa-clock-rotate-left"></i>
         </button>
       </div>
 
-      <!-- Balance Header -->
-      <div class="rounded-3xl p-4 mb-4 text-white shadow-xl"
+      <div class="rounded-3xl p-4 mb-4 text-white shadow-xl border-2 border-white/60"
            style="background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);">
         <div class="flex items-center gap-3">
-          <div class="w-14 h-14 rounded-2xl bg-amber-400 flex items-center justify-center text-amber-950 text-2xl shadow">
-            <i class="fa-solid fa-coins"></i>
+          <div class="w-14 h-14 rounded-2xl icon-cap-wallet flex items-center justify-center text-white text-2xl">
+            <i class="fa-solid fa-wallet"></i>
           </div>
           <div>
             <p class="text-xs font-semibold text-indigo-200">
-              Your Balance (<span id="rateInfoText">100</span> Coins = ₹1)
+              Conversion Rate: <span id="rateInfoText">100</span> Coins = ₹1
             </p>
             <p class="font-display text-2xl font-bold">
               <span id="walletCoinsText">0</span> Coins ≈ ₹<span id="walletRupeesText">0.00</span>
@@ -981,47 +1104,46 @@
         </div>
       </div>
 
-      <!-- ONLY THREE ALLOWED WITHDRAWAL METHODS -->
-      <div class="glass-card rounded-3xl p-4 mb-4">
-        <h3 class="font-extrabold text-xs text-indigo-950 mb-2.5">Choose Withdrawal Method</h3>
+      <!-- Strictly 3 Withdrawal Methods -->
+      <div class="glass-3d-card rounded-3xl p-4 mb-4">
+        <h3 class="font-extrabold text-xs text-indigo-950 mb-2.5">Select Withdrawal Method</h3>
         <div class="grid grid-cols-3 gap-2.5 mb-4">
           <button type="button" onclick="chooseWithdrawMethod('UPI', this)" class="wd-method-card p-3 rounded-2xl border-2 border-purple-600 bg-purple-50 text-center transition">
-            <div class="w-10 h-10 mx-auto rounded-xl icon-3d-purple flex items-center justify-center text-white mb-1.5">
+            <div class="w-11 h-11 mx-auto rounded-2xl icon-cap-home flex items-center justify-center text-white mb-1.5">
               <i class="fa-solid fa-building-columns"></i>
             </div>
             <p class="text-xs font-extrabold text-indigo-950">UPI</p>
           </button>
 
           <button type="button" onclick="chooseWithdrawMethod('Google Play', this)" class="wd-method-card p-3 rounded-2xl border border-slate-200 bg-white text-center transition">
-            <div class="w-10 h-10 mx-auto rounded-xl icon-3d-green flex items-center justify-center text-white mb-1.5">
+            <div class="w-11 h-11 mx-auto rounded-2xl icon-cap-rewards flex items-center justify-center text-white mb-1.5">
               <i class="fa-brands fa-google-play"></i>
             </div>
             <p class="text-xs font-extrabold text-indigo-950">Google Play</p>
           </button>
 
           <button type="button" onclick="chooseWithdrawMethod('Amazon Gift Card', this)" class="wd-method-card p-3 rounded-2xl border border-slate-200 bg-white text-center transition">
-            <div class="w-10 h-10 mx-auto rounded-xl icon-3d-amber flex items-center justify-center text-white mb-1.5">
+            <div class="w-11 h-11 mx-auto rounded-2xl icon-cap-wallet flex items-center justify-center text-white mb-1.5">
               <i class="fa-brands fa-amazon"></i>
             </div>
             <p class="text-xs font-extrabold text-indigo-950">Amazon</p>
           </button>
         </div>
 
-        <!-- Method-Specific Form -->
         <div class="space-y-3">
           <div id="upiInputWrapper">
             <label class="block text-[11px] font-bold text-slate-600 mb-1">Enter Your UPI ID</label>
             <input id="wdUpiIdInput" type="text" placeholder="yourname@upi"
-                   class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-purple-200 text-sm font-semibold focus:outline-none focus:border-purple-600" />
+                   class="w-full px-3.5 py-2.5 rounded-2xl bg-white border-2 border-purple-200 text-sm font-semibold focus:outline-none focus:border-purple-600" />
           </div>
 
-          <div id="giftCardNoticeBox" class="hidden p-3 rounded-2xl bg-amber-50 border border-amber-200 text-[11px] font-bold text-amber-900">
-            <i class="fa-solid fa-gift text-amber-600 mr-1"></i> Once approved by the admin, your official redeem code will appear inside your <strong>Redeem History</strong> with a Copy button.
+          <div id="giftCardNoticeBox" class="hidden p-3 rounded-2xl bg-amber-50 border border-amber-300 text-[11px] font-bold text-amber-900">
+            <i class="fa-solid fa-gift text-amber-600 mr-1"></i> Once approved by the admin, your official redeem code appears in <strong>Redeem History</strong> with a Copy button.
           </div>
 
           <div>
             <label class="block text-[11px] font-bold text-slate-600 mb-1">
-              Select or Enter Redeem Amount (₹<span id="minRedeemLabel">10</span> – ₹<span id="maxRedeemLabel">1000</span>)
+              Amount (₹<span id="minRedeemLabel">10</span> – ₹<span id="maxRedeemLabel">1000</span>)
             </label>
             <div class="grid grid-cols-4 gap-2 mb-2">
               <button type="button" onclick="setRedeemAmount(10)" class="py-1.5 rounded-xl bg-purple-100 text-purple-800 font-extrabold text-xs">₹10</button>
@@ -1030,7 +1152,7 @@
               <button type="button" onclick="setRedeemAmount(500)" class="py-1.5 rounded-xl bg-purple-100 text-purple-800 font-extrabold text-xs">₹500</button>
             </div>
             <input id="wdAmountInput" type="number" min="10" max="1000" placeholder="Enter amount in ₹"
-                   class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-purple-200 text-sm font-bold focus:outline-none focus:border-purple-600" />
+                   class="w-full px-3.5 py-2.5 rounded-2xl bg-white border-2 border-purple-200 text-sm font-bold focus:outline-none focus:border-purple-600" />
           </div>
         </div>
 
@@ -1038,13 +1160,13 @@
           Daily Redeem Limit: <span id="todayRedeemsUsed">0</span> / <span id="dailyRedeemMaxText">2</span> Times
         </p>
 
-        <button onclick="submitRedeemRequest()" class="btn-glossy-green w-full mt-4 py-3.5 rounded-2xl font-display font-bold text-base flex items-center justify-center gap-2">
+        <button onclick="submitRedeemRequest()" class="btn-3d btn-3d-green w-full mt-4 py-3.5 rounded-2xl font-display font-bold text-base flex items-center justify-center gap-2">
           <i class="fa-solid fa-paper-plane"></i>
           <span>Withdraw Now</span>
         </button>
 
-        <button onclick="navigateTo('redeemHistory')" class="w-full mt-2.5 py-2.5 rounded-xl bg-indigo-50 text-indigo-800 font-extrabold text-xs">
-          View Redeem History & Approved Gift Codes »
+        <button onclick="navigateTo('redeemHistory')" class="w-full mt-2.5 py-2.5 rounded-2xl bg-indigo-50 text-indigo-800 font-extrabold text-xs">
+          View Redeem History & Approved Codes »
         </button>
       </div>
     </section>
@@ -1052,7 +1174,7 @@
     <!-- ==================== PAGE 10: REDEEM HISTORY ==================== -->
     <section id="page-redeemHistory" class="screen-page px-4 pt-3 pb-4">
       <div class="flex items-center justify-between mb-3">
-        <button onclick="navigateTo('wallet')" class="w-10 h-10 rounded-2xl glass-card flex items-center justify-center text-indigo-800">
+        <button onclick="navigateTo('wallet')" class="w-10 h-10 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900">
           <i class="fa-solid fa-arrow-left"></i>
         </button>
         <h2 class="font-display text-xl font-bold text-indigo-950">Redeem History</h2>
@@ -1060,14 +1182,14 @@
       </div>
 
       <div id="redeemHistoryContainer" class="space-y-3">
-        <div class="glass-card rounded-2xl p-6 text-center text-xs font-bold text-slate-500">Loading your withdrawal requests...</div>
+        <div class="glass-3d-card rounded-3xl p-6 text-center text-xs font-bold text-slate-500">Loading your withdrawal requests...</div>
       </div>
     </section>
 
     <!-- ==================== PAGE 11: DAILY REWARDS ==================== -->
     <section id="page-daily" class="screen-page px-4 pt-3 pb-4">
       <div class="flex items-center justify-between mb-3">
-        <button onclick="navigateTo('home')" class="w-10 h-10 rounded-2xl glass-card flex items-center justify-center text-indigo-800">
+        <button onclick="navigateTo('home')" class="w-10 h-10 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900">
           <i class="fa-solid fa-arrow-left"></i>
         </button>
         <h2 class="font-display text-xl font-bold text-indigo-950">Daily Rewards</h2>
@@ -1076,9 +1198,11 @@
 
       <div class="rounded-3xl p-4 mb-4 text-white flex items-center gap-3 shadow-lg"
            style="background: linear-gradient(135deg, #F59E0B 0%, #EA580C 100%);">
-        <i class="fa-solid fa-calendar-check text-3xl text-yellow-200"></i>
+        <div class="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center text-2xl text-yellow-200">
+          <i class="fa-solid fa-calendar-check"></i>
+        </div>
         <div>
-          <h3 class="font-display font-bold text-base">Login Daily & Earn Big Rewards</h3>
+          <h3 class="font-display font-bold text-base">Login Daily & Earn Streak Rewards</h3>
           <p class="text-xs text-amber-100">Current Streak: <span id="dailyStreakDisplay" class="font-extrabold">Day 1</span></p>
         </div>
       </div>
@@ -1088,63 +1212,60 @@
       <div class="rounded-3xl p-4 text-white flex items-center justify-between shadow-xl"
            style="background: linear-gradient(135deg, #6D28D9 0%, #EC4899 100%);">
         <div class="flex items-center gap-3">
-          <div class="w-14 h-14 rounded-2xl bg-amber-300 flex items-center justify-center text-amber-950 text-2xl">
+          <div class="w-14 h-14 rounded-2xl icon-cap-scratch flex items-center justify-center text-amber-950 text-2xl">
             <i class="fa-solid fa-gift"></i>
           </div>
           <div>
-            <span class="text-[10px] font-extrabold uppercase bg-white/20 px-2 py-0.5 rounded-full">Day 7</span>
+            <span class="text-[10px] font-extrabold uppercase bg-white/25 px-2 py-0.5 rounded-full">Day 7</span>
             <h4 class="font-display text-lg font-bold">Mega Bonus</h4>
             <p class="font-display text-base font-extrabold text-amber-300"><span id="day7BonusText">1,000</span> Coins</p>
           </div>
         </div>
-        <button id="claimDailyBtn" onclick="claimDailyStreakBonus()" class="btn-glossy-gold px-4 py-2.5 rounded-2xl font-display font-bold text-xs">
+        <button id="claimDailyBtn" onclick="claimDailyStreakBonus()" class="btn-3d btn-3d-gold px-4 py-2.5 rounded-2xl font-display font-bold text-xs">
           Claim Today
         </button>
       </div>
     </section>
 
-    <!-- ==================== PAGE 12: MY PROFILE ==================== -->
+    <!-- ==================== PAGE 12: MY PROFILE (REAL TELEGRAM PHOTO + FALLBACK) ==================== -->
     <section id="page-profile" class="screen-page px-4 pt-3 pb-4">
       <div class="flex items-center justify-between mb-3">
-        <button onclick="navigateTo('home')" class="w-10 h-10 rounded-2xl glass-card flex items-center justify-center text-indigo-800">
+        <button onclick="navigateTo('home')" class="w-10 h-10 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900">
           <i class="fa-solid fa-arrow-left"></i>
         </button>
         <h2 class="font-display text-xl font-bold text-indigo-950">My Profile</h2>
-        <button onclick="navigateTo('settings')" class="w-10 h-10 rounded-2xl glass-card flex items-center justify-center text-indigo-800">
+        <button onclick="navigateTo('settings')" class="w-10 h-10 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900">
           <i class="fa-solid fa-gear"></i>
         </button>
       </div>
 
-      <div class="glass-card rounded-3xl p-4 mb-4">
+      <div class="glass-3d-card glow-rim-purple rounded-3xl p-4 mb-4">
         <div class="flex items-center gap-3.5 pb-4 border-b border-indigo-100">
-          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-400 to-purple-600 p-0.5 shrink-0">
-            <img id="profileUserAvatar" alt="Profile" class="hidden w-full h-full rounded-[14px] object-cover bg-white" />
-            <div id="profileUserInitials" class="w-full h-full rounded-[14px] bg-white flex items-center justify-center font-display font-bold text-xl text-purple-700">TG</div>
-          </div>
+          <div id="profileAvatarContainer" class="tg-avatar-ring w-18 h-18" style="width:72px;height:72px;"></div>
           <div class="min-w-0">
-            <h3 id="profileFullName" class="font-display text-lg font-bold text-indigo-950 truncate">Player</h3>
-            <p id="profileUsername" class="text-xs font-bold text-sky-600 truncate">@username</p>
-            <p class="text-xs font-bold text-purple-700">ID: <span id="profileTelegramId">—</span></p>
+            <h3 id="profileFullName" class="font-display text-xl font-bold text-indigo-950 truncate">Player</h3>
+            <p id="profileUsername" class="text-xs font-extrabold text-sky-600 truncate">@username</p>
+            <p class="text-xs font-bold text-purple-700 mt-0.5">Telegram ID: <span id="profileTelegramId">—</span></p>
           </div>
         </div>
 
         <div class="grid grid-cols-3 gap-2 pt-3 text-center">
-          <div class="p-2 rounded-2xl bg-amber-50 border border-amber-200">
+          <div class="p-2.5 rounded-2xl bg-amber-50 border border-amber-200">
             <p id="profileStatCoins" class="font-display font-bold text-base text-amber-700">0</p>
             <p class="text-[10px] font-bold text-slate-500">Coins</p>
           </div>
-          <div class="p-2 rounded-2xl bg-purple-50 border border-purple-200">
+          <div class="p-2.5 rounded-2xl bg-purple-50 border border-purple-200">
             <p class="font-display font-bold text-base text-purple-700">₹<span id="profileStatWithdrawn">0</span></p>
             <p class="text-[10px] font-bold text-slate-500">Withdrawn</p>
           </div>
-          <div class="p-2 rounded-2xl bg-rose-50 border border-rose-200">
+          <div class="p-2.5 rounded-2xl bg-rose-50 border border-rose-200">
             <p id="profileStatStreak" class="font-display font-bold text-base text-rose-700">1</p>
             <p class="text-[10px] font-bold text-slate-500">Day Streak</p>
           </div>
         </div>
       </div>
 
-      <div class="glass-card rounded-3xl divide-y divide-indigo-100 overflow-hidden">
+      <div class="glass-3d-card rounded-3xl divide-y divide-indigo-100 overflow-hidden">
         <button onclick="navigateTo('redeemHistory')" class="w-full p-3.5 flex items-center justify-between text-left hover:bg-white/60">
           <span class="flex items-center gap-3 text-sm font-bold text-indigo-950">
             <i class="fa-solid fa-gift text-rose-500 w-5"></i> Redeem History & Gift Codes
@@ -1168,7 +1289,7 @@
 
         <button onclick="navigateTo('settings')" class="w-full p-3.5 flex items-center justify-between text-left hover:bg-white/60">
           <span class="flex items-center gap-3 text-sm font-bold text-indigo-950">
-            <i class="fa-solid fa-sliders text-emerald-600 w-5"></i> Settings & Security
+            <i class="fa-solid fa-sliders text-emerald-600 w-5"></i> Settings & Photo Info
           </span>
           <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
         </button>
@@ -1178,7 +1299,7 @@
     <!-- ==================== PAGE 13: TRANSACTION HISTORY ==================== -->
     <section id="page-transactions" class="screen-page px-4 pt-3 pb-4">
       <div class="flex items-center justify-between mb-3">
-        <button onclick="navigateTo('home')" class="w-10 h-10 rounded-2xl glass-card flex items-center justify-center text-indigo-800">
+        <button onclick="navigateTo('home')" class="w-10 h-10 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900">
           <i class="fa-solid fa-arrow-left"></i>
         </button>
         <h2 class="font-display text-xl font-bold text-indigo-950">Transaction History</h2>
@@ -1186,52 +1307,48 @@
       </div>
 
       <div id="transactionsContainer" class="space-y-2.5">
-        <div class="glass-card rounded-2xl p-6 text-center text-xs font-bold text-slate-500">Loading transaction ledger...</div>
+        <div class="glass-3d-card rounded-3xl p-6 text-center text-xs font-bold text-slate-500">Loading transaction ledger...</div>
       </div>
     </section>
 
     <!-- ==================== PAGE 14: HELP & SUPPORT ==================== -->
     <section id="page-support" class="screen-page px-4 pt-3 pb-4">
       <div class="flex items-center justify-between mb-3">
-        <button onclick="navigateTo('profile')" class="w-10 h-10 rounded-2xl glass-card flex items-center justify-center text-indigo-800">
+        <button onclick="navigateTo('profile')" class="w-10 h-10 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900">
           <i class="fa-solid fa-arrow-left"></i>
         </button>
         <h2 class="font-display text-xl font-bold text-indigo-950">Help & Support</h2>
         <div class="w-10"></div>
       </div>
 
-      <div class="glass-card rounded-3xl p-4 space-y-2.5 text-xs">
-        <h3 class="font-display font-bold text-base text-indigo-950 mb-1">FAQ, Terms & Reward Rules</h3>
-        <details class="p-3 rounded-2xl bg-white/80 border border-purple-100" open>
-          <summary class="font-extrabold text-indigo-950 cursor-pointer">How are rewards verified?</summary>
-          <p class="mt-1.5 text-slate-600">All Spin, Scratch, Watch Ad, Game Score, and Promo Code claims are sent with your Telegram verification payload to Firebase and validated before coins are added.</p>
+      <div class="glass-3d-card rounded-3xl p-4 space-y-2.5 text-xs">
+        <h3 class="font-display font-bold text-base text-indigo-950 mb-1">FAQ & Verification Rules</h3>
+        <details class="p-3 rounded-2xl bg-white/90 border border-purple-100" open>
+          <summary class="font-extrabold text-indigo-950 cursor-pointer">How are rewards & ads verified?</summary>
+          <p class="mt-1.5 text-slate-600">All Spin, Scratch, Watch Ad, Game Score, and Promo Code claims are submitted with your signed Telegram payload to Firebase for server-side validation before coins are credited.</p>
         </details>
-        <details class="p-3 rounded-2xl bg-white/80 border border-purple-100">
+        <details class="p-3 rounded-2xl bg-white/90 border border-purple-100">
           <summary class="font-extrabold text-indigo-950 cursor-pointer">Where do I find my Google Play or Amazon Gift Code?</summary>
-          <p class="mt-1.5 text-slate-600">Once an authorized admin approves your request, your gift card code appears inside <strong>Redeem History</strong> with a Copy button.</p>
-        </details>
-        <details class="p-3 rounded-2xl bg-white/80 border border-purple-100">
-          <summary class="font-extrabold text-indigo-950 cursor-pointer">About & Privacy Policy</summary>
-          <p class="mt-1.5 text-slate-600">Smartu Earninng reads only your authorized Telegram Mini App profile fields (Telegram ID, first name, username, and avatar) to synchronize your wallet and leaderboard progress.</p>
+          <p class="mt-1.5 text-slate-600">Once an authorized admin approves your request, your redeem code appears inside <strong>Redeem History</strong> with a Copy Code button.</p>
         </details>
       </div>
     </section>
 
-    <!-- ==================== PAGE 15: SETTINGS ==================== -->
+    <!-- ==================== PAGE 15: SETTINGS & TELEGRAM PHOTO ARCHITECTURE NOTE ==================== -->
     <section id="page-settings" class="screen-page px-4 pt-3 pb-4">
       <div class="flex items-center justify-between mb-3">
-        <button onclick="navigateTo('profile')" class="w-10 h-10 rounded-2xl glass-card flex items-center justify-center text-indigo-800">
+        <button onclick="navigateTo('profile')" class="w-10 h-10 rounded-2xl glass-3d-card flex items-center justify-center text-indigo-900">
           <i class="fa-solid fa-arrow-left"></i>
         </button>
         <h2 class="font-display text-xl font-bold text-indigo-950">Settings</h2>
         <div class="w-10"></div>
       </div>
 
-      <div class="glass-card rounded-3xl p-4 space-y-4">
+      <div class="glass-3d-card rounded-3xl p-4 space-y-4">
         <div class="flex items-center justify-between">
           <div>
-            <p class="font-bold text-sm text-indigo-950">Sound Effects</p>
-            <p class="text-[11px] text-slate-500">WebAudio chimes for spins & games</p>
+            <p class="font-bold text-sm text-indigo-950">3D Sound Effects</p>
+            <p class="text-[11px] text-slate-500">WebAudio chimes for spins, wins & games</p>
           </div>
           <input id="soundPrefToggle" type="checkbox" checked class="w-5 h-5 accent-purple-600" />
         </div>
@@ -1239,62 +1356,69 @@
         <div class="flex items-center justify-between">
           <div>
             <p class="font-bold text-sm text-indigo-950">Telegram Haptic Feedback</p>
-            <p class="text-[11px] text-slate-500">Vibrate on button taps & wins</p>
+            <p class="text-[11px] text-slate-500">Vibrate on button taps & rewards</p>
           </div>
           <input id="hapticPrefToggle" type="checkbox" checked class="w-5 h-5 accent-purple-600" />
         </div>
 
-        <div class="pt-3 border-t border-indigo-100 text-xs">
-          <p class="font-bold text-indigo-950 mb-1">Authentication & Verification Status</p>
-          <div id="authVerificationStatusBox" class="p-3 rounded-2xl bg-sky-50 border border-sky-200 text-sky-900 font-semibold">
-            Checking Telegram initData signature status...
+        <div class="pt-3 border-t border-indigo-100 text-xs space-y-2">
+          <p class="font-bold text-indigo-950">Telegram Auth & Profile Photo Status</p>
+          <div id="authVerificationStatusBox" class="p-3 rounded-2xl bg-sky-50 border border-sky-200 text-sky-950 font-semibold leading-relaxed">
+            Checking Telegram WebApp user object...
           </div>
+          <p class="text-[11px] text-slate-500 leading-relaxed">
+            <strong>Technical Note:</strong> When Telegram includes <code>photo_url</code> in the Mini App user payload, it is displayed directly and synced to your profile. If a user's Telegram privacy settings omit <code>photo_url</code>, fetching high-res avatars via Bot API <code>getUserProfilePhotos</code> requires a trusted server backend (keeping the Bot Token strictly off client HTML), while the app displays your personalized 3D initials avatar.
+          </p>
         </div>
       </div>
     </section>
 
-    <!-- ==================== GLOSSY 5-TAB BOTTOM NAVIGATION BAR WITH GOLDEN COIN FAB ==================== -->
-    <nav class="fixed bottom-0 left-0 right-0 max-w-[440px] mx-auto z-30 bg-white/95 backdrop-blur-md border-t border-purple-100 px-2 py-2 flex items-center justify-around shadow-[0_-8px_25px_rgba(79,70,229,0.12)] rounded-t-3xl">
+    <!-- ==================== GLOSSY 5-TAB 3D BOTTOM NAVIGATION BAR ==================== -->
+    <nav class="fixed bottom-0 left-0 right-0 max-w-[448px] mx-auto z-30 bg-white/95 backdrop-blur-lg border-t-2 border-purple-100 px-2 pt-2 pb-[calc(0.5rem+var(--safe-bottom))] flex items-center justify-around shadow-[0_-10px_30px_rgba(79,70,229,0.14)] rounded-t-3xl">
+      <!-- Home: Purple 3D House -->
       <button onclick="navigateTo('home')" data-tab="home" class="bottom-tab flex flex-col items-center text-purple-700 font-extrabold text-[11px]">
         <div class="w-10 h-8 rounded-xl bg-purple-100 flex items-center justify-center mb-0.5">
-          <i class="fa-solid fa-house text-base"></i>
+          <i class="fa-solid fa-house text-base text-purple-700"></i>
         </div>
         <span>Home</span>
       </button>
 
+      <!-- Games: Cyan 3D Controller -->
       <button onclick="navigateTo('games')" data-tab="games" class="bottom-tab flex flex-col items-center text-slate-500 font-bold text-[11px]">
         <div class="w-10 h-8 rounded-xl flex items-center justify-center mb-0.5">
-          <i class="fa-solid fa-gamepad text-base"></i>
+          <i class="fa-solid fa-gamepad text-base text-cyan-600"></i>
         </div>
         <span>Games</span>
       </button>
 
       <!-- Center Elevated 3D Golden Coin FAB -->
       <button onclick="navigateTo('spin')" aria-label="Spin & Earn Center"
-              class="-mt-7 w-14 h-14 rounded-full bg-gradient-to-b from-yellow-300 via-amber-400 to-orange-500 border-4 border-white shadow-[0_6px_18px_rgba(245,158,11,0.45)] flex items-center justify-center text-amber-950 active:scale-95 transition">
+              class="-mt-8 w-15 h-15 p-3.5 rounded-full bg-gradient-to-b from-yellow-200 via-amber-400 to-orange-500 border-4 border-white shadow-[0_8px_22px_rgba(245,158,11,0.5)] flex items-center justify-center text-amber-950 active:scale-95 transition">
         <i class="fa-solid fa-coins text-2xl"></i>
       </button>
 
+      <!-- Rank: Golden 3D Trophy -->
       <button onclick="navigateTo('rank')" data-tab="rank" class="bottom-tab flex flex-col items-center text-slate-500 font-bold text-[11px]">
         <div class="w-10 h-8 rounded-xl flex items-center justify-center mb-0.5">
-          <i class="fa-solid fa-trophy text-base"></i>
+          <i class="fa-solid fa-trophy text-base text-amber-500"></i>
         </div>
         <span>Rank</span>
       </button>
 
+      <!-- Profile: Circular Avatar Tab -->
       <button onclick="navigateTo('profile')" data-tab="profile" class="bottom-tab flex flex-col items-center text-slate-500 font-bold text-[11px]">
-        <div class="w-10 h-8 rounded-xl flex items-center justify-center mb-0.5">
-          <i class="fa-solid fa-user text-base"></i>
+        <div id="navAvatarMiniContainer" class="w-8 h-8 rounded-full border-2 border-purple-400 overflow-hidden flex items-center justify-center mb-0.5 bg-purple-100 text-purple-800 font-extrabold text-[10px]">
+          ME
         </div>
         <span>Profile</span>
       </button>
     </nav>
   </div>
 
-  <!-- ==================== PROMOCODE REDEMPTION MODAL ==================== -->
-  <div id="promoModalOverlay" class="fixed inset-0 z-50 hidden bg-indigo-950/50 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-sm w-full p-5 shadow-2xl border-2 border-purple-200 text-center">
-      <div class="w-16 h-16 mx-auto rounded-2xl icon-3d-pink flex items-center justify-center text-white text-3xl mb-3">
+  <!-- ==================== PROMOCODE MODAL ==================== -->
+  <div id="promoModalOverlay" class="fixed inset-0 z-50 hidden bg-indigo-950/45 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="glass-3d-card glow-rim-purple rounded-3xl max-w-sm w-full p-5 text-center">
+      <div class="w-16 h-16 mx-auto rounded-2xl icon-cap-refer flex items-center justify-center text-white text-3xl mb-3">
         <i class="fa-solid fa-ticket"></i>
       </div>
       <h3 class="font-display text-xl font-bold text-indigo-950">Redeem Promo Code</h3>
@@ -1306,63 +1430,60 @@
              class="w-full mt-3 px-4 py-3 rounded-2xl bg-purple-50 border-2 border-purple-200 text-center font-display font-bold uppercase tracking-widest text-indigo-950 focus:outline-none focus:border-purple-600" />
 
       <div class="grid grid-cols-2 gap-2.5 mt-4">
-        <button onclick="closePromoModal()" class="py-2.5 rounded-xl bg-slate-100 text-slate-700 font-bold text-xs">Cancel</button>
-        <button onclick="submitPromoRedeemClaim()" class="btn-glossy-gold py-2.5 rounded-xl font-extrabold text-xs">Submit Claim</button>
+        <button onclick="closePromoModal()" class="py-2.5 rounded-2xl bg-slate-100 text-slate-700 font-bold text-xs">Cancel</button>
+        <button onclick="submitPromoRedeemClaim()" class="btn-3d btn-3d-gold py-2.5 rounded-2xl font-extrabold text-xs">Submit Claim</button>
       </div>
     </div>
   </div>
 
   <!-- ==================== REAL PLAYABLE MINI-GAME ARENA MODAL ==================== -->
-  <div id="gameArenaModal" class="fixed inset-0 z-50 hidden bg-indigo-950/75 backdrop-blur-sm flex items-center justify-center p-3">
-    <div class="bg-white rounded-3xl max-w-sm w-full p-4 shadow-2xl border-2 border-purple-300">
+  <div id="gameArenaModal" class="fixed inset-0 z-50 hidden bg-indigo-950/65 backdrop-blur-sm flex items-center justify-center p-3">
+    <div class="glass-3d-card glow-rim-purple rounded-3xl max-w-sm w-full p-4">
       <div class="flex items-center justify-between mb-2">
         <h3 id="gameArenaTitle" class="font-display font-bold text-lg text-indigo-950">Mini Game</h3>
-        <button onclick="closePlayableGame()" class="w-8 h-8 rounded-full bg-slate-100 text-slate-600 font-bold">✕</button>
+        <button onclick="closePlayableGame()" class="w-8 h-8 rounded-full bg-slate-100 text-slate-700 font-bold">✕</button>
       </div>
 
-      <div class="flex items-center justify-between text-xs font-extrabold px-2 py-1.5 rounded-xl bg-purple-50 mb-2">
+      <div class="flex items-center justify-between text-xs font-extrabold px-3 py-1.5 rounded-2xl bg-purple-50 mb-2">
         <span class="text-purple-700">Score: <span id="gameLiveScore">0</span></span>
         <span id="gameStatusLabel" class="text-emerald-700">Ready</span>
         <span class="text-amber-700">Target: <span id="gameTargetScore">100</span></span>
       </div>
 
-      <!-- Canvas Games Area -->
       <div id="canvasGameWrapper" class="relative w-full h-72 rounded-2xl overflow-hidden border-2 border-indigo-200 bg-sky-100">
         <canvas id="arcadeGameCanvas" width="320" height="288" class="w-full h-full block touch-none"></canvas>
       </div>
 
-      <!-- DOM Grid Games Area (Memory Match & Number Puzzle) -->
       <div id="gridGameWrapper" class="hidden w-full h-72 rounded-2xl p-3 border-2 border-indigo-200 bg-gradient-to-br from-sky-50 to-purple-50 flex items-center justify-center">
         <div id="gridGameBoard" class="w-full h-full"></div>
       </div>
 
-      <!-- Game Over Banner -->
       <div id="gameOverBanner" class="hidden mt-3 p-3 rounded-2xl bg-amber-50 border border-amber-300 text-center">
         <p class="font-display font-bold text-base text-indigo-950">Session Complete!</p>
         <p class="text-xs font-bold text-slate-600">Final Score: <span id="finalGameScoreText" class="text-purple-700">0</span></p>
-        <button id="submitGameScoreBtn" onclick="submitVerifiedGameScore()" class="btn-glossy-gold w-full mt-2 py-2.5 rounded-xl font-display font-bold text-xs">
+        <button id="submitGameScoreBtn" onclick="submitVerifiedGameScore()" class="btn-3d btn-3d-gold w-full mt-2 py-2.5 rounded-2xl font-display font-bold text-xs">
           Submit Score for Reward Verification
         </button>
       </div>
 
       <div class="grid grid-cols-2 gap-2 mt-3">
-        <button onclick="restartCurrentGame()" class="btn-glossy-blue py-2.5 rounded-xl font-bold text-xs">
+        <button onclick="restartCurrentGame()" class="btn-3d btn-3d-cyan py-2.5 rounded-2xl font-bold text-xs">
           <i class="fa-solid fa-rotate-right mr-1"></i> Start / Restart
         </button>
-        <button onclick="closePlayableGame()" class="py-2.5 rounded-xl bg-slate-100 text-slate-700 font-bold text-xs">
+        <button onclick="closePlayableGame()" class="py-2.5 rounded-2xl bg-slate-100 text-slate-700 font-bold text-xs">
           Exit Game
         </button>
       </div>
     </div>
   </div>
 
-  <!-- ==================== NON-BLOCKING TOAST NOTIFICATION ==================== -->
-  <div id="appToast" class="fixed top-4 left-1/2 -translate-x-1/2 z-[60] hidden max-w-[380px] w-[92%] px-4 py-3 rounded-2xl shadow-2xl text-white font-bold text-xs flex items-center gap-2.5">
+  <!-- ==================== NON-BLOCKING TOAST ==================== -->
+  <div id="appToast" class="fixed top-4 left-1/2 -translate-x-1/2 z-[60] hidden max-w-[390px] w-[92%] px-4 py-3 rounded-2xl shadow-2xl text-white font-bold text-xs flex items-center gap-2.5">
     <i id="appToastIcon" class="fa-solid fa-circle-info text-base"></i>
     <span id="appToastMsg">Status updated</span>
   </div>
 
-  <!-- ==================== FIREBASE v10.12.2 & APPLICATION LOGIC ==================== -->
+  <!-- ==================== FIREBASE & TELEGRAM PROFILE PHOTO ENGINE ==================== -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -1385,7 +1506,6 @@
 
     const todayDateStr = new Date().toISOString().slice(0, 10);
 
-    // Central Reactive App State
     window.state = {
       telegramId: null,
       initDataRaw: "",
@@ -1440,16 +1560,42 @@
       gameSessionToken: ""
     };
 
-    // Drawer Helpers
-    window.openSideMenu = () => document.getElementById("sideMenuOverlay").classList.remove("hidden");
-    window.closeSideMenu = () => document.getElementById("sideMenuOverlay").classList.add("hidden");
-    window.navigateFromDrawer = (pageKey) => {
-      closeSideMenu();
-      navigateTo(pageKey);
+    // ==================== REUSABLE REAL TELEGRAM AVATAR RENDERER ====================
+    // Renders a real <img> with referrerPolicy="no-referrer" and object-fit:cover,
+    // automatically falling back to a vibrant 3D gradient initials badge on load error or missing photo_url.
+    window.renderTelegramAvatarInto = function(containerEl, photoUrl, firstName, textSizeClass = "text-lg") {
+      if (!containerEl) return;
+      const safeName = (firstName || "User").trim();
+      const initials = safeName.slice(0, 2).toUpperCase();
+
+      const buildFallbackNode = () => {
+        containerEl.innerHTML = "";
+        const badge = document.createElement("div");
+        badge.className = `w-full h-full rounded-full bg-gradient-to-br from-sky-400 via-purple-600 to-pink-500 text-white font-display font-bold ${textSizeClass} flex items-center justify-center`;
+        badge.textContent = initials;
+        containerEl.appendChild(badge);
+      };
+
+      if (photoUrl && typeof photoUrl === "string" && photoUrl.startsWith("http")) {
+        containerEl.innerHTML = "";
+        const img = document.createElement("img");
+        img.src = photoUrl;
+        img.alt = safeName;
+        img.referrerPolicy = "no-referrer";
+        img.className = "w-full h-full rounded-full object-cover bg-white block";
+        img.onerror = () => buildFallbackNode();
+        containerEl.appendChild(img);
+      } else {
+        buildFallbackNode();
+      }
     };
 
-    // Audio & Haptics Helpers
-    window.playSoundEffect = function(freq = 620, duration = 0.12) {
+    // Drawer & UI Helpers
+    window.openSideMenu = () => document.getElementById("sideMenuOverlay").classList.remove("hidden");
+    window.closeSideMenu = () => document.getElementById("sideMenuOverlay").classList.add("hidden");
+    window.navigateFromDrawer = (pageKey) => { closeSideMenu(); navigateTo(pageKey); };
+
+    window.playSoundEffect = function(freq = 640, duration = 0.12) {
       const toggle = document.getElementById("soundPrefToggle");
       if (toggle && !toggle.checked) return;
       try {
@@ -1471,9 +1617,7 @@
       const toggle = document.getElementById("hapticPrefToggle");
       if (toggle && !toggle.checked) return;
       const tg = window.Telegram && window.Telegram.WebApp;
-      if (tg && tg.HapticFeedback) {
-        tg.HapticFeedback.impactOccurred(type);
-      }
+      if (tg && tg.HapticFeedback) tg.HapticFeedback.impactOccurred(type);
     };
 
     window.showToast = function(message, type = "info") {
@@ -1481,7 +1625,7 @@
       const icon = document.getElementById("appToastIcon");
       const msg = document.getElementById("appToastMsg");
       msg.textContent = message;
-      el.className = "fixed top-4 left-1/2 -translate-x-1/2 z-[60] max-w-[380px] w-[92%] px-4 py-3 rounded-2xl shadow-2xl text-white font-bold text-xs flex items-center gap-2.5 ";
+      el.className = "fixed top-4 left-1/2 -translate-x-1/2 z-[60] max-w-[390px] w-[92%] px-4 py-3 rounded-2xl shadow-2xl text-white font-bold text-xs flex items-center gap-2.5 ";
       if (type === "error") {
         el.classList.add("bg-rose-600");
         icon.className = "fa-solid fa-circle-exclamation text-base";
@@ -1497,20 +1641,20 @@
       window._toastTimeout = setTimeout(() => el.classList.add("hidden"), 3400);
     };
 
-    // ==================== SPLASH PARTICLES & BOOT ====================
+    // ==================== SPLASH PARTICLES & BOOTSTRAP ====================
     function spawnSplashParticles() {
       const container = document.getElementById("splashParticles");
       const colors = ["#FBBF24", "#A855F7", "#38BDF8", "#F43F5E", "#34D399"];
-      for (let i = 0; i < 18; i++) {
+      for (let i = 0; i < 16; i++) {
         const dot = document.createElement("span");
-        dot.className = "sparkle-particle";
+        dot.className = "splash-particle";
         const size = 6 + Math.random() * 8;
         dot.style.width = size + "px";
         dot.style.height = size + "px";
         dot.style.left = Math.random() * 100 + "%";
-        dot.style.bottom = (10 + Math.random() * 40) + "%";
+        dot.style.bottom = (8 + Math.random() * 42) + "%";
         dot.style.backgroundColor = colors[i % colors.length];
-        dot.style.animationDelay = (Math.random() * 2.5) + "s";
+        dot.style.animationDelay = (Math.random() * 2.4) + "s";
         container.appendChild(dot);
       }
     }
@@ -1520,14 +1664,14 @@
       const fill = document.getElementById("splashProgressFill");
       const label = document.getElementById("splashProgressLabel");
 
-      let progress = 10;
+      let progress = 12;
       const interval = setInterval(() => {
-        progress = Math.min(92, progress + 14);
+        progress = Math.min(92, progress + 15);
         fill.style.width = progress + "%";
-        label.textContent = `Loading... ${progress}%`;
-      }, 160);
+        label.textContent = `Initializing 3D Arena... ${progress}%`;
+      }, 150);
 
-      // 1. Initialize Telegram WebApp SDK
+      // Initialize official Telegram WebApp SDK
       const tg = window.Telegram && window.Telegram.WebApp;
       let tgUser = null;
       let startParam = "";
@@ -1543,7 +1687,6 @@
         tg.BackButton.onClick(() => navigateTo("home"));
       }
 
-      // 2. Load App Settings from Firebase first (check maintenance mode & authEndpoint)
       try {
         await signInAnonymously(auth);
         const settingsSnap = await get(ref(db, "appSettings"));
@@ -1556,12 +1699,11 @@
 
       clearInterval(interval);
       fill.style.width = "100%";
-      label.textContent = "Loading... 100%";
+      label.textContent = "Ready! 100%";
 
       setTimeout(async () => {
         document.getElementById("splashOverlay").classList.add("hidden");
 
-        // Maintenance Mode Check
         if (state.appSettings.maintenanceMode === true) {
           showSystemGate(
             "Under Scheduled Maintenance",
@@ -1572,27 +1714,29 @@
           return;
         }
 
-        // Strict Check: Require Real Telegram Mini App User Context (No Fake Users)
         if (!tgUser || !tgUser.id) {
           showSystemGate(
             "Open Inside Telegram Mini App",
-            "No fake profiles are permitted. Open Smartu Earninng inside Telegram so the official Telegram WebApp SDK can verify your account.",
+            "No fake profiles or stock photos are permitted. Open Smartu Earninng inside Telegram so the official Telegram WebApp SDK can load your real Telegram profile.",
             "fa-telegram",
             true
           );
           return;
         }
 
-        // Authenticate via Backend Endpoint if configured, otherwise bind Telegram ID
+        // Extract verified Telegram user fields including optional photo_url
         state.telegramId = String(tgUser.id);
-        state.userProfile.firstName = tgUser.first_name || "Telegram User";
+        state.userProfile.firstName = tgUser.first_name || "Player";
         state.userProfile.username = tgUser.username || "";
         state.userProfile.photoUrl = tgUser.photo_url || "";
+
+        // Render avatar immediately before network sync completes
+        renderAllUserAvatars();
 
         await verifyAndInitializeTelegramUser(tgUser, startParam);
         document.getElementById("mainAppContainer").classList.remove("hidden");
         attachRealtimeDatabaseListeners();
-      }, 350);
+      }, 360);
     }
 
     function showSystemGate(title, message, faIcon, showSteps) {
@@ -1607,7 +1751,6 @@
     async function verifyAndInitializeTelegramUser(tgUser, startParam) {
       const statusBox = document.getElementById("authVerificationStatusBox");
 
-      // If admin configured a trusted backend verification endpoint (Cloud Function), exchange initData for a Firebase Custom Token
       if (state.appSettings.authEndpoint && state.initDataRaw) {
         try {
           const resp = await fetch(state.appSettings.authEndpoint, {
@@ -1619,18 +1762,17 @@
           if (data && data.customToken) {
             await signInWithCustomToken(auth, data.customToken);
             state.isTelegramVerified = true;
-            statusBox.textContent = "Cryptographically Verified via Server Telegram HMAC Check";
+            if (data.photoUrl) state.userProfile.photoUrl = data.photoUrl;
           }
         } catch (err) {
-          statusBox.textContent = "Backend verification endpoint unreachable; using signed initData payload queue.";
+          console.warn("Backend verification endpoint note:", err.message);
         }
-      } else {
-        statusBox.textContent = state.initDataRaw
-          ? "Telegram initData captured. Configure appSettings/authEndpoint on backend for server-side HMAC verification & custom token minting."
-          : "Telegram initData missing.";
       }
 
-      // Auto-create or sync profile in Firebase Realtime Database (`users/{telegramId}`)
+      statusBox.innerHTML = state.userProfile.photoUrl
+        ? `Telegram ID <strong>${state.telegramId}</strong> connected • Live Telegram <code>photo_url</code> loaded.`
+        : `Telegram ID <strong>${state.telegramId}</strong> connected • Telegram did not return a public <code>photo_url</code> (showing 3D initials fallback).`;
+
       const userRef = ref(db, `users/${state.telegramId}`);
       try {
         const snap = await get(userRef);
@@ -1661,7 +1803,6 @@
             createdAt: Date.now()
           };
 
-          // Prevent self-referral
           if (startParam && startParam.startsWith("ref_")) {
             const referrerId = startParam.replace("ref_", "").trim();
             if (referrerId && referrerId !== state.telegramId) {
@@ -1681,10 +1822,13 @@
         } else {
           const existing = snap.val();
           const resetDaily = existing.activityDate !== todayDateStr;
+          const resolvedPhotoUrl = state.userProfile.photoUrl || existing.photoUrl || "";
+          state.userProfile.photoUrl = resolvedPhotoUrl;
+
           await update(userRef, {
             firstName: state.userProfile.firstName,
             username: state.userProfile.username,
-            photoUrl: state.userProfile.photoUrl,
+            photoUrl: resolvedPhotoUrl,
             activityDate: todayDateStr,
             ...(resetDaily ? {
               todayEarned: 0,
@@ -1701,12 +1845,24 @@
       }
     }
 
+    function renderAllUserAvatars() {
+      const photoUrl = state.userProfile.photoUrl || "";
+      const firstName = state.userProfile.firstName || "Player";
+      renderTelegramAvatarInto(document.getElementById("homeAvatarContainer"), photoUrl, firstName, "text-lg");
+      renderTelegramAvatarInto(document.getElementById("profileAvatarContainer"), photoUrl, firstName, "text-xl");
+      renderTelegramAvatarInto(document.getElementById("referAvatarContainer"), photoUrl, firstName, "text-xl");
+      renderTelegramAvatarInto(document.getElementById("rankFooterAvatarContainer"), photoUrl, firstName, "text-sm");
+      renderTelegramAvatarInto(document.getElementById("navAvatarMiniContainer"), photoUrl, firstName, "text-[10px]");
+    }
+
     // ==================== REAL-TIME FIREBASE LISTENERS ====================
     function attachRealtimeDatabaseListeners() {
-      // 1. Live User Profile Listener
       onValue(ref(db, `users/${state.telegramId}`), (snap) => {
         if (snap.exists()) {
-          state.userProfile = { ...state.userProfile, ...snap.val() };
+          const dbData = snap.val();
+          // Preserve live Telegram SDK photoUrl if DB field is blank
+          const mergedPhoto = dbData.photoUrl || state.userProfile.photoUrl || "";
+          state.userProfile = { ...state.userProfile, ...dbData, photoUrl: mergedPhoto };
           if (state.userProfile.blocked) {
             showSystemGate("Account Suspended", "Your account has been restricted by the Smartu Earninng administrator.", "fa-ban", false);
           }
@@ -1714,7 +1870,6 @@
         }
       });
 
-      // 2. Live Admin App Settings Listener
       onValue(ref(db, "appSettings"), (snap) => {
         if (snap.exists()) {
           state.appSettings = { ...state.appSettings, ...snap.val() };
@@ -1725,7 +1880,6 @@
         }
       });
 
-      // 3. Live Announcement Listener
       onValue(ref(db, "announcements"), (snap) => {
         if (snap.exists()) {
           const items = Object.values(snap.val());
@@ -1736,40 +1890,38 @@
         }
       });
 
-      // 4. Live Tasks Listener
       onValue(ref(db, "tasks"), (snap) => {
         const container = document.getElementById("tasksContainer");
         if (!snap.exists()) {
-          container.innerHTML = `<div class="glass-card rounded-2xl p-6 text-center text-xs font-bold text-slate-500">No active tasks available right now.</div>`;
+          container.innerHTML = `<div class="glass-3d-card rounded-3xl p-6 text-center text-xs font-bold text-slate-500">No active tasks available right now.</div>`;
           return;
         }
-        const tasksObj = snap.val();
-        const activeTasks = Object.entries(tasksObj)
+        const activeTasks = Object.entries(snap.val())
           .map(([id, t]) => ({ id, ...t }))
           .filter(t => t.status === "Active" || t.active === true);
 
         if (activeTasks.length === 0) {
-          container.innerHTML = `<div class="glass-card rounded-2xl p-6 text-center text-xs font-bold text-slate-500">No active tasks available right now.</div>`;
+          container.innerHTML = `<div class="glass-3d-card rounded-3xl p-6 text-center text-xs font-bold text-slate-500">No active tasks available right now.</div>`;
           return;
         }
 
         container.innerHTML = activeTasks.map(t => `
-          <div class="glass-card rounded-2xl p-3.5 flex items-center justify-between gap-2.5">
+          <div class="glass-3d-card rounded-3xl p-3.5 flex items-center justify-between gap-2.5">
             <div class="flex items-center gap-3 min-w-0">
-              <div class="w-12 h-12 rounded-2xl icon-3d-blue flex items-center justify-center text-white shrink-0 overflow-hidden">
-                ${t.iconUrl ? `<img src="${t.iconUrl}" alt="" class="w-full h-full object-cover" onerror="this.style.display='none'" />` : `<i class="fa-solid fa-list-check text-lg"></i>`}
+              <div class="w-12 h-12 rounded-2xl icon-cap-tasks flex items-center justify-center text-white shrink-0 overflow-hidden">
+                ${t.iconUrl ? `<img src="${t.iconUrl}" alt="" referrerpolicy="no-referrer" class="w-full h-full object-cover" onerror="this.style.display='none'" />` : `<i class="fa-solid fa-clipboard-check text-lg"></i>`}
               </div>
               <div class="min-w-0">
                 <h4 class="font-bold text-sm text-indigo-950 truncate">${t.name || t.title}</h4>
                 <p class="text-[11px] font-semibold text-slate-500 truncate">${t.description || "Complete task to earn coins"}</p>
-                <span class="inline-block mt-1 px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 font-extrabold text-[10px]">+${t.reward} Coins</span>
+                <span class="inline-block mt-1 px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 font-extrabold text-[10px]">+${t.reward} Coins</span>
               </div>
             </div>
             <div class="flex flex-col gap-1.5 shrink-0">
-              <button onclick="openTaskDestination('${t.id}', '${encodeURIComponent(t.destinationUrl || '')}')" class="btn-glossy-blue px-3.5 py-1.5 rounded-xl font-bold text-xs">
+              <button onclick="openTaskDestination('${t.id}', '${encodeURIComponent(t.destinationUrl || '')}')" class="btn-3d btn-3d-cyan px-3.5 py-1.5 rounded-xl font-bold text-xs">
                 Start
               </button>
-              <button id="claimTaskBtn-${t.id}" disabled onclick="submitTaskClaim('${t.id}', ${Number(t.reward) || 0})" class="btn-glossy-gold px-3.5 py-1.5 rounded-xl font-bold text-xs">
+              <button id="claimTaskBtn-${t.id}" disabled onclick="submitTaskClaim('${t.id}', ${Number(t.reward) || 0})" class="btn-3d btn-3d-gold px-3.5 py-1.5 rounded-xl font-bold text-xs">
                 Claim
               </button>
             </div>
@@ -1777,14 +1929,12 @@
         `).join("");
       });
 
-      // 5. Real-Time Leaderboard Listener (`users/`)
       onValue(query(ref(db, "users"), orderByChild("totalEarned"), limitToLast(50)), (snap) => {
         if (!snap.exists()) return;
         state.allUsersList = Object.values(snap.val()).filter(u => !u.blocked);
         renderRealTimeLeaderboard();
       });
 
-      // 6. Real-Time Referral History Listener (`referrals/{telegramId}`)
       onValue(ref(db, `referrals/${state.telegramId}`), (snap) => {
         const container = document.getElementById("referralHistoryList");
         if (!snap.exists()) {
@@ -1792,22 +1942,27 @@
           return;
         }
         const refs = Object.values(snap.val()).reverse();
-        container.innerHTML = refs.map(r => `
-          <div class="p-2.5 rounded-xl bg-white/80 border border-purple-100 flex items-center justify-between">
-            <div>
-              <p class="font-bold text-indigo-950">${r.referredName || ("User " + r.referredId)}</p>
-              <p class="text-[10px] text-slate-500">${new Date(r.timestamp || Date.now()).toLocaleDateString()} • ${r.status || "Verified"}</p>
+        container.innerHTML = refs.map((r, i) => `
+          <div class="p-2.5 rounded-2xl bg-white/90 border border-purple-100 flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <div id="refAvatar-${i}" class="tg-avatar-ring w-9 h-9"></div>
+              <div>
+                <p class="font-bold text-indigo-950">${r.referredName || ("User " + r.referredId)}</p>
+                <p class="text-[10px] text-slate-500">${new Date(r.timestamp || Date.now()).toLocaleDateString()} • ${r.status || "Verified"}</p>
+              </div>
             </div>
             <span class="font-display font-bold text-emerald-600">+${r.reward || state.appSettings.referralRewardCoins} 🪙</span>
           </div>
         `).join("");
+        refs.forEach((r, i) => {
+          renderTelegramAvatarInto(document.getElementById(`refAvatar-${i}`), r.referredPhotoUrl || "", r.referredName || "User", "text-xs");
+        });
       });
 
-      // 7. Real-Time Redeem History Listener (`users/{telegramId}/withdrawals`)
       onValue(ref(db, `users/${state.telegramId}/withdrawals`), (snap) => {
         const container = document.getElementById("redeemHistoryContainer");
         if (!snap.exists()) {
-          container.innerHTML = `<div class="glass-card rounded-2xl p-6 text-center text-xs font-bold text-slate-500">No withdrawal requests yet.</div>`;
+          container.innerHTML = `<div class="glass-3d-card rounded-3xl p-6 text-center text-xs font-bold text-slate-500">No withdrawal requests yet.</div>`;
           return;
         }
         const items = Object.entries(snap.val())
@@ -1824,7 +1979,7 @@
               : "bg-amber-100 text-amber-900";
 
           return `
-            <div class="glass-card rounded-2xl p-4 space-y-2">
+            <div class="glass-3d-card rounded-3xl p-4 space-y-2">
               <div class="flex items-start justify-between">
                 <div>
                   <span class="text-[10px] font-extrabold text-purple-700 uppercase">Request #${w.requestId || w.id}</span>
@@ -1839,13 +1994,13 @@
               ${w.adminRemarks ? `<p class="text-[11px] font-semibold text-slate-600 bg-slate-50 p-2 rounded-xl">Admin Note: ${w.adminRemarks}</p>` : ""}
 
               ${isApproved && isGiftCard && w.redeemCode ? `
-                <div class="p-3 rounded-2xl bg-emerald-50 border border-emerald-300 flex items-center justify-between gap-2">
+                <div class="p-3 rounded-2xl bg-emerald-50 border-2 border-emerald-300 flex items-center justify-between gap-2">
                   <div>
                     <p class="text-[10px] font-extrabold uppercase text-emerald-800">Approved ${w.method} Code</p>
                     <p class="font-display font-bold text-sm text-indigo-950 tracking-wider select-all">${w.redeemCode}</p>
                     ${w.approvedAt ? `<p class="text-[10px] text-slate-500">Approved: ${new Date(w.approvedAt).toLocaleDateString()}</p>` : ""}
                   </div>
-                  <button onclick="copyToClipboard('${w.redeemCode}', 'Redeem code copied!')" class="btn-glossy-green px-3 py-2 rounded-xl font-bold text-xs shrink-0">
+                  <button onclick="copyToClipboard('${w.redeemCode}', 'Redeem code copied!')" class="btn-3d btn-3d-green px-3.5 py-2 rounded-xl font-bold text-xs shrink-0">
                     Copy Code
                   </button>
                 </div>
@@ -1855,18 +2010,17 @@
         }).join("");
       });
 
-      // 8. Real-Time Transaction History Listener (`transactions/{telegramId}`)
       onValue(ref(db, `transactions/${state.telegramId}`), (snap) => {
         const container = document.getElementById("transactionsContainer");
         if (!snap.exists()) {
-          container.innerHTML = `<div class="glass-card rounded-2xl p-6 text-center text-xs font-bold text-slate-500">No verified transactions recorded yet.</div>`;
+          container.innerHTML = `<div class="glass-3d-card rounded-3xl p-6 text-center text-xs font-bold text-slate-500">No verified transactions recorded yet.</div>`;
           return;
         }
         const txs = Object.values(snap.val()).sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
         container.innerHTML = txs.map(t => {
           const positive = Number(t.amount) >= 0;
           return `
-            <div class="glass-card rounded-2xl p-3 flex items-center justify-between">
+            <div class="glass-3d-card rounded-2xl p-3 flex items-center justify-between">
               <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-xl ${positive ? 'bg-emerald-100 text-emerald-600' : 'bg-rose-100 text-rose-600'} flex items-center justify-center">
                   <i class="fa-solid ${positive ? 'fa-arrow-down-left' : 'fa-arrow-up-right'}"></i>
@@ -1885,13 +2039,12 @@
       });
     }
 
-    // ==================== RENDER UI FROM STATE ====================
+    // ==================== RENDER USER INTERFACE ====================
     function renderUserInterface() {
       const u = state.userProfile;
       const cfg = state.appSettings;
       const rupees = (Number(u.coins || 0) / Number(cfg.coinConversionRate || 100)).toFixed(2);
 
-      // Home & Profile Identity
       document.getElementById("homeFirstName").textContent = u.firstName || "Player";
       document.getElementById("homeUsernameText").textContent = u.username ? `@${u.username}` : `Telegram Member`;
       document.getElementById("homeTelegramId").textContent = state.telegramId || "—";
@@ -1899,22 +2052,8 @@
       document.getElementById("profileUsername").textContent = u.username ? `@${u.username}` : `ID: ${state.telegramId}`;
       document.getElementById("profileTelegramId").textContent = state.telegramId || "—";
 
-      const initials = (u.firstName || "TG").slice(0, 2).toUpperCase();
-      document.getElementById("homeUserInitials").textContent = initials;
-      document.getElementById("profileUserInitials").textContent = initials;
+      renderAllUserAvatars();
 
-      if (u.photoUrl) {
-        const homeImg = document.getElementById("homeUserAvatar");
-        const profImg = document.getElementById("profileUserAvatar");
-        homeImg.src = u.photoUrl;
-        homeImg.classList.remove("hidden");
-        document.getElementById("homeUserInitials").classList.add("hidden");
-        profImg.src = u.photoUrl;
-        profImg.classList.remove("hidden");
-        document.getElementById("profileUserInitials").classList.add("hidden");
-      }
-
-      // Balances & Stats
       document.getElementById("homeCoinsDisplay").textContent = Number(u.coins || 0).toLocaleString();
       document.getElementById("homeRupeeEquivalent").textContent = rupees;
       document.getElementById("homeTodayEarned").textContent = Number(u.todayEarned || 0).toLocaleString();
@@ -1924,7 +2063,6 @@
       document.getElementById("profileStatWithdrawn").textContent = Number(u.totalWithdrawn || 0).toLocaleString();
       document.getElementById("profileStatStreak").textContent = u.streakDay || 1;
 
-      // Spin, Scratch, Ads, Games Counters
       document.getElementById("spinRangeText").textContent = `${cfg.spinMinCoins} – ${cfg.spinMaxCoins}`;
       document.getElementById("spinRemainingText").textContent = Math.max(0, cfg.dailySpinLimit - (u.todaySpins || 0));
       document.getElementById("spinLimitMaxText").textContent = cfg.dailySpinLimit;
@@ -1940,7 +2078,6 @@
       document.getElementById("gamesSessionCounter").textContent = u.todayGames || 0;
       document.getElementById("gamesSessionMax").textContent = cfg.dailyGameplayLimit;
 
-      // Refer & Earn
       document.getElementById("userReferralCodeText").textContent = `ref_${state.telegramId}`;
       document.getElementById("referBonusCoinsText").textContent = cfg.referralRewardCoins;
       document.getElementById("referBonusRupeeText").textContent = (cfg.referralRewardCoins / cfg.coinConversionRate).toFixed(0);
@@ -1948,7 +2085,6 @@
       document.getElementById("statSuccessReferrals").textContent = u.successfulReferrals || 0;
       document.getElementById("statReferralCoins").textContent = u.referralCoinsEarned || 0;
 
-      // Wallet & Redeem
       document.getElementById("rateInfoText").textContent = cfg.coinConversionRate;
       document.getElementById("walletCoinsText").textContent = Number(u.coins || 0).toLocaleString();
       document.getElementById("walletRupeesText").textContent = rupees;
@@ -1957,7 +2093,6 @@
       document.getElementById("todayRedeemsUsed").textContent = u.todayRedeems || 0;
       document.getElementById("dailyRedeemMaxText").textContent = cfg.dailyRedeemLimit;
 
-      // Daily Rewards Streak Grid
       const dailyArr = Array.isArray(cfg.dailyRewards) ? cfg.dailyRewards : [100, 200, 300, 400, 500, 600, 1000];
       document.getElementById("dailyStreakDisplay").textContent = `Day ${u.streakDay || 1}`;
       document.getElementById("day7BonusText").textContent = Number(dailyArr[6] || 1000).toLocaleString();
@@ -1968,9 +2103,9 @@
         const isToday = dayNum === (u.streakDay || 1) && u.lastDailyClaimDate !== todayDateStr;
         return `
           <div onclick="${isToday ? 'claimDailyStreakBonus()' : ''}"
-               class="glass-card rounded-2xl p-3 text-center cursor-pointer ${isToday ? 'ring-2 ring-amber-400 bg-amber-50' : ''}">
+               class="glass-3d-card rounded-2xl p-3 text-center cursor-pointer ${isToday ? 'glow-rim-gold' : ''}">
             <p class="text-xs font-extrabold text-indigo-950 mb-1.5">Day ${dayNum}</p>
-            <div class="w-10 h-10 mx-auto rounded-full ${done ? 'bg-emerald-500 text-white' : 'bg-amber-400 text-amber-950'} flex items-center justify-center shadow mb-1">
+            <div class="w-10 h-10 mx-auto rounded-2xl ${done ? 'icon-cap-rewards text-white' : 'icon-cap-scratch text-amber-950'} flex items-center justify-center mb-1">
               <i class="fa-solid ${done ? 'fa-check' : 'fa-coins'}"></i>
             </div>
             <p class="font-display font-bold text-xs text-indigo-900">${dailyArr[idx]}</p>
@@ -1992,7 +2127,9 @@
         btn.classList.toggle("font-extrabold", isCurrent);
         btn.classList.toggle("text-slate-500", !isCurrent);
         const box = btn.querySelector("div");
-        if (box) box.classList.toggle("bg-purple-100", isCurrent);
+        if (box && btn.getAttribute("data-tab") !== "profile") {
+          box.classList.toggle("bg-purple-100", isCurrent);
+        }
       });
 
       const tg = window.Telegram && window.Telegram.WebApp;
@@ -2025,14 +2162,13 @@
 
     window.shareReferralOnTelegram = function() {
       const url = encodeURIComponent(`https://t.me/${state.appSettings.botUsername}?startapp=ref_${state.telegramId}`);
-      const text = encodeURIComponent(`Join Smartu Earninng & get ${state.appSettings.referralRewardCoins} Coins bonus! Play games, spin & redeem UPI/Google Play/Amazon!`);
+      const text = encodeURIComponent(`Join Smartu Earninng & get ${state.appSettings.referralRewardCoins} Coins bonus! Play 3D games, spin & redeem UPI/Google Play/Amazon!`);
       const shareUrl = `https://t.me/share/url?url=${url}&text=${text}`;
       const tg = window.Telegram && window.Telegram.WebApp;
       if (tg && tg.openTelegramLink) tg.openTelegramLink(shareUrl);
       else window.open(shareUrl, "_blank");
     };
 
-    // ==================== SERVER-BOUND REWARD CLAIM HELPER ====================
     async function submitRewardClaimPayload(claimType, extraData = {}) {
       if (!state.telegramId) return showToast("Telegram user not authenticated.", "error");
       const claimRef = push(ref(db, `rewardClaims/${state.telegramId}`));
@@ -2048,7 +2184,7 @@
       return claimRef.key;
     }
 
-    // ==================== TASKS FLOW ====================
+    // ==================== TASKS, PROMO & DAILY STREAK ====================
     const startedTasks = new Set();
     window.openTaskDestination = function(taskId, encodedUrl) {
       const url = decodeURIComponent(encodedUrl);
@@ -2070,7 +2206,6 @@
       showToast("Task claim submitted for server verification!", "success");
     };
 
-    // ==================== PROMOCODE FLOW ====================
     window.openPromoModal = () => document.getElementById("promoModalOverlay").classList.remove("hidden");
     window.closePromoModal = () => document.getElementById("promoModalOverlay").classList.add("hidden");
 
@@ -2080,10 +2215,9 @@
       await submitRewardClaimPayload("promocode", { promoCode: code });
       document.getElementById("promoInputField").value = "";
       closePromoModal();
-      showToast(`Promo code "${code}" submitted for server validation & random reward!`, "success");
+      showToast(`Promo code "${code}" submitted for server validation!`, "success");
     };
 
-    // ==================== DAILY STREAK CLAIM ====================
     window.claimDailyStreakBonus = async function() {
       if (state.userProfile.lastDailyClaimDate === todayDateStr) {
         return showToast("Today's daily reward has already been claimed!", "info");
@@ -2096,7 +2230,7 @@
       showToast("Daily login reward claim submitted for verification!", "success");
     };
 
-    // ==================== 20-SECOND COUNTDOWN + MONETAG AD CALLBACK FLOW ====================
+    // ==================== 20-SECOND TIMER + MONETAG VERIFICATION ====================
     let activeCountdownTimer = null;
 
     function runTwentySecondGate(numElId, barElId, claimBtnElId, readyLabel) {
@@ -2126,7 +2260,6 @@
       }, 1000);
     }
 
-    // Trigger official Monetag rewarded ad function if loaded, then record verified callback
     window.claimWithMonetagVerification = async function(sourceType) {
       const monetagFnName = state.appSettings.monetagZoneId ? `show_${state.appSettings.monetagZoneId}` : null;
       const monetagInvoker = monetagFnName && typeof window[monetagFnName] === "function" ? window[monetagFnName] : null;
@@ -2137,7 +2270,6 @@
       }
 
       try {
-        // Official Monetag Rewarded Interstitial Promise Callback
         await monetagInvoker();
         await submitRewardClaimPayload(sourceType, {
           adProvider: "monetag",
@@ -2156,7 +2288,7 @@
       }
     };
 
-    // A. SPIN & WIN
+    // SPIN WHEEL
     const wheelSlices = ["10", "50", "25", "100", "15", "75", "5", "40"];
     const wheelPalette = ["#F43F5E", "#FBBF24", "#10B981", "#3B82F6", "#8B5CF6", "#F97316", "#06B6D4", "#EC4899"];
     let wheelRotation = 0;
@@ -2185,7 +2317,7 @@
         ctx.fillStyle = wheelPalette[i % wheelPalette.length];
         ctx.fill();
         ctx.strokeStyle = "#FFFFFF";
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 2.5;
         ctx.stroke();
 
         ctx.save();
@@ -2229,7 +2361,7 @@
       requestAnimationFrame(step);
     };
 
-    // B. SCRATCH & WIN
+    // SCRATCH CARD
     let scratchCompletedFlag = false;
     window.initScratchFoilCanvas = function() {
       const canvas = document.getElementById("scratchFoilCanvas");
@@ -2242,17 +2374,17 @@
       document.getElementById("scratchVerificationBox").classList.add("hidden");
 
       const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-      grad.addColorStop(0, "#94A3B8");
-      grad.addColorStop(0.5, "#CBD5E1");
-      grad.addColorStop(1, "#64748B");
+      grad.addColorStop(0, "#FDE047");
+      grad.addColorStop(0.5, "#F59E0B");
+      grad.addColorStop(1, "#D97706");
       ctx.globalCompositeOperation = "source-over";
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.fillStyle = "#1E293B";
+      ctx.fillStyle = "#451A03";
       ctx.font = "bold 20px Fredoka, sans-serif";
       ctx.textAlign = "center";
-      ctx.fillText("Scratch Here...", canvas.width / 2, canvas.height / 2 + 6);
+      ctx.fillText("Scratch Golden Foil...", canvas.width / 2, canvas.height / 2 + 6);
 
       let scratching = false;
       const doScratch = (x, y) => {
@@ -2263,7 +2395,7 @@
         }
         ctx.globalCompositeOperation = "destination-out";
         ctx.beginPath();
-        ctx.arc(x, y, 22, 0, Math.PI * 2);
+        ctx.arc(x, y, 24, 0, Math.PI * 2);
         ctx.fill();
 
         const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
@@ -2283,7 +2415,7 @@
     };
     window.resetScratchFoil = () => initScratchFoilCanvas();
 
-    // C. WATCH ADS & EARN
+    // WATCH ADS
     window.startWatchAdTimer = function() {
       if ((state.userProfile.todayAds || 0) >= state.appSettings.dailyAdLimit) {
         return showToast("Daily Watch Ads limit reached!", "error");
@@ -2293,7 +2425,7 @@
       runTwentySecondGate("adsCountdownNum", "adsCountdownBar", "adsClaimBtn", "Launch Monetag Ad & Claim");
     };
 
-    // ==================== REAL-TIME LEADERBOARD RENDERER ====================
+    // ==================== REAL-TIME LEADERBOARD WITH 3D TROPHIES & REAL AVATARS ====================
     window.setLeaderboardMode = function(mode) {
       state.leaderboardMode = mode;
       const wBtn = document.getElementById("lbTabWeekly");
@@ -2314,9 +2446,9 @@
 
       const top3 = [sorted[1], sorted[0], sorted[2]];
       const podiumMeta = [
-        { label: "2nd", height: "h-16", bg: "from-slate-200 to-slate-300 text-slate-800" },
-        { label: "1st", height: "h-24", bg: "from-amber-300 to-amber-500 text-amber-950", crown: true },
-        { label: "3rd", height: "h-14", bg: "from-orange-200 to-orange-300 text-orange-950" }
+        { label: "2nd", height: "h-16", bg: "from-slate-200 via-slate-300 to-slate-400 text-slate-900", trophyColor: "text-slate-400" },
+        { label: "1st", height: "h-24", bg: "from-yellow-200 via-amber-400 to-orange-500 text-amber-950", trophyColor: "text-amber-500", crown: true },
+        { label: "3rd", height: "h-14", bg: "from-orange-200 via-amber-300 to-orange-400 text-orange-950", trophyColor: "text-amber-700" }
       ];
 
       document.getElementById("podiumContainer").innerHTML = top3.map((player, idx) => {
@@ -2325,12 +2457,10 @@
         const score = player ? Number(player[sortField] || 0).toLocaleString() : "0";
         return `
           <div class="flex flex-col items-center">
-            ${meta.crown ? `<i class="fa-solid fa-crown text-amber-500 text-lg mb-0.5"></i>` : ""}
-            <div class="w-12 h-12 rounded-full bg-purple-100 border-2 border-white shadow flex items-center justify-center font-display font-bold text-purple-800 overflow-hidden mb-1">
-              ${player && player.photoUrl ? `<img src="${player.photoUrl}" class="w-full h-full object-cover"/>` : name.slice(0, 2).toUpperCase()}
-            </div>
+            <i class="fa-solid fa-trophy ${meta.trophyColor} ${meta.crown ? 'text-xl animate-float-3d' : 'text-base'} mb-1"></i>
+            <div id="podiumAvatar-${idx}" class="tg-avatar-ring ${meta.crown ? 'w-14 h-14' : 'w-12 h-12'} mb-1"></div>
             <span class="text-xs font-bold text-indigo-950 truncate w-full">${name}</span>
-            <div class="w-full ${meta.height} mt-1 rounded-t-2xl bg-gradient-to-b ${meta.bg} flex flex-col items-center justify-center shadow-inner">
+            <div class="w-full ${meta.height} mt-1 rounded-t-2xl bg-gradient-to-b ${meta.bg} flex flex-col items-center justify-center shadow-md border-t border-white">
               <span class="font-display font-extrabold text-base">${meta.label}</span>
               <span class="text-[10px] font-extrabold">${score}</span>
             </div>
@@ -2338,22 +2468,38 @@
         `;
       }).join("");
 
-      // Rows
-      document.getElementById("leaderboardRows").innerHTML = sorted.slice(0, 25).map((u, idx) => {
+      top3.forEach((player, idx) => {
+        renderTelegramAvatarInto(
+          document.getElementById(`podiumAvatar-${idx}`),
+          player ? player.photoUrl : "",
+          player ? player.firstName : "—",
+          "text-sm"
+        );
+      });
+
+      const listSlice = sorted.slice(0, 25);
+      document.getElementById("leaderboardRows").innerHTML = listSlice.map((u, idx) => {
         const isMe = String(u.telegramId) === String(state.telegramId);
         return `
-          <div class="flex items-center justify-between p-2.5 rounded-2xl ${isMe ? 'bg-purple-100 border-2 border-purple-500' : 'bg-white/85 border border-purple-100'}">
+          <div class="flex items-center justify-between p-2.5 rounded-2xl ${isMe ? 'bg-purple-100 border-2 border-purple-500 shadow-xs' : 'bg-white/90 border border-purple-100'}">
             <div class="flex items-center gap-2.5 min-w-0">
               <span class="w-6 h-6 rounded-full bg-amber-100 text-amber-900 font-extrabold text-xs flex items-center justify-center shrink-0">${idx + 1}</span>
-              <div class="w-8 h-8 rounded-full bg-sky-100 flex items-center justify-center font-bold text-xs text-indigo-900 overflow-hidden shrink-0">
-                ${u.photoUrl ? `<img src="${u.photoUrl}" class="w-full h-full object-cover"/>` : (u.firstName || "P").slice(0, 2).toUpperCase()}
-              </div>
+              <div id="lbRowAvatar-${idx}" class="tg-avatar-ring w-9 h-9"></div>
               <span class="font-bold text-xs text-indigo-950 truncate">${u.firstName || "Player"} ${isMe ? "(You)" : ""}</span>
             </div>
             <span class="font-display font-bold text-xs text-purple-700 shrink-0">${Number(u[sortField] || 0).toLocaleString()}</span>
           </div>
         `;
       }).join("");
+
+      listSlice.forEach((u, idx) => {
+        renderTelegramAvatarInto(
+          document.getElementById(`lbRowAvatar-${idx}`),
+          u.photoUrl || "",
+          u.firstName || "Player",
+          "text-xs"
+        );
+      });
 
       const myIndex = sorted.findIndex(u => String(u.telegramId) === String(state.telegramId));
       document.getElementById("currentUserRankBadge").textContent = myIndex >= 0 ? `#${myIndex + 1}` : "#—";
@@ -2513,7 +2659,6 @@
       showToast(`Score (${state.currentGameScore}) submitted for server reward verification!`, "success");
     };
 
-    // 1. BUBBLE SHOOTER
     function startBubbleShooter() {
       const canvas = document.getElementById("arcadeGameCanvas");
       const ctx = canvas.getContext("2d");
@@ -2576,7 +2721,6 @@
       loop();
     }
 
-    // 2. FRUIT CUT
     function startFruitCut() {
       const canvas = document.getElementById("arcadeGameCanvas");
       const ctx = canvas.getContext("2d");
@@ -2623,7 +2767,6 @@
       loop();
     }
 
-    // 3. CAR RACING
     function startCarRacing() {
       const canvas = document.getElementById("arcadeGameCanvas");
       const ctx = canvas.getContext("2d");
@@ -2673,7 +2816,6 @@
       loop();
     }
 
-    // 4. TEMPLE RUN
     function startTempleRun() {
       const canvas = document.getElementById("arcadeGameCanvas");
       const ctx = canvas.getContext("2d");
@@ -2715,7 +2857,6 @@
       loop();
     }
 
-    // 5. MEMORY MATCH
     function startMemoryMatch() {
       const icons = ["👑", "💎", "🚀", "🎁", "👑", "💎", "🚀", "🎁"].sort(() => Math.random() - 0.5);
       let flipped = [];
@@ -2755,7 +2896,6 @@
       });
     }
 
-    // 6. NUMBER PUZZLE (3x3 Sliding)
     function startNumberPuzzle() {
       let tiles = [1, 2, 3, 4, 5, 6, 7, 0, 8];
       const board = document.getElementById("gridGameBoard");
@@ -2784,7 +2924,6 @@
       drawBoard();
     }
 
-    // Start Application
     window.addEventListener("DOMContentLoaded", bootstrapApplication);
   </script>
 </body>
